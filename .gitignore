@@ -1,0 +1,12 @@
+# Dependencies and build output (each project also keeps its own .gitignore)
+node_modules/
+dist/
+out/
+.frames/
+
+# Rendered films are regenerated with each project's render/record script
+*.mp4
+
+# OS / logs
+.DS_Store
+*.log
