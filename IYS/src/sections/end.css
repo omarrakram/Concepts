@@ -1,0 +1,121 @@
+/* 09 — END FRAME ─────────────────────────────────────────── */
+
+.end {
+  position: relative;
+  padding: clamp(60px, 10vh, 120px) var(--gutter) 28px;
+  background: var(--ink);
+  color: var(--paper);
+  overflow: clip;
+}
+.end__note-wrap {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: flex-end;
+  min-height: 210px;
+}
+.end__note {
+  width: min(420px, 100%);
+  padding: 20px 22px 16px;
+  background: #fffdf6;
+  color: var(--ink);
+  rotate: 2deg;
+  box-shadow: 0 30px 40px -24px rgba(0, 0, 0, 0.7);
+  background-image: repeating-linear-gradient(transparent 0 27px, rgba(36, 71, 179, 0.18) 27px 28px);
+  border-left: 3px double rgba(236, 74, 42, 0.5);
+}
+.end__note-title {
+  font-size: 2.2rem;
+  display: block;
+}
+.end__note-sub {
+  margin: 4px 0 12px;
+}
+.end__field {
+  display: flex;
+  gap: 8px;
+}
+.end__field input {
+  flex: 1;
+  min-width: 0;
+  min-height: 44px;
+  padding: 0 12px;
+  border: 0;
+  border-bottom: 2px solid var(--ink);
+  background: transparent;
+  font-family: var(--f-hand);
+  font-size: 1.5rem;
+  color: var(--pen);
+}
+.end__field input:focus-visible {
+  outline-offset: 2px;
+}
+.end__note-fine {
+  margin: 10px 0 0;
+  font-size: 0.6rem;
+  opacity: 0.7;
+}
+.end__done {
+  font-size: 2.6rem;
+  color: var(--sun);
+  rotate: -3deg;
+  align-self: center;
+}
+
+.end__lockup {
+  max-width: 1400px;
+  margin: 40px auto 0;
+  display: grid;
+  gap: 14px;
+}
+.end__logo {
+  width: min(560px, 80vw);
+  height: auto;
+}
+.logo--invert {
+  filter: invert(1);
+}
+.end .logo--text {
+  font-family: var(--f-display);
+  font-weight: 900;
+  font-size: clamp(3rem, 10vw, 9rem);
+  line-height: 0.85;
+  font-variation-settings: 'wdth' 110;
+}
+.end__line {
+  font-size: clamp(2rem, 5.6vw, 5.4rem);
+  font-variation-settings: 'wdth' 80;
+  color: var(--sun);
+  max-width: 16ch;
+}
+.end__official {
+  margin: 0;
+  font-size: 0.62rem;
+  opacity: 0.6;
+}
+.end__nav {
+  max-width: 1400px;
+  margin: 48px auto 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 26px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(245, 240, 230, 0.2);
+}
+.end__nav a {
+  font-weight: 600;
+  text-decoration: none;
+}
+.end__nav a:hover {
+  text-decoration: underline;
+}
+.end__credits {
+  max-width: 1400px;
+  margin: 30px auto 0;
+  font-size: 0.64rem;
+  line-height: 1.7;
+  opacity: 0.75;
+}
+.end__credits p {
+  margin: 0;
+}

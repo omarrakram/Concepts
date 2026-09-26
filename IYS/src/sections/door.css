@@ -1,0 +1,383 @@
+/* 00 — THE COOL DECISION ─────────────────────────────────── */
+
+.door {
+  position: relative;
+  height: calc(100svh - var(--bar-h));
+  min-height: 560px;
+  perspective: 2200px;
+  overflow: clip;
+  isolation: isolate;
+}
+
+.door__panels {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  transform-style: preserve-3d;
+  z-index: 3;
+}
+
+.door__panel {
+  position: relative;
+  width: 50%;
+  height: 100%;
+  overflow: hidden;
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.035), transparent 12%, transparent 88%, rgba(0, 0, 0, 0.05)),
+    var(--paper);
+  backface-visibility: hidden;
+  will-change: transform;
+}
+.door__panel--l {
+  transform-origin: 0 50%;
+  box-shadow: inset -1px 0 0 rgba(23, 20, 15, 0.22);
+}
+.door__panel--r {
+  transform-origin: 100% 50%;
+  box-shadow: inset 1px 0 0 rgba(23, 20, 15, 0.22);
+}
+/* panel moulding */
+.door__panel::before {
+  content: '';
+  position: absolute;
+  inset: 22px 26px;
+  border: 1.5px solid rgba(23, 20, 15, 0.09);
+  border-radius: 3px;
+  box-shadow:
+    inset 0 0 0 7px var(--paper),
+    inset 0 0 0 8.5px rgba(23, 20, 15, 0.06);
+  pointer-events: none;
+}
+
+.door__face {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 200%;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  place-items: center;
+  padding: 3vh var(--gutter) 14vh;
+}
+.door__panel--l .door__face {
+  left: 0;
+}
+.door__panel--r .door__face {
+  left: -100%;
+}
+
+.door__type {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  width: 100%;
+  max-width: 1240px;
+  min-width: 0;
+}
+
+.door__stack {
+  color: var(--ink);
+  text-align: center;
+}
+.fit__line {
+  display: block;
+  white-space: nowrap;
+}
+.fit__inner {
+  display: inline-block;
+  transform-origin: 50% 100%;
+}
+.door__stack .l1 .fit__inner,
+.door__stack .l2 .fit__inner,
+.door__stack .l4 .fit__inner {
+  font-variation-settings: 'wdth' 88;
+}
+.door__stack .l3 .fit__inner {
+  font-variation-settings: 'wdth' 128;
+  font-weight: 900;
+  color: var(--tomato);
+  -webkit-text-stroke: 0;
+}
+.door__stack .l3 {
+  margin: 0.02em 0 0.01em;
+}
+
+.door__sure {
+  text-transform: none;
+  letter-spacing: 0;
+  font-weight: 600;
+  line-height: 1;
+  position: absolute;
+  bottom: calc(100% + 0.25em);
+  left: -0.2em;
+  margin: 0;
+  font-size: clamp(1.6rem, 2.4vw, 2.5rem);
+  transform: rotate(-6deg);
+  z-index: 2;
+  white-space: nowrap;
+}
+.door__sure-arrow {
+  position: absolute;
+  width: 2em;
+  left: 100%;
+  top: 0.35em;
+  transform: rotate(8deg);
+}
+
+.door__knob {
+  position: absolute;
+  bottom: 24%;
+  width: 14px;
+  height: 56px;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #8f9496, #dfe2e1 45%, #9ba0a2);
+  box-shadow: 0 6px 10px -4px rgba(0, 0, 0, 0.4);
+}
+.door__panel--l .door__knob {
+  right: 20px;
+}
+.door__panel--r .door__knob {
+  left: 20px;
+}
+
+/* the big physical toggle */
+.door__toggle {
+  position: absolute;
+  z-index: 4;
+  left: 50%;
+  bottom: clamp(24px, 6vh, 64px);
+  translate: -50% 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 6px;
+  border-radius: 999px;
+  background: var(--ink);
+  box-shadow:
+    0 4px 0 #000,
+    0 22px 30px -18px rgba(0, 0, 0, 0.7);
+  width: min(460px, calc(100vw - 40px));
+}
+.door__toggle button {
+  position: relative;
+  z-index: 1;
+  min-height: 64px;
+  border-radius: 999px;
+  color: var(--paper);
+  font-family: var(--f-display);
+  font-weight: 850;
+  font-variation-settings: 'wdth' 118;
+  text-transform: uppercase;
+  font-size: clamp(1.05rem, 2vw, 1.35rem);
+  letter-spacing: 0.01em;
+  transition: color 0.2s;
+}
+.door__toggle button:hover {
+  color: var(--sun);
+}
+.door__toggle button.is-on {
+  color: var(--ink);
+}
+.door__knob-slider {
+  position: absolute;
+  top: 6px;
+  bottom: 6px;
+  left: calc(50% - 26px);
+  width: 52px;
+  border-radius: 999px;
+  background:
+    repeating-linear-gradient(90deg, transparent 0 8px, rgba(23, 20, 15, 0.22) 8px 10px) 50% 50% / 22px 40% no-repeat,
+    var(--sun);
+  box-shadow:
+    inset 0 -3px 0 rgba(0, 0, 0, 0.18),
+    0 2px 0 rgba(0, 0, 0, 0.4);
+}
+.door__toggle::before {
+  /* groove */
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 14px;
+  bottom: 14px;
+  width: 2px;
+  translate: -50% 0;
+  background: rgba(245, 240, 230, 0.12);
+}
+.door__toggle button:focus-visible {
+  outline-color: var(--sun);
+  outline-offset: -4px;
+}
+
+/* ── inside the wardrobe ───────────────────────────────────── */
+
+.inside {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  background: #e7d6bb;
+  transform-origin: 50% 40%;
+}
+.inside__wall {
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(90deg, rgba(120, 80, 40, 0.07) 0 1px, transparent 1px 112px),
+    radial-gradient(120% 70% at 50% 0%, rgba(255, 244, 222, 0.9), transparent 70%),
+    linear-gradient(#ead9bd, #dcc3a0);
+}
+.inside__rail {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 9%;
+  height: 12px;
+  border-radius: 6px;
+  background: linear-gradient(#f4f5f4, #a4a9aa 55%, #7d8385);
+  box-shadow: 0 8px 12px -6px rgba(0, 0, 0, 0.35);
+  z-index: 1;
+}
+.inside__items {
+  position: absolute;
+  inset: calc(9% - 34px) 0 auto 0;
+  display: flex;
+  justify-content: center;
+  gap: clamp(8px, 1.4vw, 22px);
+  list-style: none;
+  margin: 0;
+  padding: 0 var(--gutter);
+  z-index: 2;
+}
+.inside__item {
+  position: relative;
+  flex: 0 0 auto;
+  width: clamp(120px, 13.4vw, 230px);
+  transform-origin: 50% 20px;
+  display: grid;
+  justify-items: center;
+}
+.inside__item:nth-child(n + 7) {
+  display: none;
+}
+@media (min-width: 1280px) {
+  .inside__item:nth-child(n + 7) {
+    display: grid;
+  }
+}
+.inside__item .hanger {
+  width: 88%;
+  margin-bottom: -8px;
+  position: relative;
+  z-index: 2;
+}
+.inside__garment {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  background: var(--card);
+  padding: 7px;
+  border-radius: 3px;
+  box-shadow: var(--shadow-lift);
+  transition: transform 0.35s var(--ease-back);
+}
+.inside__garment img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.inside__garment:hover {
+  transform: translateY(8px);
+}
+.inside__tag {
+  margin-top: 8px;
+  background: var(--card);
+  padding: 4px 8px;
+  border-radius: 3px;
+  font-size: 0.62rem;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  box-shadow: var(--shadow-lay);
+  rotate: -3deg;
+}
+.inside__item:nth-child(even) .inside__tag {
+  rotate: 4deg;
+}
+
+.inside__copy {
+  position: relative;
+  z-index: 3;
+  grid-row: 2;
+  padding: 0 var(--gutter) clamp(24px, 5vh, 56px);
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas:
+    'good good'
+    'title sub'
+    'title cta'
+    'shelf shelf';
+  column-gap: clamp(20px, 4vw, 64px);
+  align-items: end;
+}
+.inside__good {
+  grid-area: good;
+  font-size: clamp(2rem, 3.4vw, 3.4rem);
+  rotate: -4deg;
+  margin: 0 0 0.35em 0.1em;
+  justify-self: start;
+}
+.inside__title {
+  grid-area: title;
+  font-size: clamp(3rem, 7.4vw, 7.6rem);
+  font-variation-settings: 'wdth' 92;
+  outline: none;
+}
+.inside__sub {
+  grid-area: sub;
+  max-width: 34ch;
+  margin: 0 0 16px;
+  font-size: 1.05rem;
+}
+.inside__cta {
+  grid-area: cta;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding-bottom: 0.4em;
+}
+.inside__shelf {
+  grid-area: shelf;
+  margin: 18px 0 0;
+  padding-top: 10px;
+  border-top: 2px solid rgba(23, 20, 15, 0.8);
+  display: flex;
+  justify-content: space-between;
+}
+
+@media (max-width: 760px) {
+  .door__face {
+    padding: 2vh 16px 18vh;
+  }
+
+  .door__panel::before {
+    inset: 12px 12px;
+  }
+  .inside__items {
+    justify-content: flex-start;
+    overflow: hidden;
+  }
+  .inside__item {
+    width: 38vw;
+  }
+  .inside__copy {
+    grid-template-columns: 1fr;
+    grid-template-areas: 'good' 'title' 'sub' 'cta' 'shelf';
+  }
+  .inside__sub {
+    margin-top: 10px;
+  }
+  .inside__shelf {
+    font-size: 0.62rem;
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "pages": ["/", "/pages/store-locations", "/pages/iysxzed", "/pages/about-us", "/pages/faqs", "/collections/homewear", "/collections/newest", "/collections/all-products", "/pages/exchange-refund-policy"],
+  "products": [
+    { "handle": "cereal-killer-pjoys" },
+    { "handle": "sunset-pjoys" },
+    { "handle": "doggies-pjoys" },
+    { "handle": "love-you-so-matcha-pjoys" },
+    { "handle": "cereal-killer-fluffy-pjoys" },
+    { "handle": "mood-swings-fluffy-pjoys" },
+    { "handle": "excuses-not-to-study-fluffy-pjoys" },
+    { "handle": "cereal-crimes-oversized-tee" },
+    { "handle": "cairo-is-a-mindset-oversized-hoodie" },
+    { "handle": "egyptian-culture-oversized-long-sleeves" },
+    { "handle": "dna-is-football-oversized-tee" },
+    { "handle": "zed-stars-jersey" },
+    { "handle": "striped-youth-dept-jersey" },
+    { "handle": "distorted-youth-dept-jersey" },
+    { "handle": "black-zed-stars-sworts" }
+  ],
+  "images": []
+}

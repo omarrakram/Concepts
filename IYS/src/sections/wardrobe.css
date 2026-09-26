@@ -1,0 +1,262 @@
+/* 02 — THE WARDROBE ─────────────────────────────────────── */
+
+.wardrobe {
+  position: relative;
+  height: 100svh;
+  min-height: 640px;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  overflow: clip;
+  background:
+    repeating-linear-gradient(90deg, rgba(90, 58, 28, 0.08) 0 2px, transparent 2px 140px),
+    linear-gradient(180deg, #e3cfae, #d4b88f 70%, #c7a77b);
+  color: var(--ink);
+}
+.wardrobe::after {
+  /* shelf shadow at top */
+  content: '';
+  position: absolute;
+  inset: 0 0 auto;
+  height: 40px;
+  background: linear-gradient(rgba(60, 36, 12, 0.25), transparent);
+  pointer-events: none;
+}
+
+.wardrobe__head {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  grid-template-areas:
+    'kick kick kick'
+    'title hint filters';
+  align-items: end;
+  gap: 6px 24px;
+  padding: calc(var(--bar-h) + 18px) var(--gutter) 0;
+  position: relative;
+  z-index: 3;
+}
+.wardrobe__head .kicker {
+  grid-area: kick;
+}
+.wardrobe__title {
+  grid-area: title;
+  font-size: clamp(2.6rem, 6.4vw, 6.4rem);
+  font-variation-settings: 'wdth' 84;
+}
+.wardrobe__hint {
+  grid-area: hint;
+  font-size: 1.6rem;
+  margin: 0 0 0.4em;
+  rotate: -2deg;
+}
+.wardrobe__filters {
+  grid-area: filters;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+  padding-bottom: 0.4em;
+  max-width: 560px;
+}
+
+.rail {
+  position: relative;
+  min-height: 0;
+}
+.rail__bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 44px;
+  height: 14px;
+  border-radius: 7px;
+  background: linear-gradient(#fbfbfa, #a8adae 50%, #767c7e);
+  box-shadow: 0 10px 14px -8px rgba(0, 0, 0, 0.45);
+  z-index: 1;
+}
+.rail__track {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  --swing: 0;
+}
+.rail__inner {
+  display: flex;
+  align-items: flex-start;
+  gap: clamp(14px, 2.2vw, 36px);
+  width: max-content;
+  list-style: none;
+  margin: 0;
+  padding: 16px var(--gutter) 0;
+  will-change: transform;
+}
+
+.garment {
+  position: relative;
+  flex: 0 0 auto;
+  width: clamp(200px, min(20vw, 30vh), 320px);
+  z-index: 2;
+}
+.garment__swing {
+  display: grid;
+  justify-items: center;
+  transform-origin: 50% 30px;
+  rotate: calc(var(--swing) * var(--k, 1) * 1deg);
+}
+.garment:hover .garment__swing {
+  animation: hang-swing 1.6s ease-out;
+}
+@keyframes hang-swing {
+  0% {
+    transform: rotate(0);
+  }
+  12% {
+    transform: rotate(4deg);
+  }
+  30% {
+    transform: rotate(-3deg);
+  }
+  50% {
+    transform: rotate(1.6deg);
+  }
+  70% {
+    transform: rotate(-0.8deg);
+  }
+  100% {
+    transform: rotate(0);
+  }
+}
+.garment .hanger {
+  width: 84%;
+  margin-bottom: -12px;
+  position: relative;
+  z-index: 2;
+}
+.garment__frame {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  background: var(--card);
+  padding: 8px;
+  border-radius: 4px;
+  box-shadow: var(--shadow-lift);
+  overflow: hidden;
+}
+.garment__frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 2px;
+}
+.garment__alt {
+  position: absolute;
+  inset: 8px;
+  width: calc(100% - 16px) !important;
+  height: calc(100% - 16px) !important;
+  opacity: 0;
+  transition: opacity 0.35s;
+}
+.garment__frame:hover .garment__alt,
+.garment__frame:focus-visible .garment__alt {
+  opacity: 1;
+}
+.garment__string {
+  width: 2px;
+  height: 18px;
+  background: #6b5a44;
+  margin-top: -2px;
+}
+.garment__tag {
+  position: relative;
+  display: grid;
+  gap: 2px;
+  justify-items: start;
+  width: 78%;
+  padding: 16px 12px 10px;
+  background: var(--card);
+  border-radius: 4px 4px 4px 4px;
+  clip-path: polygon(12% 0, 88% 0, 100% 14%, 100% 100%, 0 100%, 0 14%);
+  box-shadow: var(--shadow-lay);
+  transform-origin: 50% 0;
+  rotate: calc(var(--swing) * -1.6deg);
+  transition: rotate 0.3s;
+}
+.garment__hole {
+  position: absolute;
+  top: 5px;
+  left: 50%;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  translate: -50% 0;
+  background: #c7a77b;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.35);
+}
+.garment__cat {
+  font-size: 0.6rem;
+  color: var(--muted);
+}
+.garment__name {
+  font-weight: 650;
+  font-size: 0.92rem;
+  line-height: 1.15;
+}
+
+/* kids hang lower on the little rail */
+.garment--little {
+  width: clamp(150px, min(14vw, 22vh), 220px);
+  margin-top: 26vh;
+}
+.garment--little .hanger {
+  --hanger: #e8a33b;
+}
+.rail__little-label {
+  align-self: center;
+  font-size: 1.8rem;
+  margin-top: 30vh;
+  rotate: -4deg;
+  white-space: nowrap;
+}
+
+@media (max-width: 760px) {
+  .wardrobe {
+    height: auto;
+    min-height: 0;
+    padding-bottom: 36px;
+  }
+  .wardrobe__head {
+    grid-template-columns: 1fr;
+    grid-template-areas: 'kick' 'title' 'hint' 'filters';
+    padding-top: 40px;
+  }
+  .wardrobe__filters {
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    margin: 0 calc(-1 * var(--gutter));
+    padding: 4px var(--gutter) 8px;
+    scrollbar-width: none;
+  }
+  .rail {
+    min-height: 560px;
+  }
+  .rail__track {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+  .rail__track::-webkit-scrollbar {
+    display: none;
+  }
+  .garment {
+    width: 64vw;
+    scroll-snap-align: center;
+  }
+  .garment--little {
+    width: 48vw;
+    margin-top: 110px;
+  }
+  .rail__little-label {
+    margin-top: 200px;
+  }
+}
