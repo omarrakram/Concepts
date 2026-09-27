@@ -1,0 +1,329 @@
+{
+  "pages": [
+    "/",
+    "/pages/store-locations",
+    "/pages/iysxzed",
+    "/pages/about-us",
+    "/pages/faqs",
+    "/pages/shipping-policy",
+    "/pages/exchange-refund-policy"
+  ],
+  "products": [
+    {
+      "handle": "cereal-killer-pjoys",
+      "images": [
+        0,
+        5,
+        1,
+        2
+      ]
+    },
+    {
+      "handle": "doggies-pjoys",
+      "images": [
+        0,
+        1,
+        2
+      ]
+    },
+    {
+      "handle": "love-you-so-matcha-pjoys",
+      "images": [
+        0,
+        3,
+        1
+      ]
+    },
+    {
+      "handle": "sunset-pjoys",
+      "images": [
+        0,
+        4,
+        1
+      ]
+    },
+    {
+      "handle": "main-character-pjoys",
+      "images": [
+        0,
+        4,
+        1
+      ]
+    },
+    {
+      "handle": "mood-swings-fluffy-pjoys",
+      "images": [
+        0,
+        2,
+        1
+      ]
+    },
+    {
+      "handle": "just-sleepy-fluffy-pjoys",
+      "images": [
+        0,
+        4,
+        1
+      ]
+    },
+    {
+      "handle": "cairo-is-a-mindset-oversized-hoodie",
+      "images": [
+        2,
+        6,
+        0,
+        1
+      ]
+    },
+    {
+      "handle": "cereal-crimes-oversized-tee",
+      "images": [
+        0,
+        4,
+        2
+      ]
+    },
+    {
+      "handle": "egyptian-culture-oversized-long-sleeves",
+      "images": [
+        0,
+        7,
+        1
+      ]
+    },
+    {
+      "handle": "orange-cairo-jersey",
+      "images": [
+        0,
+        1,
+        4
+      ]
+    },
+    {
+      "handle": "female-denim-blue-washed-wide-leg-jeans",
+      "images": [
+        1,
+        0,
+        5
+      ]
+    },
+    {
+      "handle": "female-red-striped-regular-shirt",
+      "images": [
+        0,
+        1,
+        3
+      ]
+    },
+    {
+      "handle": "zed-stars-jersey",
+      "images": [
+        1,
+        4,
+        0
+      ]
+    },
+    {
+      "handle": "striped-youth-dept-jersey",
+      "images": [
+        1,
+        2,
+        0
+      ]
+    },
+    {
+      "handle": "dna-is-football-oversized-tee",
+      "images": [
+        1,
+        0,
+        2
+      ]
+    },
+    {
+      "handle": "i-love-cairo-neck-socks",
+      "images": [
+        0,
+        1
+      ]
+    },
+    {
+      "handle": "masr-washed-cap",
+      "images": [
+        0,
+        2
+      ]
+    },
+    {
+      "handle": "blue-cairo-kids-jersey",
+      "images": [
+        0,
+        3,
+        1
+      ]
+    }
+  ],
+  "images": [
+    {
+      "id": "logo",
+      "dir": "brand",
+      "url": "https://cdn.shopify.com/s/files/1/0050/2729/9397/files/Name_PNG_aa2488c8-8e3c-4a35-bd7f-8e36f9e671ea.png",
+      "page": "https://inyourshoe.com/",
+      "alt": "IN YOUR SHOE",
+      "max": 692,
+      "trim": true
+    },
+    {
+      "id": "logo-white",
+      "dir": "brand",
+      "url": "https://cdn.shopify.com/s/files/1/0050/2729/9397/files/INYOURSHOE-LOGO-WHITE.png",
+      "page": "https://inyourshoe.com/",
+      "alt": "IN YOUR SHOE",
+      "max": 1600
+    },
+    {
+      "id": "mark",
+      "dir": "brand",
+      "url": "https://cdn.shopify.com/s/files/1/0050/2729/9397/files/IYS_LOGO_ce45456e-9db1-4ed7-8da4-cec07fa2b235.png",
+      "page": "https://inyourshoe.com/",
+      "alt": "IYS",
+      "max": 591,
+      "trim": true
+    },
+    {
+      "id": "campaign-couch",
+      "dir": "campaign",
+      "url": "https://cdn.shopify.com/s/files/1/0050/2729/9397/files/slider_new_web_5.jpg",
+      "page": "https://inyourshoe.com/pages/about-us",
+      "alt": "Four friends lying on a couch in IYS Pjoys",
+      "max": 1920
+    },
+    {
+      "id": "campaign-fw27-room",
+      "dir": "campaign",
+      "url": "https://cdn.shopify.com/s/files/1/0050/2729/9397/files/FW27-MOBILE-01_jpg.jpg",
+      "page": "https://inyourshoe.com/",
+      "alt": "Two people in brown IYS hoodies in a room with a retro TV",
+      "max": 1920
+    },
+    {
+      "id": "campaign-fw27-stack",
+      "dir": "campaign",
+      "url": "https://cdn.shopify.com/s/files/1/0050/2729/9397/files/FW27-MOBILE-02_jpg.jpg",
+      "page": "https://inyourshoe.com/",
+      "alt": "A stack of folded IYS pieces on a wooden floor",
+      "max": 1920
+    },
+    {
+      "id": "zed-lockers",
+      "dir": "collabs",
+      "url": "https://cdn.shopify.com/s/files/1/0050/2729/9397/files/MOBILE-SLIDER-UPDATED-ZED_jpg.jpg",
+      "page": "https://inyourshoe.com/",
+      "alt": "IYS × ZED campaign — photos and stickers on green lockers",
+      "max": 1920
+    },
+    {
+      "id": "zed-court",
+      "dir": "collabs",
+      "url": "https://cdn.shopify.com/s/files/1/0050/2729/9397/files/IMG_5585.jpg",
+      "page": "https://inyourshoe.com/pages/iysxzed",
+      "alt": "IYS × ZED campaign on a basketball court",
+      "max": 1400
+    },
+    {
+      "id": "zed-pitch",
+      "dir": "collabs",
+      "url": "https://cdn.shopify.com/s/files/1/0050/2729/9397/files/IMG_5588.jpg",
+      "page": "https://inyourshoe.com/pages/iysxzed",
+      "alt": "IYS × ZED campaign on a football pitch",
+      "max": 1400
+    },
+    {
+      "id": "zed-pitch-2",
+      "dir": "collabs",
+      "url": "https://cdn.shopify.com/s/files/1/0050/2729/9397/files/IMG_5589.jpg",
+      "page": "https://inyourshoe.com/pages/iysxzed",
+      "alt": "IYS × ZED campaign in the stands",
+      "max": 1400
+    },
+    {
+      "id": "store-city-stars",
+      "dir": "stores",
+      "url": "https://cdn.shopify.com/s/files/1/0050/2729/9397/files/WhatsApp_Image_2025-12-23_at_22.20.50.jpg",
+      "page": "https://inyourshoe.com/pages/store-locations",
+      "alt": "IN YOUR SHOE store front, City Stars",
+      "max": 1200
+    },
+    {
+      "id": "store-u-venues",
+      "dir": "stores",
+      "url": "https://cdn.shopify.com/s/files/1/0050/2729/9397/files/Screenshot_from_2025-11-30_12-53-03.png",
+      "page": "https://inyourshoe.com/pages/store-locations",
+      "alt": "IN YOUR SHOE store, U Venues",
+      "max": 1035
+    },
+    {
+      "id": "store-almaza",
+      "dir": "stores",
+      "url": "https://cdn.shopify.com/s/files/1/0050/2729/9397/files/PHOTO-2023-12-07-15-25-34_85844759-b2a6-4aa5-b36e-9afd3d87f760.jpg",
+      "page": "https://inyourshoe.com/pages/store-locations",
+      "alt": "IN YOUR SHOE store, City Centre Almaza",
+      "max": 1200
+    },
+    {
+      "id": "store-district-5",
+      "dir": "stores",
+      "url": "https://cdn.shopify.com/s/files/1/0050/2729/9397/files/WhatsApp_Image_2025-09-21_at_06.24.15.jpg",
+      "page": "https://inyourshoe.com/pages/store-locations",
+      "alt": "IN YOUR SHOE store front, District 5",
+      "max": 1200
+    },
+    {
+      "id": "store-open-air-mall",
+      "dir": "stores",
+      "url": "https://cdn.shopify.com/s/files/1/0050/2729/9397/files/1000141396.jpg",
+      "page": "https://inyourshoe.com/pages/store-locations",
+      "alt": "IN YOUR SHOE store front at night, Open Air Mall",
+      "max": 1200
+    },
+    {
+      "id": "store-mall-of-egypt",
+      "dir": "stores",
+      "url": "https://cdn.shopify.com/s/files/1/0050/2729/9397/files/IMG_6789.heic",
+      "page": "https://inyourshoe.com/pages/store-locations",
+      "alt": "IN YOUR SHOE store, Mall of Egypt",
+      "max": 1200
+    },
+    {
+      "id": "store-the-yard",
+      "dir": "stores",
+      "url": "https://cdn.shopify.com/s/files/1/0050/2729/9397/files/yard_1.jpg",
+      "page": "https://inyourshoe.com/pages/store-locations",
+      "alt": "IN YOUR SHOE store front, The Yard Mall",
+      "max": 1200
+    },
+    {
+      "id": "store-alexandria",
+      "dir": "stores",
+      "url": "https://cdn.shopify.com/s/files/1/0050/2729/9397/files/CITY_ALEX_bc620aad-7802-402b-8e74-1db44ecdc1d2.jpg",
+      "page": "https://inyourshoe.com/pages/store-locations",
+      "alt": "IN YOUR SHOE store front, City Centre Alexandria",
+      "max": 1200
+    },
+    {
+      "id": "store-el-gouna",
+      "dir": "stores",
+      "url": "https://cdn.shopify.com/s/files/1/0050/2729/9397/files/98dcb071-e53a-49a1-b01f-59570bad4639_7287938e-67c1-4381-afdf-9d616098c153.jpg",
+      "page": "https://inyourshoe.com/pages/store-locations",
+      "alt": "IN YOUR SHOE store, El Gouna",
+      "max": 757
+    },
+    {
+      "id": "store-the-wing",
+      "dir": "stores",
+      "url": "https://cdn.shopify.com/s/files/1/0050/2729/9397/files/PHOTO-2024-03-07-17-14-21_a9f54e37-4cf0-48f2-bb83-3eef0465bd17.jpg",
+      "page": "https://inyourshoe.com/pages/store-locations",
+      "alt": "IN YOUR SHOE store, The Wing Outlet",
+      "max": 960
+    }
+  ]
+}

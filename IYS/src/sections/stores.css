@@ -1,0 +1,175 @@
+/* 08 — MEET US IRL ──────────────────────────────────────── */
+
+.stores {
+  padding: clamp(60px, 10vh, 120px) var(--gutter);
+  background: var(--room);
+}
+.stores__head {
+  max-width: 1400px;
+  margin: 0 auto 32px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 8px 28px;
+}
+.stores__head .kicker {
+  width: 100%;
+}
+.stores__title {
+  font-size: clamp(3rem, 8vw, 8.4rem);
+  font-variation-settings: 'wdth' 84;
+}
+.stores__hint {
+  font-size: 1.8rem;
+  margin: 0 0 0.3em;
+}
+.stores__official {
+  width: 100%;
+  margin: 4px 0 0;
+  max-width: 60ch;
+  font-size: 1.05rem;
+}
+.stores__official .mono {
+  font-size: 0.62rem;
+  opacity: 0.7;
+}
+.postcard__stamp .logo {
+  width: 100%;
+  height: auto;
+}
+
+.postcards {
+  list-style: none;
+  margin: 0 auto;
+  padding: 0;
+  max-width: 1400px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: clamp(18px, 2.4vw, 32px);
+}
+.postcard {
+  rotate: var(--r);
+  perspective: 1200px;
+  display: grid;
+  gap: 8px;
+  justify-items: start;
+}
+.postcard__btn {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  transform-style: preserve-3d;
+  transition: transform 0.7s var(--ease-back);
+  text-align: left;
+}
+.postcard.is-flipped .postcard__btn {
+  transform: rotateY(180deg);
+}
+.postcard__front,
+.postcard__back {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: var(--shadow-lift);
+}
+.postcard__front {
+  display: grid;
+  align-content: end;
+  padding: 16px;
+  background: var(--tomato);
+  color: var(--ink);
+  border: 8px solid #fffdf8;
+}
+.postcard:nth-child(3n + 2) .postcard__front {
+  background: var(--sign);
+}
+.postcard:nth-child(3n + 3) .postcard__front {
+  background: var(--pitch);
+}
+.postcard__front > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.postcard__front:has(> img)::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(transparent 35%, rgba(10, 8, 6, 0.72));
+}
+.postcard__front:has(> img) .postcard__greet,
+.postcard__front:has(> img) .postcard__name {
+  z-index: 1;
+  color: #fff;
+}
+.postcard__pattern {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(-45deg, rgba(255, 255, 255, 0.08) 0 12px, transparent 12px 24px);
+}
+.postcard__greet {
+  position: relative;
+  font-size: 0.66rem;
+}
+.postcard__name {
+  position: relative;
+  font-size: clamp(1.8rem, 2.8vw, 2.6rem);
+  font-variation-settings: 'wdth' 78;
+  line-height: 0.88;
+}
+.postcard__stamp {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  width: 54px;
+  height: 64px;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  padding: 10px 8px;
+  background: #fffdf8;
+  -webkit-mask: radial-gradient(circle 4px, transparent 97%, #000) -4px -4px / 10px 10px;
+  mask: radial-gradient(circle 4px, transparent 97%, #000) -4px -4px / 10px 10px;
+  rotate: 6deg;
+}
+.postcard__back {
+  transform: rotateY(180deg);
+  background: #fffdf8;
+  color: var(--ink);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-content: center;
+  gap: 10px 18px;
+  padding: 20px;
+}
+.postcard__area {
+  grid-column: 1 / -1;
+  font-size: 0.7rem;
+  color: var(--tomato);
+}
+.postcard__addr {
+  grid-column: 1 / -1;
+  font-size: 1.7rem;
+  line-height: 1.05;
+  color: var(--pen);
+}
+.postcard__lines {
+  grid-column: 2;
+  height: 40px;
+  background: repeating-linear-gradient(transparent 0 12px, rgba(0, 0, 0, 0.2) 12px 13px);
+}
+.postcard__map {
+  font-size: 0.7rem;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.stores__src {
+  max-width: 1400px;
+  margin: 26px auto 0;
+  font-size: 0.62rem;
+  opacity: 0.8;
+}

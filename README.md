@@ -28,6 +28,14 @@ Collectorverse / interactive collectibles / arcade-inspired ecommerce experience
 
 Folder: `popspot/` — routes `/` and `/showcase`
 
+## In Your Shoe
+
+Unofficial digital redesign concept for In Your Shoe (IYS).
+
+The Cool Decision Club — wardrobe / Pjoy room / Cairo clubhouse ecommerce experience.
+
+Folder: `IYS/` — routes `/`, `/showcase`, `/shop/*` and `/product/*`
+
 ---
 
 These are unofficial speculative concepts and are not affiliated with the respective brands.

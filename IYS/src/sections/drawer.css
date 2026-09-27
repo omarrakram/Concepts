@@ -1,0 +1,160 @@
+/* 06 — THE DRAWER ───────────────────────────────────────── */
+
+.drawer {
+  padding: clamp(60px, 10vh, 120px) var(--gutter);
+  background: var(--room);
+}
+.drawer__head {
+  max-width: 1200px;
+  margin: 0 auto 28px;
+}
+.drawer__title {
+  font-size: clamp(3rem, 8vw, 8.4rem);
+  font-variation-settings: 'wdth' 84;
+}
+
+.dresser {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 18px 22px;
+  border-radius: 10px;
+  background: linear-gradient(180deg, #d98f5f, #c77746);
+  box-shadow:
+    inset 0 -8px 0 rgba(0, 0, 0, 0.12),
+    0 40px 50px -30px rgba(70, 30, 10, 0.6);
+}
+.dresser__top {
+  position: relative;
+  height: 56px;
+  margin: 0 -26px 18px;
+  border-radius: 10px 10px 4px 4px;
+  background: linear-gradient(180deg, #e7a577, #d28a58);
+  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.15);
+}
+.dresser__label {
+  position: absolute;
+  right: 40px;
+  bottom: 18px;
+  margin: 0;
+  display: grid;
+  gap: 2px;
+  padding: 10px 14px;
+  background: #fffdf6;
+  rotate: 3deg;
+  box-shadow: var(--shadow-lift);
+  font-size: 1.3rem;
+}
+.dresser__label .mono {
+  font-size: 0.64rem;
+  color: var(--tomato);
+}
+.dresser__origin {
+  margin: 0 0 18px;
+  padding: 14px 18px;
+  background: #fffdf6;
+  border-radius: 4px;
+  font-size: 1.05rem;
+  line-height: 1.4;
+  box-shadow: inset 0 0 0 1px rgba(80, 30, 5, 0.15);
+}
+.dresser__origin cite {
+  font-style: normal;
+  font-size: 0.62rem;
+  opacity: 0.75;
+}
+.dresser__row + .dresser__row {
+  margin-top: 16px;
+}
+.dresser__front {
+  position: relative;
+  width: 100%;
+  height: clamp(80px, 11vw, 120px);
+  border-radius: 6px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.12), transparent 30%, rgba(0, 0, 0, 0.1)),
+    #e09a69;
+  box-shadow:
+    inset 0 0 0 2px rgba(80, 30, 5, 0.25),
+    inset 0 0 0 10px rgba(255, 255, 255, 0.06),
+    0 6px 0 rgba(70, 25, 5, 0.35);
+  transition:
+    transform 0.4s var(--ease-back),
+    box-shadow 0.3s;
+  display: grid;
+  place-items: center;
+}
+.dresser__front:hover {
+  transform: translateY(3px) scale(1.005);
+}
+.dresser__row.is-open .dresser__front {
+  transform: translateY(10px) scale(1.02);
+  box-shadow:
+    inset 0 0 0 2px rgba(80, 30, 5, 0.25),
+    0 22px 20px -10px rgba(70, 25, 5, 0.5);
+}
+.dresser__plate {
+  padding: 8px 18px;
+  background: linear-gradient(160deg, #f1e6c9, #cdbb8e);
+  border-radius: 3px;
+  box-shadow:
+    inset 0 0 0 1px rgba(0, 0, 0, 0.18),
+    0 2px 0 rgba(0, 0, 0, 0.15);
+  font-size: 0.86rem;
+  color: #3b2a12;
+}
+.dresser__plate small {
+  opacity: 0.6;
+}
+.dresser__knob {
+  position: absolute;
+  left: 14%;
+  top: 50%;
+  width: 22px;
+  height: 22px;
+  translate: 0 -50%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #fff4dc, #b98f58);
+  box-shadow: 0 4px 5px rgba(0, 0, 0, 0.35);
+}
+.dresser__knob--r {
+  left: auto;
+  right: 14%;
+}
+.dresser__tray {
+  overflow: hidden;
+  margin: 14px 4px 0;
+  border-radius: 0 0 8px 8px;
+  background:
+    repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.03) 0 1px, transparent 1px 40px),
+    #f3e3cc;
+  box-shadow: inset 0 14px 18px -12px rgba(60, 25, 5, 0.45);
+}
+.dresser__items {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+  padding: 22px;
+}
+
+@media (max-width: 760px) {
+  .dresser {
+    padding: 0 10px 14px;
+  }
+  .dresser__top {
+    margin: 0 -14px 14px;
+  }
+  .dresser__label {
+    right: 12px;
+    font-size: 1.1rem;
+  }
+  .dresser__items {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding: 16px;
+  }
+  .dresser__items .pcard {
+    flex: 0 0 62vw;
+    scroll-snap-align: start;
+  }
+}
