@@ -32,9 +32,9 @@ Folder: `popspot/` — routes `/` and `/showcase`
 
 Unofficial digital redesign concept for In Your Shoe (IYS).
 
-The Cool Decision Club — wardrobe / Pjoy room / Cairo clubhouse ecommerce experience.
+IYS INTERNET 2006 — 2000s internet / simulated desktop ecommerce concept: today’s full public IYS catalogue running inside an original 2006-era computer (desktop OS + separate mobile shell).
 
-Folder: `IYS/` — routes `/`, `/showcase`, `/shop/*` and `/product/*`
+Folder: `IYS/` — routes `/`, `/shop`, `/collections/*`, `/search`, `/product/*`, `/favorites`, `/stores` and `/showcase`
 
 ---
 

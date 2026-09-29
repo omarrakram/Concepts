@@ -5,7 +5,68 @@ In Your Shoe's **public** website. No private, internal, unpublished or logged-i
 material is used. Nothing was invented to fill gaps: missing fields stay empty.
 
 <!-- catalogue:start -->
+### Catalogue snapshot
+
+| field | value |
+| --- | --- |
+| storefront | https://inyourshoe.com (Egyptian storefront — authoritative) |
+| market / currency | Egypt / EGP |
+| synced at | 2026-09-29T11:06:03.032Z |
+| public products (total) | 1,249 |
+| in IYS “All Products” collection | 1,224 |
+| public but outside All Products | 25 (black-zed-stars-sworts, black-zed-stars-wide-leg-swants, blue-future-stars-towel, breaking-brgr-hoodie, christmas-joy-fluffy-blanket, distorted-youth-dept-jersey, …) |
+| variants | 4,843 |
+| listed in sitemap but not public (404) | hot-wheels-pjoys |
+| source methods used | sitemap.xml, products.json, collection products.json |
+
+**Endpoints (public, read-only, sequential, ~4.5 s apart, 429/5xx retried with Retry-After/backoff):**
+
+- https://inyourshoe.com/sitemap.xml → unprefixed (Egyptian) product sitemaps only
+- https://inyourshoe.com/products.json?limit=250&page=N
+- https://inyourshoe.com/collections.json?limit=250 (collection titles)
+- https://inyourshoe.com/collections/<handle>/products.json — membership + order for 67 collections: all-products, newest, pjoys, fluffy-pjoys, kids-pjoys, kids-fluffy-pjoys, cairo, cereal-killer, women, men, unisex, all-kids-products, all-accessories, all-tops, all-bottoms, homewear, on-sale, best-sellers, hoodies, outwear, all-socks, hats-caps, bandanas, headbands, all-bags, inyourshoexzed, stripes, kids, neck-socks, fluffy-socks, caps, long-sleeves-and-polos, crewnecks, jackets-sweaters, t-shirts, jerseys, shirts, tops-vests, pants, jeans, sweatpants, shorts, boxer-pants, skirts, leggings, swimmies, denims, linens, the-vacation-edit, knitwear, sportswear, pshorts, pshirts, pantoufles, boxer-shorts, flowy-wraps, beach-towels, others, baby-tees-jerseys, shirts-polos, pants-jeans, shorts-jorts, all-dresses, womens-sets, bags-for-her, bundles, end-of-season-sale
+- https://inyourshoe.com/products/<handle>.js — fallback, and a 5-product EGP price cross-check
+- https://inyourshoe.com/products/<handle> JSON-LD — last-resort fallback
+- https://inyourshoe.com/pages/store-locations — store directory (`npm run sync-stores`)
+
+Every request sends the storefront’s own `localization=EG; cart_currency=EGP` cookies; the sync aborts unless the homepage reports `Shopify.currency.active = "EGP"`, and fails on duplicate handles, currency mismatches, international-market URLs, missing prices/images, or a >20% catalogue shrink.
 <!-- catalogue:end -->
+
+## Pages researched (public, 2026-09-29)
+
+| page | used for |
+| --- | --- |
+| https://inyourshoe.com/ | Egyptian market check (`Shopify.currency`), header navigation (which collections IYS surfaces), official lines, brand-kit colours, current logos, FW27 + IYS × ZED homepage banners, announcement bar |
+| https://inyourshoe.com/sitemap.xml and its Egyptian product/collection/page sitemaps | discovery of every public product handle and collection |
+| https://inyourshoe.com/collections/all-products | IYS’s own All Products membership (1,224 at snapshot) |
+| https://inyourshoe.com/collections/newest | “NEW STUFF” and the *Newest* sort (IYS’s own order) |
+| https://inyourshoe.com/collections/pjoys, /fluffy-pjoys | Pjoys counts and the Pjoy moment |
+| https://inyourshoe.com/collections/cairo | the C:\IYS\CAIRO\ folder |
+| https://inyourshoe.com/pages/store-locations | store names, address lines, opening hours, phone numbers, Maps links, store photos |
+| product pages (e.g. /products/cereal-killer-pjoys) | descriptions, the Pjoys definition line, spot-checks of price/variants/availability |
+
+## Official copy used (verified 2026-09-29)
+
+All official strings live in `src/data/copy.ts → official`; everything in
+`concept` is new copy for this unofficial concept and is never presented as IYS copy.
+
+| line | where it appears on inyourshoe.com |
+| --- | --- |
+| You’re about to make a Cool Decision! | scrolling marquee + footer |
+| The Coolest Apparel In Town! | homepage `<title>` |
+| Stand out, Express yourself! We put ourselves in your shoe, in style! :) | homepage meta description |
+| Join our cool list and receive a 10% OFF code for your 1st purchase! | footer newsletter block (no code is shown or invented) |
+| Same-day delivery available ⚡ | announcement bar (dated in the UI; volatile) |
+| Free Shipping +2,499 | announcement bar (dated in the UI; volatile) |
+| Pjoys are our terminology for pyjama pants that are super joyful, just like you reading this. | Pjoys product descriptions |
+
+## What is NOT used
+
+No reviews, star ratings or customer names (the guestbook says “NO ENTRIES
+LOADED”), no private stock data (the public `Online Out of Stock` tag is
+ignored — availability comes only from public variant data), no internal
+systems, no discount codes, no generated or retouched product photography.
+The “TIME TRAVELLERS” counter is labelled fictional and is not analytics.
 
 ## Local assets
 

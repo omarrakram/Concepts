@@ -270,7 +270,47 @@ async function main() {
   for (const [name, body] of Object.entries(out.shards)) writeFileSync(resolve(root, 'public/catalogue', name), body);
   writeFileSync(resolve(root, 'src/data/catalogue-index.json'), out.index);
   writeFileSync(metaFile, out.meta);
+  writeSourcesSection(meta, Object.keys(membership));
   log(`wrote ${products.length} products → src/data/catalogue-index.json (${kb(out.index)}), ${SHARD_COUNT} detail shards (${kb(Object.values(out.shards).join(''))} total), meta (${kb(out.meta)})`);
+}
+
+/** Regenerates the catalogue block of docs/SOURCES.md from the snapshot metadata. */
+function writeSourcesSection(meta, collections) {
+  const file = resolve(root, 'docs/SOURCES.md');
+  if (!existsSync(file)) return;
+  const fmt = (n) => new Intl.NumberFormat('en-US').format(n);
+  const block = [
+    `### Catalogue snapshot`,
+    '',
+    `| field | value |`,
+    `| --- | --- |`,
+    `| storefront | ${meta.storefront} (Egyptian storefront — authoritative) |`,
+    `| market / currency | ${meta.market} / ${meta.currency} |`,
+    `| synced at | ${meta.generatedAt} |`,
+    `| public products (total) | ${fmt(meta.publicProductsTotal)} |`,
+    `| in IYS “All Products” collection | ${fmt(meta.allProductsCollectionCount)} |`,
+    `| public but outside All Products | ${fmt(meta.productsOutsideAllProducts.count)} (${meta.productsOutsideAllProducts.handles.slice(0, 6).join(', ')}${meta.productsOutsideAllProducts.count > 6 ? ', …' : ''}) |`,
+    `| variants | ${fmt(meta.variantsTotal)} |`,
+    `| listed in sitemap but not public (404) | ${meta.sitemapNotPublic.length ? meta.sitemapNotPublic.join(', ') : 'none'} |`,
+    `| source methods used | ${meta.sourceMethods.join(', ')} |`,
+    '',
+    `**Endpoints (public, read-only, sequential, ~4.5 s apart, 429/5xx retried with Retry-After/backoff):**`,
+    '',
+    `- ${meta.storefront}/sitemap.xml → unprefixed (Egyptian) product sitemaps only`,
+    `- ${meta.storefront}/products.json?limit=250&page=N`,
+    `- ${meta.storefront}/collections.json?limit=250 (collection titles)`,
+    `- ${meta.storefront}/collections/<handle>/products.json — membership + order for ${collections.length} collections: ${collections.join(', ')}`,
+    `- ${meta.storefront}/products/<handle>.js — fallback, and a 5-product EGP price cross-check`,
+    `- ${meta.storefront}/products/<handle> JSON-LD — last-resort fallback`,
+    `- ${meta.storefront}/pages/store-locations — store directory (\`npm run sync-stores\`)`,
+    '',
+    `Every request sends the storefront’s own \`localization=EG; cart_currency=EGP\` cookies; the sync aborts unless the homepage reports \`Shopify.currency.active = "EGP"\`, and fails on duplicate handles, currency mismatches, international-market URLs, missing prices/images, or a >20% catalogue shrink.`,
+  ].join('\n');
+  const doc = readFileSync(file, 'utf8');
+  const start = '<!-- catalogue:start -->';
+  const end = '<!-- catalogue:end -->';
+  if (!doc.includes(start)) return;
+  writeFileSync(file, doc.replace(new RegExp(`${start}[\\s\\S]*${end}`), `${start}\n${block}\n${end}`));
 }
 
 const kb = (s) => `${(Buffer.byteLength(s) / 1024).toFixed(0)} KB`;

@@ -1,0 +1,49 @@
+# CI for the IYS INTERNET 2006 concept only. Other concept folders are untouched
+# and never trigger this workflow.
+name: IYS CI
+
+on:
+  push:
+    paths:
+      - 'IYS/**'
+      - '.github/workflows/iys-ci.yml'
+  pull_request:
+    paths:
+      - 'IYS/**'
+      - '.github/workflows/iys-ci.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: iys-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test-build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: IYS
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: IYS/package-lock.json
+      - run: npm ci
+      - name: Unit tests (Vitest — committed snapshot, no network)
+        run: npm test
+      - name: Type-check + production build
+        run: npm run build
+      - name: Install Chromium for Playwright
+        run: npx playwright install --with-deps chromium
+      - name: End-to-end + axe (Playwright)
+        run: npx playwright test
+      - if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-traces
+          path: IYS/test-results
+          retention-days: 7

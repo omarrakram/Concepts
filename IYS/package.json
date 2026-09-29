@@ -17,7 +17,8 @@
     "fetch-showcase-assets": "node scripts/fetch-showcase-assets.mjs",
     "record": "node scripts/record.mjs",
     "frames": "node scripts/frames.mjs",
-    "qa:screens": "node scripts/qa-screens.mjs"
+    "qa:screens": "node scripts/qa-screens.mjs",
+    "poster": "node scripts/poster.mjs"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",
