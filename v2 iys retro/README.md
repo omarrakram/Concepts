@@ -308,13 +308,28 @@ fictional).
 
 Repository `omarrakram/Concepts` · Branch `main` ·
 Root Directory `v2 iys retro` · Framework Vite · Install `npm ci` ·
-Build `npm run build` · Output `dist` · no environment variables.
+Build `npm run build` · Output `dist`.
 Create this as its own Vercel project; the original version keeps its own
 project and deployment.
 `vercel.json` rewrites every route to `index.html` (static files first), caches
 hashed assets immutably, serves `sw.js` and catalogue shards with revalidation,
 and sets `X-Robots-Tag: noindex` (plus `robots.txt`) so this unofficial concept
 never competes with inyourshoe.com in search. The normal build needs no network and no secrets.
+
+### Integrations (all in `src/config/integrations.ts`, four separate concerns)
+
+| Concern | Where | Vercel environment variable | If unset |
+| --- | --- | --- | --- |
+| **IYS MAIL** support email → `orders@inyourshoe.com` | `api/support-email.ts` (server-side, Resend REST API) | `RESEND_API_KEY` (secret), `SUPPORT_FROM_EMAIL` (a Resend-verified sender), optional `SUPPORT_TO_EMAIL` (defaults to `orders@inyourshoe.com`) | the endpoint answers 503 and IYS MAIL shows “MAIL NOT SENT :(” — never a fake success |
+| **IYS NEWSLETTER** signup | `src/lib/newsletter.ts` adapter | `VITE_NEWSLETTER_ENDPOINT` (public URL; POST `{ email }` → `{ ok: true }`) | honest “coming online soon” state; the `IYS10` code is revealed only after a confirmed signup |
+| **HELP › IYS Help & Support** (Odoo) | Help window | `VITE_ODOO_HELP_FORM_URL` | intentional “ODOO FORM PLACEHOLDER” |
+| **XCHANGE.EXE :) Exchanges / Refunds** (Odoo) | Exchange window | `VITE_ODOO_EXCHANGE_REFUND_FORM_URL` | intentional “Odoo form will load here” placeholder |
+
+Only `RESEND_API_KEY` is a secret, and it is read only by the server function.
+`VITE_*` values are public URLs baked into the client at build time. `/api/*`
+is excluded from the SPA rewrite and from the service-worker navigation
+fallback. Desktop icon positions are stored only in this browser under
+`iys2000sv2.desktopIcons`.
 
 ## Scripts
 

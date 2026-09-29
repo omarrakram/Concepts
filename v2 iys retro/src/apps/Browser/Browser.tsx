@@ -1,10 +1,12 @@
 import { lazy, Suspense, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import type { MenuDef } from '../../components/os/MenuBar';
 import { Navigate, Route, Routes, useLocation, useNavigate, useNavigationType, useParams } from 'react-router';
 import { Icon } from '../../components/os/Icon';
 import { Window } from '../../components/os/Window';
 import { collectionPath, fakeAddress } from '../../lib/useBrowse';
 import { play } from '../../lib/sound';
 import { useCart, itemCount } from '../../state/cart';
+import { useFavorites } from '../../state/favorites';
 import { useOS, type Win } from '../../state/os';
 import { useBrowserStatus } from '../../state/status';
 import { PageLoading } from '../../components/shop/PageLoading';
@@ -71,6 +73,92 @@ export default function Browser({ win }: { win: Win }) {
     play('click');
     navigate(to);
   };
+  const refresh = () => {
+    setReloadKey((k) => k + 1);
+    useBrowserStatus.getState().set('Refreshing...', true);
+    window.setTimeout(() => useBrowserStatus.getState().set('Done.'), 250);
+  };
+  const findInIys = () => {
+    if (location.pathname !== '/search') navigate('/search');
+    // The Search page is lazy-loaded: wait (max 3 s) for its field, then focus it.
+    const until = performance.now() + 3000;
+    const tryFocus = () => {
+      const el = document.getElementById('iys-search');
+      if (el) el.focus();
+      else if (performance.now() < until) requestAnimationFrame(tryFocus);
+    };
+    requestAnimationFrame(tryFocus);
+  };
+  const copyAddress = async () => {
+    try {
+      await navigator.clipboard.writeText(address);
+      useBrowserStatus.getState().set('Address copied :)');
+    } catch {
+      useBrowserStatus.getState().set('Could not copy the address :(');
+    }
+  };
+  const productHandle = /^\/product\/([^/]+)/.exec(location.pathname)?.[1] ?? null;
+  const product = productHandle ? cat?.byHandle.get(productHandle) ?? null : null;
+  const isFav = useFavorites((st) => (productHandle ? st.handles.includes(productHandle) : false));
+  const menus: MenuDef[] = [
+    {
+      label: 'File',
+      items: [
+        { label: 'Open Home', run: () => go('/') },
+        { label: 'Open Real IYS Website', run: () => window.open('https://inyourshoe.com/', '_blank', 'noopener,noreferrer') },
+        { label: 'Close IYS Internet', separator: true, run: () => useOS.getState().close(win.id) },
+      ],
+    },
+    {
+      label: 'Edit',
+      items: [
+        { label: 'Find / Search IYS...', run: findInIys },
+        { label: 'Copy Current Address', run: () => void copyAddress() },
+      ],
+    },
+    {
+      label: 'View',
+      items: [
+        { label: 'Refresh', run: refresh },
+        { label: 'Home', run: () => go('/') },
+        { label: 'Back', separator: true, disabled: !canBack, run: () => navigate(-1) },
+        { label: 'Forward', disabled: !canForward, run: () => navigate(1) },
+      ],
+    },
+    {
+      label: 'Favorites',
+      items: [
+        { label: 'Open Favorites', run: () => go('/favorites') },
+        ...(product
+          ? [
+              {
+                label: isFav ? 'Remove Current Item from Favorites' : 'Add Current Item to Favorites',
+                separator: true,
+                run: () => {
+                  const on = useFavorites.getState().toggle(product.handle);
+                  useBrowserStatus.getState().set(on ? `Added ${product.title} to Favorites.` : `Removed ${product.title} from Favorites.`);
+                },
+              },
+            ]
+          : []),
+      ],
+    },
+    {
+      label: 'Tools',
+      items: [
+        { label: 'My Bag', run: () => useOS.getState().open('bag') },
+        { label: 'Control Panel', run: () => useOS.getState().open('control') },
+        { label: 'Stores', run: () => go('/stores') },
+      ],
+    },
+    {
+      label: 'Help',
+      items: [
+        { label: 'IYS Help & Support', run: () => useOS.getState().open('help') },
+        { label: 'About IYS Internet', separator: true, run: () => useOS.getState().open('readme') },
+      ],
+    },
+  ];
 
   const submitAddress = (e: React.FormEvent) => {
     e.preventDefault();
@@ -88,7 +176,7 @@ export default function Browser({ win }: { win: Win }) {
     <Window
       win={win}
       icon="internet"
-      menubar={['File', 'Edit', 'View', 'Favorites', 'Tools', 'Help']}
+      menus={menus}
       label={pageTitle}
       statusbar={
         <div className="statusbar">
@@ -122,11 +210,7 @@ export default function Browser({ win }: { win: Win }) {
           <button
             type="button"
             className="btn btn--tool tool"
-            onClick={() => {
-              setReloadKey((k) => k + 1);
-              useBrowserStatus.getState().set('Refreshing...', true);
-              window.setTimeout(() => useBrowserStatus.getState().set('Done.'), 250);
-            }}
+            onClick={refresh}
             aria-label="Refresh"
             title="Refresh"
           >

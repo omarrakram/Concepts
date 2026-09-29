@@ -11,7 +11,10 @@ export type AppId =
   | 'control'
   | 'mail'
   | 'readme'
-  | 'recycle';
+  | 'recycle'
+  | 'newsletter'
+  | 'help'
+  | 'exchange';
 
 export interface Rect {
   x: number;
@@ -59,9 +62,12 @@ export function defaultRect(app: AppId, desk: { w: number; h: number }, stack: n
     viewer: [Math.min(760, desk.w * 0.56), Math.min(640, desk.h * 0.9)],
     bag: [400, Math.min(540, desk.h * 0.8)],
     control: [520, Math.min(520, desk.h * 0.82)],
-    mail: [460, 420],
+    mail: [500, 500],
     readme: [420, 320],
     recycle: [460, 360],
+    newsletter: [440, 380],
+    help: [Math.min(720, desk.w * 0.6), Math.min(560, desk.h * 0.8)],
+    exchange: [Math.min(720, desk.w * 0.6), Math.min(560, desk.h * 0.8)],
   };
   const [w0, h0] = sizes[app];
   const w = Math.round(Math.min(w0, desk.w - 16));
@@ -125,6 +131,9 @@ export const TITLES: Record<AppId, string> = {
   mail: 'IYS MAIL',
   readme: 'README.TXT - Notepad',
   recycle: 'RECYCLE BIN',
+  newsletter: 'IYS NEWSLETTER',
+  help: 'IYS HELP & SUPPORT',
+  exchange: 'XCHANGE.EXE :) — EXCHANGES / REFUNDS FORM',
 };
 
 const topActive = (windows: Win[]) =>

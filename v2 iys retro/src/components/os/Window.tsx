@@ -5,6 +5,7 @@ import { play } from '../../lib/sound';
 import { prefersReducedMotion } from '../../lib/motion';
 import { useOS, type Win } from '../../state/os';
 import { Icon, type IconName } from './Icon';
+import { MenuBar, type MenuDef } from './MenuBar';
 
 const MIN: Record<string, [number, number]> = {
   internet: [420, 320],
@@ -22,6 +23,7 @@ export function Window({
   icon,
   children,
   menubar,
+  menus,
   statusbar,
   resizable = true,
   label,
@@ -29,7 +31,10 @@ export function Window({
   win: Win;
   icon: IconName;
   children: ReactNode;
+  /** Decorative period menu labels. */
   menubar?: string[];
+  /** Interactive menus (take precedence over `menubar`). */
+  menus?: MenuDef[];
   statusbar?: ReactNode;
   resizable?: boolean;
   /** Accessible name when the visible title is decorative. */
@@ -159,7 +164,9 @@ export function Window({
             </button>
           </div>
         </div>
-        {menubar && (
+        {menus ? (
+          <MenuBar menus={menus} label={`${win.title} menu`} />
+        ) : menubar && (
           <div className="win__menubar" aria-hidden="true">
             {menubar.map((m) => (
               <span key={m}>

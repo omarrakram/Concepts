@@ -17,6 +17,7 @@ export default function NotFound() {
           <div>
             <h1>{concept.notFound.line}</h1>
             <p>It may have been moved, sold out of the snapshot, or never existed.</p>
+            <p className="catchy">{concept.catchy.notFound}</p>
           </div>
         </div>
         <div className="errbox__actions">

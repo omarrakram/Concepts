@@ -82,6 +82,17 @@
     1px 1px 1px #000,
     0 0 3px rgba(0, 0, 0, 0.6);
 }
+.dicon {
+  /* movable like a real desktop: pointer drags, no text selection / touch scroll */
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.dicon.is-dragging {
+  position: relative;
+  z-index: 2;
+  cursor: grabbing;
+}
 .dicon__img {
   display: grid;
   place-items: center;
@@ -271,6 +282,34 @@
 .win__menubar span {
   padding: 2px 7px;
   color: var(--ink-2);
+}
+/* Interactive menu bar (IYS INTERNET): same look, real dropdowns. */
+.menubar__item {
+  position: relative;
+}
+.menubar__top {
+  padding: 2px 7px;
+  border: 1px solid transparent;
+  background: none;
+  color: var(--ink-2);
+  font: inherit;
+}
+.menubar__top:hover,
+.menubar__top[aria-expanded='true'],
+.menubar__top:focus-visible {
+  outline: none;
+  background: var(--selection);
+  color: #fff;
+}
+.menubar .menubar__drop {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 20;
+}
+.menubar__drop button:disabled {
+  color: #9b988f;
+  background: none;
 }
 .win__body {
   position: relative;

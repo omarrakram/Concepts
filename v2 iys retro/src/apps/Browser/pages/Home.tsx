@@ -20,7 +20,7 @@ function Img({ p, local = true, size = 240 }: { p: Product; local?: boolean; siz
   return li ? (
     <img src={li.src} alt="" width={li.width} height={li.height} loading="lazy" decoding="async" />
   ) : (
-    <RemoteImage src={p.image} alt="" title={p.title} width={p.imageWidth} height={p.imageHeight} base={size} sizes={`${size / 2}px`} />
+    <RemoteImage src={p.image} alt="" title={p.title} width={p.imageWidth} height={p.imageHeight} base={size} sizes={`${Math.round(size * 0.6)}px`} />
   );
 }
 
@@ -158,7 +158,9 @@ export default function Home() {
               {newest.map((p) => (
                 <li key={p.handle}>
                   <Link to={productPath(p.handle)}>
-                    <Img p={p} local={false} size={240} />
+                    <span className="strip__media">
+                      <Img p={p} local={false} size={240} />
+                    </span>
                     <span>{p.title}</span>
                   </Link>
                   <Price price={p.price} compareAt={p.compareAtPrice} />
@@ -181,7 +183,9 @@ export default function Home() {
               {pjoys.slice(0, 6).map((p) => (
                 <li key={p.handle}>
                   <Link to={productPath(p.handle)}>
-                    <Img p={p} size={240} />
+                    <span className="strip__media">
+                      <Img p={p} size={240} />
+                    </span>
                     <span>{p.title}</span>
                   </Link>
                 </li>
@@ -200,7 +204,9 @@ export default function Home() {
               {cairo.map((p) => (
                 <li key={p.handle}>
                   <Link to={productPath(p.handle)}>
-                    <Img p={p} size={240} />
+                    <span className="strip__media">
+                      <Img p={p} size={240} />
+                    </span>
                     <span>{p.title}</span>
                   </Link>
                   <Price price={p.price} compareAt={p.compareAtPrice} />
@@ -249,13 +255,13 @@ export default function Home() {
             </p>
           </section>
           <section className="box">
-            <h2 className="box__title">IYS MAIL</h2>
+            <h2 className="box__title">IYS NEWSLETTER</h2>
             <p className="box__text">
               <b>{concept.y2k.newsletterTitle}</b>
             </p>
             <p className="box__text">{official.coolList}</p>
-            <button type="button" className="btn btn--go btn--small" onClick={() => useOS.getState().open('mail')}>
-              <Icon name="mail" size={16} /> {concept.y2k.newsletterCta}
+            <button type="button" className="btn btn--go btn--small" onClick={() => useOS.getState().open('newsletter')}>
+              <Icon name="newsletter" size={16} /> {concept.y2k.newsletterCta}
             </button>
           </section>
           <section className="box">
@@ -284,6 +290,7 @@ export default function Home() {
         <p className="muted">
           Catalogue snapshot: {formatCount(cat.products.length)} public products, EGP, {cat.generatedAt.slice(0, 10)}. Best viewed in IYS INTERNET at 1024×768 or higher.
         </p>
+        <p className="catchy">{concept.catchy.footer}</p>
       </footer>
     </div>
   );

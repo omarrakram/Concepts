@@ -19,6 +19,9 @@ export const APP_ICONS: Record<AppId, IconName> = {
   mail: 'mail',
   readme: 'txt',
   recycle: 'recycle',
+  newsletter: 'newsletter',
+  help: 'help',
+  exchange: 'exchange',
 };
 
 function Clock() {

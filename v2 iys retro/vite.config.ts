@@ -33,7 +33,7 @@ export default defineConfig({
         globIgnores: ['**/catalogue/**', 'assets/Showcase-*'],
         maximumFileSizeToCacheInBytes: 1_500_000,
         navigateFallback: '/index.html',
-        navigateFallbackDenylist: [/^\/iys\//, /^\/catalogue\//, /^\/assets\//, /^\/_vercel\//],
+        navigateFallbackDenylist: [/^\/iys\//, /^\/catalogue\//, /^\/assets\//, /^\/_vercel\//, /^\/api\//],
         cleanupOutdatedCaches: true,
         clientsClaim: true,
         skipWaiting: true,

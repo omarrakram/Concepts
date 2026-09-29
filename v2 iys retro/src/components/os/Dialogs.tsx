@@ -2,6 +2,7 @@ import { concept, official } from '../../data/copy';
 import { useBrowse, productPath } from '../../lib/useBrowse';
 import { useOS } from '../../state/os';
 import { usePreferences, useSession } from '../../state/preferences';
+import { useIconPositions } from '../../state/icons';
 import { SystemDialog } from './SystemDialog';
 
 /** The single place system dialogs are rendered (never stacked). */
@@ -129,6 +130,7 @@ export function Dialogs() {
                   close();
                   closeAll();
                   usePreferences.getState().reset();
+                  useIconPositions.getState().reset();
                   notify('DESKTOP RESET.');
                   open('control');
                 }}

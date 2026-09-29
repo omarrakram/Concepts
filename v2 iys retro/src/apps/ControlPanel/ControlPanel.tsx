@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Icon } from '../../components/os/Icon';
 import { Window } from '../../components/os/Window';
 import { brand, WALLPAPERS } from '../../data/assets';
@@ -17,9 +17,17 @@ export default function ControlPanel({ win }: { win: Win }) {
   const [tab, setTab] = useState<Tab>((win.props.tab as Tab) ?? 'Wallpaper');
   const prefs = usePreferences();
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
-  const currentId = prefs.wallpaper.kind === 'preset' ? prefs.wallpaper.id : 'custom';
+  // A saved preset id that no longer exists falls back to the default (as the desktop does).
+  const wp = prefs.wallpaper;
+  const currentId = wp.kind === 'preset' ? (WALLPAPERS.some((w) => w.id === wp.id) ? wp.id : WALLPAPERS[0]!.id) : 'custom';
+  const customSrc = prefs.wallpaper.kind === 'image' ? prefs.wallpaper.src : null;
   const [choice, setChoice] = useState(currentId);
   const [mode, setMode] = useState<WallpaperMode>(prefs.wallpaperMode);
+  // Keep the selection in step with the real wallpaper (e.g. “Set as Wallpaper” while this window is open).
+  useEffect(() => {
+    setChoice(currentId);
+    setMode(prefs.wallpaperMode);
+  }, [currentId, customSrc, prefs.wallpaperMode]);
   const preview = choice === 'custom' && prefs.wallpaper.kind === 'image' ? prefs.wallpaper.src : WALLPAPERS.find((w) => w.id === choice)?.src ?? null;
 
   const onTabKey = (e: React.KeyboardEvent, i: number) => {
@@ -34,7 +42,7 @@ export default function ControlPanel({ win }: { win: Win }) {
   const apply = () => {
     if (choice === 'custom') prefs.setWallpaperMode(mode);
     else {
-      const preset = WALLPAPERS.find((w) => w.id === choice)!;
+      const preset = WALLPAPERS.find((w) => w.id === choice) ?? WALLPAPERS[0]!;
       prefs.setWallpaper({ kind: 'preset', id: preset.id }, preset.mode);
     }
     useOS.getState().notify(concept.wallpaperUpdated);

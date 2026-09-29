@@ -63,7 +63,9 @@ export function StartMenu() {
     { label: 'IYS MESSENGER', icon: 'messenger', sub: 'Who’s online', act: () => app('messenger') },
     { label: 'IYS CAMERA', icon: 'camera', sub: 'DCIM photos', act: () => app('camera') },
     { label: 'MY WARDROBE', icon: 'wardrobe', sub: 'Browse by folder', act: () => app('wardrobe') },
-    { label: 'IYS MAIL', icon: 'mail', sub: 'The cool list', act: () => app('mail') },
+    { label: 'IYS MAIL', icon: 'mail', sub: 'Support · orders@', act: () => app('mail') },
+    { label: 'IYS NEWSLETTER', icon: 'newsletter', sub: 'Cool list · 10% off', act: () => app('newsletter') },
+    { label: 'XCHANGE.EXE :)', icon: 'exchange', sub: 'Exchanges / refunds', act: () => app('exchange') },
     { label: 'CONTROL PANEL', icon: 'control', sub: 'Sound, CRT, wallpaper', act: () => app('control') },
   ];
 

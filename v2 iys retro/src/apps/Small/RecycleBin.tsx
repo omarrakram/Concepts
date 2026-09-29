@@ -27,6 +27,7 @@ export default function RecycleBin({ win }: { win: Win }) {
           </li>
         </ul>
         <p className="explorer__note">{concept.recycle.empty}</p>
+        <p className="catchy">{concept.catchy.recycle}</p>
       </div>
     </Window>
   );
