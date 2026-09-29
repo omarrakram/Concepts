@@ -109,10 +109,10 @@ export const WARDROBE: Folder[] = [
  * `opener` lines are concept copy.
  */
 export const BUDDIES: { id: string; name: string; collection: string; status: 'online' | 'away' | 'busy'; mood: string; opener: string }[] = [
-  { id: 'pjoys', name: 'PJOYS', collection: 'pjoys', status: 'online', mood: 'sleepover mode', opener: 'u awake?' },
-  { id: 'new', name: 'NEW STUFF', collection: 'newest', status: 'online', mood: 'just dropped', opener: 'new stuff just landed. look.' },
-  { id: 'cairo', name: 'CAIRO', collection: 'cairo', status: 'online', mood: 'Cairo is a mindset', opener: 'ahlan. sending u the whole city.' },
-  { id: 'hoodies', name: 'HOODIES', collection: 'hoodies', status: 'away', mood: 'brb, getting cozy', opener: 'it’s getting cold. just saying.' },
-  { id: 'accessories', name: 'ACCESSORIES', collection: 'all-accessories', status: 'busy', mood: 'finishing the fit', opener: 'your outfit is missing something.' },
-  { id: 'kids', name: 'IYS KIDS', collection: 'all-kids-products', status: 'away', mood: 'past bedtime', opener: 'mini sizes, same cool decisions.' },
+  { id: 'pjoys', name: 'PJOYS', collection: 'pjoys', status: 'online', mood: 'sleeepover rn lol', opener: 'u awake?' },
+  { id: 'new', name: 'NEW STUFF', collection: 'newest', status: 'online', mood: 'omg new drop!! XD', opener: 'omggg new stuff just landed. look :)' },
+  { id: 'cairo', name: 'CAIRO', collection: 'cairo', status: 'online', mood: 'cairo 4ever <3', opener: 'ahlan!! sending u the whole city xD' },
+  { id: 'hoodies', name: 'HOODIES', collection: 'hoodies', status: 'away', mood: 'brb gettin cozy', opener: 'its gettin cold 2nite... just sayin ;)' },
+  { id: 'accessories', name: 'ACCESSORIES', collection: 'all-accessories', status: 'busy', mood: 'fixing ur fit ;)', opener: 'ur outfit is missing sth. trust me lol' },
+  { id: 'kids', name: 'IYS KIDS', collection: 'all-kids-products', status: 'away', mood: 'past bedtime lol', opener: 'mini sizes, same cool decisions :P' },
 ];

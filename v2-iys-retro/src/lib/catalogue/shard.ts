@@ -1,3 +1,4 @@
+import { noEmDash } from './format';
 import type { ProductDetail } from './types';
 
 /** FNV-1a 32-bit — must match scripts/lib/outputs.mjs `shardOf`. */
@@ -21,7 +22,8 @@ export async function loadDetail(handle: string, shardCount: number): Promise<Pr
   if (!p) {
     p = fetch(shardUrl(n)).then((r) => {
       if (!r.ok) throw new Error(`catalogue shard ${n}: ${r.status}`);
-      return r.json() as Promise<Record<string, ProductDetail>>;
+      // Normalise every string in the shard for display (no em dashes); the JSON file stays as synced.
+      return r.text().then((t) => JSON.parse(noEmDash(t)) as Record<string, ProductDetail>);
     });
     p.catch(() => shards.delete(n));
     shards.set(n, p);

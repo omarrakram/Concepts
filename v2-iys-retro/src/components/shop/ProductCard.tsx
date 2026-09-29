@@ -72,7 +72,7 @@ export const ProductCard = memo(function ProductCard({ p, eager }: { p: Product;
               {p.sizes.map((s) => (
                 <option key={s.label} value={s.label} disabled={!s.available}>
                   {s.label}
-                  {s.available ? '' : ' — sold out'}
+                  {s.available ? '' : ' - sold out'}
                 </option>
               ))}
             </select>

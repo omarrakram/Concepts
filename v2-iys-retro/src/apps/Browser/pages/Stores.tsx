@@ -20,7 +20,7 @@ export default function Stores() {
           <a href={officialSources.stores} target="_blank" rel="noopener noreferrer">
             inyourshoe.com/pages/store-locations
           </a>{' '}
-          ({storesData.generatedAt.slice(0, 10)}). Hours and phone numbers can change — check before you go.
+          ({storesData.generatedAt.slice(0, 10)}). Hours and phone numbers can change - check before you go.
         </p>
       </header>
       <table className="dirtable">
@@ -41,11 +41,11 @@ export default function Stores() {
               <tr key={s.name}>
                 <td className="dirtable__photo">
                   {photo ? (
-                    <button type="button" className="thumbbtn" aria-label={`View photo of ${s.name} store`} onClick={() => openViewer([{ src: photo.src, full: photo.src, title: `IN YOUR SHOE — ${s.name}`, filename: `${s.name.replace(/\W+/g, '_').toUpperCase()}.JPG`, alt: `In Your Shoe store, ${s.name}`, sourceUrl: officialSources.stores, width: photo.width, height: photo.height }])}>
+                    <button type="button" className="thumbbtn" aria-label={`View photo of ${s.name} store`} onClick={() => openViewer([{ src: photo.src, full: photo.src, title: `IN YOUR SHOE - ${s.name}`, filename: `${s.name.replace(/\W+/g, '_').toUpperCase()}.JPG`, alt: `In Your Shoe store, ${s.name}`, sourceUrl: officialSources.stores, width: photo.width, height: photo.height }])}>
                       <img src={photo.src} alt="" width={96} height={72} loading="lazy" decoding="async" />
                     </button>
                   ) : (
-                    '—'
+                    '-'
                   )}
                 </td>
                 <th scope="row">{s.name}</th>

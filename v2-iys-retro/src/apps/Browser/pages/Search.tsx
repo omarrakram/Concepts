@@ -88,7 +88,7 @@ export default function Search() {
                     <p className="result__url">www.inyourshoe.com/products/{p.handle}</p>
                     <p className="result__text">
                       <Price price={p.price} compareAt={p.compareAtPrice} />
-                      {' — '}
+                      {' - '}
                       {[p.productType, p.available === false ? 'Out of stock' : null, p.sizes.length ? `Sizes ${p.sizes.map((s) => s.label).join(', ')}` : null].filter(Boolean).join(' · ')}
                     </p>
                   </div>

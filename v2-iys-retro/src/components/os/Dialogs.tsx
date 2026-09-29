@@ -112,6 +112,23 @@ export function Dialogs() {
           <p className="dialog__big">{dialog.message}</p>
         </SystemDialog>
       );
+    case 'info':
+      return (
+        <SystemDialog
+          title={dialog.title}
+          icon="info"
+          onCancel={close}
+          actions={
+            <button type="button" className="btn btn--primary" data-autofocus onClick={close}>
+              OK
+            </button>
+          }
+        >
+          {dialog.lines.map((l) => (
+            <p key={l}>{l}</p>
+          ))}
+        </SystemDialog>
+      );
     case 'confirm-reset':
       return (
         <SystemDialog

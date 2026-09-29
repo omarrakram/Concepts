@@ -95,12 +95,12 @@ export function TransferDialog() {
         </p>
         <p className="transfer__name">
           {item.title}
-          {item.variant ? ` — ${item.variant}` : ''}
+          {item.variant ? ` - ${item.variant}` : ''}
         </p>
         <div className="progress" style={{ ['--p' as string]: `${pct}%` }} ref={bar}>
           <div className="progress__bar" />
         </div>
-        <p className="transfer__pct">{complete ? `100% — ${concept.itemAdded}` : `${pct}%`}</p>
+        <p className="transfer__pct">{complete ? `100% - ${concept.itemAdded}` : `${pct}%`}</p>
       </div>
     </div>
   );

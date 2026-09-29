@@ -61,7 +61,7 @@ export default function Home() {
           <p className="portal__sub">{official.coolestApparel}</p>
         </div>
       </header>
-      <div className="portal__announce" title={`Announcement bar on inyourshoe.com, ${OFFICIAL_VERIFIED_ON}. Offers change — check the real site.`}>
+      <div className="portal__announce" title={`Announcement bar on inyourshoe.com, ${OFFICIAL_VERIFIED_ON}. Offers change - check the real site.`}>
         <span>{official.sameDay}</span>
         <span>{official.freeShipping} EGP</span>
         <span className="portal__announce-note">as announced on inyourshoe.com · {OFFICIAL_VERIFIED_ON}</span>
@@ -124,7 +124,7 @@ export default function Home() {
                 <img src={fw.src} alt="In Your Shoe FW27 campaign: two models in brown hoodies beside old computers" width={fw.width} height={fw.height} />
               </button>
               <figcaption>
-                <b>FW27</b> — the current IYS campaign (2026), loaded into a 2006 browser.
+                <b>FW27</b> - the current IYS campaign (2026), loaded into a 2006 browser.
               </figcaption>
             </figure>
           )}
@@ -177,7 +177,7 @@ export default function Home() {
               <Icon name="pjoys" size={24} /> {formatCount(pjoys.length)} PJOYS ONLINE
             </h2>
             <p className="box__text">
-              <q>{official.pjoys}</q> <small className="muted">— IYS product description</small>
+              <q>{official.pjoys}</q> <small className="muted">- IYS product description</small>
             </p>
             <ul className="strip strip--tight">
               {pjoys.slice(0, 6).map((p) => (
@@ -224,7 +224,7 @@ export default function Home() {
                 <img src={zed.src} alt="IYS × ZED campaign: green lockers with stickers" width={zed.width} height={zed.height} loading="lazy" />
               </button>
               <figcaption>
-                <b>IYS × ZED</b> — current collaboration on inyourshoe.com. <Link to="/collections/inyourshoexzed">{formatCount(cat.collections.get('inyourshoexzed')?.count ?? 0)} items ›</Link>
+                <b>IYS × ZED</b> - current collaboration on inyourshoe.com. <Link to="/collections/inyourshoexzed">{formatCount(cat.collections.get('inyourshoexzed')?.count ?? 0)} items ›</Link>
               </figcaption>
             </figure>
           )}

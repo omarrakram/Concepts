@@ -20,3 +20,10 @@ export function decorativeFilename(title: string, ext = 'jpg'): string {
 }
 
 export const plural = (n: number, one: string, many = `${one}s`) => `${formatCount(n)} ${n === 1 ? one : many}`;
+
+/**
+ * Display-time normalisation: the concept shows no em dashes (U+2014), so any
+ * that arrive in synced/generated data are rendered as " - ". Source data files
+ * are left exactly as synced.
+ */
+export const noEmDash = (s: string) => s.replace(/\s*\u2014\s*/g, ' - ');

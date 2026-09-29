@@ -1,4 +1,5 @@
 import raw from './assets.generated.json';
+import { noEmDash } from '../lib/catalogue/format';
 import curationRaw from './curation.json';
 import type { Catalogue, Product } from '../lib/catalogue/types';
 
@@ -23,7 +24,8 @@ interface Manifest {
 }
 
 /** Locally cached official imagery (see docs/SOURCES.md). */
-export const assets = raw as unknown as Manifest;
+/** Titles are shown in the UI, so em dashes are normalised at load (the JSON stays as generated). */
+export const assets = JSON.parse(noEmDash(JSON.stringify(raw))) as Manifest;
 export const brand = assets.brand;
 
 export const campaign = (id: string) => assets.campaign.find((c) => c.id === id) ?? null;
@@ -58,10 +60,11 @@ const fw1 = campaign('fw27-1');
 const zed = campaign('zed-1');
 
 export const WALLPAPERS: WallpaperPreset[] = [
-  { id: 'fw27', label: 'IYS FW27 (Default)', src: fw2?.src ?? null, mode: 'stretch', sourceUrl: fw2?.sourceUrl },
-  { id: 'hills', label: 'IYS Hills — Y2K sky (original drawing)', src: '/iys/os/hills.svg', mode: 'stretch' },
-  { id: 'fw27-stack', label: 'IYS FW27 — The Stack', src: fw1?.src ?? null, mode: 'stretch', sourceUrl: fw1?.sourceUrl },
+  // First entry = the default (and the fallback for any unknown saved id); must match DEFAULT_WALLPAPER.
+  { id: 'hills', label: 'IYS Hills - Y2K sky (Default)', src: '/iys/os/hills.svg', mode: 'stretch' },
+  { id: 'fw27', label: 'IYS FW27', src: fw2?.src ?? null, mode: 'stretch', sourceUrl: fw2?.sourceUrl },
+  { id: 'fw27-stack', label: 'IYS FW27 - The Stack', src: fw1?.src ?? null, mode: 'stretch', sourceUrl: fw1?.sourceUrl },
   { id: 'zed', label: 'IYS × ZED', src: zed?.src ?? null, mode: 'stretch', sourceUrl: zed?.sourceUrl },
   ...assets.tiles.map((t) => ({ id: `tile-${t.handle}`, label: `${t.title} (pattern)`, src: t.src, mode: 'tile' as const, sourceUrl: t.sourceUrl })),
-  { id: 'blue', label: '(None) — IYS Blue', src: null, mode: 'center' },
+  { id: 'blue', label: '(None) - IYS Blue', src: null, mode: 'center' },
 ];

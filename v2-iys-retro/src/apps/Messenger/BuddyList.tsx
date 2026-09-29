@@ -2,25 +2,31 @@ import { useState } from 'react';
 import { Icon } from '../../components/os/Icon';
 import { Window } from '../../components/os/Window';
 import { brand } from '../../data/assets';
+import { concept } from '../../data/copy';
 import { BUDDIES } from '../../data/taxonomy';
 import { formatCount } from '../../lib/catalogue/format';
 import { useCatalogue } from '../../lib/catalogue/load';
 import { useOS, type Win } from '../../state/os';
+import { openChat, useMessengerMenus } from './menus';
 
-export function openChat(id: string, name: string) {
-  useOS.getState().open('chat', { id: `chat-${id}`, title: `${name} - Conversation`, props: { buddy: id } });
-}
+export { openChat } from './menus';
 
 export default function BuddyList({ win }: { win: Win }) {
   const cat = useCatalogue();
   const [me, setMe] = useState<'online' | 'away' | 'busy'>('online');
   const buddies = BUDDIES.filter((b) => !cat || (cat.collections.get(b.collection)?.count ?? 0) > 0);
   const online = buddies.filter((b) => b.status !== 'busy').length;
+  // Context for Actions: the most recently focused open conversation, if any.
+  const activeBuddy = useOS((s) => {
+    const top = s.windows.filter((w) => w.app === 'chat').reduce<Win | null>((a, w) => (!a || w.z > a.z ? w : a), null);
+    return top ? String(top.props.buddy ?? '') || null : null;
+  });
+  const menus = useMessengerMenus(win, activeBuddy);
   return (
     <Window
       win={win}
       icon="messenger"
-      menubar={['File', 'Contacts', 'Actions', 'Help']}
+      menus={menus}
       statusbar={
         <div className="statusbar">
           <span className="grow">{buddies.length} contacts</span>
@@ -42,7 +48,7 @@ export default function BuddyList({ win }: { win: Win }) {
                 <option value="busy">you (Busy)</option>
               </select>
             </label>
-            <p className="im__pm">&lt;making cool decisions&gt;</p>
+            <p className="im__pm">{concept.messenger.myMood}</p>
           </div>
         </div>
         <p className="im__group">

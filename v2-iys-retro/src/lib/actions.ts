@@ -25,9 +25,9 @@ export function openViewer(images: ViewerImage[], index = 0, opts: { title?: str
   });
 }
 
-export function setWallpaperImage(img: { src: string; title: string; sourceUrl?: string }, mode?: WallpaperMode) {
-  const landscape = /\/campaign\//.test(img.src) || /\/stores\//.test(img.src);
-  usePreferences.getState().setWallpaper({ kind: 'image', src: img.src, title: img.title, sourceUrl: img.sourceUrl }, mode ?? (landscape ? 'stretch' : 'center'));
+/** A newly chosen photo always starts in Stretch (= full-desktop cover, no distortion); patterns pass 'tile'. */
+export function setWallpaperImage(img: { src: string; title: string; sourceUrl?: string }, mode: WallpaperMode = 'stretch') {
+  usePreferences.getState().setWallpaper({ kind: 'image', src: img.src, title: img.title, sourceUrl: img.sourceUrl }, mode);
   useOS.getState().notify(concept.wallpaperUpdated);
   play('done');
 }

@@ -4,6 +4,7 @@ import { Window } from '../../components/os/Window';
 import { Price } from '../../components/shop/Price';
 import { RemoteImage } from '../../components/shop/RemoteImage';
 import { assets, brand } from '../../data/assets';
+import { concept } from '../../data/copy';
 import { BUDDIES } from '../../data/taxonomy';
 import { setWallpaperImage, openViewer } from '../../lib/actions';
 import { useCatalogue } from '../../lib/catalogue/load';
@@ -13,6 +14,7 @@ import { play } from '../../lib/sound';
 import { collectionPath, productPath, useBrowse } from '../../lib/useBrowse';
 import { useFavorites } from '../../state/favorites';
 import type { Win } from '../../state/os';
+import { useMessengerMenus } from './menus';
 
 function FileCard({ ev, from, onOpen }: { ev: Extract<ChatEvent, { t: 'file' }>; from: string; onOpen: () => void }) {
   const [pct, setPct] = useState(prefersReducedMotion() ? 100 : 0);
@@ -108,16 +110,18 @@ export default function Chat({ win }: { win: Win }) {
     const text = draft.trim();
     if (!text) return;
     setDraft('');
-    setMine((m) => [...m, { text }, ...(m.some((x) => x.auto) ? [] : [{ text: `${buddy.name} is away from the keyboard. Auto-reply: the whole collection is open in IYS INTERNET →`, auto: true }])]);
+    setMine((m) => [...m, { text }, ...(m.some((x) => x.auto) ? [] : [{ text: concept.messenger.autoReply(buddy.name), auto: true }])]);
   };
 
   const events = script.slice(0, shown);
+  const lastFile = [...events].reverse().find((ev): ev is Extract<ChatEvent, { t: 'file' }> => ev.t === 'file');
+  const menus = useMessengerMenus(win, buddyId, lastFile?.product ?? null);
   const dp = cam[frame];
   return (
     <Window
       win={win}
       icon="messenger"
-      menubar={['File', 'Edit', 'Actions', 'Help']}
+      menus={menus}
       statusbar={
         <div className="statusbar">
           <span className="grow">{typing ? `${buddy.name} is typing a message...` : shown >= script.length ? 'Last message received.' : 'Receiving...'}</span>
@@ -186,7 +190,7 @@ export default function Chat({ win }: { win: Win }) {
           </div>
           <aside className="chat__cams" aria-label="Display pictures">
             <figure className="dpframe">
-              {dp ? <img key={dp.src} src={dp.src} alt={`${dp.title} — IYS product photo`} /> : <img src={brand.mark} alt="" />}
+              {dp ? <img key={dp.src} src={dp.src} alt={`${dp.title} - IYS product photo`} /> : <img src={brand.mark} alt="" />}
               <figcaption>{buddy.name}</figcaption>
             </figure>
             <figure className="dpframe dpframe--me">

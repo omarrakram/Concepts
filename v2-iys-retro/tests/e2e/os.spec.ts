@@ -117,13 +117,14 @@ test.describe('apps', () => {
     await expect(page.getByRole('status').filter({ hasText: 'WALLPAPER UPDATED xo' })).toBeVisible();
   });
 
-  test('touch grass: error dialog opens the real product', async ({ page }) => {
+  test('touch grass: TOUCH_GRASS.EXE opens the real product (no error dialog)', async ({ page }) => {
     await desktop(page);
+    await page.locator('[data-window="internet"] .tbtn').first().click();
     await page.getByRole('button', { name: /TOUCH_GRASS\.EXE/ }).click();
-    const d = page.getByRole('alertdialog', { name: 'TOUCH_GRASS.EXE' });
-    await expect(d).toContainText('ERROR: TOUCH GRASS NOT FOUND.');
-    await d.getByRole('button', { name: /Open Touch Grass/ }).click();
     await expect(page).toHaveURL(new RegExp(`/product/${curation.jokes.touchGrass}$`));
+    await expect(page.getByRole('alertdialog')).toHaveCount(0);
+    await expect(page.getByRole('dialog', { name: /IYS INTERNET/ })).toBeVisible();
+    await expect(page.getByRole('dialog', { name: /IYS INTERNET/ }).getByRole('heading', { level: 1 })).toContainText('Touch Grass');
   });
 
   test('camera: DCIM folders open the image viewer; set as wallpaper persists', async ({ page }) => {

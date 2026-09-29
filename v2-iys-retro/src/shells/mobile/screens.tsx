@@ -28,7 +28,7 @@ const PER = 24;
 
 function useTitle(t: string) {
   useEffect(() => {
-    document.title = `${t} — IYS MOBILE (unofficial concept)`;
+    document.title = `${t} - IYS MOBILE (unofficial concept)`;
   }, [t]);
 }
 

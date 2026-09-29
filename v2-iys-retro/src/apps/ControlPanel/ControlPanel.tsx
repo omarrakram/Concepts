@@ -134,7 +134,7 @@ export default function ControlPanel({ win }: { win: Win }) {
                 />
                 Play system sounds
               </label>
-              <p className="muted small">Off by default. Original synthesized sounds (Web Audio) — no recordings, no music.</p>
+              <p className="muted small">Off by default. Original synthesized sounds (Web Audio) - no recordings, no music.</p>
               <div className="cp-actions">
                 {(['click', 'open', 'ping', 'error', 'done', 'shutter', 'modem', 'boot'] as const).map((s) => (
                   <button key={s} type="button" className="btn btn--small" disabled={!prefs.sound} onClick={() => play(s)}>
@@ -162,7 +162,7 @@ export default function ControlPanel({ win }: { win: Win }) {
               <p>
                 <b>TARGET YEAR: {concept.targetYear}</b>
               </p>
-              <p className="muted small">Only one destination is installed. Your real clock keeps today’s date — the clothes are from now, the computer is from then.</p>
+              <p className="muted small">Only one destination is installed. Your real clock keeps today’s date - the clothes are from now, the computer is from then.</p>
             </div>
           )}
           {tab === 'System' && (
@@ -215,7 +215,7 @@ export default function ControlPanel({ win }: { win: Win }) {
               <img src={brand.mark} alt="IYS" width={64} height={64} />
               <div>
                 <p>
-                  <b>{concept.name}</b> — {concept.os}
+                  <b>{concept.name}</b> - {concept.os}
                 </p>
                 <p>{concept.thesis}</p>
                 {concept.disclaimer.map((d) => (

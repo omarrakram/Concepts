@@ -13,7 +13,7 @@ const count = (h: string) => idx.collections.find((c) => c.h === h)?.n ?? 0;
 const local = (h: string, i = 0) => {
   const p = assets.products[h];
   const im = p?.images[i] ?? p?.images[0];
-  if (!p || !im) throw new Error(`showcase: no local image for ${h} — run npm run fetch-showcase-assets`);
+  if (!p || !im) throw new Error(`showcase: no local image for ${h} - run npm run fetch-showcase-assets`);
   return { handle: h, title: p.title, price: p.price, compareAtPrice: p.compareAtPrice, src: im.src };
 };
 

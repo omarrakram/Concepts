@@ -40,7 +40,8 @@ export type Dialog =
   | { kind: 'welcome' }
   | { kind: 'checkout' }
   | { kind: 'error'; title: string; message: string; action?: { label: string; handle: string } }
-  | { kind: 'confirm-reset' };
+  | { kind: 'confirm-reset' }
+  | { kind: 'info'; title: string; lines: string[] };
 
 export interface Balloon {
   id: string;
@@ -133,7 +134,7 @@ export const TITLES: Record<AppId, string> = {
   recycle: 'RECYCLE BIN',
   newsletter: 'IYS NEWSLETTER',
   help: 'IYS HELP & SUPPORT',
-  exchange: 'XCHANGE.EXE :) — EXCHANGES / REFUNDS FORM',
+  exchange: 'XCHANGE.EXE :) - EXCHANGES / REFUNDS FORM',
 };
 
 const topActive = (windows: Win[]) =>

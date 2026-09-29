@@ -103,7 +103,7 @@ export default function Showcase() {
   }, [record]);
 
   useEffect(() => {
-    document.title = 'IYS INTERNET 2006 — showcase (unofficial concept by Omar Akram)';
+    document.title = 'IYS INTERNET 2006 - showcase (unofficial concept by Omar Akram)';
     const tl = buildTimeline(stage.current!);
     const api = {
       play: () => {
@@ -160,7 +160,7 @@ export default function Showcase() {
   return (
     <div className={`sc-root${record ? ' sc-root--record' : ''}`}>
       <div className="sc-frame" style={record ? undefined : { transform: `scale(${scale})` }}>
-        <div className="sc-stage showcase" ref={stage} role="img" aria-label="IYS INTERNET 2006 showcase film — unofficial In Your Shoe concept by Omar Akram">
+        <div className="sc-stage showcase" ref={stage} role="img" aria-label="IYS INTERNET 2006 showcase film - unofficial In Your Shoe concept by Omar Akram">
           {/* ── Desktop ─────────────────────────────────────────── */}
           <div className="sc-desk">
             <div className="sc-wall" data-sc="wall1" style={{ backgroundImage: `url("${SC.wallpaper}")` }} />
@@ -378,7 +378,7 @@ export default function Showcase() {
                 </div>
               </div>
             </SWin>
-            <SWin id="store" title="IN YOUR SHOE — CITY STARS.JPG" icon="image" style={{ left: 16, top: 560, width: 330, height: 250 }}>
+            <SWin id="store" title="IN YOUR SHOE - CITY STARS.JPG" icon="image" style={{ left: 16, top: 560, width: 330, height: 250 }}>
               <img className="sc-fill" src={SC.store.src} alt="" />
             </SWin>
             <SWin id="tile" title="pjoy_patterns.zip" icon="folder" style={{ left: 300, top: 160, width: 220, height: 210 }}>
@@ -424,12 +424,12 @@ export default function Showcase() {
                 <p>
                   {concept.copying} <b>MY BAG</b>
                 </p>
-                <p className="transfer__name">{SC.hero.title} — M</p>
+                <p className="transfer__name">{SC.hero.title} - M</p>
                 <div className="progress">
                   <div className="progress__bar" data-sc="xferbar" />
                 </div>
                 <p className="transfer__pct" data-sc="xferdone">
-                  100% — {concept.itemAdded}
+                  100% - {concept.itemAdded}
                 </p>
               </div>
             </div>
@@ -521,7 +521,7 @@ export default function Showcase() {
           <span>
             {t.toFixed(2)} / {DURATION.toFixed(1)}s
           </span>
-          <span className="sc-controls__note">Unofficial concept by Omar Akram — not affiliated with In Your Shoe</span>
+          <span className="sc-controls__note">Unofficial concept by Omar Akram - not affiliated with In Your Shoe</span>
         </div>
       )}
     </div>

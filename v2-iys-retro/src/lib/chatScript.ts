@@ -28,7 +28,7 @@ export function chatScript(buddyId: string, cat: Catalogue): ChatEvent[] {
 
   if (buddyId === 'pjoys') {
     return [
-      { t: 'system', text: `PJOYS is online. It’s 2:13 AM somewhere — sleepover mode.`, delay: 0 },
+      { t: 'system', text: concept.messenger.pjoysSignIn, delay: 0 },
       { t: 'msg', from: 'buddy', text: concept.messenger.pjoysOpener, delay: 500 },
       { t: 'msg', from: 'buddy', text: concept.messenger.pjoysFranco, lang: 'ar-Latn', note: 'Franco-Arabic: “are you awake?”', delay: 900 },
       { t: 'msg', from: 'buddy', text: concept.messenger.pjoysAfter[0]!, delay: 1100 },
@@ -38,14 +38,14 @@ export function chatScript(buddyId: string, cat: Catalogue): ChatEvent[] {
         tiles: assets.tiles.map((x) => ({ src: x.src, title: x.title, sourceUrl: x.sourceUrl, handle: x.handle })),
         delay: 800,
       },
-      { t: 'msg', from: 'buddy', text: 'also made u wallpapers', delay: 200 },
-      { t: 'msg', from: 'buddy', text: `${concept.messenger.pjoysAfter[1]} (${count} pjoys online rn)`, delay: 900 },
+      { t: 'msg', from: 'buddy', text: concept.messenger.pjoysWallpapers, delay: 200 },
+      { t: 'msg', from: 'buddy', text: concept.messenger.pjoysOutro(count), delay: 900 },
     ];
   }
   return [
-    { t: 'system', text: `${buddy.name} is ${buddy.status}.`, delay: 0 },
+    { t: 'system', text: concept.messenger.buddyStatus(buddy.name, buddy.status), delay: 0 },
     { t: 'msg', from: 'buddy', text: buddy.opener, delay: 500 },
     ...files,
-    { t: 'msg', from: 'buddy', text: `that’s ${products.length} of ${count}. the rest are in the shop.`, delay: 700 },
+    { t: 'msg', from: 'buddy', text: concept.messenger.buddyOutro(products.length, count), delay: 700 },
   ];
 }

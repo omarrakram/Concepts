@@ -5,7 +5,7 @@ import { collectionCount } from '../../lib/catalogue/hydrate';
 import { formatCount } from '../../lib/catalogue/format';
 import { useCatalogue } from '../../lib/catalogue/load';
 import { play } from '../../lib/sound';
-import { productPath, useBrowse } from '../../lib/useBrowse';
+import { productPath, touchGrassPath, useBrowse } from '../../lib/useBrowse';
 import { useCart, itemCount } from '../../state/cart';
 import { useFavorites } from '../../state/favorites';
 import { useOS, type AppId } from '../../state/os';
@@ -77,14 +77,17 @@ export function DesktopIcons() {
     { id: 'mail', label: 'IYS MAIL', icon: 'mail', aria: 'Open IYS Mail', act: () => open('mail') },
     { id: 'recycle', label: 'RECYCLE BIN', icon: 'recycle', aria: 'Open Recycle Bin', act: () => open('recycle') },
   ];
-  if (touchGrass)
-    right.push({
-      id: 'touch-grass',
-      label: 'TOUCH_GRASS.EXE',
-      icon: 'exe',
-      aria: `Run TOUCH_GRASS.EXE (opens ${touchGrass.title})`,
-      act: () => useOS.getState().showDialog({ kind: 'error', title: concept.touchGrass.title, message: concept.touchGrass.message, action: { label: `Open ${touchGrass.title}`, handle: touchGrass.handle } }),
-    });
+  // Opens the curated Touch Grass product; if it ever leaves the snapshot, searches instead.
+  right.push({
+    id: 'touch-grass',
+    label: 'TOUCH_GRASS.EXE',
+    icon: 'exe',
+    aria: touchGrass ? `Run TOUCH_GRASS.EXE (opens ${touchGrass.title})` : 'Run TOUCH_GRASS.EXE (searches IYS for touch grass)',
+    act: () => {
+      browse(touchGrassPath(touchGrass?.handle));
+      useOS.getState().notify(concept.touchGrass.loaded);
+    },
+  });
   if (gameNight) right.push({ id: 'game-night', label: concept.gameNight, icon: 'exe', aria: `Run GAME_NIGHT.EXE (opens ${gameNight.title})`, act: () => browse(productPath(gameNight.handle)) });
   right.push(
     { id: 'newsletter', label: 'IYS NEWSLETTER', icon: 'newsletter', aria: 'Open IYS Newsletter', act: () => open('newsletter') },
@@ -135,7 +138,7 @@ export function DesktopIcons() {
           className={`dicon${live?.id === d.id ? ' is-dragging' : ''}`}
           data-icon={d.id}
           aria-label={d.aria}
-          title={d.tip ? `Open — ${d.tip}` : 'Open'}
+          title={d.tip ? `Open - ${d.tip}` : 'Open'}
           aria-current={selected === d.id ? 'true' : undefined}
           style={o ? { transform: `translate(${o.dx}px, ${o.dy}px)` } : undefined}
           onClick={() => {

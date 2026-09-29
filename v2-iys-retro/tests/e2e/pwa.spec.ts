@@ -14,7 +14,7 @@ test('PWA: registers, survives refresh, and the shell works offline', async ({ p
   await expect.poll(() => page.evaluate(() => Boolean(navigator.serviceWorker.controller))).toBe(true);
 
   const manifest = await (await page.request.get(`${ORIGIN}/manifest.webmanifest`)).json();
-  expect(manifest.name).toBe('IYS Internet 2006 — Concept');
+  expect(manifest.name).toBe('IYS Internet 2006 - Concept');
 
   await context.setOffline(true);
   await page.goto(`${ORIGIN}/shop?page=2`);

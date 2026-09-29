@@ -19,7 +19,7 @@ interface Preferences {
   reset: () => void;
 }
 
-export const DEFAULT_WALLPAPER: Wallpaper = { kind: 'preset', id: 'fw27' };
+export const DEFAULT_WALLPAPER: Wallpaper = { kind: 'preset', id: 'hills' };
 
 /** localStorage: sound (default OFF), CRT, wallpaper. Never window positions. */
 export const usePreferences = create<Preferences>()(

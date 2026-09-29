@@ -139,7 +139,7 @@ export default function DesktopShell() {
         Skip to IYS Internet
       </a>
       <main className="desktop" ref={deskRef} aria-label="IYS OS desktop" onMouseDown={() => setStart(false)}>
-        <h1 className="sr-only">IYS INTERNET 2006 — an unofficial In Your Shoe concept desktop</h1>
+        <h1 className="sr-only">IYS INTERNET 2006 - an unofficial In Your Shoe concept desktop</h1>
         <Wallpaper />
         <DesktopIcons />
         <div className="desktop__stamp">
@@ -163,7 +163,7 @@ export default function DesktopShell() {
       <Dialogs />
       {!online && (
         <p className="offline" role="alert">
-          INTERNET CONNECTION LOST — product photos load from the official IYS CDN. Prices shown are the saved snapshot.
+          INTERNET CONNECTION LOST - product photos load from the official IYS CDN. Prices shown are the saved snapshot.
         </p>
       )}
       <Screensaver disabled={booting} />

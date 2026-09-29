@@ -191,7 +191,7 @@ export default function Browser({ win }: { win: Win }) {
               </span>
             </span>
           )}
-          <span title="Catalogue snapshot — not live stock">Snapshot {cat?.generatedAt.slice(0, 10) ?? '…'}</span>
+          <span title="Catalogue snapshot - not live stock">Snapshot {cat?.generatedAt.slice(0, 10) ?? '…'}</span>
           <span>
             <Icon name="internet" size={16} /> Internet
           </span>

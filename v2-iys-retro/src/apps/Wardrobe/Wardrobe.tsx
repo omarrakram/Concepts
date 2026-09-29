@@ -133,7 +133,7 @@ export default function Wardrobe({ win }: { win: Win }) {
                   <ul className="files" aria-label={`${folder.label} items`}>
                     {pg.items.map((p) => (
                       <li key={p.handle}>
-                        <button type="button" className="files__item" onClick={() => browse(productPath(p.handle))} title={`${p.title} — open`}>
+                        <button type="button" className="files__item" onClick={() => browse(productPath(p.handle))} title={`${p.title} - open`}>
                           <span className="files__thumb">
                             <RemoteImage src={p.image} alt="" title={p.title} base={180} sizes="96px" max={240} />
                           </span>
@@ -165,11 +165,11 @@ export default function Wardrobe({ win }: { win: Win }) {
                               <Icon name="image" size={16} /> {p.title}
                             </button>
                           </td>
-                          <td>{p.productType ?? '—'}</td>
+                          <td>{p.productType ?? '-'}</td>
                           <td>
                             <Price price={p.price} compareAt={p.compareAtPrice} />
                           </td>
-                          <td>{p.sizes.map((s) => s.label).join(', ') || '—'}</td>
+                          <td>{p.sizes.map((s) => s.label).join(', ') || '-'}</td>
                         </tr>
                       ))}
                     </tbody>

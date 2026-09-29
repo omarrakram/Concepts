@@ -11,9 +11,9 @@ export default defineConfig({
       injectRegister: false,
       includeAssets: ['favicon.svg', 'robots.txt', 'icons/apple-touch-icon.png'],
       manifest: {
-        name: 'IYS Internet 2006 — Concept',
+        name: 'IYS Internet 2006 - Concept',
         short_name: 'IYS 2006 (concept)',
-        description: 'Unofficial speculative concept by Omar Akram — today’s In Your Shoe catalogue inside a 2006-style computer. Not affiliated with In Your Shoe. No orders can be placed.',
+        description: 'Unofficial speculative concept by Omar Akram - today’s In Your Shoe catalogue inside a 2006-style computer. Not affiliated with In Your Shoe. No orders can be placed.',
         lang: 'en',
         start_url: '/',
         scope: '/',

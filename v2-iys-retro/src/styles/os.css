@@ -288,7 +288,8 @@
   position: relative;
 }
 .menubar__top {
-  padding: 2px 7px;
+  /* 1px border + 1px/6px padding = same box as the decorative 2px/7px span */
+  padding: 1px 6px;
   border: 1px solid transparent;
   background: none;
   color: var(--ink-2);

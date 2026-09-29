@@ -33,7 +33,7 @@ export default function ImageViewer({ win }: { win: Win }) {
     <Window
       win={win}
       icon="image"
-      label={`${img.title} — image viewer`}
+      label={`${img.title} - image viewer`}
       statusbar={
         <div className="statusbar">
           <span className="grow">{img.title}</span>

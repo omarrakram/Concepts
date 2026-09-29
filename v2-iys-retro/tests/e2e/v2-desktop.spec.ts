@@ -46,7 +46,7 @@ test.describe('IYS Retro V2 desktop upgrades', () => {
       if (label.includes('IYS Blue')) expect(wp.bg).toBe('none');
       else expect(wp.bg, label).toMatch(/url\("[^"]+\/iys\/(campaign|os|tiles)\//);
       if (label.includes('(pattern)')) expect(wp.cls).toContain('wallpaper--tile');
-      if (label.includes('FW27 (Default)')) expect(wp.cls).toContain('wallpaper--preset-fw27');
+      if (label.startsWith('IYS FW27') && !label.includes('Stack')) expect(wp.cls).toContain('wallpaper--preset-fw27');
     }
   });
 
@@ -58,22 +58,25 @@ test.describe('IYS Retro V2 desktop upgrades', () => {
       }
     });
     await desktop(page, '/');
-    expect((await wallpaper(page)).cls).toContain('wallpaper--preset-fw27');
+    // invalid saved id → falls back to the default, IYS Hills
+    expect((await wallpaper(page)).bg).toContain('/iys/os/hills.svg');
     await minimizeBrowser(page);
     await page.getByRole('button', { name: 'Open Control Panel' }).click();
-    await expect(cp(page).locator('.cp-list label:has(input:checked)')).toContainText('IYS FW27 (Default)');
-    await cp(page).locator('.cp-list label', { hasText: 'IYS Hills' }).locator('input').check();
+    await expect(cp(page).locator('.cp-list label:has(input:checked)')).toContainText('IYS Hills - Y2K sky (Default)');
+    await cp(page).getByRole('button', { name: 'Apply' }).click(); // Apply on a fallback must not throw
+    await cp(page).locator('.cp-list label', { hasText: 'IYS × ZED' }).locator('input').check();
     await cp(page).getByRole('button', { name: 'Apply' }).click();
-    expect((await wallpaper(page)).bg).toContain('/iys/os/hills.svg');
+    expect((await wallpaper(page)).bg).toContain('/iys/campaign/zed-1');
     await page.reload();
     await expect(page.getByRole('dialog', { name: /IYS INTERNET/ })).toBeVisible();
-    expect((await wallpaper(page)).bg).toContain('/iys/os/hills.svg');
+    expect((await wallpaper(page)).bg).toContain('/iys/campaign/zed-1');
     await minimizeBrowser(page);
     await page.getByRole('button', { name: 'Open Control Panel' }).click();
-    await expect(cp(page).locator('.cp-list label:has(input:checked)')).toContainText('IYS Hills');
+    await expect(cp(page).locator('.cp-list label:has(input:checked)')).toContainText('IYS × ZED');
     await cp(page).getByRole('button', { name: /Reset desktop/ }).click();
     await page.getByRole('alertdialog', { name: 'RESET DESKTOP' }).getByRole('button', { name: 'Reset' }).click();
-    expect((await wallpaper(page)).cls).toContain('wallpaper--preset-fw27');
+    expect((await wallpaper(page)).bg).toContain('/iys/os/hills.svg');
+    await expect(cp(page).locator('.cp-list label:has(input:checked)')).toContainText('IYS Hills - Y2K sky (Default)');
   });
 
   test('P2: product photo → Set as Wallpaper, with Stretch / Center / Tile', async ({ page }) => {
@@ -134,8 +137,21 @@ test.describe('IYS Retro V2 desktop upgrades', () => {
     await expect(page.getByRole('dialog', { name: 'IYS MAIL' })).toHaveCount(0);
     await expect(nl).toContainText('JOIN THE COOL LIST :)');
     await expect(nl).toContainText('COMING ONLINE SOON');
-    await expect(nl.getByRole('button', { name: 'JOIN XO' })).toBeDisabled();
+    // the email field is always editable, even with no provider connected
+    const field = nl.getByLabel('Email:');
+    await expect(field).toBeEnabled();
+    await field.click();
+    await page.keyboard.type('test@example.com');
+    await expect(field).toHaveValue('test@example.com');
+    await page.keyboard.press('Backspace');
+    await expect(field).toHaveValue('test@example.co');
+    await page.keyboard.type('m');
+    await nl.getByRole('button', { name: 'JOIN XO' }).click();
+    await expect(nl.getByRole('alert')).toContainText('COOL LIST CONNECTION IS STILL COMING ONLINE :)');
+    await expect(nl.getByRole('alert')).toContainText('ur email wasn’t sent yet');
+    await expect(field).toHaveValue('test@example.com');
     await expect(nl).not.toContainText('IYS10');
+    await expect(nl.getByTestId('newsletter-success')).toHaveCount(0);
   });
 
   test('P4: IYS INTERNET menus open, act and follow the keyboard', async ({ page }) => {
@@ -204,7 +220,7 @@ test.describe('IYS Retro V2 desktop upgrades', () => {
     await desktop(page, '/');
     await minimizeBrowser(page);
     await page.getByRole('button', { name: /Open XCHANGE\.EXE/ }).click();
-    const x = page.getByRole('dialog', { name: 'XCHANGE.EXE :) — EXCHANGES / REFUNDS FORM' });
+    const x = page.getByRole('dialog', { name: 'XCHANGE.EXE :) - EXCHANGES / REFUNDS FORM' });
     await expect(x).toContainText('EXCHANGES / REFUNDS FORM');
     await expect(x.getByTestId('odoo-placeholder')).toContainText('form connection coming online soon :)');
     await expect(x.locator('form, iframe')).toHaveCount(0);

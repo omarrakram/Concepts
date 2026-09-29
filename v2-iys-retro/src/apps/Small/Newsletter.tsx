@@ -6,7 +6,7 @@ import { concept, official, officialSources } from '../../data/copy';
 import { subscribe } from '../../lib/newsletter';
 import type { Win } from '../../state/os';
 
-type Phase = 'idle' | 'joining' | 'error' | 'invalid';
+type Phase = 'idle' | 'joining' | 'error' | 'invalid' | 'offline';
 
 /**
  * IYS NEWSLETTER — the cool list. Separate from IYS MAIL. The 10% code is
@@ -24,13 +24,13 @@ export default function Newsletter({ win }: { win: Win }) {
 
   const join = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (busy.current || !connected) return;
+    if (busy.current) return;
     busy.current = true;
     setPhase('joining');
     const r = await subscribe(email);
     busy.current = false;
     if (r.status === 'subscribed') setCode(r.code);
-    else setPhase(r.status === 'invalid' ? 'invalid' : 'error');
+    else setPhase(r.status === 'invalid' ? 'invalid' : r.status === 'not-configured' ? 'offline' : 'error');
   };
 
   const copy = async () => {
@@ -85,14 +85,23 @@ export default function Newsletter({ win }: { win: Win }) {
             <p className="small">{official.coolList}</p>
             <label htmlFor={`${id}-email`}>Email:</label>
             <div className="news__row">
-              <input id={`${id}-email`} className="input" type="email" required maxLength={254} value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" autoComplete="email" disabled={!connected} data-autofocus />
-              <button type="submit" className="btn btn--go" disabled={!connected || phase === 'joining'}>
+              <input id={`${id}-email`} className="input" type="email" required maxLength={254} value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@example.com" autoComplete="email" data-autofocus />
+              <button type="submit" className="btn btn--go" disabled={phase === 'joining'}>
                 {phase === 'joining' ? concept.newsletter.joining : concept.newsletter.join}
               </button>
             </div>
             {phase === 'invalid' && (
               <p className="mail__error" role="alert">
                 {concept.newsletter.invalid}
+              </p>
+            )}
+            {phase === 'offline' && (
+              <p className="mail__error" role="alert">
+                <span>
+                  <b>{concept.newsletter.offlineSubmit}</b>
+                  <br />
+                  {concept.newsletter.offlineSubmitSub}
+                </span>
               </p>
             )}
             {phase === 'error' && (

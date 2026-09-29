@@ -67,7 +67,7 @@ function Saver() {
           <img src={src} alt="" className={i === 0 ? 'screensaver__logo' : undefined} />
         </div>
       ))}
-      <p className="screensaver__hint">IYS OS SCREENSAVER — move the mouse or press any key</p>
+      <p className="screensaver__hint">IYS OS SCREENSAVER - move the mouse or press any key</p>
     </div>
   );
 }

@@ -84,7 +84,7 @@ export default function Camera({ win }: { win: Win }) {
               ))}
             </ul>
             <p className="explorer__note">
-              “TM▸2006” is the fictional time-machine overlay, not a capture date — these are current IYS photos.
+              “TM▸2006” is the fictional time-machine overlay, not a capture date - these are current IYS photos.
             </p>
           </div>
         </div>
