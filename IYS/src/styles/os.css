@@ -43,13 +43,13 @@
 .desktop__icons {
   position: absolute;
   z-index: var(--z-icons);
-  top: 10px;
-  left: 8px;
-  bottom: 10px;
+  top: 8px;
+  left: 6px;
+  bottom: 8px;
   display: grid;
   grid-auto-flow: column;
-  grid-template-rows: repeat(auto-fill, 86px);
-  grid-auto-columns: 86px;
+  grid-template-rows: repeat(auto-fill, 80px);
+  grid-auto-columns: 92px;
   gap: 2px 4px;
   margin: 0;
   padding: 0;
@@ -69,13 +69,13 @@
   flex-direction: column;
   align-items: center;
   gap: 4px;
-  width: 84px;
-  padding: 4px 2px;
+  width: 90px;
+  padding: 3px 2px;
   border: 1px solid transparent;
   background: none;
   color: #fff;
   font-family: var(--system-font);
-  font-size: var(--fs-chrome);
+  font-size: var(--fs-small);
   line-height: 1.2;
   text-align: center;
   text-shadow:
@@ -91,7 +91,9 @@
 }
 .dicon__label {
   padding: 0 2px;
-  overflow-wrap: anywhere;
+  overflow-wrap: normal;
+  word-break: keep-all;
+  hyphens: none;
 }
 .dicon:hover .dicon__label {
   text-decoration: underline;
@@ -169,6 +171,10 @@
 }
 .win.is-active {
   background: var(--frame-active);
+}
+/* The window itself takes programmatic focus; its controls show focus instead. */
+.win:focus {
+  outline: none;
 }
 .win.is-maximized {
   border-radius: 0;

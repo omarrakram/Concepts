@@ -30,7 +30,7 @@
  *
  * Fails loudly (exit 1, nothing written) on integrity problems.
  */
-import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, rmSync, statSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { ORIGIN, get } from './lib/http.mjs';
@@ -60,13 +60,21 @@ const cacheFile = (name) => resolve(CACHE, `${name.replace(/[^\w.-]+/g, '_')}`);
 async function cached(name, url, as = 'json') {
   const file = cacheFile(name);
   if (offline) {
+    if (existsSync(`${file}.404`)) throw Object.assign(new Error(`404 ${url} (cached)`), { status: 404 });
     if (!existsSync(file)) throw new Error(`--offline: no cached ${name}`);
     const body = readFileSync(file, 'utf8');
     return as === 'json' ? JSON.parse(body) : body;
   }
-  const body = await get(url, { as });
-  writeFileSync(file, as === 'json' ? JSON.stringify(body) : body);
-  return body;
+  try {
+    const body = await get(url, { as });
+    writeFileSync(file, as === 'json' ? JSON.stringify(body) : body);
+    rmSync(`${file}.404`, { force: true });
+    return body;
+  } catch (e) {
+    // Remember public 404s so an --offline rebuild reaches the same verdict.
+    if (e.status === 404) writeFileSync(`${file}.404`, new Date().toISOString());
+    throw e;
+  }
 }
 
 /** Collections this concept needs membership for, beyond what the homepage nav links. */
@@ -78,7 +86,8 @@ const REQUIRED_COLLECTIONS = [
 ];
 
 async function main() {
-  const retrievedAt = new Date().toISOString();
+  // Offline rebuilds keep the ORIGINAL retrieval time of the cached responses.
+  const retrievedAt = offline && existsSync(cacheFile('products_p1.json')) ? statSync(cacheFile('products_p1.json')).mtime.toISOString() : new Date().toISOString();
   const sourceMethods = new Set();
 
   // ── 0. Market check ───────────────────────────────────────────────────
@@ -240,8 +249,17 @@ async function main() {
     storefront: ORIGIN,
     market: 'Egypt',
     currency: CURRENCY,
+    // Distinct metrics — do not conflate them:
+    //  publicProductsTotal       every product the Egyptian storefront publishes (sitemap ∪ storefront JSON)
+    //  allProductsCollectionCount IYS's own /collections/all-products membership
+    //  productsOutsideAllProducts public products IYS does not list in All Products (e.g. collab capsules)
     productCount: products.length,
+    publicProductsTotal: products.length,
+    allProductsCollectionCount: allOrder.length,
+    productsOutsideAllProducts: { count: report.notInAllProducts.length, handles: report.notInAllProducts },
     variantCount: report.variantCount,
+    variantsTotal: report.variantCount,
+    sitemapNotPublic: notPublic,
     sourceMethods: [...sourceMethods],
     navCollections,
     report: { ...report, missingFromSync: report.missingFromSync.length ? report.missingFromSync : [] },

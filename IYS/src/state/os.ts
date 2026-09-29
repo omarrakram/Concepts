@@ -53,7 +53,7 @@ export function defaultRect(app: AppId, desk: { w: number; h: number }, stack: n
   const sizes: Record<AppId, [number, number]> = {
     internet: [Math.min(1120, desk.w * 0.74), Math.min(780, desk.h * 0.9)],
     messenger: [268, Math.min(520, desk.h * 0.72)],
-    chat: [440, Math.min(560, desk.h * 0.82)],
+    chat: [520, Math.min(640, desk.h * 0.86)],
     wardrobe: [Math.min(820, desk.w * 0.62), Math.min(560, desk.h * 0.78)],
     camera: [Math.min(800, desk.w * 0.6), Math.min(580, desk.h * 0.82)],
     viewer: [Math.min(760, desk.w * 0.56), Math.min(640, desk.h * 0.9)],
@@ -70,7 +70,7 @@ export function defaultRect(app: AppId, desk: { w: number; h: number }, stack: n
     internet: [desk.w * 0.13, 12],
     messenger: [desk.w - w - 24, 24],
     bag: [desk.w - w - 36, desk.h - h - 20],
-    chat: [desk.w - w - 310, 60],
+    chat: [Math.max(12, desk.w - w - 300), 40],
   };
   const [ax, ay] = anchors[app] ?? [(desk.w - w) / 2, (desk.h - h) / 2.4];
   const offset = (stack % 6) * 26;

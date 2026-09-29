@@ -29,7 +29,10 @@ export const catalogueNow = () => ready;
 export function useCatalogue(): Catalogue | null {
   const [cat, setCat] = useState<Catalogue | null>(ready);
   useEffect(() => {
-    if (ready) return;
+    if (ready) {
+      setCat(ready);
+      return;
+    }
     let alive = true;
     loadCatalogue().then((c) => alive && setCat(c));
     return () => {

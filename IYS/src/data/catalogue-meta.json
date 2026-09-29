@@ -1,11 +1,47 @@
 {
  "concept": "IYS INTERNET 2006 — unofficial speculative concept. Snapshot of public data; not live commerce.",
- "generatedAt": "2026-09-29T11:05:44.099Z",
+ "generatedAt": "2026-09-29T11:06:03.032Z",
  "storefront": "https://inyourshoe.com",
  "market": "Egypt",
  "currency": "EGP",
  "productCount": 1249,
+ "publicProductsTotal": 1249,
+ "allProductsCollectionCount": 1224,
+ "productsOutsideAllProducts": {
+  "count": 25,
+  "handles": [
+   "black-zed-stars-sworts",
+   "black-zed-stars-wide-leg-swants",
+   "blue-future-stars-towel",
+   "breaking-brgr-hoodie",
+   "christmas-joy-fluffy-blanket",
+   "distorted-youth-dept-jersey",
+   "dna-is-football-oversized-tee",
+   "everyday-black-denim-tote-bag",
+   "green-future-stars-towel",
+   "green-holly-jolly-fluffy-socks",
+   "green-zed-stars-sworts",
+   "olive-green-acid-washed-hoodie",
+   "out-of-service-oversized-tee",
+   "road-trippin-oversized-tee",
+   "silver-sands-live-life-towel",
+   "silver-sands-summer-swim-shorts",
+   "silver-sands-summer-towel",
+   "silver-sands-sun-neck-socks",
+   "silver-sands-under-the-sea-swim-shorts",
+   "stars-zed-neck-socks",
+   "striped-youth-dept-jersey",
+   "team-stars-jersey",
+   "white-zed-stars-wide-leg-swants",
+   "zed-green-striped-swim-shorts",
+   "zed-stars-jersey"
+  ]
+ },
  "variantCount": 4843,
+ "variantsTotal": 4843,
+ "sitemapNotPublic": [
+  "hot-wheels-pjoys"
+ ],
  "sourceMethods": [
   "sitemap.xml",
   "products.json",
