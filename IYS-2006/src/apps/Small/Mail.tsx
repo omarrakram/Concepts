@@ -53,8 +53,8 @@ export default function Mail({ win }: { win: Win }) {
           </p>
         </div>
         <div className="cp-actions">
-          <button type="submit" className="btn btn--primary">
-            Send
+          <button type="submit" className="btn btn--go">
+            {concept.y2k.newsletterCta}
           </button>
         </div>
       </form>

@@ -106,14 +106,16 @@ export default function MobileShell() {
           setSplash(false);
         }}
       >
-        <img src={brand.wordmarkWhite} alt="In Your Shoe" />
-        <p>IYS MOBILE</p>
-        <p className="m-splash__sub">{concept.boot.connecting}</p>
-        <div className="progress" style={{ width: 180 }}>
-          <div className="progress__bar progress__bar--indeterminate" />
+        <div className="m-splash__panel">
+          <img src={brand.wordmark} alt="In Your Shoe" />
+          <p>IYS MOBILE</p>
+          <p className="m-splash__sub">{concept.boot.connecting}</p>
+          <div className="progress" style={{ width: 180 }}>
+            <div className="progress__bar progress__bar--indeterminate" />
+          </div>
         </div>
-        <button type="button" className="m-splash__skip">
-          Skip
+        <button type="button" className="btn btn--sky m-splash__skip">
+          {concept.y2k.enter}
         </button>
       </div>
     );
@@ -136,7 +138,7 @@ export default function MobileShell() {
         {overlay === 'bag' && <MBag close={() => setOverlay(null)} />}
         {overlay === 'camera' && <MCamera />}
         {overlay === 'chat' && <MChat close={() => setOverlay(null)} />}
-        {overlay === 'menu' && <MMenu close={() => setOverlay(null)} />}
+        {overlay === 'menu' && <MMenu close={() => setOverlay(null)} openOverlay={open} />}
         {overlay === 'filters' && <MFilters close={() => setOverlay(null)} />}
         <div className="m-routes" hidden={Boolean(overlay)}>
           <Routes>

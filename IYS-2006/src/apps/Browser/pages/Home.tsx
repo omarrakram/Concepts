@@ -105,20 +105,33 @@ export default function Home() {
         </aside>
 
         <div className="portal__main">
+          <section className="portal__cta" aria-labelledby="portal-cta-title">
+            <p className="portal__cta-kicker" id="portal-cta-title">
+              {concept.y2k.heroKicker}
+            </p>
+            <div className="portal__cta-row">
+              <button type="button" className="btn btn--go portal__cta-main" onClick={() => navigate('/collections/newest')}>
+                {concept.y2k.primary} › <small>{formatCount(cat.collections.get('newest')?.count ?? 0)} new</small>
+              </button>
+              <button type="button" className="btn btn--sky" onClick={() => navigate('/collections/pjoys')}>
+                {concept.y2k.secondary}
+              </button>
+            </div>
+          </section>
           {fw && (
             <figure className="hero">
               <button type="button" className="hero__img" onClick={() => navigate('/collections/newest')} aria-label="Open New Stuff (FW27)">
                 <img src={fw.src} alt="In Your Shoe FW27 campaign: two models in brown hoodies beside old computers" width={fw.width} height={fw.height} />
               </button>
               <figcaption>
-                <b>FW27</b> — the current IYS campaign (2026), loaded into a 2006 browser. <Link to="/collections/newest">See what’s new ›</Link>
+                <b>FW27</b> — the current IYS campaign (2026), loaded into a 2006 browser.
               </figcaption>
             </figure>
           )}
 
           <section className="box">
             <h2 className="box__title box__title--coral">
-              TOP 8 COOL DECISIONS <small>real products · real prices</small>
+              TOP 8 COOL DECISIONS <small>real products · real prices · too cute 2 skip xo</small>
             </h2>
             <ol className="top8">
               {top8.map((p, i) => (
@@ -153,7 +166,7 @@ export default function Home() {
               ))}
             </ul>
             <p className="box__more">
-              <Link to="/collections/newest">All {formatCount(cat.collections.get('newest')?.count ?? 0)} new items ›</Link>
+              <Link to="/collections/newest">omg see all {formatCount(cat.collections.get('newest')?.count ?? 0)} new drops :) ›</Link>
             </p>
           </section>
 
@@ -175,7 +188,7 @@ export default function Home() {
               ))}
             </ul>
             <p className="box__more">
-              <Link to="/collections/pjoys">All Pjoys ›</Link> · <Link to="/collections/fluffy-pjoys">Fluffy Pjoys ({formatCount(cat.collections.get('fluffy-pjoys')?.count ?? 0)}) ›</Link>
+              <Link to="/collections/pjoys">{concept.y2k.secondary} ›</Link> · <Link to="/collections/fluffy-pjoys">Fluffy Pjoys ({formatCount(cat.collections.get('fluffy-pjoys')?.count ?? 0)}) ›</Link>
             </p>
           </section>
 
@@ -232,14 +245,17 @@ export default function Home() {
               <b>{storesData.storeCount}</b> IYS stores in Egypt.
             </p>
             <p className="box__more">
-              <Link to="/stores">Find IYS IRL ›</Link>
+              <Link to="/stores">{concept.y2k.stores} ›</Link>
             </p>
           </section>
           <section className="box">
             <h2 className="box__title">IYS MAIL</h2>
+            <p className="box__text">
+              <b>{concept.y2k.newsletterTitle}</b>
+            </p>
             <p className="box__text">{official.coolList}</p>
-            <button type="button" className="btn btn--small" onClick={() => useOS.getState().open('mail')}>
-              <Icon name="mail" size={16} /> Open IYS MAIL
+            <button type="button" className="btn btn--go btn--small" onClick={() => useOS.getState().open('mail')}>
+              <Icon name="mail" size={16} /> {concept.y2k.newsletterCta}
             </button>
           </section>
           <section className="box">

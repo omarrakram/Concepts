@@ -75,11 +75,12 @@ export default function Product() {
           <StockNote available={available} />
           <VariantPicker p={p} selected={s.selected} onSelect={s.select} />
           <div className="props__buy">
-            <button type="button" className="btn btn--primary props__add" disabled={!s.canAdd} onClick={s.add}>
-              {s.needsChoice ? `Choose ${p.options.find((_, i) => !s.selected[i])?.name.toLowerCase() ?? 'an option'}` : available === false ? 'Sold out' : 'ADD TO BAG'}
+            <button type="button" className="btn btn--go props__add" disabled={!s.canAdd} onClick={s.add}>
+              {s.needsChoice ? `Choose ${p.options.find((_, i) => !s.selected[i])?.name.toLowerCase() ?? 'an option'} :)` : available === false ? concept.y2k.soldOut : concept.y2k.add}
             </button>
             <FavoriteButton handle={p.handle} title={p.title} />
           </div>
+          <p className="props__fit">{available === false ? concept.y2k.tooCute : concept.y2k.fitNote}</p>
           <a className="props__real" href={p.sourceUrl} target="_blank" rel="noopener noreferrer">
             VIEW CURRENT ITEM ON IYS ↗
           </a>

@@ -114,7 +114,7 @@ test.describe('apps', () => {
     await expect(log.getByText('Transfer complete.').first()).toBeVisible();
     expect(idx.length).toBeGreaterThan(3);
     await log.getByRole('button', { name: /Set .* pattern as wallpaper/ }).first().click();
-    await expect(page.getByRole('status').filter({ hasText: 'WALLPAPER UPDATED.' })).toBeVisible();
+    await expect(page.getByRole('status').filter({ hasText: 'WALLPAPER UPDATED xo' })).toBeVisible();
   });
 
   test('touch grass: error dialog opens the real product', async ({ page }) => {
@@ -137,7 +137,7 @@ test.describe('apps', () => {
     await expect(viewer).toBeVisible();
     await viewer.getByRole('button', { name: 'Next image' }).click();
     await viewer.getByRole('button', { name: /Set as wallpaper/ }).click();
-    await expect(page.getByRole('status').filter({ hasText: 'WALLPAPER UPDATED.' })).toBeVisible();
+    await expect(page.getByRole('status').filter({ hasText: 'WALLPAPER UPDATED xo' })).toBeVisible();
     const saved = await page.evaluate(() => JSON.parse(localStorage.getItem('iys2006.preferences')!).state.wallpaper);
     expect(saved.kind).toBe('image');
     await page.reload();

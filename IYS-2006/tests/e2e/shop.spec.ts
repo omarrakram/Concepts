@@ -70,11 +70,11 @@ test.describe('IYS INTERNET commerce', () => {
     await expect(b.getByRole('heading', { level: 1 })).toHaveText(multi.t);
     await expect(b.getByLabel('Address', { exact: true })).toHaveValue(`http://www.inyourshoe.com/products/${multi.h}`);
     await expect(b.getByRole('link', { name: /VIEW CURRENT ITEM ON IYS/ })).toHaveAttribute('href', `https://inyourshoe.com/products/${multi.h}`);
-    const add = b.getByRole('button', { name: /Choose size|ADD TO BAG/ });
+    const add = b.getByRole('button', { name: /Choose size|ADD 2 BAG/ });
     await expect(add).toBeDisabled();
     const size = multi.sz.find((s: [string, number]) => s[1] === 1)[0];
     await b.locator('.chip label', { hasText: new RegExp(`^${size}$`) }).click();
-    await b.getByRole('button', { name: 'ADD TO BAG' }).click();
+    await b.getByRole('button', { name: 'ADD 2 BAG' }).click();
     await expect(page.locator('.transfer')).toContainText('COPYING ITEM TO:');
     await expect(page.getByRole('button', { name: /Open My Bag, 1 items/ })).toBeVisible();
     await page.getByRole('button', { name: /Open My Bag, 1 items/ }).first().click();
@@ -86,7 +86,7 @@ test.describe('IYS INTERNET commerce', () => {
     await expect(page.getByRole('alertdialog', { name: 'CONCEPT CHECKOUT' })).toContainText('No order will be placed.');
     await page.keyboard.press('Escape');
     await bag.getByRole('button', { name: /^Remove / }).click();
-    await expect(bag).toContainText('MY BAG is empty.');
+    await expect(bag).toContainText('ur bag is empty :(');
   });
 
   test('first, middle and last catalogue products, a kids and a women item all resolve', async ({ page }) => {
@@ -125,7 +125,7 @@ test.describe('IYS INTERNET commerce', () => {
   test('404 and browser back/forward', async ({ page }) => {
     await desktop(page, '/definitely-not-a-page');
     const b = browserWin(page);
-    await expect(b).toContainText('THE PAGE YOU’RE LOOKING FOR WENT OFFLINE.');
+    await expect(b).toContainText('omg this page went offline :(');
     await b.getByRole('button', { name: 'SHOP', exact: true }).click();
     await expect(page).toHaveURL(/\/shop$/);
     await b.getByRole('button', { name: 'Back', exact: true }).click();

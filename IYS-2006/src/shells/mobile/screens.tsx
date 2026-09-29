@@ -7,9 +7,10 @@ import { PageLoading } from '../../components/shop/PageLoading';
 import { Pagination } from '../../components/shop/Pagination';
 import { Price, SaleBadge, StockNote } from '../../components/shop/Price';
 import { RemoteImage } from '../../components/shop/RemoteImage';
-import { assets, brand, campaign, WALLPAPERS } from '../../data/assets';
-import { concept, official } from '../../data/copy';
+import { assets, brand } from '../../data/assets';
+import { concept, official, officialSources } from '../../data/copy';
 import storesData from '../../data/stores.generated.json';
+import { collectionProducts } from '../../lib/catalogue/hydrate';
 import { formatCount } from '../../lib/catalogue/format';
 import { useCatalogue } from '../../lib/catalogue/load';
 import { paginate } from '../../lib/catalogue/query';
@@ -35,58 +36,99 @@ export function MHome({ open, pjoysPing }: { open: (o: Overlay) => void; pjoysPi
   const cat = useCatalogue();
   const navigate = useNavigate();
   const wp = usePreferences((s) => s.wallpaper);
-  const [now, setNow] = useState(() => new Date());
+  const mode = usePreferences((s) => s.wallpaperMode);
   useTitle('IYS MOBILE');
-  useEffect(() => {
-    const t = setInterval(() => setNow(new Date()), 20_000);
-    return () => clearInterval(t);
-  }, []);
-  useClaimCenter({ label: 'SHOP', run: () => navigate('/shop') });
-  const bg = wp.kind === 'image' ? wp.src : wp.id === 'fw27' || wp.id === 'fw27-stack' ? campaign('fw27-m1')?.src : wp.id === 'zed' ? campaign('zed-m1')?.src : WALLPAPERS.find((w) => w.id === wp.id)?.src;
-  const tile = wp.kind === 'preset' && wp.id.startsWith('tile-');
-  const n = (h: string) => cat?.collections.get(h)?.count;
-  const items: { label: string; icon: IconName; to?: string; overlay?: Overlay; count?: number | null }[] = [
-    { label: 'SHOP', icon: 'hanger', to: '/shop', count: cat?.products.length },
-    { label: 'NEW', icon: 'tag', to: '/collections/newest', count: n('newest') },
-    { label: 'PJOYS', icon: 'pjoys', to: '/collections/pjoys', count: n('pjoys') },
+  useClaimCenter({ label: 'SHOP', run: () => navigate('/collections/newest') });
+  // Default screen = the original IYS Hills sky; a photo/pattern the visitor
+  // chose themselves (Camera, PJOYS chat) still wins.
+  const custom = wp.kind === 'image' ? wp.src : null;
+  const bgStyle = custom ? { backgroundImage: `url("${custom}")`, backgroundSize: mode === 'tile' ? '120px auto' : 'cover', backgroundRepeat: mode === 'tile' ? 'repeat' : 'no-repeat' } : undefined;
+  const n = (h: string) => cat?.collections.get(h)?.count ?? 0;
+  const drop = cat ? collectionProducts(cat, 'newest').slice(0, 8) : [];
+  const quick: { label: string; icon: IconName; to: string; count?: number | null }[] = [
+    { label: concept.y2k.shopAll.toUpperCase(), icon: 'hanger', to: '/shop', count: cat?.products.length },
     { label: 'SEARCH', icon: 'search', to: '/search' },
-    { label: 'CAIRO', icon: 'folder', to: '/collections/cairo', count: n('cairo') },
-    { label: 'CAMERA', icon: 'camera', overlay: 'camera' },
-    { label: 'FAVORITES', icon: 'favorites', to: '/favorites' },
+    { label: 'FAVS', icon: 'favorites', to: '/favorites' },
     { label: 'STORES', icon: 'stores', to: '/stores', count: storesData.storeCount },
-    { label: 'MESSAGES', icon: 'messenger', overlay: 'chat' },
   ];
   return (
-    <div className="m-home" style={bg ? { backgroundImage: `url("${bg}")`, backgroundSize: tile ? '120px auto' : 'cover', backgroundRepeat: tile ? 'repeat' : 'no-repeat' } : undefined}>
-      <div className="m-home__shade" />
-      <div className="m-home__top">
-        <img src={brand.wordmarkWhite} alt="In Your Shoe" className="m-home__logo" />
-        <p className="m-home__clock">{now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</p>
-        <p className="m-home__date">
-          {now.toLocaleDateString([], { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' })} · TARGET 2006
-        </p>
-      </div>
+    <div className={`m-home${custom ? ' m-home--custom' : ''}`} style={bgStyle}>
       {pjoysPing && (
         <button type="button" className="m-notify" onClick={() => open('chat')}>
           <Icon name="mail" size={24} />
           <span>
-            <b>1 NEW MESSAGE</b> — PJOYS: “{concept.messenger.pjoysOpener}”
+            <b>{concept.y2k.ping}</b> “{concept.messenger.pjoysOpener}”
           </span>
         </button>
       )}
-      <ul className="m-grid" aria-label="IYS MOBILE menu">
-        {items.map((it) => (
+      <section className="m-hero" aria-labelledby="m-hero-title">
+        <p className="m-hero__bar" aria-hidden="true">
+          <span>✧ welcome.htm</span>
+          <span>✧ ✧ ✧</span>
+        </p>
+        <div className="m-hero__body">
+          <img src={brand.wordmark} alt="In Your Shoe" className="m-hero__logo" width={346} height={114} />
+          <p className="m-hero__kicker">{concept.y2k.heroKicker}</p>
+          <h1 className="m-hero__title" id="m-hero-title">
+            {official.coolDecision}
+          </h1>
+          {cat && <p className="m-hero__line">{formatCount(cat.products.length)} real IYS pieces · prices in EGP</p>}
+          <div className="m-cta">
+            <button type="button" className="btn btn--go m-cta__primary" onClick={() => navigate('/collections/newest')}>
+              {concept.y2k.primary} ›{n('newest') ? <small>{formatCount(n('newest'))} new</small> : null}
+            </button>
+            <button type="button" className="btn btn--sky m-cta__secondary" onClick={() => navigate('/collections/pjoys')}>
+              {concept.y2k.secondary}
+            </button>
+          </div>
+        </div>
+      </section>
+      <ul className="m-grid" aria-label={concept.y2k.quick}>
+        {quick.map((it) => (
           <li key={it.label}>
-            <button type="button" className="m-grid__item" onClick={() => (it.to ? navigate(it.to) : open(it.overlay!))} aria-label={`${it.label}${it.count ? `, ${it.count} items` : ''}`}>
-              <Icon name={it.icon} size={40} />
+            <button type="button" className="m-grid__item" onClick={() => navigate(it.to)} aria-label={`${it.label}${it.count ? `, ${it.count} items` : ''}`}>
+              <Icon name={it.icon} size={32} />
               <span>{it.label}</span>
-              {it.count ? <small>{formatCount(it.count)}</small> : null}
             </button>
           </li>
         ))}
       </ul>
-      <p className="m-home__official">{official.coolDecision}</p>
-      <p className="m-home__disclaimer">Unofficial concept by Omar Akram · not affiliated with In Your Shoe</p>
+      {drop.length > 0 && (
+        <section className="m-panel" aria-labelledby="m-drop-title">
+          <h2 className="m-panel__title" id="m-drop-title">
+            {concept.y2k.justDropped}
+          </h2>
+          <ul className="m-drop">
+            {drop.map((p) => (
+              <li key={p.handle}>
+                <Link to={productPath(p.handle)} className="m-drop__card">
+                  <span className="m-drop__img">
+                    <RemoteImage src={p.image} alt="" title={p.title} base={240} sizes="128px" max={480} />
+                  </span>
+                  <span className="m-drop__name">{p.title}</span>
+                  <Price price={p.price} compareAt={p.compareAtPrice} />
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <Link to="/collections/newest" className="m-panel__more">
+            {concept.y2k.seeAllNew} ({formatCount(n('newest'))}) ›
+          </Link>
+        </section>
+      )}
+      <section className="m-panel m-news" aria-labelledby="m-news-title">
+        <h2 className="m-panel__title" id="m-news-title">
+          {concept.y2k.newsletterTitle}
+        </h2>
+        <p>{official.coolList}</p>
+        <a className="btn btn--go m-news__cta" href={officialSources.home} target="_blank" rel="noopener noreferrer">
+          {concept.y2k.newsletterCta}
+        </a>
+        <p className="m-news__note">{concept.y2k.newsletterNote}</p>
+      </section>
+      <p className="m-home__foot">
+        <b>{concept.y2k.wasHere}</b> · Unofficial concept by Omar Akram · not affiliated with In Your Shoe
+      </p>
     </div>
   );
 }
@@ -117,7 +159,7 @@ export function MList({ open }: { open: (o: Overlay) => void }) {
   const { cat, q, result, setQuery, handle, collection, notFound } = useShopQuery();
   const title = handle ? collectionTitle(handle, collection?.title) : 'SHOP ALL';
   useTitle(title);
-  useClaimCenter({ label: 'OPTIONS', run: () => open('filters') });
+  useClaimCenter({ label: 'FILTER', run: () => open('filters') });
   if (notFound) return <MNotFound />;
   if (!cat || !result) return <PageLoading label="Loading..." />;
   const pg = paginate(result.filtered, q.page, PER);
@@ -128,8 +170,8 @@ export function MList({ open }: { open: (o: Overlay) => void }) {
         {formatCount(pg.total)} products · page {pg.page}/{pg.pageCount}
         {q.sort !== 'featured' || q.types.length || q.sizes.length || q.inStock || q.sale || q.min !== null || q.max !== null ? ' · filtered' : ''}
       </p>
-      <button type="button" className="btn m-options" onClick={() => open('filters')}>
-        Sort & filter
+      <button type="button" className="btn btn--sky m-options" onClick={() => open('filters')}>
+        {concept.y2k.filter}
       </button>
       {pg.items.length ? (
         <ul className="m-list">
@@ -138,7 +180,7 @@ export function MList({ open }: { open: (o: Overlay) => void }) {
           ))}
         </ul>
       ) : (
-        <p className="empty">0 products. Try fewer filters.</p>
+        <p className="empty">{concept.y2k.noResults}</p>
       )}
       <Pagination page={pg.page} pageCount={pg.pageCount} onPage={(n) => { setQuery({ page: n }); window.scrollTo(0, 0); document.querySelector('.m-content')?.scrollTo(0, 0); }} />
     </div>
@@ -149,7 +191,7 @@ export function MSearch() {
   const [params, setParams] = useSearchParams();
   const q = params.get('q') ?? '';
   const [typed, setTyped] = useState(q);
-  const { cat, results } = useSearch(q);
+  const { results } = useSearch(q);
   const page = Number(params.get('page') ?? '1') || 1;
   const pg = results ? paginate(results, page, PER) : null;
   const input = useRef<HTMLInputElement>(null);
@@ -173,17 +215,15 @@ export function MSearch() {
           SEARCH
         </label>
         <div className="m-search__row">
-          <input ref={input} id="m-q" className="input" type="search" enterKeyHint="search" value={typed} onChange={(e) => setTyped(e.target.value)} placeholder={`${cat ? formatCount(cat.products.length) : ''} products`} />
-          <button type="submit" className="btn btn--primary">
+          <input ref={input} id="m-q" className="input" type="search" enterKeyHint="search" value={typed} onChange={(e) => setTyped(e.target.value)} placeholder={concept.y2k.searchPlaceholder} />
+          <button type="submit" className="btn btn--go">
             Go
           </button>
         </div>
       </form>
       {pg && (
         <>
-          <p className="m-meta">
-            {formatCount(pg.total)} results for “{q}”
-          </p>
+          <p className="m-meta">{pg.total ? `${formatCount(pg.total)} results 4 “${q}” :)` : `0 results 4 “${q}” :( try another word?`}</p>
           <ul className="m-list">
             {pg.items.map((p) => (
               <Row key={p.handle} p={p} />
@@ -203,7 +243,8 @@ export function MProduct() {
   const [idx, setIdx] = useState(0);
   const strip = useRef<HTMLDivElement>(null);
   useTitle(p?.title ?? indexed?.title ?? 'Product');
-  useClaimCenter(p ? { label: s.needsChoice ? 'SIZE?' : variant?.available === false ? 'SOLD OUT' : 'ADD', disabled: !s.canAdd, run: () => s.add() } : null);
+  const missing = p?.options.find((_, i) => !s.selected[i])?.name;
+  useClaimCenter(p ? { label: s.needsChoice ? `PICK ${(missing ?? 'size').toUpperCase()}` : variant?.available === false ? concept.y2k.soldOut : concept.y2k.add, disabled: !s.canAdd, run: () => s.add() } : null);
   const images = useMemo(() => p?.images ?? (indexed?.image ? [{ src: indexed.image, alt: indexed.title, width: indexed.imageWidth, height: indexed.imageHeight }] : []), [p, indexed]);
   if (s.missing || detail.status === 'missing') return <MNotFound />;
   if (!indexed && !p) return <PageLoading label="Opening..." />;
@@ -241,13 +282,14 @@ export function MProduct() {
           <>
             <StockNote available={variant ? variant.available : p.available} />
             <VariantPicker p={p} selected={s.selected} onSelect={s.select} />
-            <button type="button" className="btn btn--primary m-add" disabled={!s.canAdd} onClick={s.add}>
-              {s.needsChoice ? `Choose ${p.options.find((_, i) => !s.selected[i])?.name.toLowerCase() ?? 'option'}` : variant?.available === false ? 'Sold out' : 'ADD TO BAG'}
+            <button type="button" className="btn btn--go m-add" disabled={!s.canAdd} onClick={s.add}>
+              {s.needsChoice ? `pick a ${missing?.toLowerCase() ?? 'size'} first :)` : variant?.available === false ? concept.y2k.soldOut : `${concept.y2k.add} ✧`}
             </button>
+            <p className="m-fit">{variant?.available === false ? concept.y2k.tooCute : concept.y2k.fitNote}</p>
             <div className="m-product__row">
               <FavoriteButton handle={p.handle} title={p.title} />
               <a className="btn" href={p.sourceUrl} target="_blank" rel="noopener noreferrer">
-                View on IYS ↗
+                {concept.y2k.seeOnIys}
               </a>
             </div>
             <p className="props__snapshot">
@@ -283,7 +325,7 @@ export function MFavorites() {
           ))}
         </ul>
       ) : (
-        <p className="empty">No favorites yet. Tap ☆ on a product.</p>
+        <p className="empty">{concept.y2k.favEmpty}</p>
       )}
     </div>
   );
@@ -294,7 +336,9 @@ export function MStores() {
   return (
     <div className="m-page">
       <h1 className="m-h1">FIND IYS IRL ({storesData.storeCount})</h1>
-      <p className="m-meta">As published on inyourshoe.com, {storesData.generatedAt.slice(0, 10)}.</p>
+      <p className="m-meta">
+        {concept.y2k.stores} As published on inyourshoe.com, {storesData.generatedAt.slice(0, 10)}.
+      </p>
       <ul className="m-stores">
         {storesData.stores.map((st) => {
           const photo = assets.stores.find((x) => x.name === st.name);
@@ -333,12 +377,13 @@ export function MNotFound() {
     <div className="m-page m-notfound">
       <Icon name="error" size={48} />
       <h1 className="m-h1">{concept.notFound.line}</h1>
+      <p className="m-meta">{concept.y2k.notFoundSub}</p>
       <div className="m-product__row">
-        <button type="button" className="btn btn--primary" onClick={() => navigate('/')}>
-          HOME
+        <button type="button" className="btn btn--go" onClick={() => navigate('/collections/newest')}>
+          {concept.y2k.primary}
         </button>
-        <button type="button" className="btn" onClick={() => navigate('/shop')}>
-          SHOP
+        <button type="button" className="btn btn--sky" onClick={() => navigate('/')}>
+          HOME
         </button>
       </div>
     </div>

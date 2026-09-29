@@ -16,6 +16,27 @@ mid-2000s. The website *is* the computer; the store runs inside it.
 
 ---
 
+## Revision — IYS team feedback (2026-09)
+
+1. **Mobile more retro + blue/green screen vibe.** IYS MOBILE now sits on
+   *IYS Hills* (`public/iys/os/hills.svg`), an original vector sky + rolling
+   green hills in the cheerful mid-2000s screen mood — no Microsoft/Windows
+   asset, name or logo. Glossy sky-blue chrome, grass-green accents, light
+   rounded panels.
+2. **Less distraction, more CTA.** The 3×3 icon grid and big clock are gone.
+   One hero window carries the official line plus **Shop the drop** (green,
+   primary → IYS’s Newest collection) and **Explore pjoys xo** (blue,
+   secondary), both above the fold. Camera and Messages moved into MENU.
+   Product pages show title, price and sizes above the fold; the green centre
+   soft key is always the next step (SHOP → PICK SIZE → ADD 2 BAG → CHECKOUT).
+3. **Y2K voice.** Concept microcopy uses 2000s slang sparingly (“omg new drop
+   just landed :)”, “u + this fit = meant 2 b xx”, “subscribe 2 our newsletter
+   xoxo”, “ur bag is empty :(”, “IYS was here XD”). It lives in
+   `concept.y2k` in `src/data/copy.ts`, kept apart from verified official IYS
+   lines; honesty notes (snapshot prices, no real orders) are kept.
+4. **Desktop keeps its OS**, gains the same CTA pair above the FW27 hero, a
+   green ADD 2 BAG / CHECKOUT, the Y2K copy and an *IYS Hills* wallpaper preset.
+
 ## Design thesis
 
 - **Build a computer, not a skin.** IYS OS is a real window manager (drag,
@@ -56,7 +77,7 @@ archive photos.
 | **Stores** | FIND IYS IRL — every published store with address line, hours, phone, directions. |
 | **Control Panel** | Wallpaper (presets, stretch/center/tile), sound, CRT filter, Time Machine (2006 only), System (snapshot facts), About, Reset desktop. |
 | **Easter eggs** | README.TXT, RECYCLE BIN (BORING_OUTFITS, empty), `TOUCH_GRASS.EXE` (“ERROR: TOUCH GRASS NOT FOUND.” → the real product), `GAME_NIGHT.EXE`, a screensaver after 60 s idle. |
-| **IYS MOBILE** | A separate shell below 700 px: status strip, path titles, 3×3 home grid, list screens, swipe gallery, soft keys (BACK · context key · BAG), same catalogue/bag/favorites/routes. |
+| **IYS MOBILE** | A separate shell below 700 px on an original sky-and-hills screen: glossy status strip, path titles, a `welcome.htm` hero with **Shop the drop** (primary) + **Explore pjoys xo** (secondary), four shortcuts, a “just dropped” strip, a newsletter panel, list screens, swipe gallery, glossy soft keys (BACK · green context key · BAG), same catalogue/bag/favorites/routes. |
 
 ## Technology
 

@@ -14,6 +14,18 @@
   --iys-blue: #06478e;
   --iys-blue-2: #4b87c8;
 
+  /* Y2K sky + grass (team feedback 2026-09): cheerful blue/green screen mood.
+     Original values for IYS — no third-party wallpaper or theme is reused. */
+  --sky-deep: #0f56b3;
+  --sky: #2f86e0;
+  --sky-light: #7fc0f7;
+  --sky-pale: #e3f2ff;
+  --grass-deep: #186d10;
+  --grass: #2c9420;
+  --grass-light: #6fd145;
+  --grass-pale: #e6f8d8;
+  --hills: url('/iys/os/hills.svg');
+
   /* OS faces + bevels */
   --os-face: #e7e5df;
   --os-face-2: #f3f2ee;

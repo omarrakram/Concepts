@@ -48,13 +48,13 @@ const shots = [
     path: '/product/cereal-killer-pjoys',
     session: true,
     wait: 2500,
-    actions: [['click', ".chip label >> text='M'"], ['click', ".chip label >> text='Black'"], ['click', 'text=ADD TO BAG'], ['wait', 1400], ['click', '.dicon[aria-label^="Open My Bag"]'], ['wait', 900]],
+    actions: [['click', ".chip label >> text='M'"], ['click', ".chip label >> text='Black'"], ['click', 'text=ADD 2 BAG'], ['wait', 1400], ['click', '.dicon[aria-label^="Open My Bag"]'], ['wait', 900]],
   },
   { name: 'stores', w: 1440, h: 900, path: '/stores', session: true, wait: 2500 },
   { name: 'mobile-home', w: 390, h: 844, mobile: true, path: '/', session: true, wait: 2000 },
   { name: 'mobile-shop', w: 360, h: 800, mobile: true, path: '/collections/pjoys', session: true, wait: 2500 },
   { name: 'mobile-product', w: 430, h: 932, mobile: true, path: '/product/cereal-killer-pjoys', session: true, wait: 2500 },
-  { name: 'mobile-messages', w: 390, h: 844, mobile: true, path: '/', session: true, wait: 1500, actions: [['click', "text=MESSAGES"], ['wait', 6000]] },
+  { name: 'mobile-messages', w: 390, h: 844, mobile: true, path: '/', session: true, wait: 1500, actions: [['click', "text=MENU"], ['wait', 300], ['click', "text=MESSAGES · PJOYS"], ['wait', 6000]] },
 ];
 
 const browser = await launch();

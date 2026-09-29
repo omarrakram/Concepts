@@ -226,7 +226,7 @@ export default function Showcase() {
                     {concept.messenger.pjoysFranco} <small className="chat__note">(Franco-Arabic: “are you awake?”)</small>
                   </p>
                   <p className="chat__text" data-sc="msg">
-                    found these for the sleepover
+                    omg found these 4 the sleepover xd
                   </p>
                   <ul className="sc-atts">
                     {SC.pjoys.map((p) => (
@@ -315,8 +315,8 @@ export default function Showcase() {
                       </span>
                     ))}
                   </div>
-                  <span className="btn btn--primary sc-add" data-sc="add">
-                    ADD TO BAG
+                  <span className="btn btn--go sc-add" data-sc="add">
+                    ADD 2 BAG
                   </span>
                   <u className="props__real">VIEW CURRENT ITEM ON IYS ↗</u>
                 </div>

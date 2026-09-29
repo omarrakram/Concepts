@@ -34,15 +34,20 @@ export function MBag({ close }: { close: () => void }) {
           navigate(productPath(h));
         }}
       />
+      {items.length === 0 && (
+        <button type="button" className="btn btn--go m-add" onClick={() => { close(); navigate('/collections/newest'); }}>
+          {concept.y2k.primary} ›
+        </button>
+      )}
       {items.length > 0 && (
         <div className="m-total">
           <div className="bag__total">
             <span>Subtotal</span>
             <b>{formatEGP(subtotal(items))}</b>
           </div>
-          <p className="bag__note">Snapshot prices in EGP. This concept cannot place orders.</p>
-          <button type="button" className="btn btn--primary m-add" onClick={() => useOS.getState().showDialog({ kind: 'checkout' })}>
-            CHECKOUT
+          <p className="bag__note">{concept.y2k.bagNote}</p>
+          <button type="button" className="btn btn--go m-add" onClick={() => useOS.getState().showDialog({ kind: 'checkout' })}>
+            {concept.y2k.bagCta}
           </button>
         </div>
       )}
@@ -159,7 +164,7 @@ export function MChat({ close }: { close: () => void }) {
   );
 }
 
-export function MMenu({ close }: { close: () => void }) {
+export function MMenu({ close, openOverlay }: { close: () => void; openOverlay: (o: 'camera' | 'chat') => void }) {
   const cat = useCatalogue();
   const navigate = useNavigate();
   const prefs = usePreferences();
@@ -167,7 +172,20 @@ export function MMenu({ close }: { close: () => void }) {
   return (
     <div className="m-page">
       <h1 className="m-h1">MENU</h1>
+      <p className="m-meta">{concept.y2k.menuHint}</p>
       <ul className="m-menu">
+        <li>
+          <button type="button" onClick={() => openOverlay('chat')}>
+            <Icon name="messenger" size={24} />
+            <span>MESSAGES · PJOYS :)</span>
+          </button>
+        </li>
+        <li>
+          <button type="button" onClick={() => openOverlay('camera')}>
+            <Icon name="camera" size={24} />
+            <span>CAMERA · DCIM</span>
+          </button>
+        </li>
         {MENU.filter((m) => !m.collection || (cat?.collections.get(m.collection)?.count ?? 0) > 0).map((m) => (
           <li key={m.label}>
             <button type="button" onClick={() => { close(); navigate(m.to ?? collectionPath(m.collection)); }}>

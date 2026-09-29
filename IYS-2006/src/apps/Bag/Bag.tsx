@@ -38,7 +38,7 @@ export default function Bag({ win }: { win: Win }) {
             <b>{formatEGP(total)}</b>
           </div>
           <p className="bag__note">Snapshot prices in EGP. Delivery and offers are calculated on the real site.</p>
-          <button type="button" className="btn btn--primary bag__checkout" onClick={() => useOS.getState().showDialog({ kind: 'checkout' })}>
+          <button type="button" className="btn btn--go bag__checkout" onClick={() => useOS.getState().showDialog({ kind: 'checkout' })}>
             CHECKOUT
           </button>
         </div>

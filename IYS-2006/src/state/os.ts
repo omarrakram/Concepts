@@ -93,7 +93,7 @@ interface OSState {
   desk: { w: number; h: number };
   dialog: Dialog | null;
   balloon: Balloon | null;
-  /** Transient taskbar/OS status line (e.g. "WALLPAPER UPDATED."). */
+  /** Transient taskbar/OS status line (e.g. "WALLPAPER UPDATED xo"). */
   notice: { text: string; at: number } | null;
   startOpen: boolean;
   setDesk: (w: number, h: number) => void;

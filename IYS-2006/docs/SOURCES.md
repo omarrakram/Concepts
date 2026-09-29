@@ -62,11 +62,19 @@ All official strings live in `src/data/copy.ts → official`; everything in
 
 ## What is NOT used
 
-No reviews, star ratings or customer names (the guestbook says “NO ENTRIES
-LOADED”), no private stock data (the public `Online Out of Stock` tag is
+No reviews, star ratings or customer names (the guestbook says “no entries
+yet”), no private stock data (the public `Online Out of Stock` tag is
 ignored — availability comes only from public variant data), no internal
 systems, no discount codes, no generated or retouched product photography.
 The “TIME TRAVELLERS” counter is labelled fictional and is not analytics.
+
+**IYS Hills** (`public/iys/os/hills.svg`, the mobile home screen, splash and
+home CTA band) is an original vector landscape drawn for this concept. It
+evokes the cheerful blue-sky / green-hills screen mood of the mid-2000s; it is
+not a copy or trace of any operating-system wallpaper, and no Microsoft /
+Windows name, logo or asset is used. Y2K slang lines (“omg new drop just
+landed :)”, “Subscribe xo”…) are CONCEPT COPY in `src/data/copy.ts`
+(`concept.y2k`), never presented as IYS language.
 
 ## Local assets
 

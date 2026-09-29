@@ -112,7 +112,7 @@ export function buildTimeline(root: HTMLElement): gsap.core.Timeline {
   press(all('res')[0]!, 8.08);
   close(['shop'], 8.2);
 
-  // ── 8.30–9.80 size M → ADD TO BAG → COPYING TO MY BAG ─────────────────
+  // ── 8.30–9.80 size M → ADD 2 BAG → COPYING TO MY BAG ─────────────────
   open('product', 8.24);
   move(one('chipM'), 8.34, 0.22);
   tl.set(one('chipM'), { background: '#06478e', color: '#ffffff' }, 8.58);

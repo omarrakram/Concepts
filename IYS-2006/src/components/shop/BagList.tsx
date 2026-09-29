@@ -1,3 +1,4 @@
+import { concept } from '../../data/copy';
 import { formatEGP } from '../../lib/catalogue/format';
 import { sized } from '../../lib/catalogue/images';
 import { MAX_QTY, useCart } from '../../state/cart';
@@ -11,9 +12,9 @@ export function BagList({ onOpenProduct }: { onOpenProduct: (handle: string) => 
       <div className="bag__empty">
         <Icon name="bag" size={48} />
         <p>
-          <b>MY BAG is empty.</b>
+          <b>{concept.y2k.bagEmpty}</b>
         </p>
-        <p>Items you add are copied here.</p>
+        <p>items u add get copied here xo</p>
       </div>
     );
   return (
