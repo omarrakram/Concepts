@@ -1,7 +1,7 @@
 # IYS 2000s V2
 
 > **V2 — revised IYS INTERNET 2006 concept**, a standalone project in the
-> `v2 iys retro/` folder of `omarrakram/Concepts`. It has its own
+> `v2-iys-retro/` folder of `omarrakram/Concepts`. It has its own
 > dependencies, assets, catalogue snapshot, tests and Vercel config, and does
 > not depend on any other folder. The original version is kept separately and
 > deployed on its own.
@@ -93,7 +93,7 @@ Vercel Web Analytics · Playwright/Vitest (`npm test`, `npx playwright test`).
 No backend, database, auth, payments, Three.js, Tailwind, UI kit or AI.
 
 ```
-v2 iys retro/
+v2-iys-retro/
   public/
     catalogue/p-00…31.json     full product records (32 on-demand shards)
     iys/{brand,campaign,stores,products,camera,tiles,thumbs,os}/  curated local assets
@@ -307,7 +307,7 @@ fictional).
 ## Deploy (Vercel)
 
 Repository `omarrakram/Concepts` · Branch `main` ·
-Root Directory `v2 iys retro` · Framework Vite · Install `npm ci` ·
+Root Directory `v2-iys-retro` · Framework Vite · Install `npm ci` ·
 Build `npm run build` · Output `dist`.
 Create this as its own Vercel project; the original version keeps its own
 project and deployment.
