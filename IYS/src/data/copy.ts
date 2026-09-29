@@ -1,67 +1,104 @@
 /**
- * Copy registry.
+ * COPY REGISTRY
  *
- * OFFICIAL — verified existing IN YOUR SHOE language, read on the public site
- *            (retrieved 2026-09-27), with where it appears.
- * CONCEPT  — new lines written for this experience.
+ * OFFICIAL — existing In Your Shoe language, re-verified on the public
+ *            Egyptian storefront on 2026-09-29, with where it appears.
+ *            Promotions are volatile: re-verify before each publish.
+ * CONCEPT  — lines written for this unofficial concept (Omar Akram, 2026).
+ *            Never present these as IYS copy.
  */
 
-// ── OFFICIAL (verified, public) ─────────────────────────────────────────
+export const OFFICIAL_VERIFIED_ON = '2026-09-29';
+
 export const official = {
-  /** Scrolling marquee, inyourshoe.com (links to New Drops). */
+  /** Scrolling marquee + footer, https://inyourshoe.com/ */
   coolDecision: 'You’re about to make a Cool Decision!',
-  /** Storefront <title> — inyourshoe.com. */
+  /** <title> of https://inyourshoe.com/ */
   coolestApparel: 'The Coolest Apparel In Town!',
-  /** Meta description — inyourshoe.com. */
+  /** meta description of https://inyourshoe.com/ */
   standOut: 'Stand out, Express yourself! We put ourselves in your shoe, in style! :)',
-  /** About Us — inyourshoe.com/pages/about-us. */
-  origin: 'What started with two friends competing over who rocked better socks ended with the creation of In Your Shoe in April 2018, with the goal of blowing everyone’s socks off!',
-  customers: 'more than 250,000 happy customers',
-  /** IYS × ZED page — inyourshoe.com/pages/iysxzed. */
-  zedLine: ['Not fan merch.', 'A uniform for the next generation.'],
-  zedLicensed: 'Officially licensed IYS × ZED FC collab.',
-  /** Pjoys product descriptions — e.g. inyourshoe.com/products/beanie-pjoys. */
+  /** Footer newsletter block, https://inyourshoe.com/ */
+  coolList: 'Join our cool list and receive a 10% OFF code for your 1st purchase!',
+  /** Announcement bar, https://inyourshoe.com/ */
+  sameDay: 'Same-day delivery available ⚡',
+  /** Announcement bar, https://inyourshoe.com/ */
+  freeShipping: 'Free Shipping +2,499',
+  /** Pjoys product descriptions, e.g. https://inyourshoe.com/products/cereal-killer-pjoys */
   pjoys: 'Pjoys are our terminology for pyjama pants that are super joyful, just like you reading this.',
-  fluffy: 'the fluffy winter edition',
-  /** FAQs — inyourshoe.com/pages/faqs. */
-  outfitCheck: 'If still unsure, visit any of our stores for that “outfit check”.',
   brand: 'IN YOUR SHOE',
-  handle: '@inyourshoe',
-};
+} as const;
 
 export const officialSources = {
   home: 'https://inyourshoe.com/',
-  about: 'https://inyourshoe.com/pages/about-us',
-  zed: 'https://inyourshoe.com/pages/iysxzed',
-  faqs: 'https://inyourshoe.com/pages/faqs',
-};
+  stores: 'https://inyourshoe.com/pages/store-locations',
+  collections: 'https://inyourshoe.com/collections/all-products',
+} as const;
 
-// ── CONCEPT COPY — NOT OFFICIAL BRAND LANGUAGE. ────────────────────────
+/** ── CONCEPT COPY — NOT OFFICIAL BRAND LANGUAGE ─────────────────────── */
 export const concept = {
-  clubName: 'The Cool Decision Club',
-  youSure: 'you sure?',
-  yes: 'Yes',
-  obviously: 'Obviously',
-  goodChoice: 'good choice.',
-  howFeeling: 'How are you feeling?',
-  todayIm: 'Today I’m…',
-  inside: 'An unofficial IYS store you can walk around in. Pick a mood, open the rooms, build a look.',
-  wardrobe: { title: 'The Wardrobe', hint: 'scroll the rail · tap to pull one down', kids: 'the little rail' },
-  pjoyRoom: { title: 'The Pjoy Room', hint: 'drag the line', pick: 'okay this one.' },
-  cairo: { title: 'The Balcony', buzzer: 'Buzz a flat' },
-  locker: { title: 'The Locker Room', label: 'Match day' },
-  drawer: { title: 'The Drawer', est: 'EST. 2018', origin: ['Started with socks.', 'Got louder.'] },
-  wall: { title: 'The Wall', line: 'Everyone’s here.' },
-  stores: { title: 'Meet us IRL', hint: 'flip a postcard' },
-  bag: {
-    title: 'Your Bag',
-    counter: 'Cool decisions',
-    empty: 'Nothing yet. Bold of you.',
-    added: ['Good choice.', 'Obviously.', 'Cool decision made.', 'Okay this one.', 'You knew you wanted to.'],
+  name: 'IYS INTERNET 2006',
+  os: 'IYS OS',
+  targetYear: '2006',
+  thesis: 'What if today’s In Your Shoe travelled back to the internet of 2006?',
+  boot: {
+    machine: 'IYS PERSONAL COMPUTER',
+    lines: [
+      ['MEMORY', 'OK'],
+      ['WARDROBE', 'DETECTED'],
+      ['INTERNET', 'CONNECTED'],
+      ['COOL DECISIONS', 'READY'],
+    ] as [string, string][],
+    target: 'TIME TARGET: 2006',
+    connecting: 'CONNECTING TO IYS INTERNET...',
+    skip: 'SKIP',
   },
-  search: { title: 'What are we looking for?', empty: 'Nothing in the closet for that.' },
-  wishlist: 'Stuck it on the wall.',
-  newsletter: { title: 'Leave a note', sub: 'New drops and restocks, if you want them.', placeholder: 'your@email.com', done: 'Noted. Folded. Pinned.', disclaimer: 'Concept demo — nothing is sent or stored.' },
-  checkoutNote: 'This is a concept. Checkout isn’t connected and nothing is charged — every item links to the real product on inyourshoe.com.',
-  disclaimer: ['Unofficial speculative digital concept.', 'Not affiliated with In Your Shoe.', 'Design & development concept — Omar Akram / 2026.'],
-};
+  dialog: { app: 'IYS.EXE', cancel: 'Cancel', ok: 'Obviously', postponed: 'Cool decision postponed. It’ll wait.' },
+  notFound: { title: 'IYS.EXE', line: 'THE PAGE YOU’RE LOOKING FOR WENT OFFLINE.' },
+  imageOffline: 'IMAGE COULD NOT LOAD',
+  copying: 'COPYING ITEM TO:',
+  itemAdded: 'ITEM ADDED.',
+  wallpaperUpdated: 'WALLPAPER UPDATED.',
+  touchGrass: { title: 'TOUCH_GRASS.EXE', message: 'ERROR: TOUCH GRASS NOT FOUND.', sub: 'Opening the closest available alternative...' },
+  gameNight: 'GAME_NIGHT.EXE',
+  checkout: {
+    title: 'CONCEPT CHECKOUT',
+    lines: ['This is an unofficial portfolio prototype.', 'No order will be placed.'],
+    continue: 'Continue shopping',
+    visit: 'Visit In Your Shoe ↗',
+  },
+  mail: {
+    title: 'IYS MAIL',
+    subject: 'Welcome to the cool list',
+    note: 'Portfolio demo — this form does not send or store your address. Join the real list on inyourshoe.com.',
+    done: 'MESSAGE QUEUED. (Not really — this is a concept. Nothing was sent.)',
+  },
+  readme: [
+    'you made a cool decision.',
+    '',
+    'IYS INTERNET 2006 is an unofficial concept:',
+    'today’s In Your Shoe, running on a computer from 2006.',
+    '',
+    'Every product, price and photo inside is real and public,',
+    'copied from inyourshoe.com at the snapshot time shown in',
+    'Control Panel. Nothing here can place an order.',
+    '',
+    '— Omar Akram, 2026',
+  ],
+  recycle: { title: 'RECYCLE BIN', folder: 'BORING_OUTFITS', empty: 'This folder is empty. Nobody here dresses boring.' },
+  snapshot: 'Prices & availability as of the catalogue snapshot',
+  guestbook: 'NO ENTRIES LOADED. (No reviews are shown — we don’t invent customers.)',
+  counterLabel: 'TIME TRAVELLERS:',
+  counterNote: 'Fictional counter. Not analytics.',
+  messenger: {
+    pjoysOpener: 'u awake?',
+    /** Egyptian Franco-Arabic ("are you awake?") — period-accurate chat script. */
+    pjoysFranco: 'enta sa7y?',
+    pjoysAfter: ['found these for the sleepover', 'pick one. obviously.'],
+  },
+  disclaimer: [
+    'UNOFFICIAL SPECULATIVE DIGITAL CONCEPT.',
+    'NOT AFFILIATED WITH IN YOUR SHOE.',
+    'DESIGN & DEVELOPMENT CONCEPT — OMAR AKRAM / 2026.',
+    'Product names, logo and photography belong to their respective rights holders and are used here for a non-commercial concept.',
+  ],
+} as const;

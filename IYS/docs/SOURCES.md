@@ -1,152 +1,144 @@
-# Sources
+# Sources — IYS INTERNET 2006
 
-Every external asset and fact in this concept comes from In Your Shoe’s **public** website. No private, internal or unpublished material is used. Retrieved **2026-09-27**.
+Every fact, product, price, photograph and logo in this unofficial concept comes from
+In Your Shoe's **public** website. No private, internal, unpublished or logged-in
+material is used. Nothing was invented to fill gaps: missing fields stay empty.
 
-Product data and imagery are pulled by `npm run fetch-assets` from the storefront’s public product JSON (`/products/<handle>.js`, Egypt market, EGP); images are resized locally to WebP (never upscaled). Re-running the script refreshes prices and stock and rewrites the image table in `.qa/SOURCES.generated.md`.
+<!-- catalogue:start -->
+<!-- catalogue:end -->
 
-## Pages researched
+## Local assets
 
-- https://inyourshoe.com/ — homepage — navigation, marquee (“You’re about to make a Cool Decision!”), footer, logo, brand kit colours, campaign banners
-- https://inyourshoe.com/pages/about-us — brand origin (April 2018, socks), 250,000+ customers, campaign photo
-- https://inyourshoe.com/pages/iysxzed — IYS × ZED FC collaboration — verified live; headline, licensing line, products, campaign photos
-- https://inyourshoe.com/pages/store-locations — 10 stores — names, address lines, Google Maps links, store photos
-- https://inyourshoe.com/pages/faqs — delivery times, same-day delivery, “outfit check” line
-- https://inyourshoe.com/pages/shipping-policy — delivery durations, free shipping over 2,499 EGP
-- https://inyourshoe.com/pages/exchange-refund-policy — 14-day exchange/refund conditions
-- https://inyourshoe.com/collections/pjoys — live Pjoys (30 at retrieval)
-- https://inyourshoe.com/collections/fluffy-pjoys — live Fluffy Pjoys; the “Pjoys are our terminology…” definition (product descriptions)
-- https://inyourshoe.com/collections/hoodies · /t-shirts · /long-sleeves-and-polos · /jeans · /women · /all-kids-products · /all-socks · /hats-caps · /bandanas · /all-bags · /best-sellers · /newest — which products are currently live, prices, availability, imagery (public `products.json` of each collection)
+<!-- assets:start -->
+Retrieved 2026-09-29 by `npm run fetch-showcase-assets`. 127 files.
 
-## Official copy used
-
-| line | where it appears |
-| --- | --- |
-| You’re about to make a Cool Decision! | inyourshoe.com — scrolling marquee (footer: “You’re about to make a cool decision”) |
-| The Coolest Apparel In Town! | inyourshoe.com — page title (brand kit slogan: “The coolest apparel in town.”) |
-| What started with two friends competing over who rocked better socks ended with the creation of In Your Shoe in April 2018, with the goal of blowing everyone’s socks off! | /pages/about-us |
-| more than 250,000 happy customers | /pages/about-us |
-| Not fan merch. A uniform for the next generation. | /pages/iysxzed |
-| Officially licensed IYS × ZED FC collab. | /pages/iysxzed |
-| Pjoys are our terminology for pyjama pants that are super joyful, just like you reading this. | Pjoys product descriptions, e.g. /products/beanie-pjoys |
-| the fluffy winter edition | Fluffy Pjoys product descriptions |
-| If still unsure, visit any of our stores for that “outfit check”. | /pages/faqs |
-| Product captions (e.g. “Relax, it’s just about breakfast (probably).”) | verbatim excerpts of each product’s own description on its product page (listed below) |
-
-Everything else on screen (room names, mood labels, notes, toasts, button jokes) is concept copy, registered in `src/data/copy.ts` / `src/data/moods.ts` and marked *CONCEPT COPY — NOT OFFICIAL BRAND LANGUAGE*.
-
-Brand colours `#FF6060` (primary), `#06478E` (text) and `#4B87C8` (secondary) are the storefront’s public brand-kit values. The logo files are the current storefront header logo, footer white wordmark and IYS monogram.
-
-## Products (19)
-
-| product | price (EGP) | sizes (✗ = sold out at retrieval) | product page | data |
+| local file | official source URL | type | subject | retrieved |
 | --- | --- | --- | --- | --- |
-| Cereal Killer Pjoys | 799 | S M L XL | https://inyourshoe.com/products/cereal-killer-pjoys | [.js](https://inyourshoe.com/products/cereal-killer-pjoys.js) |
-| Doggies Pjoys | 799 | S M L XL | https://inyourshoe.com/products/doggies-pjoys | [.js](https://inyourshoe.com/products/doggies-pjoys.js) |
-| Love You So Matcha Pjoys | 799 | S M L XL | https://inyourshoe.com/products/love-you-so-matcha-pjoys | [.js](https://inyourshoe.com/products/love-you-so-matcha-pjoys.js) |
-| Sunset Pjoys | 799 | S M L XL | https://inyourshoe.com/products/sunset-pjoys | [.js](https://inyourshoe.com/products/sunset-pjoys.js) |
-| Main Character Pjoys | 799 | S M L XL✗ | https://inyourshoe.com/products/main-character-pjoys | [.js](https://inyourshoe.com/products/main-character-pjoys.js) |
-| Mood Swings Fluffy Pjoys | 999 | XS S M L XL | https://inyourshoe.com/products/mood-swings-fluffy-pjoys | [.js](https://inyourshoe.com/products/mood-swings-fluffy-pjoys.js) |
-| Just Sleepy Fluffy Pjoys | 999 | XS S M L XL | https://inyourshoe.com/products/just-sleepy-fluffy-pjoys | [.js](https://inyourshoe.com/products/just-sleepy-fluffy-pjoys.js) |
-| Cairo Is A Mindset Oversized Hoodie | 1799 | S M L XL | https://inyourshoe.com/products/cairo-is-a-mindset-oversized-hoodie | [.js](https://inyourshoe.com/products/cairo-is-a-mindset-oversized-hoodie.js) |
-| Cereal Crimes Oversized Tee | 1099 | S M L XL | https://inyourshoe.com/products/cereal-crimes-oversized-tee | [.js](https://inyourshoe.com/products/cereal-crimes-oversized-tee.js) |
-| Egyptian Culture Oversized Long Sleeves | 1199 | S M L XL | https://inyourshoe.com/products/egyptian-culture-oversized-long-sleeves | [.js](https://inyourshoe.com/products/egyptian-culture-oversized-long-sleeves.js) |
-| Orange Cairo Jersey | 1099 | S✗ M L XL | https://inyourshoe.com/products/orange-cairo-jersey | [.js](https://inyourshoe.com/products/orange-cairo-jersey.js) |
-| Female Denim Blue Washed Wide Leg Jeans | 1399 | 34 36 38 40 42 | https://inyourshoe.com/products/female-denim-blue-washed-wide-leg-jeans | [.js](https://inyourshoe.com/products/female-denim-blue-washed-wide-leg-jeans.js) |
-| Female Red Striped Regular Shirt | 799 (was 1299) | S M L XL✗ | https://inyourshoe.com/products/female-red-striped-regular-shirt | [.js](https://inyourshoe.com/products/female-red-striped-regular-shirt.js) |
-| ZED Stars Jersey | 1099 | S M L XL | https://inyourshoe.com/products/zed-stars-jersey | [.js](https://inyourshoe.com/products/zed-stars-jersey.js) |
-| Striped Youth Dept Jersey | 1099 | S M L XL | https://inyourshoe.com/products/striped-youth-dept-jersey | [.js](https://inyourshoe.com/products/striped-youth-dept-jersey.js) |
-| DNA Is Football Oversized Tee | 1099 | S M L✗ XL✗ | https://inyourshoe.com/products/dna-is-football-oversized-tee | [.js](https://inyourshoe.com/products/dna-is-football-oversized-tee.js) |
-| I Love Cairo Neck Socks | 159 | one size | https://inyourshoe.com/products/i-love-cairo-neck-socks | [.js](https://inyourshoe.com/products/i-love-cairo-neck-socks.js) |
-| Masr Washed Cap | 749 | one size | https://inyourshoe.com/products/masr-washed-cap | [.js](https://inyourshoe.com/products/masr-washed-cap.js) |
-| Blue Cairo Kids Jersey | 799 | 2-3✗ 4-5✗ 6-7✗ 8-9 10-11 12-13✗ | https://inyourshoe.com/products/blue-cairo-kids-jersey | [.js](https://inyourshoe.com/products/blue-cairo-kids-jersey.js) |
-
-## Images
-
-### Brand, campaign, collab and store imagery
-
-| file | what | source file | found on | retrieved |
-| --- | --- | --- | --- | --- |
-| `public/iys/brand/logo.webp` | IN YOUR SHOE | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/Name_PNG_aa2488c8-8e3c-4a35-bd7f-8e36f9e671ea.png | https://inyourshoe.com/ | 2026-09-27 |
-| `public/iys/brand/logo-white.webp` | IN YOUR SHOE | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/INYOURSHOE-LOGO-WHITE.png | https://inyourshoe.com/ | 2026-09-27 |
-| `public/iys/brand/mark.webp` | IYS | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/IYS_LOGO_ce45456e-9db1-4ed7-8da4-cec07fa2b235.png | https://inyourshoe.com/ | 2026-09-27 |
-| `public/iys/campaign/campaign-couch.webp` | Four friends lying on a couch in IYS Pjoys | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/slider_new_web_5.jpg | https://inyourshoe.com/pages/about-us | 2026-09-27 |
-| `public/iys/campaign/campaign-fw27-room.webp` | Two people in brown IYS hoodies in a room with a retro TV | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/FW27-MOBILE-01_jpg.jpg | https://inyourshoe.com/ | 2026-09-27 |
-| `public/iys/campaign/campaign-fw27-stack.webp` | A stack of folded IYS pieces on a wooden floor | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/FW27-MOBILE-02_jpg.jpg | https://inyourshoe.com/ | 2026-09-27 |
-| `public/iys/collabs/zed-lockers.webp` | IYS × ZED campaign — photos and stickers on green lockers | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/MOBILE-SLIDER-UPDATED-ZED_jpg.jpg | https://inyourshoe.com/ | 2026-09-27 |
-| `public/iys/collabs/zed-court.webp` | IYS × ZED campaign on a basketball court | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/IMG_5585.jpg | https://inyourshoe.com/pages/iysxzed | 2026-09-27 |
-| `public/iys/collabs/zed-pitch.webp` | IYS × ZED campaign on a football pitch | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/IMG_5588.jpg | https://inyourshoe.com/pages/iysxzed | 2026-09-27 |
-| `public/iys/collabs/zed-pitch-2.webp` | IYS × ZED campaign in the stands | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/IMG_5589.jpg | https://inyourshoe.com/pages/iysxzed | 2026-09-27 |
-| `public/iys/stores/store-city-stars.webp` | IN YOUR SHOE store front, City Stars | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/WhatsApp_Image_2025-12-23_at_22.20.50.jpg | https://inyourshoe.com/pages/store-locations | 2026-09-27 |
-| `public/iys/stores/store-u-venues.webp` | IN YOUR SHOE store, U Venues | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/Screenshot_from_2025-11-30_12-53-03.png | https://inyourshoe.com/pages/store-locations | 2026-09-27 |
-| `public/iys/stores/store-almaza.webp` | IN YOUR SHOE store, City Centre Almaza | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/PHOTO-2023-12-07-15-25-34_85844759-b2a6-4aa5-b36e-9afd3d87f760.jpg | https://inyourshoe.com/pages/store-locations | 2026-09-27 |
-| `public/iys/stores/store-district-5.webp` | IN YOUR SHOE store front, District 5 | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/WhatsApp_Image_2025-09-21_at_06.24.15.jpg | https://inyourshoe.com/pages/store-locations | 2026-09-27 |
-| `public/iys/stores/store-open-air-mall.webp` | IN YOUR SHOE store front at night, Open Air Mall | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/1000141396.jpg | https://inyourshoe.com/pages/store-locations | 2026-09-27 |
-| `public/iys/stores/store-mall-of-egypt.webp` | IN YOUR SHOE store, Mall of Egypt | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/IMG_6789.heic | https://inyourshoe.com/pages/store-locations | 2026-09-27 |
-| `public/iys/stores/store-the-yard.webp` | IN YOUR SHOE store front, The Yard Mall | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/yard_1.jpg | https://inyourshoe.com/pages/store-locations | 2026-09-27 |
-| `public/iys/stores/store-alexandria.webp` | IN YOUR SHOE store front, City Centre Alexandria | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/CITY_ALEX_bc620aad-7802-402b-8e74-1db44ecdc1d2.jpg | https://inyourshoe.com/pages/store-locations | 2026-09-27 |
-| `public/iys/stores/store-el-gouna.webp` | IN YOUR SHOE store, El Gouna | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/98dcb071-e53a-49a1-b01f-59570bad4639_7287938e-67c1-4381-afdf-9d616098c153.jpg | https://inyourshoe.com/pages/store-locations | 2026-09-27 |
-| `public/iys/stores/store-the-wing.webp` | IN YOUR SHOE store, The Wing Outlet | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/PHOTO-2024-03-07-17-14-21_a9f54e37-4cf0-48f2-bb83-3eef0465bd17.jpg | https://inyourshoe.com/pages/store-locations | 2026-09-27 |
-
-### Product imagery
-
-| file | source file | retrieved |
-| --- | --- | --- |
-| `public/iys/products/cereal-killer-pjoys-1.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/cereal-killer-pjoys-pjoys-in-your-shoe-901214.jpg | 2026-09-27 |
-| `public/iys/products/cereal-killer-pjoys-2.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/cereal-killer-pjoys-pjoys-in-your-shoe-201261.jpg | 2026-09-27 |
-| `public/iys/products/cereal-killer-pjoys-3.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/cereal-killer-pjoys-pjoys-in-your-shoe-683352.jpg | 2026-09-27 |
-| `public/iys/products/cereal-killer-pjoys-4.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/cereal-killer-pjoys-pjoys-in-your-shoe-712347.jpg | 2026-09-27 |
-| `public/iys/products/doggies-pjoys-1.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/doggies-pjoys-pjoys-in-your-shoe-503334.jpg | 2026-09-27 |
-| `public/iys/products/doggies-pjoys-2.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/doggies-pjoys-pjoys-in-your-shoe-266676.jpg | 2026-09-27 |
-| `public/iys/products/doggies-pjoys-3.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/doggies-pjoys-pjoys-in-your-shoe-363135.jpg | 2026-09-27 |
-| `public/iys/products/love-you-so-matcha-pjoys-1.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/love-you-so-matcha-pjoys-pjoys-in-your-shoe-148812.jpg | 2026-09-27 |
-| `public/iys/products/love-you-so-matcha-pjoys-2.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/love-you-so-matcha-pjoys-pjoys-in-your-shoe-325392.jpg | 2026-09-27 |
-| `public/iys/products/love-you-so-matcha-pjoys-3.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/love-you-so-matcha-pjoys-pjoys-in-your-shoe-845552.jpg | 2026-09-27 |
-| `public/iys/products/sunset-pjoys-1.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/sunset-pjoys-pjoys-in-your-shoe-230621.jpg | 2026-09-27 |
-| `public/iys/products/sunset-pjoys-2.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/sunset-pjoys-pjoys-in-your-shoe-933918.jpg | 2026-09-27 |
-| `public/iys/products/sunset-pjoys-3.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/sunset-pjoys-pjoys-in-your-shoe-428536.jpg | 2026-09-27 |
-| `public/iys/products/main-character-pjoys-1.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/main-character-pjoys-pjoys-in-your-shoe-765906.jpg | 2026-09-27 |
-| `public/iys/products/main-character-pjoys-2.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/main-character-pjoys-pjoys-in-your-shoe-470856.jpg | 2026-09-27 |
-| `public/iys/products/main-character-pjoys-3.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/main-character-pjoys-pjoys-in-your-shoe-925694.jpg | 2026-09-27 |
-| `public/iys/products/mood-swings-fluffy-pjoys-1.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/mood-swings-fluffy-pjoys-fluffy-pjoys-in-your-shoe-377819.jpg | 2026-09-27 |
-| `public/iys/products/mood-swings-fluffy-pjoys-2.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/mood-swings-fluffy-pjoys-fluffy-pjoys-in-your-shoe-649335.jpg | 2026-09-27 |
-| `public/iys/products/mood-swings-fluffy-pjoys-3.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/mood-swings-fluffy-pjoys-fluffy-pjoys-in-your-shoe-558641.jpg | 2026-09-27 |
-| `public/iys/products/just-sleepy-fluffy-pjoys-1.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/just-sleepy-fluffy-pjoys-fluffy-pjoys-in-your-shoe-548089.jpg | 2026-09-27 |
-| `public/iys/products/just-sleepy-fluffy-pjoys-2.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/just-sleepy-fluffy-pjoys-fluffy-pjoys-in-your-shoe-668495.jpg | 2026-09-27 |
-| `public/iys/products/just-sleepy-fluffy-pjoys-3.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/just-sleepy-fluffy-pjoys-fluffy-pjoys-in-your-shoe-593877.jpg | 2026-09-27 |
-| `public/iys/products/cairo-is-a-mindset-oversized-hoodie-1.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/cairo-is-a-mindset-oversized-hoodie-printed-hoodies-in-your-shoe-667690.jpg | 2026-09-27 |
-| `public/iys/products/cairo-is-a-mindset-oversized-hoodie-2.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/cairo-is-a-mindset-oversized-hoodie-printed-hoodies-in-your-shoe-697430.jpg | 2026-09-27 |
-| `public/iys/products/cairo-is-a-mindset-oversized-hoodie-3.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/cairo-is-a-mindset-oversized-hoodie-printed-hoodies-in-your-shoe-798730.jpg | 2026-09-27 |
-| `public/iys/products/cairo-is-a-mindset-oversized-hoodie-4.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/cairo-is-a-mindset-oversized-hoodie-printed-hoodies-in-your-shoe-959651.jpg | 2026-09-27 |
-| `public/iys/products/cereal-crimes-oversized-tee-1.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/cereal-crimes-oversized-tee-printed-oversized-tees-in-your-shoe-106103.jpg | 2026-09-27 |
-| `public/iys/products/cereal-crimes-oversized-tee-2.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/cereal-crimes-oversized-tee-printed-oversized-tees-in-your-shoe-641209.jpg | 2026-09-27 |
-| `public/iys/products/cereal-crimes-oversized-tee-3.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/cereal-crimes-oversized-tee-printed-oversized-tees-in-your-shoe-766785.jpg | 2026-09-27 |
-| `public/iys/products/egyptian-culture-oversized-long-sleeves-1.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/egyptian-culture-oversized-long-sleeves-long-sleeves-in-your-shoe-282745.jpg | 2026-09-27 |
-| `public/iys/products/egyptian-culture-oversized-long-sleeves-2.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/egyptian-culture-oversized-long-sleeves-long-sleeves-in-your-shoe-716968.jpg | 2026-09-27 |
-| `public/iys/products/egyptian-culture-oversized-long-sleeves-3.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/egyptian-culture-oversized-long-sleeves-long-sleeves-in-your-shoe-278377.jpg | 2026-09-27 |
-| `public/iys/products/orange-cairo-jersey-1.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/orange-cairo-jersey-jersey-in-your-shoe-110829.jpg | 2026-09-27 |
-| `public/iys/products/orange-cairo-jersey-2.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/orange-cairo-jersey-jersey-in-your-shoe-398913.jpg | 2026-09-27 |
-| `public/iys/products/orange-cairo-jersey-3.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/orange-cairo-jersey-jersey-in-your-shoe-573200.jpg | 2026-09-27 |
-| `public/iys/products/female-denim-blue-washed-wide-leg-jeans-1.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/female-denim-blue-washed-wide-leg-jeans-jeans-in-your-shoe-430045.jpg | 2026-09-27 |
-| `public/iys/products/female-denim-blue-washed-wide-leg-jeans-2.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/female-denim-blue-washed-wide-leg-jeans-jeans-in-your-shoe-101686.jpg | 2026-09-27 |
-| `public/iys/products/female-red-striped-regular-shirt-1.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/female-red-striped-regular-shirt-regular-shirts-in-your-shoe-249213.jpg | 2026-09-27 |
-| `public/iys/products/female-red-striped-regular-shirt-2.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/female-red-striped-regular-shirt-regular-shirts-in-your-shoe-465861.jpg | 2026-09-27 |
-| `public/iys/products/female-red-striped-regular-shirt-3.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/female-red-striped-regular-shirt-regular-shirts-in-your-shoe-771710.jpg | 2026-09-27 |
-| `public/iys/products/zed-stars-jersey-1.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/zed-stars-jersey-jersey-iys-x-zed-433067.jpg | 2026-09-27 |
-| `public/iys/products/zed-stars-jersey-2.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/zed-stars-jersey-jersey-iys-x-zed-777846.jpg | 2026-09-27 |
-| `public/iys/products/zed-stars-jersey-3.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/zed-stars-jersey-jersey-iys-x-zed-676263.jpg | 2026-09-27 |
-| `public/iys/products/striped-youth-dept-jersey-1.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/striped-youth-dept-jersey-jersey-iys-x-zed-189654.jpg | 2026-09-27 |
-| `public/iys/products/striped-youth-dept-jersey-2.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/striped-youth-dept-jersey-jersey-iys-x-zed-630420.jpg | 2026-09-27 |
-| `public/iys/products/striped-youth-dept-jersey-3.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/striped-youth-dept-jersey-jersey-iys-x-zed-707564.jpg | 2026-09-27 |
-| `public/iys/products/dna-is-football-oversized-tee-1.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/dna-is-football-oversized-tee-printed-oversized-tees-iys-x-zed-749989.jpg | 2026-09-27 |
-| `public/iys/products/dna-is-football-oversized-tee-2.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/dna-is-football-oversized-tee-printed-oversized-tees-iys-x-zed-475579.jpg | 2026-09-27 |
-| `public/iys/products/dna-is-football-oversized-tee-3.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/dna-is-football-oversized-tee-printed-oversized-tees-iys-x-zed-755814.jpg | 2026-09-27 |
-| `public/iys/products/i-love-cairo-neck-socks-1.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/i-love-cairo-neck-socks-neck-socks-in-your-shoe-316817.jpg | 2026-09-27 |
-| `public/iys/products/i-love-cairo-neck-socks-2.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/i-love-cairo-neck-socks-neck-socks-in-your-shoe-974684.jpg | 2026-09-27 |
-| `public/iys/products/masr-washed-cap-1.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/masr-washed-cap-washed-cap-in-your-shoe-699948.jpg | 2026-09-27 |
-| `public/iys/products/masr-washed-cap-2.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/masr-washed-cap-washed-cap-in-your-shoe-870100.jpg | 2026-09-27 |
-| `public/iys/products/blue-cairo-kids-jersey-1.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/blue-cairo-kids-jersey-kids-jersey-in-your-shoe-766203.jpg | 2026-09-27 |
-| `public/iys/products/blue-cairo-kids-jersey-2.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/blue-cairo-kids-jersey-kids-jersey-in-your-shoe-533622.jpg | 2026-09-27 |
-| `public/iys/products/blue-cairo-kids-jersey-3.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/blue-cairo-kids-jersey-kids-jersey-in-your-shoe-694285.jpg | 2026-09-27 |
-
-All photography, product names and the IN YOUR SHOE logo belong to In Your Shoe and are used here only for an unofficial, non-commercial portfolio concept.
-
+| `public/iys/brand/iys-mark.svg` | https://inyourshoe.com/cdn/shop/files/IYS_LOGO.svg | logo | IYS mark (current, homepage header) | 2026-09-29 |
+| `public/iys/brand/iys-mark-white.svg` | https://inyourshoe.com/cdn/shop/files/IYS_LOGO.svg | logo (white fill variant) | IYS mark — fill #000→#FFF, geometry untouched | 2026-09-29 |
+| `public/iys/brand/in-your-shoe-white.png` | https://inyourshoe.com/cdn/shop/files/INYOURSHOE-LOGO-WHITE.png | logo | IN YOUR SHOE wordmark, white (current header logo) | 2026-09-29 |
+| `public/iys/brand/in-your-shoe-black.png` | https://inyourshoe.com/cdn/shop/files/Name_PNG_aa2488c8-8e3c-4a35-bd7f-8e36f9e671ea.png | logo | IN YOUR SHOE wordmark, black (current) | 2026-09-29 |
+| `public/iys/campaign/fw27-1.webp` | https://inyourshoe.com/cdn/shop/files/FW27-DESKTOP-01_jpg.jpg | campaign | FW27 campaign — desktop banner 1 | 2026-09-29 |
+| `public/iys/campaign/fw27-2.webp` | https://inyourshoe.com/cdn/shop/files/FW27-DESKTOP-02_jpg.jpg | campaign | FW27 campaign — desktop banner 2 | 2026-09-29 |
+| `public/iys/campaign/fw27-m1.webp` | https://inyourshoe.com/cdn/shop/files/FW27-MOBILE-01_jpg.jpg | campaign | FW27 campaign — mobile banner 1 | 2026-09-29 |
+| `public/iys/campaign/fw27-m2.webp` | https://inyourshoe.com/cdn/shop/files/FW27-MOBILE-02_jpg.jpg | campaign | FW27 campaign — mobile banner 2 | 2026-09-29 |
+| `public/iys/campaign/zed-1.webp` | https://inyourshoe.com/cdn/shop/files/DESKTOP-SLIDER-UPDATED-ZED_jpg.jpg | campaign | IYS × ZED — desktop banner | 2026-09-29 |
+| `public/iys/campaign/zed-m1.webp` | https://inyourshoe.com/cdn/shop/files/MOBILE-SLIDER-UPDATED-ZED_jpg.jpg | campaign | IYS × ZED — mobile banner | 2026-09-29 |
+| `public/iys/stores/city-stars.webp` | https://inyourshoe.com/cdn/shop/files/WhatsApp_Image_2025-12-23_at_22.20.50.jpg | store photo | CITY STARS | 2026-09-29 |
+| `public/iys/stores/u-venues.webp` | https://inyourshoe.com/cdn/shop/files/Screenshot_from_2025-11-30_12-53-03.png | store photo | U VENUES | 2026-09-29 |
+| `public/iys/stores/city-centre-almazah-mall.webp` | https://inyourshoe.com/cdn/shop/files/PHOTO-2023-12-07-15-25-34_85844759-b2a6-4aa5-b36e-9afd3d87f760.jpg | store photo | City Centre Almazah Mall | 2026-09-29 |
+| `public/iys/stores/district-5.webp` | https://inyourshoe.com/cdn/shop/files/WhatsApp_Image_2025-09-21_at_06.24.15.jpg | store photo | District 5 | 2026-09-29 |
+| `public/iys/stores/open-air-mall.webp` | https://inyourshoe.com/cdn/shop/files/1000141396.jpg | store photo | OPEN AIR MALL | 2026-09-29 |
+| `public/iys/stores/mall-of-egypt.webp` | https://inyourshoe.com/cdn/shop/files/IMG_6789.heic | store photo | Mall of Egypt | 2026-09-29 |
+| `public/iys/stores/the-yard-mall.webp` | https://inyourshoe.com/cdn/shop/files/yard_1.jpg | store photo | The Yard Mall | 2026-09-29 |
+| `public/iys/stores/city-centre-alexandria-mall.webp` | https://inyourshoe.com/cdn/shop/files/CITY_ALEX_bc620aad-7802-402b-8e74-1db44ecdc1d2.jpg | store photo | City Centre Alexandria Mall | 2026-09-29 |
+| `public/iys/stores/el-gouna.webp` | https://inyourshoe.com/cdn/shop/files/98dcb071-e53a-49a1-b01f-59570bad4639_7287938e-67c1-4381-afdf-9d616098c153.jpg | store photo | El-Gouna | 2026-09-29 |
+| `public/iys/stores/the-wing-outlet.webp` | https://inyourshoe.com/cdn/shop/files/PHOTO-2024-03-07-17-14-21_a9f54e37-4cf0-48f2-bb83-3eef0465bd17.jpg | store photo | The Wing Outlet | 2026-09-29 |
+| `public/iys/products/dropout-oversized-hoodie-1.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/dropout-oversized-hoodie-printed-hoodies-in-your-shoe-209981.jpg | product image | Dropout Oversized Hoodie | 2026-09-29 |
+| `public/iys/products/dropout-oversized-hoodie-2.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/dropout-oversized-hoodie-printed-hoodies-in-your-shoe-217302.jpg | product image | Dropout Oversized Hoodie | 2026-09-29 |
+| `public/iys/products/cereal-killer-fluffy-pjoys-1.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/cereal-killer-fluffy-pjoys-fluffy-pjoys-in-your-shoe-937572.jpg | product image | Cereal Killer Fluffy Pjoys | 2026-09-29 |
+| `public/iys/products/cereal-killer-fluffy-pjoys-2.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/cereal-killer-fluffy-pjoys-fluffy-pjoys-in-your-shoe-943655.jpg | product image | Cereal Killer Fluffy Pjoys | 2026-09-29 |
+| `public/iys/products/egyptian-culture-oversized-long-sleeves-1.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/egyptian-culture-oversized-long-sleeves-long-sleeves-in-your-shoe-282745.jpg | product image | Egyptian Culture Oversized Long Sleeves | 2026-09-29 |
+| `public/iys/products/egyptian-culture-oversized-long-sleeves-2.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/egyptian-culture-oversized-long-sleeves-long-sleeves-in-your-shoe-278377.jpg | product image | Egyptian Culture Oversized Long Sleeves | 2026-09-29 |
+| `public/iys/products/female-denim-blue-washed-wide-leg-jeans-1.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/female-denim-blue-washed-wide-leg-jeans-jeans-in-your-shoe-101686.jpg | product image | Female Denim Blue Washed Wide Leg Jeans | 2026-09-29 |
+| `public/iys/products/female-denim-blue-washed-wide-leg-jeans-2.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/female-denim-blue-washed-wide-leg-jeans-jeans-in-your-shoe-430045.jpg | product image | Female Denim Blue Washed Wide Leg Jeans | 2026-09-29 |
+| `public/iys/products/kairo-pop-jersey-1.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/kairo-pop-jersey-jersey-in-your-shoe-124269.jpg | product image | Kairo Pop Jersey | 2026-09-29 |
+| `public/iys/products/kairo-pop-jersey-2.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/kairo-pop-jersey-jersey-in-your-shoe-127870.jpg | product image | Kairo Pop Jersey | 2026-09-29 |
+| `public/iys/products/mustard-afterclass-boxy-zip-up-hoodie-1.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/mustard-afterclass-boxy-zip-up-hoodie-zip-up-hoodies-in-your-shoe-160129.jpg | product image | Mustard Afterclass Boxy Zip-Up Hoodie | 2026-09-29 |
+| `public/iys/products/mustard-afterclass-boxy-zip-up-hoodie-2.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/mustard-afterclass-boxy-zip-up-hoodie-zip-up-hoodies-in-your-shoe-207971.jpg | product image | Mustard Afterclass Boxy Zip-Up Hoodie | 2026-09-29 |
+| `public/iys/products/sunset-stripes-fluffy-pjoys-1.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/sunset-stripes-fluffy-pjoys-fluffy-pjoys-in-your-shoe-750530.jpg | product image | Sunset Stripes Fluffy Pjoys | 2026-09-29 |
+| `public/iys/products/sunset-stripes-fluffy-pjoys-2.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/sunset-stripes-fluffy-pjoys-fluffy-pjoys-in-your-shoe-600684.jpg | product image | Sunset Stripes Fluffy Pjoys | 2026-09-29 |
+| `public/iys/products/blue-checkered-laptop-sleeve-1.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/blue-checkered-laptop-sleeve-laptop-sleeve-in-your-shoe-715670.jpg | product image | Blue Checkered Laptop Sleeve | 2026-09-29 |
+| `public/iys/products/blue-checkered-laptop-sleeve-2.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/blue-checkered-laptop-sleeve-laptop-sleeve-in-your-shoe-578753.jpg | product image | Blue Checkered Laptop Sleeve | 2026-09-29 |
+| `public/iys/products/cereal-killer-pjoys-1.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/cereal-killer-pjoys-pjoys-in-your-shoe-901214.jpg | product image | Cereal Killer Pjoys | 2026-09-29 |
+| `public/iys/products/cereal-killer-pjoys-2.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/cereal-killer-pjoys-pjoys-in-your-shoe-683352.jpg | product image | Cereal Killer Pjoys | 2026-09-29 |
+| `public/iys/products/love-you-so-matcha-pjoys-1.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/love-you-so-matcha-pjoys-pjoys-in-your-shoe-148812.jpg | product image | Love You So Matcha Pjoys | 2026-09-29 |
+| `public/iys/products/love-you-so-matcha-pjoys-2.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/love-you-so-matcha-pjoys-pjoys-in-your-shoe-845552.jpg | product image | Love You So Matcha Pjoys | 2026-09-29 |
+| `public/iys/products/not-your-habibi-pjoys-1.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/not-your-habibi-pjoys-pjoys-in-your-shoe-998920.jpg | product image | Not Your Habibi Pjoys | 2026-09-29 |
+| `public/iys/products/not-your-habibi-pjoys-2.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/not-your-habibi-pjoys-pjoys-in-your-shoe-885757.jpg | product image | Not Your Habibi Pjoys | 2026-09-29 |
+| `public/iys/products/game-night-pjoys-1.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/game-night-pjoys-pjoys-in-your-shoe-868530.jpg | product image | Game Night Pjoys | 2026-09-29 |
+| `public/iys/products/game-night-pjoys-2.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/game-night-pjoys-pjoys-in-your-shoe-209765.jpg | product image | Game Night Pjoys | 2026-09-29 |
+| `public/iys/products/touch-grass-pjoys-1.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/touch-grass-pjoys-pjoys-in-your-shoe-742415.jpg | product image | Touch Grass Pjoys | 2026-09-29 |
+| `public/iys/products/touch-grass-pjoys-2.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/touch-grass-pjoys-pjoys-in-your-shoe-854001.jpg | product image | Touch Grass Pjoys | 2026-09-29 |
+| `public/iys/products/main-character-pjoys-1.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/main-character-pjoys-pjoys-in-your-shoe-765906.jpg | product image | Main Character Pjoys | 2026-09-29 |
+| `public/iys/products/main-character-pjoys-2.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/main-character-pjoys-pjoys-in-your-shoe-925694.jpg | product image | Main Character Pjoys | 2026-09-29 |
+| `public/iys/products/cairo-desert-pjoys-1.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/cairo-desert-pjoys-pjoys-in-your-shoe-208161.jpg | product image | Cairo Desert Pjoys | 2026-09-29 |
+| `public/iys/products/cairo-desert-pjoys-2.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/cairo-desert-pjoys-pjoys-in-your-shoe-967817.jpg | product image | Cairo Desert Pjoys | 2026-09-29 |
+| `public/iys/products/dont-go-out-fluffy-pjoys-1.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/dont-go-out-fluffy-pjoys-fluffy-pjoys-in-your-shoe-560177.jpg | product image | Don't Go Out Fluffy Pjoys | 2026-09-29 |
+| `public/iys/products/dont-go-out-fluffy-pjoys-2.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/dont-go-out-fluffy-pjoys-fluffy-pjoys-in-your-shoe-693605.jpg | product image | Don't Go Out Fluffy Pjoys | 2026-09-29 |
+| `public/iys/products/cairo-is-a-mindset-oversized-hoodie-1.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/cairo-is-a-mindset-oversized-hoodie-printed-hoodies-in-your-shoe-798730.jpg | product image | Cairo Is A Mindset Oversized Hoodie | 2026-09-29 |
+| `public/iys/products/cairo-is-a-mindset-oversized-hoodie-2.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/cairo-is-a-mindset-oversized-hoodie-printed-hoodies-in-your-shoe-959651.jpg | product image | Cairo Is A Mindset Oversized Hoodie | 2026-09-29 |
+| `public/iys/products/universal-cairo-club-double-sleeve-tee-1.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/universal-cairo-club-double-sleeve-tee-double-sleeve-tee-in-your-shoe-703793.jpg | product image | Universal Cairo Club Double Long Sleeves | 2026-09-29 |
+| `public/iys/products/universal-cairo-club-double-sleeve-tee-2.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/universal-cairo-club-double-sleeve-tee-double-sleeve-tee-in-your-shoe-294501.jpg | product image | Universal Cairo Club Double Long Sleeves | 2026-09-29 |
+| `public/iys/products/qasr-el-nile-regular-tee-1.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/qasr-el-nile-regular-tee-printed-regular-tees-in-your-shoe-585613.jpg | product image | Qasr El Nile Regular Tee | 2026-09-29 |
+| `public/iys/products/qasr-el-nile-regular-tee-2.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/qasr-el-nile-regular-tee-printed-regular-tees-in-your-shoe-567565.jpg | product image | Qasr El Nile Regular Tee | 2026-09-29 |
+| `public/iys/products/heliopolis-regular-tee-1.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/heliopolis-regular-tee-printed-regular-tees-in-your-shoe-396171.jpg | product image | Heliopolis Regular Tee | 2026-09-29 |
+| `public/iys/products/heliopolis-regular-tee-2.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/heliopolis-regular-tee-printed-regular-tees-in-your-shoe-457785.jpg | product image | Heliopolis Regular Tee | 2026-09-29 |
+| `public/iys/products/masr-washed-cap-1.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/masr-washed-cap-washed-cap-in-your-shoe-699948.jpg | product image | Masr Washed Cap | 2026-09-29 |
+| `public/iys/products/masr-washed-cap-2.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/masr-washed-cap-washed-cap-in-your-shoe-729994.jpg | product image | Masr Washed Cap | 2026-09-29 |
+| `public/iys/products/i-love-cairo-neck-socks-1.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/i-love-cairo-neck-socks-neck-socks-in-your-shoe-316817.jpg | product image | I Love Cairo Neck Socks | 2026-09-29 |
+| `public/iys/products/i-love-cairo-neck-socks-2.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/i-love-cairo-neck-socks-neck-socks-in-your-shoe-974684.jpg | product image | I Love Cairo Neck Socks | 2026-09-29 |
+| `public/iys/camera/pjoys-01.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/cereal-killer-pjoys-pjoys-in-your-shoe-683352.jpg | product lifestyle photo | Cereal Killer Pjoys | 2026-09-29 |
+| `public/iys/camera/pjoys-02.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/cereal-killer-pjoys-pjoys-in-your-shoe-901214.jpg | product lifestyle photo | Cereal Killer Pjoys | 2026-09-29 |
+| `public/iys/camera/pjoys-03.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/love-you-so-matcha-pjoys-pjoys-in-your-shoe-845552.jpg | product lifestyle photo | Love You So Matcha Pjoys | 2026-09-29 |
+| `public/iys/camera/pjoys-04.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/dont-go-out-fluffy-pjoys-fluffy-pjoys-in-your-shoe-693605.jpg | product lifestyle photo | Don't Go Out Fluffy Pjoys | 2026-09-29 |
+| `public/iys/camera/pjoys-05.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/cereal-killer-pjoys-pjoys-in-your-shoe-712347.jpg | product lifestyle photo | Cereal Killer Pjoys | 2026-09-29 |
+| `public/iys/camera/pjoys-06.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/game-night-pjoys-pjoys-in-your-shoe-868530.jpg | product lifestyle photo | Game Night Pjoys | 2026-09-29 |
+| `public/iys/camera/cairo-07.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/cairo-is-a-mindset-oversized-hoodie-printed-hoodies-in-your-shoe-798730.jpg | product lifestyle photo | Cairo Is A Mindset Oversized Hoodie | 2026-09-29 |
+| `public/iys/camera/cairo-08.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/cairo-is-a-mindset-oversized-hoodie-printed-hoodies-in-your-shoe-667690.jpg | product lifestyle photo | Cairo Is A Mindset Oversized Hoodie | 2026-09-29 |
+| `public/iys/camera/cairo-09.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/kairo-pop-jersey-jersey-in-your-shoe-124269.jpg | product lifestyle photo | Kairo Pop Jersey | 2026-09-29 |
+| `public/iys/camera/cairo-10.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/universal-cairo-club-double-sleeve-tee-double-sleeve-tee-in-your-shoe-703793.jpg | product lifestyle photo | Universal Cairo Club Double Long Sleeves | 2026-09-29 |
+| `public/iys/camera/cairo-11.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/egyptian-culture-oversized-long-sleeves-long-sleeves-in-your-shoe-282745.jpg | product lifestyle photo | Egyptian Culture Oversized Long Sleeves | 2026-09-29 |
+| `public/iys/camera/cairo-12.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/qasr-el-nile-regular-tee-printed-regular-tees-in-your-shoe-585613.jpg | product lifestyle photo | Qasr El Nile Regular Tee | 2026-09-29 |
+| `public/iys/tiles/cereal-killer-pjoys.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/cereal-killer-pjoys-pjoys-in-your-shoe-201261.jpg | product detail photo (pattern) | Cereal Killer Pjoys | 2026-09-29 |
+| `public/iys/tiles/love-you-so-matcha-pjoys.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/love-you-so-matcha-pjoys-pjoys-in-your-shoe-325392.jpg | product detail photo (pattern) | Love You So Matcha Pjoys | 2026-09-29 |
+| `public/iys/tiles/dont-go-out-fluffy-pjoys.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/dont-go-out-fluffy-pjoys-fluffy-pjoys-in-your-shoe-560177.jpg | product detail photo (pattern) | Don't Go Out Fluffy Pjoys | 2026-09-29 |
+| `public/iys/thumbs/dropout-oversized-hoodie.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/dropout-oversized-hoodie-printed-hoodies-in-your-shoe-209981.jpg | product thumbnail | Dropout Oversized Hoodie | 2026-09-29 |
+| `public/iys/thumbs/mustard-afterclass-boxy-zip-up-hoodie.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/mustard-afterclass-boxy-zip-up-hoodie-zip-up-hoodies-in-your-shoe-160129.jpg | product thumbnail | Mustard Afterclass Boxy Zip-Up Hoodie | 2026-09-29 |
+| `public/iys/thumbs/dark-grey-afterclass-boxy-zip-up-hoodie.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/dark-grey-afterclass-boxy-zip-up-hoodie-zip-up-hoodies-in-your-shoe-305694.jpg | product thumbnail | Dark Grey Afterclass Boxy Zip-Up Hoodie | 2026-09-29 |
+| `public/iys/thumbs/afterclass-oversized-quarter-zipper.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/afterclass-oversized-quarter-zipper-quarter-zipper-in-your-shoe-981908.jpg | product thumbnail | Afterclass Oversized Quarter Zipper | 2026-09-29 |
+| `public/iys/thumbs/off-white-raglan-oversized-pullover.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/off-white-raglan-oversized-pullover-pullovers-in-your-shoe-513031.jpg | product thumbnail | Off White Raglan Oversized Pullover | 2026-09-29 |
+| `public/iys/thumbs/butter-yellow-raglan-oversized-pullover.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/butter-yellow-raglan-oversized-pullover-pullovers-in-your-shoe-603787.jpg | product thumbnail | Butter Yellow Raglan Oversized Pullover | 2026-09-29 |
+| `public/iys/thumbs/pink-raglan-oversized-pullover.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/pink-raglan-oversized-pullover-pullovers-in-your-shoe-686157.jpg | product thumbnail | Pink Raglan Oversized Pullover | 2026-09-29 |
+| `public/iys/thumbs/claimed-territory-oversized-long-sleeves.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/claimed-territory-oversized-long-sleeves-long-sleeves-in-your-shoe-720625.jpg | product thumbnail | Claimed Territory Oversized Long Sleeves | 2026-09-29 |
+| `public/iys/thumbs/egyptian-culture-oversized-long-sleeves.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/egyptian-culture-oversized-long-sleeves-long-sleeves-in-your-shoe-282745.jpg | product thumbnail | Egyptian Culture Oversized Long Sleeves | 2026-09-29 |
+| `public/iys/thumbs/city-runners-oversized-long-sleeves.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/city-runners-oversized-long-sleeves-long-sleeves-in-your-shoe-134910.jpg | product thumbnail | City Runners Oversized Long Sleeves | 2026-09-29 |
+| `public/iys/thumbs/brown-plaid-balloon-pants.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/brown-plaid-balloon-pants-pants-in-your-shoe-463594.jpg | product thumbnail | Brown Plaid Balloon Pants | 2026-09-29 |
+| `public/iys/thumbs/navy-plaid-balloon-pants.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/heather-grey-double-layered-long-sleeve-top-long-sleeve-tops-in-your-shoe-161609.jpg | product thumbnail | Navy Plaid Balloon Pants | 2026-09-29 |
+| `public/iys/thumbs/female-brown-baggy-leather-pants.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/female-brown-baggy-leather-pants-leather-pants-in-your-shoe-841728.jpg | product thumbnail | Female Brown Baggy Leather Pants | 2026-09-29 |
+| `public/iys/thumbs/female-green-corduroy-pants-1.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/female-green-corduroy-pants-pants-in-your-shoe-283690.jpg | product thumbnail | Female Green Corduroy Pants | 2026-09-29 |
+| `public/iys/thumbs/female-brown-corduroy-pants-1.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/brown-double-layered-long-sleeve-top-long-sleeve-tops-in-your-shoe-742065.jpg | product thumbnail | Female Brown Corduroy Pants | 2026-09-29 |
+| `public/iys/thumbs/female-denim-blue-washed-wide-leg-jeans.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/female-denim-blue-washed-wide-leg-jeans-jeans-in-your-shoe-101686.jpg | product thumbnail | Female Denim Blue Washed Wide Leg Jeans | 2026-09-29 |
+| `public/iys/thumbs/female-navy-washed-barrel-fit-jeans.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/female-navy-washed-barrel-fit-jeans-jeans-in-your-shoe-388156.jpg | product thumbnail | Female Navy Washed Barrel Fit Jeans | 2026-09-29 |
+| `public/iys/thumbs/male-black-loose-parachute-pants.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/city-runners-oversized-long-sleeves-long-sleeves-in-your-shoe-290831.jpg | product thumbnail | Male Black Loose Parachute Pants | 2026-09-29 |
+| `public/iys/thumbs/green-basic-boxy-zip-up-hoodie.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/green-basic-boxy-zip-up-hoodie-zip-up-hoodies-in-your-shoe-589128.jpg | product thumbnail | Green Basic Boxy Zip-Up Hoodie | 2026-09-29 |
+| `public/iys/thumbs/heather-grey-basic-boxy-zip-up-hoodie.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/heather-grey-basic-boxy-zip-up-hoodie-zip-up-hoodies-in-your-shoe-252413.jpg | product thumbnail | Heather Grey Basic Boxy Zip-Up Hoodie | 2026-09-29 |
+| `public/iys/thumbs/black-basic-boxy-zip-up-hoodie.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/black-basic-boxy-zip-up-hoodie-zip-up-hoodies-in-your-shoe-603806.jpg | product thumbnail | Black Basic Boxy Zip-Up Hoodie | 2026-09-29 |
+| `public/iys/thumbs/greige-oversized-quarter-zipper.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/greige-oversized-quarter-zipper-quarter-zipper-in-your-shoe-998221.jpg | product thumbnail | Greige Oversized Quarter Zipper | 2026-09-29 |
+| `public/iys/thumbs/iys-racing-club-oversized-crewneck.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/iys-racing-club-oversized-crewneck-crewnecks-in-your-shoe-169225.jpg | product thumbnail | IYS Racing Club Oversized Crewneck | 2026-09-29 |
+| `public/iys/thumbs/blue-basic-boxy-crewneck.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/blue-basic-boxy-crewneck-crewnecks-in-your-shoe-704213.jpg | product thumbnail | Blue Basic Boxy Crewneck | 2026-09-29 |
+| `public/iys/thumbs/green-basic-oversized-crewneck.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/green-basic-oversized-crewneck-crewnecks-in-your-shoe-122550.jpg | product thumbnail | Green Basic Oversized Crewneck | 2026-09-29 |
+| `public/iys/thumbs/black-basic-oversized-crewneck.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/black-basic-oversized-crewneck-crewnecks-in-your-shoe-894495.jpg | product thumbnail | Black Basic Oversized Crewneck | 2026-09-29 |
+| `public/iys/thumbs/burgundy-basic-oversized-crewneck.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/burgundy-basic-oversized-crewneck-crewnecks-in-your-shoe-885269.jpg | product thumbnail | Burgundy Basic Oversized Crewneck | 2026-09-29 |
+| `public/iys/thumbs/el-hob-moqawma-boxy-hoodie.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/el-hob-moqawma-boxy-hoodie-boxy-hoodies-in-your-shoe-503954.jpg | product thumbnail | El Hob Moqawma Boxy Hoodie | 2026-09-29 |
+| `public/iys/thumbs/brown-basic-heavy-boxy-hoodie-1.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/brown-basic-heavy-boxy-hoodie-plain-hoodies-in-your-shoe-254155.jpg | product thumbnail | Brown Basic Heavy Boxy Hoodie | 2026-09-29 |
+| `public/iys/thumbs/heather-grey-basic-heavy-boxy-hoodie.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/heather-grey-basic-heavy-boxy-hoodie-plain-hoodies-in-your-shoe-228198.jpg | product thumbnail | Heather Grey Basic Heavy Boxy Hoodie | 2026-09-29 |
+| `public/iys/thumbs/male-dark-blue-striped-loose-fit-jeans.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/male-dark-blue-striped-loose-fit-jeans-jeans-in-your-shoe-288795.jpg | product thumbnail | Male Dark Blue Striped Loose Fit Jeans | 2026-09-29 |
+| `public/iys/thumbs/international-council-oversized-hoodie.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/international-council-oversized-hoodie-printed-hoodies-in-your-shoe-557292.jpg | product thumbnail | International Council Oversized Hoodie | 2026-09-29 |
+| `public/iys/thumbs/cairo-is-a-mindset-oversized-hoodie.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/cairo-is-a-mindset-oversized-hoodie-printed-hoodies-in-your-shoe-798730.jpg | product thumbnail | Cairo Is A Mindset Oversized Hoodie | 2026-09-29 |
+| `public/iys/thumbs/dont-panic-oversized-hoodie.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/dont-panic-oversized-hoodie-printed-hoodies-in-your-shoe-607284.jpg | product thumbnail | Don't Panic Oversized Hoodie | 2026-09-29 |
+| `public/iys/thumbs/insane-oversized-hoodie.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/insane-oversized-hoodie-printed-hoodies-in-your-shoe-261352.jpg | product thumbnail | Insane Oversized Hoodie | 2026-09-29 |
+| `public/iys/thumbs/horse-race-club-oversized-hoodie.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/el-hob-moqawma-boxy-hoodie-boxy-hoodies-in-your-shoe-196240.jpg | product thumbnail | Horse Race Club Oversized Hoodie | 2026-09-29 |
+| `public/iys/thumbs/anti-running-oversized-hoodie.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/anti-running-oversized-hoodie-printed-hoodies-in-your-shoe-252058.jpg | product thumbnail | Anti-Running Oversized Hoodie | 2026-09-29 |
+| `public/iys/thumbs/world-wide-tour-oversized-hoodie.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/worldwide-tour-oversized-hoodie-printed-hoodies-in-your-shoe-437318.jpg | product thumbnail | Worldwide Tour Oversized Hoodie | 2026-09-29 |
+| `public/iys/thumbs/cairo-legacy-oversized-hoodie.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/cairo-legacy-oversized-hoodie-printed-hoodies-in-your-shoe-975523.jpg | product thumbnail | Cairo Legacy Oversized Hoodie | 2026-09-29 |
+| `public/iys/thumbs/brown-embroidered-oversized-leather-jacket.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/brown-embroidered-oversized-leather-jacket-leather-jacket-in-your-shoe-190668.jpg | product thumbnail | Brown Embroidered Oversized Leather Jacket | 2026-09-29 |
+| `public/iys/thumbs/teal-embroidered-oversized-leather-jacket.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/teal-embroidered-oversized-leather-jacket-leather-jacket-in-your-shoe-584059.jpg | product thumbnail | Teal Embroidered Oversized Leather Jacket | 2026-09-29 |
+| `public/iys/thumbs/give-me-a-raise-oversized-hoodie.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/give-me-a-raise-oversized-hoodie-printed-hoodies-in-your-shoe-496910.jpg | product thumbnail | Give Me A Raise Oversized Hoodie | 2026-09-29 |
+| `public/iys/thumbs/heritage-culture-oversized-hoodie.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/heritage-culture-oversized-hoodie-printed-hoodies-in-your-shoe-521513.jpg | product thumbnail | Heritage Culture Oversized Hoodie | 2026-09-29 |
+| `public/iys/thumbs/save-the-turtles-oversized-hoodie.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/save-the-turtles-oversized-hoodie-printed-hoodies-in-your-shoe-381261.jpg | product thumbnail | Save The Turtles Oversized Hoodie | 2026-09-29 |
+| `public/iys/thumbs/blue-basic-oversized-hoodie.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/blue-basic-oversized-hoodie-plain-hoodies-in-your-shoe-935918.jpg | product thumbnail | Blue Basic Oversized Hoodie | 2026-09-29 |
+| `public/iys/thumbs/gingham-fluffy-pjoys.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/gingham-fluffy-pjoys-fluffy-pjoys-in-your-shoe-494112.jpg | product thumbnail | Gingham Fluffy Pjoys | 2026-09-29 |
+| `public/iys/thumbs/green-plaid-fluffy-pjoys.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/green-plaid-fluffy-pjoys-fluffy-pjoys-in-your-shoe-540506.jpg | product thumbnail | Green Plaid Fluffy Pjoys | 2026-09-29 |
+| `public/iys/thumbs/red-plaid-fluffy-pjoys.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/red-plaid-fluffy-pjoys-fluffy-pjoys-in-your-shoe-424551.jpg | product thumbnail | Red Plaid Fluffy Pjoys | 2026-09-29 |
+<!-- assets:end -->
