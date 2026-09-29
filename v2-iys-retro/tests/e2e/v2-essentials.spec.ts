@@ -133,6 +133,12 @@ test.describe('conversion CTAs go where they say (desktop)', () => {
     await minimizeBrowser(page);
     await page.getByRole('button', { name: /Open My Bag, 0 items/ }).click();
     const bag = page.getByRole('dialog', { name: 'MY BAG' });
+    // the two CTAs read as one pair centered under the empty message
+    await expect(bag.locator('.bag__empty')).toBeVisible();
+    const msg = (await bag.locator('.bag__empty').boundingBox())!;
+    const a = (await bag.getByRole('button', { name: /^Shop the drop/ }).boundingBox())!;
+    const z = (await bag.getByRole('button', { name: /^Explore pjoys xo/ }).boundingBox())!;
+    expect(Math.abs((a.x + z.x + z.width) / 2 - (msg.x + msg.width / 2))).toBeLessThanOrEqual(2);
     await bag.getByRole('button', { name: /^Shop the drop/ }).click();
     await expect(page).toHaveURL(/\/collections\/newest$/);
     await page.goto('/favorites');

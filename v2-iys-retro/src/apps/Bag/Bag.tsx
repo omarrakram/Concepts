@@ -33,7 +33,7 @@ export default function Bag({ win }: { win: Win }) {
         </p>
         <BagList onOpenProduct={(h) => browse(productPath(h))} />
         {items.length === 0 && (
-          <p className="cp-actions">
+          <p className="cp-actions bag__empty-actions">
             <button type="button" className="btn btn--go" onClick={() => browse('/collections/newest')}>
               {concept.y2k.primary} ›
             </button>

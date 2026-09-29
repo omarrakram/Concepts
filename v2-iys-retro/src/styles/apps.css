@@ -2169,6 +2169,11 @@ span.explorer__twisty {
   gap: 6px;
   margin-top: 6px;
 }
+/* empty-bag CTA pair: centered as one group under the empty message */
+.bag__empty-actions {
+  justify-content: center;
+  align-items: center;
+}
 .cp-tm {
   text-align: center;
 }
