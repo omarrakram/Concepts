@@ -40,7 +40,7 @@ export function RemoteImage({
   const [attempt, setAttempt] = useState(0);
   if (!src || state === 'error') {
     return (
-      <div className={`img-offline ${className ?? ''}`} role="img" aria-label={`${concept.imageOffline}: ${title ?? alt}`} style={{ aspectRatio: width && height ? `${width} / ${height}` : '4 / 5' }}>
+      <div className={`img-offline ${className ?? ''}`} role={actions ? 'group' : 'img'} aria-label={`${concept.imageOffline}: ${title ?? alt}`} style={{ aspectRatio: width && height ? `${width} / ${height}` : '4 / 5' }}>
         <b>{concept.imageOffline}</b>
         <span>{title ?? alt}</span>
         {actions && (

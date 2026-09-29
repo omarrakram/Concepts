@@ -66,7 +66,8 @@ export default function Home() {
         <span>{official.freeShipping} EGP</span>
         <span className="portal__announce-note">as announced on inyourshoe.com · {OFFICIAL_VERIFIED_ON}</span>
       </div>
-      <div className="marquee" aria-label="New stuff, Pjoys, hoodies, socks, Cairo">
+      <div className="marquee">
+        <p className="sr-only">New stuff, Pjoys, Fluffy Pjoys, hoodies, socks, Cairo, IYS × ZED, women, kids.</p>
         <div className="marquee__track" aria-hidden="true">
           {[0, 1].map((k) => (
             <span key={k}>NEW STUFF ★ PJOYS ★ FLUFFY PJOYS ★ HOODIES ★ SOCKS ★ CAIRO ★ IYS × ZED ★ WOMEN ★ KIDS ★&nbsp;</span>
@@ -92,7 +93,7 @@ export default function Home() {
           </section>
           <section className="box">
             <h2 className="box__title">IYS CAMERA</h2>
-            <button type="button" className="camteaser" onClick={() => useOS.getState().open('camera')} aria-label="Open IYS Camera photos">
+            <button type="button" className="camteaser" onClick={() => useOS.getState().open('camera')} aria-label="Open the IYS Camera DCIM folder">
               <img src={assets.camera[0]?.src} alt="" loading="lazy" />
               <span>DCIM · {assets.camera.length + assets.campaign.length + assets.stores.length} photos</span>
             </button>

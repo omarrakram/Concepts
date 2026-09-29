@@ -55,7 +55,8 @@ export const ProductCard = memo(function ProductCard({ p, eager }: { p: Product;
       <Price price={p.price} compareAt={p.compareAtPrice} from={p.priceMax !== null && p.price !== null && p.priceMax > p.price} />
       {p.available === false && <span className="stock stock--out">OUT OF STOCK</span>}
       {p.sizes.length > 0 && (
-        <p className="pcard__sizes" aria-label={`Sizes: ${p.sizes.map((s) => `${s.label}${s.available ? '' : ' (sold out)'}`).join(', ')}`}>
+        <p className="pcard__sizes">
+          <span className="sr-only">Sizes: {p.sizes.map((s) => `${s.label}${s.available ? '' : ' (sold out)'}`).join(', ')}</span>
           {p.sizes.map((s) => (
             <span key={s.label} className={s.available ? undefined : 'is-out'} aria-hidden="true">
               {s.label}

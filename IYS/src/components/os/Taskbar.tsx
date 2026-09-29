@@ -83,13 +83,13 @@ export function Taskbar({ onStart, pjoysUnread, onMessenger }: { onStart: () => 
         <span className="sr-only">IYS menu</span>
       </button>
       <div className="quicklaunch" role="group" aria-label="Quick launch">
-        <button type="button" title="IYS INTERNET" aria-label="Open IYS Internet" onClick={() => open('internet')}>
+        <button type="button" title="IYS INTERNET" aria-label="Quick launch: IYS Internet" onClick={() => open('internet')}>
           <Icon name="internet" size={20} />
         </button>
         <button type="button" title="Show Desktop" aria-label="Show desktop (minimize all windows)" onClick={() => useOS.getState().minimizeAll()}>
           <Icon name="computer" size={20} />
         </button>
-        <button type="button" title={`MY BAG (${bagCount})`} aria-label={`Open My Bag, ${bagCount} items`} onClick={() => open('bag')}>
+        <button type="button" title={`MY BAG (${bagCount})`} aria-label={`Quick launch: My Bag (${bagCount})`} onClick={() => open('bag')}>
           <Icon name="bag" size={20} />
         </button>
       </div>
@@ -122,7 +122,7 @@ export function Taskbar({ onStart, pjoysUnread, onMessenger }: { onStart: () => 
             {notice.text}
           </span>
         )}
-        <button type="button" title={pjoysUnread ? '1 NEW MESSAGE' : 'IYS MESSENGER'} aria-label={pjoysUnread ? 'IYS Messenger: 1 new message from PJOYS' : 'Open IYS Messenger'} onClick={onMessenger} className={pjoysUnread ? 'blink' : undefined}>
+        <button type="button" title={pjoysUnread ? '1 NEW MESSAGE' : 'IYS MESSENGER'} aria-label={pjoysUnread ? 'IYS Messenger: 1 new message from PJOYS' : 'Messenger status: no new messages'} onClick={onMessenger} className={pjoysUnread ? 'blink' : undefined}>
           <Icon name="messenger" size={18} />
         </button>
         <button type="button" title={online ? 'IYS INTERNET: Connected' : 'INTERNET CONNECTION LOST'} aria-label={online ? 'Connection: online' : 'Connection: offline'}>

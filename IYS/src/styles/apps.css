@@ -744,7 +744,7 @@ img.is-loading {
   border: 1px solid #c8c6bf;
 }
 .pcard__sizes .is-out {
-  color: #aaa;
+  color: #767676;
   text-decoration: line-through;
 }
 .pcard__actions {

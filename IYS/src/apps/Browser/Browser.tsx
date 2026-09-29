@@ -150,7 +150,7 @@ export default function Browser({ win }: { win: Win }) {
             <span>Bag ({bag})</span>
           </button>
         </div>
-        <form className="addressbar" onSubmit={submitAddress} role="search" aria-label="Address">
+        <form className="addressbar" onSubmit={submitAddress}>
           <label htmlFor={`addr-${win.id}`}>Address</label>
           <div className="addressbar__field">
             <img src="/favicon.svg" alt="" width={16} height={16} />
