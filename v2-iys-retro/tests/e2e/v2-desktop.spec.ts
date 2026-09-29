@@ -163,7 +163,7 @@ test.describe('IYS Retro V2 desktop upgrades', () => {
       View: ['Refresh', 'Home', 'Back', 'Forward'],
       Favorites: ['Open Favorites'],
       Tools: ['My Bag', 'Control Panel', 'Stores'],
-      Help: ['IYS Help & Support', 'About IYS Internet'],
+      Help: ['IYS Help & Support', 'Essentials', 'About IYS Internet'],
     };
     for (const [menu, items] of Object.entries(expected)) {
       await bar.getByRole('menuitem', { name: menu, exact: true }).click();

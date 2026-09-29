@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import { Icon, type IconName } from '../../components/os/Icon';
 import { Window } from '../../components/os/Window';
 import type { Win } from '../../state/os';
@@ -14,7 +15,7 @@ export interface OdooCopy {
  * intentional placeholder (no fake form). With a URL it embeds the form and
  * always offers an "open" button, in case Odoo refuses to be framed.
  */
-export function OdooForm({ win, icon, url, copy }: { win: Win; icon: IconName; url: string | null; copy: OdooCopy }) {
+export function OdooForm({ win, icon, url, copy, secondary }: { win: Win; icon: IconName; url: string | null; copy: OdooCopy; secondary?: ReactNode }) {
   return (
     <Window
       win={win}
@@ -47,6 +48,7 @@ export function OdooForm({ win, icon, url, copy }: { win: Win; icon: IconName; u
             <p className="odoo__slot">{copy.placeholder}</p>
           </div>
         )}
+        {secondary && <div className="cp-actions">{secondary}</div>}
       </div>
     </Window>
   );

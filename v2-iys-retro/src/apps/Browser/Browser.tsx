@@ -155,6 +155,7 @@ export default function Browser({ win }: { win: Win }) {
       label: 'Help',
       items: [
         { label: 'IYS Help & Support', run: () => useOS.getState().open('help') },
+        { label: 'Essentials', run: () => useOS.getState().open('essentials') },
         { label: 'About IYS Internet', separator: true, run: () => useOS.getState().open('readme') },
       ],
     },

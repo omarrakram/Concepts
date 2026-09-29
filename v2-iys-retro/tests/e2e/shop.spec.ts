@@ -126,7 +126,7 @@ test.describe('IYS INTERNET commerce', () => {
     await desktop(page, '/definitely-not-a-page');
     const b = browserWin(page);
     await expect(b).toContainText('omg this page went offline :(');
-    await b.getByRole('button', { name: 'SHOP', exact: true }).click();
+    await b.getByRole('button', { name: 'BACK 2 SHOP' }).click();
     await expect(page).toHaveURL(/\/shop$/);
     await b.getByRole('button', { name: 'Back', exact: true }).click();
     await expect(page).toHaveURL(/definitely-not-a-page/);

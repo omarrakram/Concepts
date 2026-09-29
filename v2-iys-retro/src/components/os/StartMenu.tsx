@@ -66,6 +66,7 @@ export function StartMenu() {
     { label: 'IYS MAIL', icon: 'mail', sub: 'Support · orders@', act: () => app('mail') },
     { label: 'IYS NEWSLETTER', icon: 'newsletter', sub: 'Cool list · 10% off', act: () => app('newsletter') },
     { label: 'XCHANGE.EXE :)', icon: 'exchange', sub: 'Exchanges / refunds', act: () => app('exchange') },
+    { label: 'IYS ESSENTIALS', icon: 'txt', sub: 'Refunds, shipping, terms', act: () => app('essentials') },
     { label: 'CONTROL PANEL', icon: 'control', sub: 'Sound, CRT, wallpaper', act: () => app('control') },
   ];
 

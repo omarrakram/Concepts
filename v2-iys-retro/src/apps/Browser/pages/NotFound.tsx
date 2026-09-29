@@ -25,7 +25,7 @@ export default function NotFound() {
             HOME
           </button>
           <button type="button" className="btn" onClick={() => navigate('/shop')}>
-            SHOP
+            {concept.y2k.back2Shop}
           </button>
         </div>
       </div>

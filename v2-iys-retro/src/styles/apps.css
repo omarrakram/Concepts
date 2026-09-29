@@ -2351,6 +2351,12 @@ span.explorer__twisty {
   font-weight: bold;
   letter-spacing: 0.12em;
 }
+.essentials {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  padding: 8px;
+}
 .odoo {
   display: flex;
   flex-direction: column;

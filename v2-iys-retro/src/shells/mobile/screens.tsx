@@ -7,6 +7,7 @@ import { PageLoading } from '../../components/shop/PageLoading';
 import { Pagination } from '../../components/shop/Pagination';
 import { Price, SaleBadge, StockNote } from '../../components/shop/Price';
 import { RemoteImage } from '../../components/shop/RemoteImage';
+import { EssentialLinks } from '../../components/shop/EssentialLinks';
 import { assets, brand } from '../../data/assets';
 import { concept, official, officialSources } from '../../data/copy';
 import storesData from '../../data/stores.generated.json';
@@ -180,7 +181,12 @@ export function MList({ open }: { open: (o: Overlay) => void }) {
           ))}
         </ul>
       ) : (
-        <p className="empty">{concept.y2k.noResults}</p>
+        <>
+          <p className="empty">{concept.y2k.noResults}</p>
+          <Link className="btn btn--go m-add" to="/shop">
+            {concept.y2k.shopAll.toUpperCase()} ›
+          </Link>
+        </>
       )}
       <Pagination page={pg.page} pageCount={pg.pageCount} onPage={(n) => { setQuery({ page: n }); window.scrollTo(0, 0); document.querySelector('.m-content')?.scrollTo(0, 0); }} />
     </div>
@@ -224,6 +230,11 @@ export function MSearch() {
       {pg && (
         <>
           <p className="m-meta">{pg.total ? `${formatCount(pg.total)} results 4 “${q}” :)` : `0 results 4 “${q}” :( try another word?`}</p>
+          {pg.total === 0 && (
+            <Link className="btn btn--go m-add" to="/shop">
+              {concept.y2k.shopAll.toUpperCase()} ›
+            </Link>
+          )}
           <ul className="m-list">
             {pg.items.map((p) => (
               <Row key={p.handle} p={p} />
@@ -295,6 +306,7 @@ export function MProduct() {
             <p className="props__snapshot">
               {concept.snapshot} ({p.retrievedAt?.slice(0, 10)}). No orders can be placed here.
             </p>
+            <EssentialLinks className="props__snapshot" label="Before u buy:" ids={['shipping', 'exchange-refund']} />
             {p.description && (
               <details className="props__desc">
                 <summary>Description</summary>
@@ -325,7 +337,12 @@ export function MFavorites() {
           ))}
         </ul>
       ) : (
-        <p className="empty">{concept.y2k.favEmpty}</p>
+        <>
+          <p className="empty">{concept.y2k.favEmpty}</p>
+          <Link className="btn btn--go m-add" to="/collections/newest">
+            {concept.y2k.primary} ›
+          </Link>
+        </>
       )}
     </div>
   );

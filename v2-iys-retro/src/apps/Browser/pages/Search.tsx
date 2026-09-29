@@ -73,6 +73,14 @@ export default function Search() {
               <p>
                 Try different words, or <Link to="/shop">browse the whole shop</Link>.
               </p>
+              <p>
+                <Link className="btn btn--go btn--small" to="/shop">
+                  SHOP ALL
+                </Link>{' '}
+                <Link className="btn btn--small" to="/collections/newest">
+                  NEW STUFF
+                </Link>
+              </p>
             </div>
           ) : (
             <ol className="results__list" start={pg.from}>

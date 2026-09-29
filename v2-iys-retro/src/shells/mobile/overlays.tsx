@@ -6,6 +6,8 @@ import { Icon } from '../../components/os/Icon';
 import { FilterPanel } from '../../components/shop/FilterPanel';
 import { Price } from '../../components/shop/Price';
 import { RemoteImage } from '../../components/shop/RemoteImage';
+import { EssentialLinks } from '../../components/shop/EssentialLinks';
+import { ESSENTIALS } from '../../data/essentials';
 import { concept } from '../../data/copy';
 import { MENU } from '../../data/taxonomy';
 import { setWallpaperImage } from '../../lib/actions';
@@ -46,6 +48,7 @@ export function MBag({ close }: { close: () => void }) {
             <b>{formatEGP(subtotal(items))}</b>
           </div>
           <p className="bag__note">{concept.y2k.bagNote}</p>
+          <EssentialLinks className="bag__note" ids={['exchange-refund', 'shipping', 'terms-conditions']} />
           <button type="button" className="btn btn--go m-add" onClick={() => useOS.getState().showDialog({ kind: 'checkout' })}>
             {concept.y2k.bagCta}
           </button>
@@ -193,6 +196,17 @@ export function MMenu({ close, openOverlay }: { close: () => void; openOverlay: 
               <span>{m.label}</span>
               <small>{formatCount(m.collection ? cat?.collections.get(m.collection)?.count ?? 0 : cat?.products.length ?? 0)}</small>
             </button>
+          </li>
+        ))}
+      </ul>
+      <h2 className="m-h2">ESSENTIALS</h2>
+      <ul className="m-menu" aria-label="Essentials">
+        {ESSENTIALS.map((e) => (
+          <li key={e.id}>
+            <a className="m-menu__link" href={e.url} target="_blank" rel="noopener noreferrer">
+              <Icon name="txt" size={24} />
+              <span>{e.label} ↗</span>
+            </a>
           </li>
         ))}
       </ul>

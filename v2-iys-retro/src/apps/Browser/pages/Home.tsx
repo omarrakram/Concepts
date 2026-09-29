@@ -3,6 +3,7 @@ import { Icon } from '../../../components/os/Icon';
 import { PageLoading } from '../../../components/shop/PageLoading';
 import { Price, SaleBadge } from '../../../components/shop/Price';
 import { RemoteImage } from '../../../components/shop/RemoteImage';
+import { EssentialLinks } from '../../../components/shop/EssentialLinks';
 import { assets, brand, campaign, curation, localImage, pick } from '../../../data/assets';
 import { concept, official, OFFICIAL_VERIFIED_ON } from '../../../data/copy';
 import { BUDDIES, MENU } from '../../../data/taxonomy';
@@ -148,6 +149,9 @@ export default function Home() {
                 </li>
               ))}
             </ol>
+            <p className="box__more">
+              <Link to="/shop">{concept.y2k.seeMoreTop8(formatCount(cat.products.length))}</Link>
+            </p>
           </section>
 
           <section className="box">
@@ -214,7 +218,7 @@ export default function Home() {
               ))}
             </ul>
             <p className="box__more">
-              <Link to="/collections/cairo">Open the whole Cairo folder ({formatCount(cat.collections.get('cairo')?.count ?? 0)}) ›</Link>
+              <Link to="/collections/cairo">{concept.y2k.shopCairo(formatCount(cat.collections.get('cairo')?.count ?? 0))}</Link>
             </p>
           </section>
 
@@ -224,7 +228,7 @@ export default function Home() {
                 <img src={zed.src} alt="IYS × ZED campaign: green lockers with stickers" width={zed.width} height={zed.height} loading="lazy" />
               </button>
               <figcaption>
-                <b>IYS × ZED</b> - current collaboration on inyourshoe.com. <Link to="/collections/inyourshoexzed">{formatCount(cat.collections.get('inyourshoexzed')?.count ?? 0)} items ›</Link>
+                <b>IYS × ZED</b> - current collaboration on inyourshoe.com. <Link to="/collections/inyourshoexzed">{concept.y2k.openCollection(formatCount(cat.collections.get('inyourshoexzed')?.count ?? 0))}</Link>
               </figcaption>
             </figure>
           )}
@@ -290,6 +294,7 @@ export default function Home() {
         <p className="muted">
           Catalogue snapshot: {formatCount(cat.products.length)} public products, EGP, {cat.generatedAt.slice(0, 10)}. Best viewed in IYS INTERNET at 1024×768 or higher.
         </p>
+        <EssentialLinks className="muted" label="IYS ESSENTIALS:" ids={['exchange-refund', 'shipping', 'terms-conditions', 'terms-of-service', 'privacy']} more />
         <p className="catchy">{concept.catchy.footer}</p>
       </footer>
     </div>

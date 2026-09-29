@@ -14,7 +14,8 @@ export type AppId =
   | 'recycle'
   | 'newsletter'
   | 'help'
-  | 'exchange';
+  | 'exchange'
+  | 'essentials';
 
 export interface Rect {
   x: number;
@@ -69,6 +70,7 @@ export function defaultRect(app: AppId, desk: { w: number; h: number }, stack: n
     newsletter: [440, 380],
     help: [Math.min(720, desk.w * 0.6), Math.min(560, desk.h * 0.8)],
     exchange: [Math.min(720, desk.w * 0.6), Math.min(560, desk.h * 0.8)],
+    essentials: [380, Math.min(470, desk.h * 0.8)],
   };
   const [w0, h0] = sizes[app];
   const w = Math.round(Math.min(w0, desk.w - 16));
@@ -135,6 +137,7 @@ export const TITLES: Record<AppId, string> = {
   newsletter: 'IYS NEWSLETTER',
   help: 'IYS HELP & SUPPORT',
   exchange: 'XCHANGE.EXE :) - EXCHANGES / REFUNDS FORM',
+  essentials: 'IYS ESSENTIALS',
 };
 
 const topActive = (windows: Win[]) =>

@@ -1,4 +1,6 @@
-import { Link, useParams } from 'react-router';
+import { useState } from 'react';
+import { Link, useNavigate, useParams } from 'react-router';
+import { EssentialLinks } from '../../../components/shop/EssentialLinks';
 import { Gallery } from '../../../components/product/Gallery';
 import { VariantPicker } from '../../../components/product/VariantPicker';
 import { FavoriteButton } from '../../../components/shop/FavoriteButton';
@@ -8,12 +10,16 @@ import { RemoteImage } from '../../../components/shop/RemoteImage';
 import { concept } from '../../../data/copy';
 import { usePage } from '../../../lib/usePage';
 import { useProductState } from '../../../lib/useProductState';
+import { useOS } from '../../../state/os';
 import { collectionTitle } from '../../../lib/useShopQuery';
 import NotFound from './NotFound';
 
 export default function Product() {
   const { handle } = useParams();
   const s = useProductState(handle);
+  const navigate = useNavigate();
+  // After a real add, offer the next step (per product, so it resets on navigation).
+  const [addedHandle, setAddedHandle] = useState<string | null>(null);
   const { cat, indexed, detail, p, variant } = s;
   const title = p?.title ?? indexed?.title ?? 'Loading...';
   usePage(title, detail.status === 'loading' ? 'Loading image...' : p ? 'Done.' : undefined);
@@ -75,18 +81,39 @@ export default function Product() {
           <StockNote available={available} />
           <VariantPicker p={p} selected={s.selected} onSelect={s.select} />
           <div className="props__buy">
-            <button type="button" className="btn btn--go props__add" disabled={!s.canAdd} onClick={s.add}>
+            <button
+              type="button"
+              className="btn btn--go props__add"
+              disabled={!s.canAdd}
+              onClick={() => {
+                s.add();
+                setAddedHandle(p.handle);
+              }}
+            >
               {s.needsChoice ? `Choose ${p.options.find((_, i) => !s.selected[i])?.name.toLowerCase() ?? 'an option'} :)` : available === false ? concept.y2k.soldOut : concept.y2k.add}
             </button>
             <FavoriteButton handle={p.handle} title={p.title} />
           </div>
-          <p className="props__fit">{available === false ? concept.y2k.tooCute : concept.y2k.fitNote}</p>
+          {addedHandle === p.handle ? (
+            <p className="props__fit" role="status">
+              {concept.y2k.added}{' '}
+              <button type="button" className="btn btn--go btn--small" onClick={() => useOS.getState().open('bag')}>
+                {concept.y2k.viewBag}
+              </button>{' '}
+              <button type="button" className="btn btn--small" onClick={() => navigate('/shop')}>
+                {concept.y2k.keepShopping}
+              </button>
+            </p>
+          ) : (
+            <p className="props__fit">{available === false ? concept.y2k.tooCute : concept.y2k.fitNote}</p>
+          )}
           <a className="props__real" href={p.sourceUrl} target="_blank" rel="noopener noreferrer">
             VIEW CURRENT ITEM ON IYS ↗
           </a>
           <p className="props__snapshot">
             {concept.snapshot} ({p.retrievedAt?.slice(0, 10) ?? 'unknown'}). This concept cannot place orders.
           </p>
+          <EssentialLinks className="props__snapshot" label="Before u buy:" ids={['shipping', 'exchange-refund']} more />
           {p.description && (
             <details className="props__desc" open>
               <summary>Description</summary>

@@ -1,5 +1,6 @@
 import { Link } from 'react-router';
 import { Icon } from '../../../components/os/Icon';
+import { concept } from '../../../data/copy';
 import { PageLoading } from '../../../components/shop/PageLoading';
 import { ProductCard } from '../../../components/shop/ProductCard';
 import { useCatalogue } from '../../../lib/catalogue/load';
@@ -26,6 +27,11 @@ export default function Favorites() {
         <div className="empty">
           <p>
             <b>No favorites yet.</b> Press <b>☆</b> on any product to save it here.
+          </p>
+          <p>
+            <Link className="btn btn--go btn--small" to="/collections/newest">
+              {concept.y2k.shopNew}
+            </Link>
           </p>
           <p>
             <Link to="/collections/pjoys">Start with Pjoys</Link> · <Link to="/shop">Shop all</Link>

@@ -1,4 +1,5 @@
 import { memo, useState } from 'react';
+import { concept } from '../../data/copy';
 import { Link } from 'react-router';
 import type { Product } from '../../lib/catalogue/types';
 import { productPath } from '../../lib/useBrowse';
@@ -76,7 +77,7 @@ export const ProductCard = memo(function ProductCard({ p, eager }: { p: Product;
                 </option>
               ))}
             </select>
-            <button type="button" className="btn btn--primary btn--small" disabled={!size} onClick={quickAdd} aria-label={`Add ${p.title}${size ? `, size ${size}` : ''} to bag`}>
+            <button type="button" className="btn btn--primary btn--small" disabled={!size} onClick={quickAdd} title={size ? undefined : concept.y2k.pickSizeFirst} aria-label={`Add ${p.title}${size ? `, size ${size}` : ''} to bag`}>
               Add
             </button>
           </>
