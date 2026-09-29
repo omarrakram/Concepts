@@ -45,7 +45,7 @@ test.describe('IYS INTERNET commerce', () => {
     const b = browserWin(page);
     const saleLabel = b.getByRole('checkbox', { name: /On sale only/ });
     const expected = Number((await b.getByText(/On sale only \(/).textContent())!.match(/\(([\d,]+)\)/)![1]!.replace(/,/g, ''));
-    await saleLabel.click();
+    await saleLabel.check();
     await expect(page).toHaveURL(/sale=1/);
     await expect(b.locator('.page__meta')).toContainText(`of ${fmt(expected)} products`);
     await expect(page).not.toHaveURL(/page=26/);

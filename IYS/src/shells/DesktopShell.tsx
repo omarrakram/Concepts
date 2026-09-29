@@ -20,19 +20,27 @@ import '../styles/os.css';
 import '../styles/apps.css';
 
 type AppProps = { win: Win };
-const APPS: Record<AppId, ComponentType<AppProps>> = {
-  internet: lazy(() => import('../apps/Browser/Browser')),
-  messenger: lazy(() => import('../apps/Messenger/BuddyList')),
-  chat: lazy(() => import('../apps/Messenger/Chat')),
-  wardrobe: lazy(() => import('../apps/Wardrobe/Wardrobe')),
-  camera: lazy(() => import('../apps/Camera/Camera')),
-  viewer: lazy(() => import('../apps/Viewer/ImageViewer')),
-  bag: lazy(() => import('../apps/Bag/Bag')),
-  control: lazy(() => import('../apps/ControlPanel/ControlPanel')),
-  mail: lazy(() => import('../apps/Small/Mail')),
-  readme: lazy(() => import('../apps/Small/Readme')),
-  recycle: lazy(() => import('../apps/Small/RecycleBin')),
+const LOADERS: Record<AppId, () => Promise<{ default: ComponentType<AppProps> }>> = {
+  internet: () => import('../apps/Browser/Browser'),
+  messenger: () => import('../apps/Messenger/BuddyList'),
+  chat: () => import('../apps/Messenger/Chat'),
+  wardrobe: () => import('../apps/Wardrobe/Wardrobe'),
+  camera: () => import('../apps/Camera/Camera'),
+  viewer: () => import('../apps/Viewer/ImageViewer'),
+  bag: () => import('../apps/Bag/Bag'),
+  control: () => import('../apps/ControlPanel/ControlPanel'),
+  mail: () => import('../apps/Small/Mail'),
+  readme: () => import('../apps/Small/Readme'),
+  recycle: () => import('../apps/Small/RecycleBin'),
 };
+const APPS = Object.fromEntries(Object.entries(LOADERS).map(([k, load]) => [k, lazy(load)])) as unknown as Record<AppId, ComponentType<AppProps>>;
+
+/** Warm every app chunk once the desktop is idle, so windows open without a loading frame. */
+function preloadApps() {
+  const run = () => Object.values(LOADERS).forEach((load) => void load());
+  if ('requestIdleCallback' in window) window.requestIdleCallback(run, { timeout: 3000 });
+  else setTimeout(run, 1500);
+}
 
 function Loading({ win }: AppProps) {
   return (
@@ -84,6 +92,7 @@ export default function DesktopShell() {
   useEffect(() => {
     if (booting || started.current) return;
     started.current = true;
+    preloadApps();
     if (deepLink || useSession.getState().welcomeSeen) open('internet');
     else showDialog({ kind: 'welcome' });
     // eslint-disable-next-line react-hooks/exhaustive-deps

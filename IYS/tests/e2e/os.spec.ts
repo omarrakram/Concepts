@@ -17,9 +17,12 @@ test.describe('IYS OS', () => {
     await expect(page.getByText('IYS PERSONAL COMPUTER')).toHaveCount(0);
   });
 
-  test('boot finishes on its own in under ~2.5 s', async ({ page }) => {
+  test('boot sequence finishes on its own in about 2 s', async ({ page }) => {
     await page.goto('/');
-    await expect(page.getByRole('alertdialog', { name: 'IYS.EXE' })).toBeVisible({ timeout: 3500 });
+    await expect(page.getByText('IYS PERSONAL COMPUTER')).toBeAttached();
+    const t0 = Date.now();
+    await expect(page.getByRole('alertdialog', { name: 'IYS.EXE' })).toBeVisible({ timeout: 6000 });
+    expect(Date.now() - t0).toBeLessThan(3000);
   });
 });
 
@@ -67,6 +70,7 @@ test.describe('window manager', () => {
     await desktop(page);
     await page.getByRole('button', { name: 'Open Control Panel' }).click();
     const win = page.getByRole('dialog', { name: 'CONTROL PANEL' });
+    await expect(win.getByRole('tab', { name: 'Wallpaper' })).toBeVisible();
     const bar = win.locator('.titlebar');
     const b = (await bar.boundingBox())!;
     await page.mouse.move(b.x + 60, b.y + 10);

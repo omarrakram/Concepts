@@ -31,6 +31,9 @@ export function Boot({ onDone }: { onDone: () => void }) {
       };
     }
     const q = gsap.utils.selector(el);
+    // Wall-clock boot: after a main-thread stall (e.g. a slow machine parsing
+    // the catalogue chunk) jump ahead instead of stretching the boot.
+    gsap.ticker.lagSmoothing(0);
     const tl = gsap.timeline({ onComplete: finish });
     tl.set(q('.boot__screen'), { opacity: 0 })
       .fromTo(q('.boot__dot'), { scale: 0, opacity: 1 }, { scale: 1, duration: 0.12, ease: 'power2.out' })
@@ -46,6 +49,7 @@ export function Boot({ onDone }: { onDone: () => void }) {
       .to(el, { opacity: 0, duration: 0.18 });
     return () => {
       tl.kill();
+      gsap.ticker.lagSmoothing(500, 33);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

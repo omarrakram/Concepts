@@ -6,7 +6,7 @@ import { SORTS, type Facets, type ShopQuery, type SortKey } from '../../lib/cata
  * Filters styled as a CONTROL PANEL but built from real form controls.
  * A facet only appears when the data actually supports it.
  */
-export function FilterPanel({ q, facets, onChange, onReset, departments, onDepartment }: {
+export function FilterPanel({ q: fromUrl, facets, onChange: commit, onReset, departments, onDepartment }: {
   q: ShopQuery;
   facets: Facets;
   onChange: (patch: Partial<ShopQuery>) => void;
@@ -15,6 +15,17 @@ export function FilterPanel({ q, facets, onChange, onReset, departments, onDepar
   onDepartment?: (handle: string) => void;
 }) {
   const id = useId();
+  // Optimistic mirror of the URL query: React Router applies URL updates in a
+  // transition, so controls driven only by the URL would visibly snap back
+  // until it commits (noticeable on slow devices). Local state updates at once
+  // and re-syncs whenever the URL changes.
+  const [q, setQ] = useState(fromUrl);
+  useEffect(() => setQ(fromUrl), [fromUrl]);
+  const onChange = (patch: Partial<ShopQuery>) => {
+    const next = { ...q, ...patch };
+    setQ(next);
+    commit(next);
+  };
   const [min, setMin] = useState(q.min?.toString() ?? '');
   const [max, setMax] = useState(q.max?.toString() ?? '');
   useEffect(() => {
