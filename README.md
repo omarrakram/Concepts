@@ -28,13 +28,21 @@ Collectorverse / interactive collectibles / arcade-inspired ecommerce experience
 
 Folder: `popspot/` — routes `/` and `/showcase`
 
-## In Your Shoe
+## In Your Shoe — The Cool Decision Club
 
 Unofficial digital redesign concept for In Your Shoe (IYS).
 
 The Cool Decision Club — wardrobe / Pjoy room / Cairo clubhouse ecommerce experience.
 
 Folder: `IYS/` — routes `/`, `/showcase`, `/shop/*` and `/product/*`
+
+## In Your Shoe — IYS Internet 2006
+
+Unofficial speculative concept for In Your Shoe (IYS).
+
+Today's In Your Shoe running inside an original 2006-era computer (IYS OS): the full public Egyptian catalogue in a period browser, messenger, camera and wardrobe, plus a separate mobile shell.
+
+Folder: `IYS-2006/` — routes `/`, `/shop`, `/collections/:handle`, `/search`, `/product/:handle`, `/favorites`, `/stores` and `/showcase`
 
 ---
 

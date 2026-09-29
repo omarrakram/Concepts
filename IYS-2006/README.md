@@ -1,0 +1,323 @@
+# IYS INTERNET 2006
+
+**Unofficial speculative digital concept. Not affiliated with In Your Shoe.**
+Design & development concept by **Omar Akram, 2026**. No orders can be placed.
+Product names, logo and photography belong to their respective rights holders
+and are used here for a non-commercial portfolio concept.
+
+> **What if today’s In Your Shoe travelled back to the internet of 2006?**
+
+In Your Shoe did not exist in 2006, and nothing here pretends it did. This is the
+**current** brand — its full public catalogue, current FW27 campaign, stores and
+official language — loaded into an original, functioning computer from the
+mid-2000s. The website *is* the computer; the store runs inside it.
+
+**The visual language is 2006. The engineering is 2026. The brand is current IYS.**
+
+---
+
+## Design thesis
+
+- **Build a computer, not a skin.** IYS OS is a real window manager (drag,
+  resize, minimise, maximise, focus/z-order, taskbar), with a browser, a
+  messenger, a camera, a file explorer, a bag and a control panel.
+- **Old interface, new clothes.** Period chrome (glossy title bars, bevels,
+  8.3 filenames, status bars, 88×31 badges, one marquee) frames real, current,
+  colour-accurate product photography.
+- **The brand is the subject.** Identity comes from real products (Pjoys,
+  Cairo, Cereal Killer, Touch Grass), real categories and counts, the current
+  campaign, the stores and the official lines — not just the logo.
+- **2026 UX underneath.** Single-click everything, big touch targets on
+  mobile, real form controls, keyboard support, reduced motion, sound off by
+  default, no fake loading delays.
+
+A happy discovery during research: IYS’s **current FW27 campaign is staged
+with CRT TVs and old computers**. Those real photos are the default wallpaper —
+shown as current campaign imagery inside a fictional 2006 machine, never as
+archive photos.
+
+## What’s inside
+
+| | |
+| --- | --- |
+| **Boot** | ~2 s CRT power-on → POST lines → the current IYS wordmark → “TIME TARGET: 2006”. SKIP button, Esc/Enter, once per session, 250 ms fade with reduced motion. |
+| **IYS.EXE** | “You’re about to make a Cool Decision!” (official line) with *Cancel* / *Obviously* (concept UI). |
+| **Desktop** | Original SVG icon family, FW27 wallpaper, taskbar with IYS menu, quick launch, window buttons, messenger/connection/sound tray and the real device clock (tooltip: “TIME MACHINE TARGET: 2006”). |
+| **IYS INTERNET** | Browser with Back/Forward (real history), Refresh, Home, Search, Favorites, Bag, a fake `http://www.inyourshoe.com/...` address that mirrors the real route, a Links bar and a status bar. “View on real IYS site ↗” is the only way out. |
+| **Home portal** | Official lines and dated announcements, FW27 hero, **TOP 8 COOL DECISIONS**, NEW STUFF (IYS’s own Newest collection), Pjoys, `C:\IYS\CAIRO\` (القاهرة), IYS × ZED, currently-online buddies, stores, IYS MAIL, a *fictional* TIME TRAVELLERS counter, an honest empty guestbook, original badges. |
+| **Shop** | Every public product, 48 per page, « Previous 1 2 3 … N Next », sort, Control-Panel filters (type, size, price, availability, sale), URL-synced state. |
+| **Search** | Fuse.js over title/type/collections/tags, typo-tolerant (“ceral” → Cereal Killer). |
+| **Product** | IYS IMAGE VIEWER + PRODUCT PROPERTIES: all photos, zoom, full-size viewer, real options and per-variant availability (no silent default size), sale only when a real compare-at exists, description, VIEW CURRENT ITEM ON IYS ↗. |
+| **Bag** | “COPYING ITEM TO: MY BAG” < 1 s, quantities, remove, subtotal in EGP, CONCEPT CHECKOUT (“No order will be placed.”). |
+| **Favorites** | ★ ADD TO FAVORITES, a browser-favorites page, persisted locally. |
+| **IYS MESSENGER** | Collections as buddies. **2:13 AM — PJOYS is online: “u awake?” / “enta sa7y?”**, then real Pjoys arrive as file transfers, plus pattern tiles you can set as wallpaper. Scripted concept copy; no bot, no fake customers. |
+| **IYS CAMERA** | `E:\DCIM\` — CAMPAIGNS, PJOYS, CAIRO, STORES; 4:3 contact sheet, image viewer, set as wallpaper. |
+| **MY WARDROBE** | Explorer over IYS’s own taxonomy; every count comes from data; decorative filenames beside official titles. |
+| **Stores** | FIND IYS IRL — every published store with address line, hours, phone, directions. |
+| **Control Panel** | Wallpaper (presets, stretch/center/tile), sound, CRT filter, Time Machine (2006 only), System (snapshot facts), About, Reset desktop. |
+| **Easter eggs** | README.TXT, RECYCLE BIN (BORING_OUTFITS, empty), `TOUCH_GRASS.EXE` (“ERROR: TOUCH GRASS NOT FOUND.” → the real product), `GAME_NIGHT.EXE`, a screensaver after 60 s idle. |
+| **IYS MOBILE** | A separate shell below 700 px: status strip, path titles, 3×3 home grid, list screens, swipe gallery, soft keys (BACK · context key · BAG), same catalogue/bag/favorites/routes. |
+
+## Technology
+
+React 19 · TypeScript · Vite 8 · React Router 7 · Zustand · react-rnd · GSAP ·
+Fuse.js · Vitest · Playwright · axe-core · Sharp · FFmpeg · vite-plugin-pwa ·
+Vercel Web Analytics · GitHub Actions (`.github/workflows/iys-2006-ci.yml`).
+No backend, database, auth, payments, Three.js, Tailwind, UI kit or AI.
+
+```
+IYS-2006/
+  public/
+    catalogue/p-00…31.json     full product records (32 on-demand shards)
+    iys/{brand,campaign,stores,products,camera,tiles,thumbs,os}/  curated local assets
+  src/
+    App.tsx                    lazy DesktopShell / MobileShell / Showcase
+    shells/                    DesktopShell, MobileShell (+ mobile/ screens, overlays, chrome)
+    apps/                      Browser (+ pages), Messenger, Camera, Wardrobe, Viewer, Bag, ControlPanel, Small
+    components/os|shop|product Window, Taskbar, StartMenu, Boot, Dialogs, Icon, ProductCard, FilterPanel, Gallery…
+    lib/catalogue/             types, hydrate, query (filter/sort/paginate/facets), search (Fuse), shard loader
+    state/                     Zustand: os, cart, favorites, preferences(+session), status
+    data/                      generated snapshot + copy.ts (official vs concept) + taxonomy + curation
+    showcase/                  /showcase film (GSAP master timeline)
+    styles/                    tokens, base, controls, os, apps, boot, mobile
+    tests/                     Vitest
+  scripts/                     sync-products, sync-stores, fetch-showcase-assets, record, frames, qa-screens
+  tests/e2e/                   Playwright + axe
+  docs/                        SOURCES.md, RESEARCH.md, qa/ (small screenshot set)
+```
+
+## Full public catalogue (Egyptian storefront = authority)
+
+The concept contains **every product publicly published on the Egyptian
+storefront** at snapshot time — not a curated cast. Counts are never typed by
+hand; they are generated into `src/data/catalogue-meta.json`:
+
+| metric (snapshot 2026-09-29) | value |
+| --- | --- |
+| `publicProductsTotal` | 1,249 |
+| `allProductsCollectionCount` (IYS’s own All Products) | 1,224 |
+| `productsOutsideAllProducts` | 25 — public collaboration capsules (IYS × ZED, Silver Sands) |
+| `variantsTotal` | 4,843 |
+| currency / market | EGP / Egypt |
+
+`/shop` (“Shop All”) lists all 1,249 public products and explains the
+difference; `/collections/all-products` shows IYS’s own 1,224-item collection
+in IYS’s own order. Search covers all 1,249.
+
+**Why Egypt:** the same Shopify store serves Saudi/UAE/Kuwait/UK/international
+markets with converted prices and slightly different assortments. The sync uses
+only unprefixed Egyptian URLs, sends the store’s own `localization=EG` cookies,
+aborts unless the homepage reports `Shopify.currency.active = "EGP"`, rejects
+any international-market URL, and cross-checks prices against the product Ajax
+endpoint.
+
+### `npm run sync-products`
+
+Manual, never automatic (not on install, not on dev, no bot commits).
+Discovery fallback chain, all public and sequential (~4.5 s apart, 429/5xx
+retried with Retry-After/backoff):
+
+1. `sitemap.xml` → Egyptian product sitemaps (+ homepage navigation for collections)
+2. `/products.json?limit=250&page=N` (paged until empty)
+3. `/collections/<handle>/products.json` → membership and IYS’s own order
+4. `/products/<handle>.js` for anything still missing
+5. JSON-LD in the product page
+6. otherwise reported (sitemap entries that 404 are reported as *not public*)
+
+It normalises (never fabricates — unknown = `null`), prints a validation report
+(discovered/normalised/unique/duplicates, images, prices, compare-at, variants,
+collections, product types, invalid URLs, unparseable, currency mismatches,
+international contamination), **fails loudly** on integrity problems or a >20%
+shrink, then writes deterministic output and regenerates the catalogue section
+of `docs/SOURCES.md`. Raw responses are cached in `.cache/sync/` (gitignored);
+`--offline` rebuilds from that cache. `npm run sync-stores` refreshes the store
+directory the same way.
+
+### Catalogue architecture (measured)
+
+| file | raw | gzip | loaded |
+| --- | --- | --- | --- |
+| `src/data/catalogue-index.json` (compact card/filter/search fields) | 589 KB | 114 KB | as its own chunk, in parallel with the boot — never blocks it |
+| `public/catalogue/p-XX.json` × 32 (descriptions, all images, all variants) | 3.0 MB total | 434 KB total | one ~14 KB shard when a product opens |
+
+One flat file would have been ~3.6 MB raw on first load, so the split is
+justified by measurement.
+
+### Snapshot notice
+
+Prices, sale states and availability are **as of the sync timestamp** (shown in
+the status bar, product pages and Control Panel → System). This is not live
+commerce; every product links to the current item on inyourshoe.com.
+
+## Images (hybrid)
+
+- **Full catalogue:** official Shopify CDN URLs, lazy, `decoding="async"`,
+  responsive `srcset` using the CDN `width` parameter. If a remote image
+  disappears the UI shows “IMAGE COULD NOT LOAD” with the real title (and
+  Retry / View original where appropriate) — never a substitute photo.
+- **Curated local assets:** `npm run fetch-showcase-assets` downloads only the
+  127 images the experience and the film need (logos, FW27 + ZED campaign,
+  10 store photos, curated products, camera frames, pattern tiles, 48 showcase
+  thumbnails) → Sharp → sRGB WebP (q 78–86), never upscaled, no colour grading
+  (~8.4 MB). Every file is logged in `docs/SOURCES.md` with its official URL.
+  Digital-camera effects are CSS on campaign/lifestyle frames only.
+
+## Routes
+
+`/` · `/shop` · `/collections/:handle` · `/search?q=` · `/product/:handle`
+(`/products/:handle` redirects) · `/favorites` · `/stores` · `/showcase`.
+Query state (`page`, `sort`, `type`, `size`, `min`, `max`, `stock`, `sale`, `q`)
+survives refresh. Deep links skip the boot and open IYS INTERNET on the exact
+product. Closing the browser window returns the address to `/`.
+
+## State & persistence
+
+Zustand stores: `useOS` (windows, focus, dialogs — **never persisted**, so a
+broken layout can’t be saved), `useCart` + `useFavorites` + `usePreferences`
+(sound, CRT, wallpaper → `localStorage`), `useSession` (boot / welcome / PJOYS
+ping → `sessionStorage`).
+
+## Desktop vs mobile
+
+Below 700 px the app renders **IYS MOBILE**, a different shell (not a shrunken
+desktop). Both shells share catalogue, query/search logic, product/variant
+logic, cart, favorites and routes. The mobile chunk never downloads the window
+manager (react-rnd) or GSAP. Tablets get the desktop shell with the browser,
+wardrobe and camera opening maximised.
+
+## Performance (measured on the production build)
+
+| chunk | gzip | when |
+| --- | --- | --- |
+| entry (`index-*.js`: React, router, stores, shared UI) | 81.6 KB | always |
+| `DesktopShell` + `gsap` + shared app chunk | 19.3 + 26.2 + 9.7 KB | desktop only |
+| `MobileShell` | 7.0 KB | mobile only (no react-rnd, no GSAP) |
+| `catalogue-index` (all 1,249 products) | 110 KB | in parallel with boot |
+| `search` (Fuse.js) | 9.3 KB | first search |
+| `Showcase` | 7.4 KB | `/showcase` only |
+| one catalogue detail shard | ~14 KB | when a product opens |
+
+Initial JS ≈ 137 KB gz on desktop and ≈ 98 KB on mobile (well under the
+400 KB budget); every app window and browser page is a lazy chunk. The shop
+never renders more than 48 cards; remote photos are lazy, `decoding="async"`,
+and sized through the CDN `width` parameter. No Lighthouse score is claimed
+here — none was measured.
+
+## Accessibility
+
+Real buttons/inputs/selects/checkboxes/radios; windows are labelled non-modal
+dialogs; system dialogs are modal `alertdialog`s with focus trap and focus
+return; Escape closes windows/dialogs/menus; keyboard menus and tabs; context
+menu via right-click, Shift+F10 or the menu key; visible dotted focus; skip
+link; `prefers-reduced-motion` removes boot animation, flicker, marquee, blink,
+window animation and camera flash; sound off by default; 44 px mobile targets.
+Automated: axe (WCAG 2.1 A/AA, serious + critical) on the desktop portal, shop,
+product, bag/messenger/control-panel windows — 0 violations. This is tested
+behaviour, not a certification.
+
+## Testing
+
+```bash
+npm test          # Vitest — 58 tests: normalisation, EGP parsing, tags, JSON-LD,
+                  # validation, shard hash, stores parser, filters, sort, pagination,
+                  # facets, cart, variants, AND the committed snapshot (every product
+                  # exactly once across all pages, metrics consistent, curated handles
+                  # resolve, search: ceral/cairo/pjoys/hoodie/socks/kids/jeans/black)
+npm run test:e2e  # Playwright (builds + previews): 32 tests — boot/skip, window
+                  # manager, drag bounds, menu, clock, messenger, touch grass, camera,
+                  # wallpaper persistence, wardrobe counts, control panel, shop +
+                  # pagination, filters/sort/reset, sale, fuzzy search, deep links
+                  # (first/middle/last/kids/women/collab), bag quantities, checkout,
+                  # favorites, stores, 404, back/forward, image fallback, 1024 smoke,
+                  # mobile shell/shop/product/bag/search/targets, axe
+npm run qa:screens  # canonical screenshots → docs/qa/
+```
+
+E2E blocks the remote CDN, so tests never depend on IYS being reachable.
+
+## Showcase film — `/showcase`
+
+A deterministic 1080×1920 portrait film (**19.2 s**) built from the site’s own
+styles and markup, driven by one paused GSAP master timeline:
+boot → FW27 desktop → IYS.EXE → portal + TOP 8 → 2:13 AM PJOYS (“u awake?”, real
+Pjoys arrive) → the whole catalogue pages by → search CAIRO → *Cairo Is A
+Mindset* hoodie, size M, ADD TO BAG → IYS CAMERA → set the Cereal Killer
+balcony photo as wallpaper → MY WARDROBE counts → controlled desktop chaos →
+everything minimises → IYS.EXE → end card → power-off.
+
+- `/showcase?t=5.2` seeks and pauses.
+- `window.__iysShowcase` = `{ play, pause, seek(t), restart, time(), duration, ready }`.
+- Every image is local; the renderer blocks all external requests.
+
+```bash
+npm run build && npm run preview   # in one terminal
+npm run frames                     # QA stills → out/frames/*.png
+npm run record                     # → out/iys-internet-2006.mp4 (H.264, 1080×1920, 60 fps)
+```
+
+`record` seeks the timeline frame by frame with Playwright (540×960 CSS px at
+device scale 2) and pipes PNGs into FFmpeg. The MP4 lives in `out/`
+(gitignored) and is never committed.
+
+## PWA
+
+`vite-plugin-pwa` (auto-update, `skipWaiting` + `clientsClaim`, outdated caches
+cleaned). Precached: the app shell, JS/CSS, logos, cursors, icons and the two
+wallpaper photos. Runtime-cached: catalogue shards (network-first) and local
+curated images. **Not cached:** the 1,000+ remote CDN product photos. Offline,
+the OS still opens, shows “INTERNET CONNECTION LOST”, and keeps showing
+snapshot prices labelled as a snapshot. The installed app is named
+“IYS Internet 2006 — Concept”. `sw.js` is served `no-cache`, so new
+deployments are picked up on the next visit.
+
+## Analytics
+
+Standard Vercel Web Analytics (`@vercel/analytics`), page views only, no custom
+events, no fingerprinting, loaded only in production builds and not on
+`localhost`. It is never shown in the UI (the TIME TRAVELLERS counter is
+fictional).
+
+## Deploy (Vercel)
+
+Repository `omarrakram/Concepts` · Branch `main` · Root Directory `IYS-2006` ·
+Framework Vite · Install `npm ci` · Build `npm run build` · Output `dist`.
+The original Cool Decision Club concept lives separately in `IYS/`.
+`vercel.json` rewrites every route to `index.html` (static files first), caches
+hashed assets immutably, serves `sw.js` and catalogue shards with revalidation,
+and sets `X-Robots-Tag: noindex` (plus `robots.txt`) so this unofficial concept
+never competes with inyourshoe.com in search. The normal build needs no network and no secrets.
+
+## Scripts
+
+| command | does |
+| --- | --- |
+| `npm run dev` | Vite dev server |
+| `npm run build` | type-check + production build |
+| `npm run preview` | serve `dist/` |
+| `npm test` / `npm run test:e2e` | Vitest / Playwright + axe |
+| `npm run sync-products` | re-snapshot the public Egyptian catalogue (network) |
+| `npm run sync-stores` | re-read the public store directory (network) |
+| `npm run fetch-showcase-assets` | download + optimise the curated local images (network) |
+| `npm run frames` / `npm run record` | showcase stills / MP4 |
+| `npm run qa:screens` | canonical QA screenshots |
+| `npm run poster` | 1080×1350 social poster (`out/`) + OpenGraph image (`public/og-poster.jpg`) |
+| `node scripts/make-icons.mjs` | regenerate the original PWA icons from `public/favicon.svg` |
+
+## Sources
+
+See [`docs/SOURCES.md`](docs/SOURCES.md) (every page, endpoint and local asset
+with its official URL) and [`docs/RESEARCH.md`](docs/RESEARCH.md) (brand and
+2004–2007 interface research, Egypt context, design decisions).
+
+## Known limitations
+
+- Snapshot data: prices, sales and stock can change after the sync date.
+- Remote product photos depend on the official CDN; offline they show an honest
+  placeholder box, not a substitute image.
+- Tahoma/Verdana are used when installed; elsewhere the stack falls back to
+  DejaVu/Arial (no fonts are bundled).
+- The fake address bar accepts `inyourshoe.com` paths and search terms; it never
+  navigates away from the concept.
+- Messenger conversations are fixed concept scripts (by design, no AI).
+- The official “Same-day delivery” / “Free Shipping +2,499” / 10% lines are
+  promotional and dated; re-verify before each publish.
