@@ -59,7 +59,7 @@ test.describe('IYS Retro V2 fixes', () => {
         return bad;
       });
     await desktop(page, '/product/candy-cane-onesie'); // its synced description contains an em dash
-    await expect(browserWin(page).locator('.props__desc')).toBeVisible();
+    await expect(browserWin(page).locator('.props__desc:not(.props__care)')).toBeVisible();
     expect(await scan()).toEqual([]);
     await page.goto('/');
     await expect(browserWin(page).locator('.top8')).toBeVisible();
@@ -120,43 +120,43 @@ test.describe('IYS MESSENGER menus', () => {
     await page.getByRole('menuitem', { name: 'About IYS Messenger' }).click();
     await expect(page.getByRole('alertdialog', { name: 'About IYS Messenger' })).toContainText('unofficial concept');
     await page.getByRole('alertdialog').getByRole('button', { name: 'OK' }).click();
-    // Contacts › CAIRO opens the existing conversation
+    // Contacts › CAIRO opens the conversation IN the same Messenger window
     await bar.getByRole('menuitem', { name: 'Contacts', exact: true }).click();
     await page.getByRole('menuitem', { name: 'CAIRO' }).click();
-    const chat = page.locator('[data-window="chat-cairo"]');
-    await expect(chat).toBeVisible();
-    await expect(chat.locator('.xfer').first()).toBeVisible();
-    const cbar = chat.getByRole('menubar');
+    await expect(buddy.locator('.chat')).toBeVisible();
+    await expect(buddy.locator('.xfer').first()).toBeVisible();
+    await expect(page.locator('[data-window]')).toHaveCount(2); // IYS INTERNET + the one Messenger
     // Actions (context-aware) in the conversation
-    await cbar.getByRole('menuitem', { name: 'Actions', exact: true }).click();
+    await bar.getByRole('menuitem', { name: 'Actions', exact: true }).click();
     const acts = await page.getByRole('menu', { name: 'Actions' }).getByRole('menuitem').allTextContents();
     expect(acts.slice(0, 3)).toEqual(['Send IM', 'Open CAIRO Collection', 'View Shared Product']);
     await page.getByRole('menuitem', { name: 'Send IM' }).click();
     await expect(page.locator('#compose-chat-cairo')).toBeFocused();
     if (acts.includes('Add Shared Product to Bag')) {
-      await cbar.getByRole('menuitem', { name: 'Actions', exact: true }).click();
+      await bar.getByRole('menuitem', { name: 'Actions', exact: true }).click();
       await page.getByRole('menuitem', { name: 'Add Shared Product to Bag' }).click();
       await expect(page.getByRole('button', { name: /Open My Bag, 1 items/ }).first()).toBeVisible();
     }
-    await cbar.getByRole('menuitem', { name: 'Actions', exact: true }).click();
+    await bar.getByRole('menuitem', { name: 'Actions', exact: true }).click();
     await page.getByRole('menuitem', { name: 'View Shared Product' }).click();
     await expect(page).toHaveURL(/\/product\//);
     await minimizeBrowser(page); // the product opened in IYS INTERNET, in front
-    await chat.evaluate((el: HTMLElement) => el.focus()); // bring the conversation to the front
-    await cbar.getByRole('menuitem', { name: 'Actions', exact: true }).click();
+    await buddy.evaluate((el: HTMLElement) => el.focus()); // bring Messenger to the front
+    await bar.getByRole('menuitem', { name: 'Actions', exact: true }).click();
     await page.getByRole('menuitem', { name: 'Open CAIRO Collection' }).click();
     await expect(page).toHaveURL(/\/collections\/cairo$/);
     await minimizeBrowser(page);
-    // buddy list Actions now follows the open conversation
+    // File in a conversation: Close Conversation → back to the buddy list (same window); then Close IYS Messenger
     await buddy.evaluate((el: HTMLElement) => el.focus());
-    await bar.getByRole('menuitem', { name: 'Actions', exact: true }).click();
-    await expect(page.getByRole('menu', { name: 'Actions' }).getByRole('menuitem').first()).toHaveText('Send IM');
-    await page.keyboard.press('Escape');
-    // File › Close Conversation closes only the chat; File › Close IYS Messenger closes only Messenger
-    await chat.evaluate((el: HTMLElement) => el.focus()); // bring the conversation to the front
-    await cbar.getByRole('menuitem', { name: 'File', exact: true }).click();
+    await bar.getByRole('menuitem', { name: 'File', exact: true }).click();
+    await expect(page.getByRole('menu', { name: 'File' }).getByRole('menuitem')).toHaveText(['New Conversation...', 'Minimize Messenger', 'Close Conversation', 'Close IYS Messenger']);
     await page.getByRole('menuitem', { name: 'Close Conversation' }).click();
-    await expect(chat).toHaveCount(0);
+    await expect(buddy.locator('.im__list')).toBeVisible();
+    await expect(buddy.locator('.chat')).toHaveCount(0);
+    // buddy-list Actions act on the list again
+    await bar.getByRole('menuitem', { name: 'Actions', exact: true }).click();
+    await expect(page.getByRole('menu', { name: 'Actions' }).getByRole('menuitem').first()).toHaveText('Start Conversation...');
+    await page.keyboard.press('Escape');
     await bar.getByRole('menuitem', { name: 'File', exact: true }).click();
     await page.getByRole('menuitem', { name: 'Close IYS Messenger' }).click();
     await expect(buddy).toHaveCount(0);

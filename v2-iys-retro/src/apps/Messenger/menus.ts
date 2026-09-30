@@ -6,42 +6,28 @@ import type { Product } from '../../lib/catalogue/types';
 import { collectionPath, productPath, useBrowse } from '../../lib/useBrowse';
 import { useOS, type Win } from '../../state/os';
 import { addToBag, quickRequest } from '../../state/status';
+import { focusWhenReady, MESSENGER, openChat, showBuddies } from './nav';
 
-export function openChat(id: string, name: string) {
-  useOS.getState().open('chat', { id: `chat-${id}`, title: `${name} - Conversation`, props: { buddy: id } });
-}
-
-/** Focus an element that may still be mounting (lazy window), for up to 3 s. */
-function focusWhenReady(selector: string) {
-  const until = performance.now() + 3000;
-  const tick = () => {
-    const el = document.querySelector<HTMLElement>(selector);
-    if (el) el.focus();
-    else if (performance.now() < until) requestAnimationFrame(tick);
-  };
-  requestAnimationFrame(tick);
-}
+export { openChat, showBuddies } from './nav';
 
 /**
- * Real menus for IYS MESSENGER (buddy list + conversations), rendered by the
- * same MenuBar as IYS INTERNET. `buddyId` = the conversation in context;
- * `shared` = the latest product actually sent in that conversation.
+ * Real menus for the one IYS MESSENGER window, rendered by the same MenuBar
+ * as IYS INTERNET. `buddyId` = the conversation open in the window (null = the
+ * buddy list is showing); `shared` = the latest product actually sent in it.
  */
 export function useMessengerMenus(win: Win, buddyId: string | null, shared: Product | null = null): MenuDef[] {
   const cat = useCatalogue();
   const browse = useBrowse();
   const { open, close, minimize } = useOS.getState();
-  const isChat = win.app === 'chat';
+  const isChat = Boolean(buddyId);
   const available = BUDDIES.filter((b) => !cat || (cat.collections.get(b.collection)?.count ?? 0) > 0);
   const buddy = buddyId ? available.find((b) => b.id === buddyId) ?? null : null;
   const startConversation = () => {
     open('messenger');
-    focusWhenReady('[data-window="messenger"] .im__buddy');
+    showBuddies();
+    focusWhenReady(`[data-window="${MESSENGER}"] .im__buddy`);
   };
-  const sendIM = (id: string, name: string) => {
-    openChat(id, name);
-    focusWhenReady(`#compose-chat-${id}`);
-  };
+  const sendIM = (id: string, name: string) => openChat(id, name, `#compose-chat-${id}`);
   const req = shared ? quickRequest(shared) : null;
 
   return [
@@ -49,15 +35,17 @@ export function useMessengerMenus(win: Win, buddyId: string | null, shared: Prod
       label: 'File',
       items: [
         { label: 'New Conversation...', run: startConversation },
-        { label: isChat ? 'Minimize Conversation' : 'Minimize Messenger', run: () => minimize(win.id) },
-        { label: isChat ? 'Close Conversation' : 'Close IYS Messenger', separator: true, run: () => close(win.id) },
+        { label: 'Minimize Messenger', run: () => minimize(win.id) },
+        // In a conversation, Close Conversation goes back to the buddy list (same window).
+        ...(isChat ? [{ label: 'Close Conversation', separator: true, run: showBuddies }] : []),
+        { label: 'Close IYS Messenger', separator: !isChat, run: () => close(win.id) },
       ],
     },
     {
       label: 'Contacts',
       items: [
         ...available.map((b) => ({ label: b.name, run: () => openChat(b.id, b.name) })),
-        { label: 'Show Buddy List', separator: true, run: () => open('messenger') },
+        { label: 'Show Buddy List', separator: true, run: showBuddies },
       ],
     },
     {

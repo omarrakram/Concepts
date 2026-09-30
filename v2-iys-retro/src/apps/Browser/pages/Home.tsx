@@ -15,6 +15,7 @@ import type { Product } from '../../../lib/catalogue/types';
 import { usePage } from '../../../lib/usePage';
 import { collectionPath, productPath } from '../../../lib/useBrowse';
 import { useOS } from '../../../state/os';
+import { openChat } from '../../Messenger/nav';
 
 function Img({ p, local = true, size = 240 }: { p: Product; local?: boolean; size?: number }) {
   const li = local ? localImage(p.handle) : null;
@@ -46,10 +47,6 @@ export default function Home() {
   const cairo = pick(cat, curation.cairo).slice(0, 4);
   const fw = campaign('fw27-2');
   const zed = campaign('zed-1');
-  const openChat = (id: string, name: string) => {
-    useOS.getState().open('messenger');
-    useOS.getState().open('chat', { id: `chat-${id}`, title: `${name} - Conversation`, props: { buddy: id } });
-  };
 
   return (
     <div className="page portal">

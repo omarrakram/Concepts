@@ -1,6 +1,6 @@
 {
  "concept": "IYS INTERNET 2006 — unofficial speculative concept. Snapshot of public data; not live commerce.",
- "generatedAt": "2026-09-29T11:06:03.032Z",
+ "generatedAt": "2026-09-30T22:38:01.482Z",
  "storefront": "https://inyourshoe.com",
  "market": "Egypt",
  "currency": "EGP",
@@ -47,6 +47,12 @@
   "products.json",
   "collection products.json"
  ],
+ "careGuides": {
+  "source": "public product page: the theme’s care-guide block (Section Rendering API, full-page cross-checked)",
+  "section": "template--23057185112285__product_overview",
+  "withCareGuide": 1175,
+  "withoutPublishedCareGuide": 74
+ },
  "navCollections": [
   "newest",
   "outwear",
@@ -113,7 +119,7 @@
   "withoutImages": [],
   "withPrices": 1249,
   "withoutPrices": [],
-  "withCompareAt": 467,
+  "withCompareAt": 474,
   "variantCount": 4843,
   "collectionCount": 66,
   "productTypeCount": 162,
@@ -127,27 +133,27 @@
   ],
   "priceChecks": [
    {
-    "handle": "xmas-ornaments-fluffy-pjoys",
-    "productsJson": 999,
-    "productJs": 999,
+    "handle": "big-grill-energy-oversized-hoodie",
+    "productsJson": 2099,
+    "productJs": 2099,
     "ok": true
    },
    {
-    "handle": "confetti-neck-socks",
-    "productsJson": 159,
-    "productJs": 159,
+    "handle": "sweet-tooth-pjoys",
+    "productsJson": 799,
+    "productJs": 799,
     "ok": true
    },
    {
-    "handle": "green-granny-crochet-bandana",
+    "handle": "purple-zigzag-crochet-bandana",
     "productsJson": 399,
     "productJs": 399,
     "ok": true
    },
    {
-    "handle": "cactus-cairo-fluffy-blanket",
-    "productsJson": 849,
-    "productJs": 849,
+    "handle": "blue-mint-color-block-neck-socks",
+    "productsJson": 159,
+    "productJs": 159,
     "ok": true
    },
    {
@@ -184,6 +190,40 @@
    "white-zed-stars-wide-leg-swants",
    "zed-green-striped-swim-shorts",
    "zed-stars-jersey"
-  ]
+  ],
+  "care": {
+   "section": "template--23057185112285__product_overview",
+   "total": 1249,
+   "withCareGuide": 1175,
+   "withoutPublished": 74,
+   "parseFailures": [],
+   "distinctTexts": 154,
+   "mostReused": [
+    {
+     "n": 118,
+     "text": "- Machine wash as usual.\n- Avoid rubbing.\n- Do not iron.\n- Made of 100% polyester."
+    },
+    {
+     "n": 56,
+     "text": "- Machine wash inside out with cold water.\n- Iron inside out on low heat.\n- Made of 100% cotton."
+    },
+    {
+     "n": 51,
+     "text": "- Machine wash inside out with cold water.\n- Avoid rubbing.\n- Iron on low heat."
+    },
+    {
+     "n": 50,
+     "text": "- Machine wash inside out with cold water.\n- Iron on low heat.\n- Made of 70% cotton, 30% polyester."
+    },
+    {
+     "n": 49,
+     "text": "- Machine wash inside out with cold water.\n- Avoid rubbing.\n- Iron on low heat.\n- Made of 100% cotton"
+    }
+   ],
+   "fullPageCrossCheck": {
+    "checked": 25,
+    "mismatches": []
+   }
+  }
  }
 }

@@ -10,7 +10,6 @@ import { MenuBar, type MenuDef } from './MenuBar';
 const MIN: Record<string, [number, number]> = {
   internet: [420, 320],
   messenger: [220, 300],
-  chat: [300, 320],
   bag: [300, 300],
   viewer: [320, 280],
 };

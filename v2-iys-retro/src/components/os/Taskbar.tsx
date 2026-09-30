@@ -10,7 +10,6 @@ import { Icon, type IconName } from './Icon';
 export const APP_ICONS: Record<AppId, IconName> = {
   internet: 'internet',
   messenger: 'messenger',
-  chat: 'messenger',
   wardrobe: 'wardrobe',
   camera: 'camera',
   viewer: 'image',

@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Icon } from '../../components/os/Icon';
-import { Window } from '../../components/os/Window';
 import { Price } from '../../components/shop/Price';
 import { RemoteImage } from '../../components/shop/RemoteImage';
 import { assets, brand } from '../../data/assets';
@@ -13,8 +12,8 @@ import { prefersReducedMotion } from '../../lib/motion';
 import { play } from '../../lib/sound';
 import { collectionPath, productPath, useBrowse } from '../../lib/useBrowse';
 import { useFavorites } from '../../state/favorites';
-import type { Win } from '../../state/os';
-import { useMessengerMenus } from './menus';
+import type { Product } from '../../lib/catalogue/types';
+import { showBuddies } from './nav';
 
 function FileCard({ ev, from, onOpen }: { ev: Extract<ChatEvent, { t: 'file' }>; from: string; onOpen: () => void }) {
   const [pct, setPct] = useState(prefersReducedMotion() ? 100 : 0);
@@ -59,8 +58,14 @@ function FileCard({ ev, from, onOpen }: { ev: Extract<ChatEvent, { t: 'file' }>;
   );
 }
 
-export default function Chat({ win }: { win: Win }) {
-  const buddyId = String(win.props.buddy ?? 'pjoys');
+/** What the Messenger window shows around a conversation: its status line and the latest shared product (for Actions). */
+export interface ChatInfo {
+  status: string;
+  shared: Product | null;
+}
+
+/** The conversation view of the IYS MESSENGER window. */
+export function Chat({ buddyId, onInfo }: { buddyId: string; onInfo: (info: ChatInfo) => void }) {
   const buddy = BUDDIES.find((b) => b.id === buddyId) ?? BUDDIES[0]!;
   const cat = useCatalogue();
   const browse = useBrowse();
@@ -115,105 +120,99 @@ export default function Chat({ win }: { win: Win }) {
 
   const events = script.slice(0, shown);
   const lastFile = [...events].reverse().find((ev): ev is Extract<ChatEvent, { t: 'file' }> => ev.t === 'file');
-  const menus = useMessengerMenus(win, buddyId, lastFile?.product ?? null);
+  const shared = lastFile?.product ?? null;
+  const status = typing ? `${buddy.name} is typing a message...` : shown >= script.length ? 'Last message received.' : 'Receiving...';
+  useEffect(() => onInfo({ status, shared }), [onInfo, status, shared]);
   const dp = cam[frame];
   return (
-    <Window
-      win={win}
-      icon="messenger"
-      menus={menus}
-      statusbar={
-        <div className="statusbar">
-          <span className="grow">{typing ? `${buddy.name} is typing a message...` : shown >= script.length ? 'Last message received.' : 'Receiving...'}</span>
-        </div>
-      }
-    >
-      <div className="chat">
-        <div className="chat__to">
-          To: <b>{buddy.name}</b> &lt;{buddy.collection}@iys&gt; <span className={`orb orb--${buddy.status}`} aria-hidden="true" /> {buddy.status}
-          <span className="chat__mood">{buddyId === 'pjoys' ? '2:13 AM · ' : ''}{buddy.mood}</span>
-        </div>
-        <div className="chat__main">
-          <div className="chat__log" ref={log} role="log" aria-live="polite" aria-label={`Conversation with ${buddy.name}`}>
-            {events.map((ev, i) => {
-              if (ev.t === 'system')
-                return (
-                  <p key={i} className="chat__sys">
-                    <Icon name="info" size={16} /> {ev.text}
-                  </p>
-                );
-              if (ev.t === 'msg')
-                return (
-                  <div key={i} className="chat__msg">
-                    <p className="chat__who">{buddy.name} says:</p>
-                    <p className="chat__text" lang={ev.lang}>
-                      {ev.text}
-                      {ev.note && <small className="chat__note"> ({ev.note})</small>}
-                    </p>
-                  </div>
-                );
-              if (ev.t === 'file') return <FileCard key={i} ev={ev} from={buddy.name} onOpen={() => browse(productPath(ev.product.handle))} />;
+    <div className="chat">
+      <div className="chat__to">
+        To: <b>{buddy.name}</b> &lt;{buddy.collection}@iys&gt; <span className={`orb orb--${buddy.status}`} aria-hidden="true" /> {buddy.status}
+        <button type="button" className="btn btn--small chat__back" onClick={showBuddies} title="Back to the buddy list">
+          <span aria-hidden="true">&lt; </span>back 2 buddies
+        </button>
+        <span className="chat__mood">{buddyId === 'pjoys' ? '2:13 AM · ' : ''}{buddy.mood}</span>
+      </div>
+      <div className="chat__main">
+        <div className="chat__log" ref={log} role="log" aria-live="polite" aria-label={`Conversation with ${buddy.name}`}>
+          {events.map((ev, i) => {
+            if (ev.t === 'system')
               return (
-                <div key={i} className="xfer">
-                  <p className="xfer__head">
-                    <Icon name="folder" size={16} /> {buddy.name} sent <b>pjoy_patterns.zip</b> ({ev.tiles.length} files)
+                <p key={i} className="chat__sys">
+                  <Icon name="info" size={16} /> {ev.text}
+                </p>
+              );
+            if (ev.t === 'msg')
+              return (
+                <div key={i} className="chat__msg">
+                  <p className="chat__who">{buddy.name} says:</p>
+                  <p className="chat__text" lang={ev.lang}>
+                    {ev.text}
+                    {ev.note && <small className="chat__note"> ({ev.note})</small>}
                   </p>
-                  <ul className="tiles">
-                    {ev.tiles.map((tile) => (
-                      <li key={tile.src}>
-                        <button type="button" className="tiles__img" style={{ backgroundImage: `url("${tile.src}")` }} onClick={() => openViewer([{ src: tile.src, title: tile.title, alt: `${tile.title} pattern detail`, filename: `${tile.handle}.jpg`, sourceUrl: tile.sourceUrl, productHandle: tile.handle }])} aria-label={`View ${tile.title} pattern`} />
-                        <button type="button" className="btn btn--small" aria-label={`Set ${tile.title} pattern as wallpaper`} onClick={() => setWallpaperImage({ src: tile.src, title: `${tile.title} (pattern)`, sourceUrl: tile.sourceUrl }, 'tile')}>
-                          Wallpaper
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
                 </div>
               );
-            })}
-            {typing && <p className="chat__typing">{buddy.name} is typing...</p>}
-            {mine.map((m, i) =>
-              m.auto ? (
-                <p key={`m${i}`} className="chat__sys">
-                  {m.text}{' '}
-                  <button type="button" className="link" onClick={() => browse(collectionPath(buddy.collection))}>
-                    open {buddy.name}
-                  </button>
+            if (ev.t === 'file') return <FileCard key={i} ev={ev} from={buddy.name} onOpen={() => browse(productPath(ev.product.handle))} />;
+            return (
+              <div key={i} className="xfer">
+                <p className="xfer__head">
+                  <Icon name="folder" size={16} /> {buddy.name} sent <b>pjoy_patterns.zip</b> ({ev.tiles.length} files)
                 </p>
-              ) : (
-                <div key={`m${i}`} className="chat__msg chat__msg--me">
-                  <p className="chat__who">you say:</p>
-                  <p className="chat__text">{m.text}</p>
-                </div>
-              ),
-            )}
-          </div>
-          <aside className="chat__cams" aria-label="Display pictures">
-            <figure className="dpframe">
-              {dp ? <img key={dp.src} src={dp.src} alt={`${dp.title} - IYS product photo`} /> : <img src={brand.mark} alt="" />}
-              <figcaption>{buddy.name}</figcaption>
-            </figure>
-            <figure className="dpframe dpframe--me">
-              <img src={brand.markWhite} alt="" />
-              <figcaption>you</figcaption>
-            </figure>
-          </aside>
+                <ul className="tiles">
+                  {ev.tiles.map((tile) => (
+                    <li key={tile.src}>
+                      <button type="button" className="tiles__img" style={{ backgroundImage: `url("${tile.src}")` }} onClick={() => openViewer([{ src: tile.src, title: tile.title, alt: `${tile.title} pattern detail`, filename: `${tile.handle}.jpg`, sourceUrl: tile.sourceUrl, productHandle: tile.handle }])} aria-label={`View ${tile.title} pattern`} />
+                      <button type="button" className="btn btn--small" aria-label={`Set ${tile.title} pattern as wallpaper`} onClick={() => setWallpaperImage({ src: tile.src, title: `${tile.title} (pattern)`, sourceUrl: tile.sourceUrl }, 'tile')}>
+                        Wallpaper
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            );
+          })}
+          {typing && <p className="chat__typing">{buddy.name} is typing...</p>}
+          {mine.map((m, i) =>
+            m.auto ? (
+              <p key={`m${i}`} className="chat__sys">
+                {m.text}{' '}
+                <button type="button" className="link" onClick={() => browse(collectionPath(buddy.collection))}>
+                  open {buddy.name}
+                </button>
+              </p>
+            ) : (
+              <div key={`m${i}`} className="chat__msg chat__msg--me">
+                <p className="chat__who">you say:</p>
+                <p className="chat__text">{m.text}</p>
+              </div>
+            ),
+          )}
         </div>
-        <form className="chat__compose" onSubmit={send}>
-          <label htmlFor={`compose-${win.id}`} className="sr-only">
-            Message to {buddy.name}
-          </label>
-          <textarea id={`compose-${win.id}`} className="input" rows={2} value={draft} onChange={(e) => setDraft(e.target.value)} onKeyDown={(e) => {
-            if (e.key === 'Enter' && !e.shiftKey) {
-              e.preventDefault();
-              send(e);
-            }
-          }} />
-          <button type="submit" className="btn">
-            Send
-          </button>
-        </form>
+        <aside className="chat__cams" aria-label="Display pictures">
+          <figure className="dpframe">
+            {dp ? <img key={dp.src} src={dp.src} alt={`${dp.title} - IYS product photo`} /> : <img src={brand.mark} alt="" />}
+            <figcaption>{buddy.name}</figcaption>
+          </figure>
+          <figure className="dpframe dpframe--me">
+            <img src={brand.markWhite} alt="" />
+            <figcaption>you</figcaption>
+          </figure>
+        </aside>
       </div>
-    </Window>
+      <form className="chat__compose" onSubmit={send}>
+        <label htmlFor={`compose-chat-${buddyId}`} className="sr-only">
+          Message to {buddy.name}
+        </label>
+        <textarea id={`compose-chat-${buddyId}`} className="input" rows={2} value={draft} onChange={(e) => setDraft(e.target.value)} onKeyDown={(e) => {
+          if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            send(e);
+          }
+        }} />
+        <button type="submit" className="btn">
+          Send
+        </button>
+      </form>
+    </div>
   );
 }

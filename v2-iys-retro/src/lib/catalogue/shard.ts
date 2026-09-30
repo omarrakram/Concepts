@@ -23,7 +23,12 @@ export async function loadDetail(handle: string, shardCount: number): Promise<Pr
     p = fetch(shardUrl(n)).then((r) => {
       if (!r.ok) throw new Error(`catalogue shard ${n}: ${r.status}`);
       // Normalise every string in the shard for display (no em dashes); the JSON file stays as synced.
-      return r.text().then((t) => JSON.parse(noEmDash(t)) as Record<string, ProductDetail>);
+      return r.text().then((t) => {
+        const records = JSON.parse(noEmDash(t)) as Record<string, ProductDetail>;
+        // Shards written before care guides were synced have no field: that means "none known".
+        for (const d of Object.values(records)) d.careGuide ??= null;
+        return records;
+      });
     });
     p.catch(() => shards.delete(n));
     shards.set(n, p);

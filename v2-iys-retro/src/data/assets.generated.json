@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-09-29T11:20:52.248Z",
+ "generatedAt": "2026-09-30T23:36:38.505Z",
  "brand": {
   "mark": "/iys/brand/iys-mark.svg",
   "markWhite": "/iys/brand/iys-mark-white.svg",
@@ -137,7 +137,7 @@
  "products": {
   "dropout-oversized-hoodie": {
    "title": "Dropout Oversized Hoodie",
-   "price": 1799,
+   "price": 2099,
    "compareAtPrice": null,
    "images": [
     {
@@ -200,7 +200,7 @@
   },
   "female-denim-blue-washed-wide-leg-jeans": {
    "title": "Female Denim Blue Washed Wide Leg Jeans",
-   "price": 1399,
+   "price": 1799,
    "compareAtPrice": null,
    "images": [
     {
@@ -240,20 +240,20 @@
     }
    ]
   },
-  "mustard-afterclass-boxy-zip-up-hoodie": {
-   "title": "Mustard Afterclass Boxy Zip-Up Hoodie",
-   "price": 1999,
+  "mustard-guarded-boxy-zip-up-hoodie": {
+   "title": "Mustard Guarded Boxy Zip-Up Hoodie",
+   "price": 2499,
    "compareAtPrice": null,
    "images": [
     {
-     "src": "/iys/products/mustard-afterclass-boxy-zip-up-hoodie-1.webp",
+     "src": "/iys/products/mustard-guarded-boxy-zip-up-hoodie-1.webp",
      "width": 900,
      "height": 1125,
      "alt": null,
      "sourceUrl": "https://cdn.shopify.com/s/files/1/0050/2729/9397/files/mustard-afterclass-boxy-zip-up-hoodie-zip-up-hoodies-in-your-shoe-160129.jpg"
     },
     {
-     "src": "/iys/products/mustard-afterclass-boxy-zip-up-hoodie-2.webp",
+     "src": "/iys/products/mustard-guarded-boxy-zip-up-hoodie-2.webp",
      "width": 900,
      "height": 1125,
      "alt": null,
@@ -473,7 +473,7 @@
   },
   "cairo-is-a-mindset-oversized-hoodie": {
    "title": "Cairo Is A Mindset Oversized Hoodie",
-   "price": 1799,
+   "price": 2099,
    "compareAtPrice": null,
    "images": [
     {
@@ -737,49 +737,49 @@
  "thumbs": {
   "dropout-oversized-hoodie": {
    "title": "Dropout Oversized Hoodie",
-   "price": 1799,
+   "price": 2099,
    "src": "/iys/thumbs/dropout-oversized-hoodie.webp",
    "width": 280,
    "height": 350
   },
-  "mustard-afterclass-boxy-zip-up-hoodie": {
-   "title": "Mustard Afterclass Boxy Zip-Up Hoodie",
-   "price": 1999,
-   "src": "/iys/thumbs/mustard-afterclass-boxy-zip-up-hoodie.webp",
+  "mustard-guarded-boxy-zip-up-hoodie": {
+   "title": "Mustard Guarded Boxy Zip-Up Hoodie",
+   "price": 2499,
+   "src": "/iys/thumbs/mustard-guarded-boxy-zip-up-hoodie.webp",
    "width": 280,
    "height": 350
   },
-  "dark-grey-afterclass-boxy-zip-up-hoodie": {
-   "title": "Dark Grey Afterclass Boxy Zip-Up Hoodie",
-   "price": 1999,
-   "src": "/iys/thumbs/dark-grey-afterclass-boxy-zip-up-hoodie.webp",
+  "dark-grey-guarded-boxy-zip-up-hoodie": {
+   "title": "Dark Grey Guarded Boxy Zip-Up Hoodie",
+   "price": 2499,
+   "src": "/iys/thumbs/dark-grey-guarded-boxy-zip-up-hoodie.webp",
    "width": 280,
    "height": 350
   },
   "afterclass-oversized-quarter-zipper": {
    "title": "Afterclass Oversized Quarter Zipper",
-   "price": 1499,
+   "price": 1999,
    "src": "/iys/thumbs/afterclass-oversized-quarter-zipper.webp",
    "width": 280,
    "height": 350
   },
   "off-white-raglan-oversized-pullover": {
    "title": "Off White Raglan Oversized Pullover",
-   "price": 1199,
+   "price": 1499,
    "src": "/iys/thumbs/off-white-raglan-oversized-pullover.webp",
    "width": 280,
    "height": 350
   },
   "butter-yellow-raglan-oversized-pullover": {
    "title": "Butter Yellow Raglan Oversized Pullover",
-   "price": 1199,
+   "price": 1499,
    "src": "/iys/thumbs/butter-yellow-raglan-oversized-pullover.webp",
    "width": 280,
    "height": 350
   },
   "pink-raglan-oversized-pullover": {
    "title": "Pink Raglan Oversized Pullover",
-   "price": 1199,
+   "price": 1499,
    "src": "/iys/thumbs/pink-raglan-oversized-pullover.webp",
    "width": 280,
    "height": 350
@@ -807,245 +807,245 @@
   },
   "brown-plaid-balloon-pants": {
    "title": "Brown Plaid Balloon Pants",
-   "price": 2399,
+   "price": 1799,
    "src": "/iys/thumbs/brown-plaid-balloon-pants.webp",
    "width": 280,
    "height": 350
   },
   "navy-plaid-balloon-pants": {
    "title": "Navy Plaid Balloon Pants",
-   "price": 2399,
+   "price": 1799,
    "src": "/iys/thumbs/navy-plaid-balloon-pants.webp",
    "width": 280,
    "height": 350
   },
   "female-brown-baggy-leather-pants": {
    "title": "Female Brown Baggy Leather Pants",
-   "price": 1999,
+   "price": 2299,
    "src": "/iys/thumbs/female-brown-baggy-leather-pants.webp",
    "width": 280,
    "height": 350
   },
   "female-green-corduroy-pants-1": {
    "title": "Female Green Corduroy Pants",
-   "price": 1699,
+   "price": 1799,
    "src": "/iys/thumbs/female-green-corduroy-pants-1.webp",
    "width": 280,
    "height": 350
   },
   "female-brown-corduroy-pants-1": {
    "title": "Female Brown Corduroy Pants",
-   "price": 1699,
+   "price": 1799,
    "src": "/iys/thumbs/female-brown-corduroy-pants-1.webp",
    "width": 280,
    "height": 350
   },
   "female-denim-blue-washed-wide-leg-jeans": {
    "title": "Female Denim Blue Washed Wide Leg Jeans",
-   "price": 1399,
+   "price": 1799,
    "src": "/iys/thumbs/female-denim-blue-washed-wide-leg-jeans.webp",
    "width": 280,
    "height": 350
   },
   "female-navy-washed-barrel-fit-jeans": {
    "title": "Female Navy Washed Barrel Fit Jeans",
-   "price": 1399,
+   "price": 1799,
    "src": "/iys/thumbs/female-navy-washed-barrel-fit-jeans.webp",
    "width": 280,
    "height": 350
   },
   "male-black-loose-parachute-pants": {
    "title": "Male Black Loose Parachute Pants",
-   "price": 1599,
+   "price": 1799,
    "src": "/iys/thumbs/male-black-loose-parachute-pants.webp",
    "width": 280,
    "height": 350
   },
   "green-basic-boxy-zip-up-hoodie": {
    "title": "Green Basic Boxy Zip-Up Hoodie",
-   "price": 1999,
+   "price": 2499,
    "src": "/iys/thumbs/green-basic-boxy-zip-up-hoodie.webp",
    "width": 280,
    "height": 350
   },
   "heather-grey-basic-boxy-zip-up-hoodie": {
    "title": "Heather Grey Basic Boxy Zip-Up Hoodie",
-   "price": 1999,
+   "price": 2499,
    "src": "/iys/thumbs/heather-grey-basic-boxy-zip-up-hoodie.webp",
    "width": 280,
    "height": 350
   },
   "black-basic-boxy-zip-up-hoodie": {
    "title": "Black Basic Boxy Zip-Up Hoodie",
-   "price": 1999,
+   "price": 2499,
    "src": "/iys/thumbs/black-basic-boxy-zip-up-hoodie.webp",
    "width": 280,
    "height": 350
   },
   "greige-oversized-quarter-zipper": {
    "title": "Greige Oversized Quarter Zipper",
-   "price": 1499,
+   "price": 1999,
    "src": "/iys/thumbs/greige-oversized-quarter-zipper.webp",
    "width": 280,
    "height": 350
   },
   "iys-racing-club-oversized-crewneck": {
    "title": "IYS Racing Club Oversized Crewneck",
-   "price": 1599,
+   "price": 1699,
    "src": "/iys/thumbs/iys-racing-club-oversized-crewneck.webp",
    "width": 280,
    "height": 350
   },
   "blue-basic-boxy-crewneck": {
    "title": "Blue Basic Boxy Crewneck",
-   "price": 1299,
+   "price": 1699,
    "src": "/iys/thumbs/blue-basic-boxy-crewneck.webp",
    "width": 280,
    "height": 350
   },
   "green-basic-oversized-crewneck": {
    "title": "Green Basic Oversized Crewneck",
-   "price": 1299,
+   "price": 1699,
    "src": "/iys/thumbs/green-basic-oversized-crewneck.webp",
    "width": 280,
    "height": 350
   },
   "black-basic-oversized-crewneck": {
    "title": "Black Basic Oversized Crewneck",
-   "price": 1299,
+   "price": 1699,
    "src": "/iys/thumbs/black-basic-oversized-crewneck.webp",
    "width": 280,
    "height": 350
   },
   "burgundy-basic-oversized-crewneck": {
    "title": "Burgundy Basic Oversized Crewneck",
-   "price": 1299,
+   "price": 1699,
    "src": "/iys/thumbs/burgundy-basic-oversized-crewneck.webp",
    "width": 280,
    "height": 350
   },
   "el-hob-moqawma-boxy-hoodie": {
    "title": "El Hob Moqawma Boxy Hoodie",
-   "price": 1799,
+   "price": 2099,
    "src": "/iys/thumbs/el-hob-moqawma-boxy-hoodie.webp",
    "width": 280,
    "height": 350
   },
   "brown-basic-heavy-boxy-hoodie-1": {
    "title": "Brown Basic Heavy Boxy Hoodie",
-   "price": 2099,
+   "price": 1399,
    "src": "/iys/thumbs/brown-basic-heavy-boxy-hoodie-1.webp",
    "width": 280,
    "height": 350
   },
   "heather-grey-basic-heavy-boxy-hoodie": {
    "title": "Heather Grey Basic Heavy Boxy Hoodie",
-   "price": 2099,
+   "price": 1399,
    "src": "/iys/thumbs/heather-grey-basic-heavy-boxy-hoodie.webp",
    "width": 280,
    "height": 350
   },
   "male-dark-blue-striped-loose-fit-jeans": {
    "title": "Male Dark Blue Striped Loose Fit Jeans",
-   "price": 1399,
+   "price": 1799,
    "src": "/iys/thumbs/male-dark-blue-striped-loose-fit-jeans.webp",
    "width": 280,
    "height": 350
   },
   "international-council-oversized-hoodie": {
    "title": "International Council Oversized Hoodie",
-   "price": 1799,
+   "price": 2099,
    "src": "/iys/thumbs/international-council-oversized-hoodie.webp",
    "width": 280,
    "height": 350
   },
   "cairo-is-a-mindset-oversized-hoodie": {
    "title": "Cairo Is A Mindset Oversized Hoodie",
-   "price": 1799,
+   "price": 2099,
    "src": "/iys/thumbs/cairo-is-a-mindset-oversized-hoodie.webp",
    "width": 280,
    "height": 350
   },
   "dont-panic-oversized-hoodie": {
    "title": "Don't Panic Oversized Hoodie",
-   "price": 1799,
+   "price": 2099,
    "src": "/iys/thumbs/dont-panic-oversized-hoodie.webp",
    "width": 280,
    "height": 350
   },
   "insane-oversized-hoodie": {
    "title": "Insane Oversized Hoodie",
-   "price": 1799,
+   "price": 2099,
    "src": "/iys/thumbs/insane-oversized-hoodie.webp",
    "width": 280,
    "height": 350
   },
   "horse-race-club-oversized-hoodie": {
    "title": "Horse Race Club Oversized Hoodie",
-   "price": 1799,
+   "price": 2099,
    "src": "/iys/thumbs/horse-race-club-oversized-hoodie.webp",
    "width": 280,
    "height": 350
   },
   "anti-running-oversized-hoodie": {
    "title": "Anti-Running Oversized Hoodie",
-   "price": 1799,
+   "price": 2099,
    "src": "/iys/thumbs/anti-running-oversized-hoodie.webp",
    "width": 280,
    "height": 350
   },
   "world-wide-tour-oversized-hoodie": {
    "title": "Worldwide Tour Oversized Hoodie",
-   "price": 1799,
+   "price": 2099,
    "src": "/iys/thumbs/world-wide-tour-oversized-hoodie.webp",
    "width": 280,
    "height": 350
   },
   "cairo-legacy-oversized-hoodie": {
    "title": "Cairo Legacy Oversized Hoodie",
-   "price": 1799,
+   "price": 2099,
    "src": "/iys/thumbs/cairo-legacy-oversized-hoodie.webp",
    "width": 280,
    "height": 350
   },
   "brown-embroidered-oversized-leather-jacket": {
    "title": "Brown Embroidered Oversized Leather Jacket",
-   "price": 2699,
+   "price": 3099,
    "src": "/iys/thumbs/brown-embroidered-oversized-leather-jacket.webp",
    "width": 280,
    "height": 350
   },
   "teal-embroidered-oversized-leather-jacket": {
    "title": "Teal Embroidered Oversized Leather Jacket",
-   "price": 2699,
+   "price": 3099,
    "src": "/iys/thumbs/teal-embroidered-oversized-leather-jacket.webp",
    "width": 280,
    "height": 350
   },
   "give-me-a-raise-oversized-hoodie": {
    "title": "Give Me A Raise Oversized Hoodie",
-   "price": 1799,
+   "price": 2099,
    "src": "/iys/thumbs/give-me-a-raise-oversized-hoodie.webp",
    "width": 280,
    "height": 350
   },
   "heritage-culture-oversized-hoodie": {
    "title": "Heritage Culture Oversized Hoodie",
-   "price": 1799,
+   "price": 2099,
    "src": "/iys/thumbs/heritage-culture-oversized-hoodie.webp",
    "width": 280,
    "height": 350
   },
   "save-the-turtles-oversized-hoodie": {
    "title": "Save The Turtles Oversized Hoodie",
-   "price": 1799,
+   "price": 2099,
    "src": "/iys/thumbs/save-the-turtles-oversized-hoodie.webp",
    "width": 280,
    "height": 350
   },
   "blue-basic-oversized-hoodie": {
    "title": "Blue Basic Oversized Hoodie",
-   "price": 1299,
+   "price": 1399,
    "src": "/iys/thumbs/blue-basic-oversized-hoodie.webp",
    "width": 280,
    "height": 350

@@ -95,6 +95,13 @@ export interface ProductDetail {
   vendor: string | null;
   tags: string[];
   description: string;
+  /**
+   * The product's own official care guide as plain text lines, or null when IYS
+   * publishes none (never inferred). Source-agnostic: filled today by the
+   * catalogue sync from the public product page; a Shopify metafield / product
+   * content field can fill the same field later without touching the UI.
+   */
+  careGuide: string | null;
   currency: 'EGP';
   price: number | null;
   priceMax: number | null;

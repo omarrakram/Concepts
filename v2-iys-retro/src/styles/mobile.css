@@ -627,7 +627,8 @@ body:has(.m-splash) {
   width: 64px;
   height: 80px;
 }
-.m-shell .bag__qty .btn {
+.m-shell .bag__qty .btn,
+.m-shell .props__qty .btn {
   min-width: 44px;
   min-height: 44px;
   font-size: 18px;

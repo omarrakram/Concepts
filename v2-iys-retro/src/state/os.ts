@@ -3,7 +3,6 @@ import { create } from 'zustand';
 export type AppId =
   | 'internet'
   | 'messenger'
-  | 'chat'
   | 'wardrobe'
   | 'camera'
   | 'viewer'
@@ -58,7 +57,6 @@ export function defaultRect(app: AppId, desk: { w: number; h: number }, stack: n
   const sizes: Record<AppId, [number, number]> = {
     internet: [Math.min(1120, desk.w * 0.74), Math.min(780, desk.h * 0.9)],
     messenger: [268, Math.min(520, desk.h * 0.72)],
-    chat: [520, Math.min(640, desk.h * 0.86)],
     wardrobe: [Math.min(820, desk.w * 0.62), Math.min(560, desk.h * 0.78)],
     camera: [Math.min(800, desk.w * 0.6), Math.min(580, desk.h * 0.82)],
     viewer: [Math.min(760, desk.w * 0.56), Math.min(640, desk.h * 0.9)],
@@ -79,7 +77,6 @@ export function defaultRect(app: AppId, desk: { w: number; h: number }, stack: n
     internet: [desk.w * 0.13, 12],
     messenger: [desk.w - w - 24, 24],
     bag: [desk.w - w - 36, desk.h - h - 20],
-    chat: [Math.max(12, desk.w - w - 300), 40],
   };
   const [ax, ay] = anchors[app] ?? [(desk.w - w) / 2, (desk.h - h) / 2.4];
   const offset = (stack % 6) * 26;
@@ -114,6 +111,8 @@ interface OSState {
   toggleMaximize: (id: string) => void;
   setRect: (id: string, rect: Partial<Rect>) => void;
   setTitle: (id: string, title: string) => void;
+  /** Merge app state into a window's props (e.g. which view IYS MESSENGER shows). */
+  setProps: (id: string, props: Record<string, unknown>) => void;
   minimizeAll: () => void;
   closeAll: () => void;
   showDialog: (d: Dialog | null) => void;
@@ -125,7 +124,6 @@ interface OSState {
 export const TITLES: Record<AppId, string> = {
   internet: 'IYS INTERNET',
   messenger: 'IYS MESSENGER',
-  chat: 'Conversation',
   wardrobe: 'MY WARDROBE',
   camera: 'IYS CAMERA',
   viewer: 'IYS IMAGE VIEWER',
@@ -209,6 +207,7 @@ export const useOS = create<OSState>()((set, get) => ({
   setRect: (id, rect) =>
     set((s) => ({ windows: s.windows.map((w) => (w.id === id ? { ...w, rect: clampRect({ ...w.rect, ...rect }, s.desk) } : w)) })),
   setTitle: (id, title) => set((s) => ({ windows: s.windows.map((w) => (w.id === id && w.title !== title ? { ...w, title } : w)) })),
+  setProps: (id, props) => set((s) => ({ windows: s.windows.map((w) => (w.id === id ? { ...w, props: { ...w.props, ...props } } : w)) })),
   minimizeAll: () => set((s) => ({ windows: s.windows.map((w) => ({ ...w, minimized: true })), activeId: null })),
   closeAll: () => set({ windows: [], activeId: null }),
   showDialog: (dialog) => set({ dialog }),

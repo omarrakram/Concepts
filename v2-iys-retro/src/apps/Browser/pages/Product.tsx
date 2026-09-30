@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router';
 import { EssentialLinks } from '../../../components/shop/EssentialLinks';
 import { Gallery } from '../../../components/product/Gallery';
+import { ProductInfo } from '../../../components/product/ProductInfo';
+import { QuantityPicker } from '../../../components/product/QuantityPicker';
 import { VariantPicker } from '../../../components/product/VariantPicker';
 import { FavoriteButton } from '../../../components/shop/FavoriteButton';
 import { PageLoading } from '../../../components/shop/PageLoading';
@@ -80,6 +82,7 @@ export default function Product() {
           </div>
           <StockNote available={available} />
           <VariantPicker p={p} selected={s.selected} onSelect={s.select} />
+          <QuantityPicker value={s.qty} onChange={s.setQty} />
           <div className="props__buy">
             <button
               type="button"
@@ -114,12 +117,7 @@ export default function Product() {
             {concept.snapshot} ({p.retrievedAt?.slice(0, 10) ?? 'unknown'}). This concept cannot place orders.
           </p>
           <EssentialLinks className="props__snapshot" label="Before u buy:" ids={['shipping', 'exchange-refund']} more />
-          {p.description && (
-            <details className="props__desc" open>
-              <summary>Description</summary>
-              <p>{p.description}</p>
-            </details>
-          )}
+          <ProductInfo p={p} />
           <table className="props__table">
             <caption className="sr-only">Product details</caption>
             <tbody>

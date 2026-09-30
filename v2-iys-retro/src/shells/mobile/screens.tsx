@@ -2,6 +2,8 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router';
 import { Icon, type IconName } from '../../components/os/Icon';
 import { VariantPicker } from '../../components/product/VariantPicker';
+import { ProductInfo } from '../../components/product/ProductInfo';
+import { QuantityPicker } from '../../components/product/QuantityPicker';
 import { FavoriteButton } from '../../components/shop/FavoriteButton';
 import { PageLoading } from '../../components/shop/PageLoading';
 import { Pagination } from '../../components/shop/Pagination';
@@ -293,7 +295,8 @@ export function MProduct() {
           <>
             <StockNote available={variant ? variant.available : p.available} />
             <VariantPicker p={p} selected={s.selected} onSelect={s.select} />
-            <button type="button" className="btn btn--go m-add" disabled={!s.canAdd} onClick={s.add}>
+            <QuantityPicker value={s.qty} onChange={s.setQty} />
+            <button type="button" className="btn btn--go m-add" disabled={!s.canAdd} onClick={() => s.add()}>
               {s.needsChoice ? `pick a ${missing?.toLowerCase() ?? 'size'} first :)` : variant?.available === false ? concept.y2k.soldOut : `${concept.y2k.add} ✧`}
             </button>
             <p className="m-fit">{variant?.available === false ? concept.y2k.tooCute : concept.y2k.fitNote}</p>
@@ -307,12 +310,7 @@ export function MProduct() {
               {concept.snapshot} ({p.retrievedAt?.slice(0, 10)}). No orders can be placed here.
             </p>
             <EssentialLinks className="props__snapshot" label="Before u buy:" ids={['shipping', 'exchange-refund']} />
-            {p.description && (
-              <details className="props__desc">
-                <summary>Description</summary>
-                <p>{p.description}</p>
-              </details>
-            )}
+            <ProductInfo p={p} />
           </>
         ) : (
           <PageLoading label="Loading sizes..." />

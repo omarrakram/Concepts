@@ -11,7 +11,7 @@ material is used. Nothing was invented to fill gaps: missing fields stay empty.
 | --- | --- |
 | storefront | https://inyourshoe.com (Egyptian storefront — authoritative) |
 | market / currency | Egypt / EGP |
-| synced at | 2026-09-29T11:06:03.032Z |
+| synced at | 2026-09-30T22:38:01.482Z |
 | public products (total) | 1,249 |
 | in IYS “All Products” collection | 1,224 |
 | public but outside All Products | 25 (black-zed-stars-sworts, black-zed-stars-wide-leg-swants, blue-future-stars-towel, breaking-brgr-hoodie, christmas-joy-fluffy-blanket, distorted-youth-dept-jersey, …) |
@@ -27,6 +27,7 @@ material is used. Nothing was invented to fill gaps: missing fields stay empty.
 - https://inyourshoe.com/collections/<handle>/products.json — membership + order for 67 collections: all-products, newest, pjoys, fluffy-pjoys, kids-pjoys, kids-fluffy-pjoys, cairo, cereal-killer, women, men, unisex, all-kids-products, all-accessories, all-tops, all-bottoms, homewear, on-sale, best-sellers, hoodies, outwear, all-socks, hats-caps, bandanas, headbands, all-bags, inyourshoexzed, stripes, kids, neck-socks, fluffy-socks, caps, long-sleeves-and-polos, crewnecks, jackets-sweaters, t-shirts, jerseys, shirts, tops-vests, pants, jeans, sweatpants, shorts, boxer-pants, skirts, leggings, swimmies, denims, linens, the-vacation-edit, knitwear, sportswear, pshorts, pshirts, pantoufles, boxer-shorts, flowy-wraps, beach-towels, others, baby-tees-jerseys, shirts-polos, pants-jeans, shorts-jorts, all-dresses, womens-sets, bags-for-her, bundles, end-of-season-sale
 - https://inyourshoe.com/products/<handle>.js — fallback, and a 5-product EGP price cross-check
 - https://inyourshoe.com/products/<handle> JSON-LD — last-resort fallback
+- https://inyourshoe.com/products/<handle>?section_id=<product section> — each product’s official care guide (the theme’s `care-guide` block); 1,175 products publish one, 74 publish none (stored as `null`, never inferred); a sample of full product pages is cross-checked
 - https://inyourshoe.com/pages/store-locations — store directory (`npm run sync-stores`)
 
 Every request sends the storefront’s own `localization=EG; cart_currency=EGP` cookies; the sync aborts unless the homepage reports `Shopify.currency.active = "EGP"`, and fails on duplicate handles, currency mismatches, international-market URLs, missing prices/images, or a >20% catalogue shrink.
@@ -84,7 +85,7 @@ re-encode).
 ## Local assets
 
 <!-- assets:start -->
-Retrieved 2026-09-29 by `npm run fetch-showcase-assets`. 127 files.
+Retrieved 2026-09-29 by `npm run fetch-showcase-assets` (the 4 renamed-product files on 2026-09-30). 127 files.
 
 | local file | official source URL | type | subject | retrieved |
 | --- | --- | --- | --- | --- |
@@ -118,8 +119,8 @@ Retrieved 2026-09-29 by `npm run fetch-showcase-assets`. 127 files.
 | `public/iys/products/female-denim-blue-washed-wide-leg-jeans-2.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/female-denim-blue-washed-wide-leg-jeans-jeans-in-your-shoe-430045.jpg | product image | Female Denim Blue Washed Wide Leg Jeans | 2026-09-29 |
 | `public/iys/products/kairo-pop-jersey-1.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/kairo-pop-jersey-jersey-in-your-shoe-124269.jpg | product image | Kairo Pop Jersey | 2026-09-29 |
 | `public/iys/products/kairo-pop-jersey-2.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/kairo-pop-jersey-jersey-in-your-shoe-127870.jpg | product image | Kairo Pop Jersey | 2026-09-29 |
-| `public/iys/products/mustard-afterclass-boxy-zip-up-hoodie-1.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/mustard-afterclass-boxy-zip-up-hoodie-zip-up-hoodies-in-your-shoe-160129.jpg | product image | Mustard Afterclass Boxy Zip-Up Hoodie | 2026-09-29 |
-| `public/iys/products/mustard-afterclass-boxy-zip-up-hoodie-2.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/mustard-afterclass-boxy-zip-up-hoodie-zip-up-hoodies-in-your-shoe-207971.jpg | product image | Mustard Afterclass Boxy Zip-Up Hoodie | 2026-09-29 |
+| `public/iys/products/mustard-guarded-boxy-zip-up-hoodie-1.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/mustard-afterclass-boxy-zip-up-hoodie-zip-up-hoodies-in-your-shoe-160129.jpg | product image | Mustard Guarded Boxy Zip-Up Hoodie | 2026-09-30 |
+| `public/iys/products/mustard-guarded-boxy-zip-up-hoodie-2.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/mustard-afterclass-boxy-zip-up-hoodie-zip-up-hoodies-in-your-shoe-207971.jpg | product image | Mustard Guarded Boxy Zip-Up Hoodie | 2026-09-30 |
 | `public/iys/products/sunset-stripes-fluffy-pjoys-1.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/sunset-stripes-fluffy-pjoys-fluffy-pjoys-in-your-shoe-750530.jpg | product image | Sunset Stripes Fluffy Pjoys | 2026-09-29 |
 | `public/iys/products/sunset-stripes-fluffy-pjoys-2.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/sunset-stripes-fluffy-pjoys-fluffy-pjoys-in-your-shoe-600684.jpg | product image | Sunset Stripes Fluffy Pjoys | 2026-09-29 |
 | `public/iys/products/blue-checkered-laptop-sleeve-1.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/blue-checkered-laptop-sleeve-laptop-sleeve-in-your-shoe-715670.jpg | product image | Blue Checkered Laptop Sleeve | 2026-09-29 |
@@ -168,8 +169,8 @@ Retrieved 2026-09-29 by `npm run fetch-showcase-assets`. 127 files.
 | `public/iys/tiles/love-you-so-matcha-pjoys.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/love-you-so-matcha-pjoys-pjoys-in-your-shoe-325392.jpg | product detail photo (pattern) | Love You So Matcha Pjoys | 2026-09-29 |
 | `public/iys/tiles/dont-go-out-fluffy-pjoys.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/dont-go-out-fluffy-pjoys-fluffy-pjoys-in-your-shoe-560177.jpg | product detail photo (pattern) | Don't Go Out Fluffy Pjoys | 2026-09-29 |
 | `public/iys/thumbs/dropout-oversized-hoodie.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/dropout-oversized-hoodie-printed-hoodies-in-your-shoe-209981.jpg | product thumbnail | Dropout Oversized Hoodie | 2026-09-29 |
-| `public/iys/thumbs/mustard-afterclass-boxy-zip-up-hoodie.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/mustard-afterclass-boxy-zip-up-hoodie-zip-up-hoodies-in-your-shoe-160129.jpg | product thumbnail | Mustard Afterclass Boxy Zip-Up Hoodie | 2026-09-29 |
-| `public/iys/thumbs/dark-grey-afterclass-boxy-zip-up-hoodie.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/dark-grey-afterclass-boxy-zip-up-hoodie-zip-up-hoodies-in-your-shoe-305694.jpg | product thumbnail | Dark Grey Afterclass Boxy Zip-Up Hoodie | 2026-09-29 |
+| `public/iys/thumbs/mustard-guarded-boxy-zip-up-hoodie.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/mustard-afterclass-boxy-zip-up-hoodie-zip-up-hoodies-in-your-shoe-160129.jpg | product thumbnail | Mustard Guarded Boxy Zip-Up Hoodie | 2026-09-30 |
+| `public/iys/thumbs/dark-grey-guarded-boxy-zip-up-hoodie.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/dark-grey-afterclass-boxy-zip-up-hoodie-zip-up-hoodies-in-your-shoe-305694.jpg | product thumbnail | Dark Grey Guarded Boxy Zip-Up Hoodie | 2026-09-30 |
 | `public/iys/thumbs/afterclass-oversized-quarter-zipper.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/afterclass-oversized-quarter-zipper-quarter-zipper-in-your-shoe-981908.jpg | product thumbnail | Afterclass Oversized Quarter Zipper | 2026-09-29 |
 | `public/iys/thumbs/off-white-raglan-oversized-pullover.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/off-white-raglan-oversized-pullover-pullovers-in-your-shoe-513031.jpg | product thumbnail | Off White Raglan Oversized Pullover | 2026-09-29 |
 | `public/iys/thumbs/butter-yellow-raglan-oversized-pullover.webp` | https://cdn.shopify.com/s/files/1/0050/2729/9397/files/butter-yellow-raglan-oversized-pullover-pullovers-in-your-shoe-603787.jpg | product thumbnail | Butter Yellow Raglan Oversized Pullover | 2026-09-29 |

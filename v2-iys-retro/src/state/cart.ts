@@ -15,7 +15,10 @@ export interface CartItem {
   image: string | null;
 }
 
+/** Per-line safeguard of this local bag (not a stock level; the snapshot has no inventory counts). */
 export const MAX_QTY = 10;
+/** Any requested quantity → a whole number in 1…MAX_QTY (never 0, negative or NaN). */
+export const clampQty = (n: number) => Math.min(MAX_QTY, Math.max(1, Math.floor(Number.isFinite(n) ? n : 1)));
 export const cartKey = (handle: string, variantId: number | null) => `${handle}::${variantId ?? 'default'}`;
 
 export function subtotal(items: CartItem[]): number {
@@ -26,9 +29,11 @@ export const itemCount = (items: CartItem[]) => items.reduce((n, i) => n + i.qua
 /** Pure reducers (unit-tested). */
 export function addItem(items: CartItem[], item: Omit<CartItem, 'key' | 'quantity'>, qty = 1): CartItem[] {
   const key = cartKey(item.handle, item.variantId);
+  const n = clampQty(qty);
   const existing = items.find((i) => i.key === key);
-  if (existing) return items.map((i) => (i.key === key ? { ...i, quantity: Math.min(MAX_QTY, i.quantity + qty) } : i));
-  return [...items, { ...item, key, quantity: Math.min(MAX_QTY, Math.max(1, qty)) }];
+  // Same variant again → increment (capped per line), never replace.
+  if (existing) return items.map((i) => (i.key === key ? { ...i, quantity: Math.min(MAX_QTY, i.quantity + n) } : i));
+  return [...items, { ...item, key, quantity: n }];
 }
 export function setQuantity(items: CartItem[], key: string, qty: number): CartItem[] {
   if (qty <= 0) return items.filter((i) => i.key !== key);

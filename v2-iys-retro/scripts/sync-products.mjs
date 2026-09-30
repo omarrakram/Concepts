@@ -21,6 +21,15 @@
  *   5. JSON-LD in /products/<handle> HTML     (last resort)
  *   6. otherwise → reported as unparseable (never invented)
  *
+ * CARE GUIDES: each product's own official care guide is read from its public
+ * product page. It is not in any JSON endpoint (the theme renders it from the
+ * product into `<div class="care-guide">`), so every product's page section is
+ * fetched through Shopify's public Section Rendering API
+ * (`/products/<handle>?section_id=<main product section>`, ~1/6 of the full
+ * page), and a sample of full product pages is cross-checked against it.
+ * No published guide → `careGuide: null` (never inferred). A guide that exists
+ * but cannot be read is an integrity error.
+ *
  * OUTPUT (deterministic: products sorted by the storefront's own All Products
  * order, keys stable):
  *   src/data/catalogue-index.json    everything cards/filters/search need
@@ -36,6 +45,7 @@ import { fileURLToPath } from 'node:url';
 import { ORIGIN, get } from './lib/http.mjs';
 import {
   CURRENCY,
+  extractCareGuide,
   extractJsonLdProduct,
   handleFromProductUrl,
   isInternationalMarketUrl,
@@ -75,6 +85,18 @@ async function cached(name, url, as = 'json') {
     if (e.status === 404) writeFileSync(`${file}.404`, new Date().toISOString());
     throw e;
   }
+}
+
+/**
+ * Care sections are the slow part (one paced request per product). A response
+ * this run's cache already holds from the last 12 h is reused, so an
+ * interrupted live sync resumes instead of re-requesting every page.
+ */
+const CARE_FRESH_MS = 12 * 3600_000;
+async function cachedFresh(name, url) {
+  const file = cacheFile(name);
+  if (!offline && existsSync(file) && Date.now() - statSync(file).mtimeMs < CARE_FRESH_MS) return readFileSync(file, 'utf8');
+  return cached(name, url, 'text');
 }
 
 /** Collections this concept needs membership for, beyond what the homepage nav links. */
@@ -219,6 +241,9 @@ async function main() {
   const pos = new Map(allOrder.map((h, i) => [h, i]));
   const products = [...normalized.values()].sort((a, b) => (pos.get(a.handle) ?? 1e9) - (pos.get(b.handle) ?? 1e9) || a.handle.localeCompare(b.handle));
 
+  // ── Care guides (official, per product) ───────────────────────────────
+  const care = await syncCareGuides(products);
+
   // ── Validate ──────────────────────────────────────────────────────────
   const metaFile = resolve(root, 'src/data/catalogue-meta.json');
   const previousCount = existsSync(metaFile) && !allowShrink ? JSON.parse(readFileSync(metaFile, 'utf8')).productCount : null;
@@ -231,6 +256,8 @@ async function main() {
   if (priceMismatch.length) errors.push(`${priceMismatch.length} price cross-check mismatches`);
   report.notInSitemap = products.filter((p) => !discoveredSet.has(p.handle)).map((p) => p.handle);
   report.notInAllProducts = products.filter((p) => !pos.has(p.handle)).map((p) => p.handle);
+  report.care = care.report;
+  errors.push(...care.errors);
 
   printReport(report, errors);
   writeFileSync(resolve(CACHE, 'last-report.json'), JSON.stringify({ report, errors }, null, 2));
@@ -261,6 +288,12 @@ async function main() {
     variantsTotal: report.variantCount,
     sitemapNotPublic: notPublic,
     sourceMethods: [...sourceMethods],
+    careGuides: {
+      source: 'public product page: the theme\u2019s care-guide block (Section Rendering API, full-page cross-checked)',
+      section: care.report.section,
+      withCareGuide: care.report.withCareGuide,
+      withoutPublishedCareGuide: care.report.withoutPublished,
+    },
     navCollections,
     report: { ...report, missingFromSync: report.missingFromSync.length ? report.missingFromSync : [] },
   };
@@ -272,6 +305,69 @@ async function main() {
   writeFileSync(metaFile, out.meta);
   writeSourcesSection(meta, Object.keys(membership));
   log(`wrote ${products.length} products → src/data/catalogue-index.json (${kb(out.index)}), ${SHARD_COUNT} detail shards (${kb(Object.values(out.shards).join(''))} total), meta (${kb(out.meta)})`);
+}
+
+/**
+ * Attach each product's official care guide (or null) and report on it.
+ * Section id is discovered from the storefront's first product page, not hardcoded.
+ */
+async function syncCareGuides(products) {
+  const first = products[0].handle;
+  const page = await cached(`product_${first}.html`, `${ORIGIN}/products/${encodeURIComponent(first)}`, 'text');
+  const section = [...page.matchAll(/id="shopify-section-(template--[^"]+)"/g)]
+    .map((m) => m[1])
+    .find((id) => {
+      const at = page.indexOf(`id="shopify-section-${id}"`);
+      return page.slice(at, at + 400_000).includes('js-product-details');
+    });
+  if (!section) throw new Error('care guides: could not find the main product section on a product page');
+  log(`care guides: product section ${section}; fetching ${products.length} product sections…`);
+
+  const failures = [];
+  const byText = new Map();
+  for (const [i, p] of products.entries()) {
+    let html;
+    try {
+      html = await cachedFresh(`care_${p.handle}.html`, `${ORIGIN}/products/${encodeURIComponent(p.handle)}?section_id=${section}`);
+    } catch (e) {
+      failures.push({ handle: p.handle, reason: `section fetch failed (${e.status ?? e.message})` });
+      continue;
+    }
+    if (!html.includes('js-product-details')) {
+      failures.push({ handle: p.handle, reason: 'section response is not a product section' });
+      continue;
+    }
+    const r = extractCareGuide(html);
+    if (r.status === 'failed') failures.push({ handle: p.handle, reason: r.reason });
+    p.careGuide = r.status === 'found' ? r.text : null;
+    if (p.careGuide) byText.set(p.careGuide, (byText.get(p.careGuide) ?? 0) + 1);
+    if ((i + 1) % 100 === 0) log(`  care guides ${i + 1}/${products.length}`);
+  }
+
+  // Cross-check: full public product pages (whatever template each uses) must agree with the section.
+  const step = Math.max(1, Math.floor(products.length / 24));
+  const crossCheck = [];
+  for (const p of products.filter((_, i) => i % step === 0)) {
+    const full = extractCareGuide(await cached(`product_${p.handle}.html`, `${ORIGIN}/products/${encodeURIComponent(p.handle)}`, 'text'));
+    crossCheck.push({ handle: p.handle, ok: (full.status === 'found' ? full.text : null) === p.careGuide });
+  }
+
+  const withCare = products.filter((p) => p.careGuide).length;
+  const failed = new Set(failures.map((f) => f.handle));
+  const report = {
+    section,
+    total: products.length,
+    withCareGuide: withCare,
+    withoutPublished: products.length - withCare - failed.size,
+    parseFailures: failures,
+    distinctTexts: byText.size,
+    mostReused: [...byText].sort((a, b) => b[1] - a[1]).slice(0, 5).map(([text, n]) => ({ n, text })),
+    fullPageCrossCheck: { checked: crossCheck.length, mismatches: crossCheck.filter((c) => !c.ok).map((c) => c.handle) },
+  };
+  const errors = [];
+  if (failures.length) errors.push(`${failures.length} care-guide parse failures: ${failures.slice(0, 5).map((f) => `${f.handle} (${f.reason})`).join(', ')}`);
+  if (report.fullPageCrossCheck.mismatches.length) errors.push(`care guide differs between product page and section: ${report.fullPageCrossCheck.mismatches.join(', ')}`);
+  return { report, errors };
 }
 
 /** Regenerates the catalogue block of docs/SOURCES.md from the snapshot metadata. */
@@ -302,6 +398,7 @@ function writeSourcesSection(meta, collections) {
     `- ${meta.storefront}/collections/<handle>/products.json — membership + order for ${collections.length} collections: ${collections.join(', ')}`,
     `- ${meta.storefront}/products/<handle>.js — fallback, and a 5-product EGP price cross-check`,
     `- ${meta.storefront}/products/<handle> JSON-LD — last-resort fallback`,
+    `- ${meta.storefront}/products/<handle>?section_id=<product section> — each product\u2019s official care guide (the theme\u2019s \`care-guide\` block); ${fmt(meta.careGuides.withCareGuide)} products publish one, ${fmt(meta.careGuides.withoutPublishedCareGuide)} publish none (stored as \`null\`, never inferred); a sample of full product pages is cross-checked`,
     `- ${meta.storefront}/pages/store-locations — store directory (\`npm run sync-stores\`)`,
     '',
     `Every request sends the storefront’s own \`localization=EG; cart_currency=EGP\` cookies; the sync aborts unless the homepage reports \`Shopify.currency.active = "EGP"\`, and fails on duplicate handles, currency mismatches, international-market URLs, missing prices/images, or a >20% catalogue shrink.`,
@@ -337,6 +434,13 @@ function printReport(r, errors) {
 │ discovered but not synced   ${n(r.missingFromSync)}
 │ synced but not in sitemap   ${n(r.notInSitemap)}
 │ not in All Products         ${n(r.notInAllProducts)}
+├─ CARE GUIDES (official product pages) ───────────────────────
+│ total public products       ${r.care?.total}
+│ with official care guide    ${r.care?.withCareGuide}
+│ without published guide     ${r.care?.withoutPublished}
+│ parser failures             ${n(r.care?.parseFailures ?? [])}
+│ distinct care texts         ${r.care?.distinctTexts}
+│ full-page cross-check       ${r.care?.fullPageCrossCheck.checked} checked, ${n(r.care?.fullPageCrossCheck.mismatches ?? [])} mismatches
 └──────────────────────────────────────────────────────────────${errors.length ? `\n ERRORS:\n  - ${errors.join('\n  - ')}` : '\n ✓ no integrity errors'}`);
 }
 

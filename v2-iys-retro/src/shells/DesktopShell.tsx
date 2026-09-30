@@ -16,14 +16,14 @@ import { Window } from '../components/os/Window';
 import { APP_ICONS } from '../components/os/Taskbar';
 import { useOS, type AppId, type Win } from '../state/os';
 import { useSession } from '../state/preferences';
+import { openChat } from '../apps/Messenger/nav';
 import '../styles/os.css';
 import '../styles/apps.css';
 
 type AppProps = { win: Win };
 const LOADERS: Record<AppId, () => Promise<{ default: ComponentType<AppProps> }>> = {
   internet: () => import('../apps/Browser/Browser'),
-  messenger: () => import('../apps/Messenger/BuddyList'),
-  chat: () => import('../apps/Messenger/Chat'),
+  messenger: () => import('../apps/Messenger/Messenger'),
   wardrobe: () => import('../apps/Wardrobe/Wardrobe'),
   camera: () => import('../apps/Camera/Camera'),
   viewer: () => import('../apps/Viewer/ImageViewer'),
@@ -130,8 +130,7 @@ export default function DesktopShell() {
   const openPjoys = () => {
     setUnread(false);
     showBalloon(null);
-    open('messenger');
-    open('chat', { id: 'chat-pjoys', title: 'PJOYS - Conversation', props: { buddy: 'pjoys' } });
+    openChat('pjoys', 'PJOYS');
   };
 
   return (

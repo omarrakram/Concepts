@@ -74,10 +74,10 @@ archive photos.
 | **Home portal** | Official lines and dated announcements, FW27 hero, **TOP 8 COOL DECISIONS**, NEW STUFF (IYS’s own Newest collection), Pjoys, `C:\IYS\CAIRO\` (القاهرة), IYS × ZED, currently-online buddies, stores, IYS MAIL, a *fictional* TIME TRAVELLERS counter, an honest empty guestbook, original badges. |
 | **Shop** | Every public product, 48 per page, « Previous 1 2 3 … N Next », sort, Control-Panel filters (type, size, price, availability, sale), URL-synced state. |
 | **Search** | Fuse.js over title/type/collections/tags, typo-tolerant (“ceral” → Cereal Killer). |
-| **Product** | IYS IMAGE VIEWER + PRODUCT PROPERTIES: all photos, zoom, full-size viewer, real options and per-variant availability (no silent default size), sale only when a real compare-at exists, description, VIEW CURRENT ITEM ON IYS ↗. |
+| **Product** | IYS IMAGE VIEWER + PRODUCT PROPERTIES: all photos, zoom, full-size viewer, real options and per-variant availability (no silent default size), Qty: [−] 1 [+] feeding ADD 2 BAG (same variant again increments), sale only when a real compare-at exists, description (open), the product's own official Care Guide below it (only when IYS publishes one), VIEW CURRENT ITEM ON IYS ↗. |
 | **Bag** | “COPYING ITEM TO: MY BAG” < 1 s, quantities, remove, subtotal in EGP, CONCEPT CHECKOUT (“No order will be placed.”). |
 | **Favorites** | ★ ADD TO FAVORITES, a browser-favorites page, persisted locally. |
-| **IYS MESSENGER** | Collections as buddies. **2:13 AM — PJOYS is online: “u awake?” / “enta sa7y?”**, then real Pjoys arrive as file transfers, plus pattern tiles you can set as wallpaper. Scripted concept copy; no bot, no fake customers. |
+| **IYS MESSENGER** | One window: pick a buddy and the conversation opens inside it (tiny “< back 2 buddies” returns to the list). Collections as buddies. **2:13 AM — PJOYS is online: “u awake?” / “enta sa7y?”**, then real Pjoys arrive as file transfers, plus pattern tiles you can set as wallpaper. Scripted concept copy; no bot, no fake customers. |
 | **IYS CAMERA** | `E:\DCIM\` — CAMPAIGNS, PJOYS, CAIRO, STORES; 4:3 contact sheet, image viewer, set as wallpaper. |
 | **MY WARDROBE** | Explorer over IYS’s own taxonomy; every count comes from data; decorative filenames beside official titles. |
 | **Stores** | FIND IYS IRL — every published store with address line, hours, phone, directions. |
@@ -165,7 +165,7 @@ directory the same way.
 | file | raw | gzip | loaded |
 | --- | --- | --- | --- |
 | `src/data/catalogue-index.json` (compact card/filter/search fields) | 589 KB | 114 KB | as its own chunk, in parallel with the boot — never blocks it |
-| `public/catalogue/p-XX.json` × 32 (descriptions, all images, all variants) | 3.0 MB total | 434 KB total | one ~14 KB shard when a product opens |
+| `public/catalogue/p-XX.json` × 32 (descriptions, care guides, all images, all variants) | 3.0 MB total | 434 KB total | one ~14 KB shard when a product opens |
 
 One flat file would have been ~3.6 MB raw on first load, so the split is
 justified by measurement.

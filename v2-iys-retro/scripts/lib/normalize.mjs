@@ -246,12 +246,80 @@ function finish(p, x) {
     images: x.images,
     createdAt: x.createdAt ?? null,
     publishedAt: x.publishedAt ?? null,
+    // Filled from the product page by the sync (extractCareGuide); null = none published.
+    careGuide: null,
     sourceUrl: `https://inyourshoe.com/products/${handle}`,
     retrievedAt: x.retrievedAt ?? null,
     sourceMethod: x.method,
     currencyMismatch: Boolean(x.currencyMismatch),
     collections: [],
   };
+}
+
+/**
+ * The OFFICIAL care guide of one product, from its public IYS product page
+ * (or that page's product section via Shopify's public Section Rendering API).
+ *
+ * The live theme renders each product's own care guide into
+ * `<div class="care-guide">`: inside a "Care Guide" accordion row on the
+ * clothing template, directly in a content block on the accessories template.
+ * Products that publish none have neither the block nor the row.
+ *
+ * Only presentation noise is normalised (tags → line breaks, entities,
+ * whitespace); wording, punctuation and order are kept exactly.
+ *
+ *   { status: 'found',  text }             official care guide
+ *   { status: 'none',   text: null }       IYS publishes no care guide for it
+ *   { status: 'failed', text: null, reason } care content exists but could not be read
+ */
+export function extractCareGuide(html) {
+  const s = String(html ?? '');
+  const row = /<summary\b[^>]*>\s*Care\s+Guide\s*</i.test(s);
+  const open = /<div\b[^>]*\bclass\s*=\s*(["'])(?:[^"']*\s)?care-guide(?:\s[^"']*)?\1[^>]*>/gi;
+  const texts = [];
+  for (const m of s.matchAll(open)) {
+    const inner = balancedDivInner(s, m.index + m[0].length);
+    if (inner === null) return { status: 'failed', text: null, reason: 'unbalanced care-guide markup' };
+    texts.push(careText(inner));
+  }
+  if (!texts.length) return row ? { status: 'failed', text: null, reason: 'Care Guide row without care-guide content' } : { status: 'none', text: null };
+  const distinct = [...new Set(texts)];
+  if (distinct.length > 1) return { status: 'failed', text: null, reason: 'conflicting care-guide blocks' };
+  const text = distinct[0];
+  if (!text) return { status: 'failed', text: null, reason: 'empty care-guide block' };
+  if (/[<>]|\{\{|\{%|Liquid error|translation missing/i.test(text)) return { status: 'failed', text: null, reason: 'malformed care-guide text' };
+  return { status: 'found', text };
+}
+
+/**
+ * Care-guide HTML → text the way a browser renders it: source whitespace
+ * (including newlines) collapses to a space; only <br> and block ends break
+ * lines. No words are added, removed or reordered.
+ */
+function careText(html) {
+  const text = String(html)
+    .replace(/<(script|style)[^>]*>[\s\S]*?<\/\1>/gi, '')
+    .replace(/\s+/g, ' ')
+    .replace(/<br\s*\/?>/gi, '\n')
+    .replace(/<\/(p|div|li|h[1-6]|tr)>/gi, '\n')
+    .replace(/<[^>]+>/g, '');
+  return decodeEntities(text)
+    .split('\n')
+    .map((l) => l.replace(/[ \t\u00a0]+/g, ' ').trim())
+    .filter(Boolean)
+    .join('\n');
+}
+
+/** Inner HTML of the <div> whose opening tag ends at `start`, honouring nested divs; null if unbalanced. */
+function balancedDivInner(s, start) {
+  const tag = /<(\/?)div\b[^>]*>/gi;
+  tag.lastIndex = start;
+  let depth = 1;
+  for (let m = tag.exec(s); m; m = tag.exec(s)) {
+    depth += m[1] ? -1 : 1;
+    if (depth === 0) return s.slice(start, m.index);
+  }
+  return null;
 }
 
 /** Parse every JSON-LD block of a page and return the first Product. */

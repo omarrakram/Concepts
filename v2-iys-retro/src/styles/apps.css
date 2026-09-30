@@ -1230,6 +1230,23 @@ img.is-loading {
   text-decoration: line-through;
   cursor: not-allowed;
 }
+/* Qty: [−] 1 [+] — same small buttons as MY BAG, one compact row above ADD 2 BAG */
+.props__qty {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin: 0;
+  font-family: var(--system-font);
+  font-size: var(--fs-chrome);
+}
+.props__qty output {
+  min-width: 2.2em;
+  text-align: center;
+  font-weight: bold;
+}
+.props__qty + .props__buy {
+  margin-top: 6px;
+}
 .props__buy {
   display: flex;
   flex-wrap: wrap;
@@ -1925,6 +1942,10 @@ span.explorer__twisty {
   padding: 5px 8px;
   border-bottom: 1px solid #c3d3e8;
   background: linear-gradient(#f3f7fc, #e3ecf8);
+}
+/* tiny "< back 2 buddies" utility button at the end of the To: line */
+.chat__back {
+  margin-left: auto;
 }
 .chat__mood {
   flex-basis: 100%;
