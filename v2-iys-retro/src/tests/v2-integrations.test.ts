@@ -3,6 +3,7 @@ import { resolve } from 'node:path';
 import { describe, expect, it, vi } from 'vitest';
 import { buildSupportMail, DEFAULT_SUPPORT_TO, handleSupport, validateSupport, type Sender } from '../../api/_lib/support';
 import { WALLPAPERS } from '../data/assets';
+import { DEFAULT_WALLPAPER } from '../state/preferences';
 import { concept, official } from '../data/copy';
 import { subscribe } from '../lib/newsletter';
 
@@ -103,6 +104,17 @@ describe('wallpapers', () => {
     for (const w of WALLPAPERS) if (w.src) expect(existsSync(resolve(root, 'public', w.src.replace(/^\//, ''))), w.src).toBe(true);
     expect(WALLPAPERS.find((w) => w.id === 'blue')?.src).toBeNull();
     expect(WALLPAPERS.find((w) => w.id === 'hills')?.src).toBe('/iys/os/hills.svg');
+  });
+
+  it('Purbale Catchy is a Stretch preset whose 1672×940 image is precached like the other iys/os assets, never the default', () => {
+    const w = WALLPAPERS.find((x) => x.id === 'purbale-catchy');
+    expect(w).toEqual({ id: 'purbale-catchy', label: 'Purbale Catchy', src: '/iys/os/purbale-catchy.webp', mode: 'stretch' });
+    const file = readFileSync(resolve(root, 'public/iys/os/purbale-catchy.webp'));
+    expect(file.subarray(8, 12).toString()).toBe('WEBP');
+    expect(file.length).toBeLessThan(1_500_000); // workbox maximumFileSizeToCacheInBytes
+    expect(readFileSync(resolve(root, 'vite.config.ts'), 'utf8')).toContain("'iys/os/*'");
+    expect(WALLPAPERS[0]!.id).toBe('hills');
+    expect(DEFAULT_WALLPAPER).toEqual({ kind: 'preset', id: 'hills' });
   });
 });
 

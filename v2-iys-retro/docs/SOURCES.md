@@ -76,6 +76,11 @@ Windows name, logo or asset is used. Y2K slang lines (“omg new drop just
 landed :)”, “Subscribe xo”…) are CONCEPT COPY in `src/data/copy.ts`
 (`concept.y2k`), never presented as IYS language.
 
+**Purbale Catchy** (`public/iys/os/purbale-catchy.webp`, 1672×940, a Control
+Panel wallpaper preset) is artwork supplied by the project owner for this
+concept and is committed byte-for-byte unchanged (no crop, recolour or
+re-encode).
+
 ## Local assets
 
 <!-- assets:start -->

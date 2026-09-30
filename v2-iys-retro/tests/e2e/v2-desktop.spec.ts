@@ -79,6 +79,53 @@ test.describe('IYS Retro V2 desktop upgrades', () => {
     await expect(cp(page).locator('.cp-list label:has(input:checked)')).toContainText('IYS Hills - Y2K sky (Default)');
   });
 
+  test('Purbale Catchy: preview, apply (Stretch), persist, sync, switch away, Reset keeps Hills default', async ({ page }) => {
+    const res = await page.request.get('/iys/os/purbale-catchy.webp');
+    expect(res.status()).toBe(200);
+    expect(res.headers()['content-type']).toContain('image/webp');
+    await desktop(page, '/');
+    await minimizeBrowser(page);
+    await page.getByRole('button', { name: 'Open Control Panel' }).click();
+    const item = cp(page).locator('.cp-list label', { hasText: /^Purbale Catchy$/ });
+    await expect(item).toHaveCount(1);
+    await item.locator('input').check();
+    const screen = cp(page).locator('.monitor__screen');
+    await expect(screen).toHaveClass(/monitor__screen--stretch/);
+    expect(await screen.evaluate((e) => getComputedStyle(e).backgroundImage)).toContain('/iys/os/purbale-catchy.webp');
+    expect((await wallpaper(page)).bg).toContain('/iys/os/hills.svg'); // preview only until Apply
+    await cp(page).getByRole('button', { name: 'Apply' }).click();
+    let wp = await wallpaper(page);
+    expect(wp.bg).toContain('/iys/os/purbale-catchy.webp');
+    expect(wp.cls).toContain('wallpaper--stretch');
+    expect(await page.locator('.wallpaper').evaluate((e) => [getComputedStyle(e).backgroundSize, getComputedStyle(e).backgroundPosition, getComputedStyle(e).backgroundRepeat])).toEqual(['cover', '50% 50%', 'no-repeat']);
+    // close / reopen Control Panel stays in sync
+    await cp(page).getByRole('button', { name: /^Close/ }).first().click();
+    await expect(cp(page)).toHaveCount(0);
+    await page.getByRole('button', { name: 'Open Control Panel' }).click();
+    await expect(cp(page).locator('.cp-list label:has(input:checked)')).toHaveText('Purbale Catchy');
+    // persists after reload
+    await page.reload();
+    await expect(page.getByRole('dialog', { name: /IYS INTERNET/ })).toBeVisible();
+    wp = await wallpaper(page);
+    expect(wp.bg).toContain('/iys/os/purbale-catchy.webp');
+    expect(wp.cls).toContain('wallpaper--stretch');
+    await minimizeBrowser(page);
+    await page.getByRole('button', { name: 'Open Control Panel' }).click();
+    await expect(cp(page).locator('.cp-list label:has(input:checked)')).toHaveText('Purbale Catchy');
+    // switching away still works
+    await cp(page).locator('.cp-list label', { hasText: 'IYS × ZED' }).locator('input').check();
+    await cp(page).getByRole('button', { name: 'Apply' }).click();
+    expect((await wallpaper(page)).bg).toContain('/iys/campaign/zed-1');
+    await item.locator('input').check();
+    await cp(page).getByRole('button', { name: 'Apply' }).click();
+    expect((await wallpaper(page)).bg).toContain('/iys/os/purbale-catchy.webp');
+    // Reset Desktop returns to IYS Hills, not Purbale Catchy
+    await cp(page).getByRole('button', { name: /Reset desktop/ }).click();
+    await page.getByRole('alertdialog', { name: 'RESET DESKTOP' }).getByRole('button', { name: 'Reset' }).click();
+    expect((await wallpaper(page)).bg).toContain('/iys/os/hills.svg');
+    await expect(cp(page).locator('.cp-list label:has(input:checked)')).toContainText('IYS Hills - Y2K sky (Default)');
+  });
+
   test('P2: product photo → Set as Wallpaper, with Stretch / Center / Tile', async ({ page }) => {
     const p = index.products.find((x: { a?: number; o?: string[] }) => x.a === 1 && !x.o);
     await desktop(page, `/product/${p.h}`);

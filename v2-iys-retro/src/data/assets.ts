@@ -65,6 +65,7 @@ export const WALLPAPERS: WallpaperPreset[] = [
   { id: 'fw27', label: 'IYS FW27', src: fw2?.src ?? null, mode: 'stretch', sourceUrl: fw2?.sourceUrl },
   { id: 'fw27-stack', label: 'IYS FW27 - The Stack', src: fw1?.src ?? null, mode: 'stretch', sourceUrl: fw1?.sourceUrl },
   { id: 'zed', label: 'IYS × ZED', src: zed?.src ?? null, mode: 'stretch', sourceUrl: zed?.sourceUrl },
+  { id: 'purbale-catchy', label: 'Purbale Catchy', src: '/iys/os/purbale-catchy.webp', mode: 'stretch' },
   ...assets.tiles.map((t) => ({ id: `tile-${t.handle}`, label: `${t.title} (pattern)`, src: t.src, mode: 'tile' as const, sourceUrl: t.sourceUrl })),
   { id: 'blue', label: '(None) - IYS Blue', src: null, mode: 'center' },
 ];
