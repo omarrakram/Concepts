@@ -19,7 +19,7 @@ test('mobile MENU lists every essential as an official link', async ({ page }) =
   expect(hrefs.map((h) => h[0])).toContain('https://inyourshoe.com/policies/terms-of-service');
 });
 
-test('mobile product: essentials + PICK SIZE → ADD 2 BAG; bag shows policy links', async ({ page }) => {
+test('mobile product: essentials + PICK SIZE → ADD TO BAG; bag shows policy links', async ({ page }) => {
   const p = index.products.find((x: { sz?: [string, number][]; a?: number; o?: string[] }) => x.sz && x.sz.length > 1 && x.a === 1 && !x.o);
   await page.goto(`/product/${p.h}`);
   await expect(page.getByRole('link', { name: /^Shipping/ })).toHaveAttribute('href', 'https://inyourshoe.com/pages/shipping-policy');
@@ -29,7 +29,7 @@ test('mobile product: essentials + PICK SIZE → ADD 2 BAG; bag shows policy lin
   await expect(center).toBeDisabled();
   const size = p.sz.find((s: [string, number]) => s[1] === 1)[0];
   await page.locator('.chip label', { hasText: new RegExp(`^${size}$`) }).click();
-  await expect(center).toHaveText('ADD 2 BAG');
+  await expect(center).toHaveText('+ MY BAG');
   await center.click();
   await page.getByRole('button', { name: /My Bag, 1 items/ }).click();
   await expect(page.getByRole('link', { name: /^Terms & Conditions/ })).toHaveAttribute('href', 'https://inyourshoe.com/pages/terms-conditions');

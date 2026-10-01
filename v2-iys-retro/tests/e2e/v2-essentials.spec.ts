@@ -58,7 +58,7 @@ test.describe('IYS ESSENTIALS everywhere (desktop)', () => {
     // bag (with an item)
     const size = multi.sz.find((s: [string, number]) => s[1] === 1)[0];
     await browserWin(page).locator('.chip label', { hasText: new RegExp(`^${size}$`) }).click();
-    await browserWin(page).getByRole('button', { name: 'ADD 2 BAG' }).click();
+    await browserWin(page).getByRole('button', { name: 'ADD TO BAG' }).click();
     await page.getByRole('button', { name: /Open My Bag, 1 items/ }).first().click();
     const bag = page.getByRole('dialog', { name: 'MY BAG' });
     await expectOfficial(bag, /^Exchange & Refund/, OFFICIAL.exchange);
@@ -105,13 +105,13 @@ test.describe('conversion CTAs go where they say (desktop)', () => {
     await go(/^Open collection \(/, /\/collections\/inyourshoexzed$/);
   });
 
-  test('product: pick size → ADD 2 BAG → VIEW BAG / KEEP SHOPPING XO', async ({ page }) => {
+  test('product: pick size → ADD TO BAG → VIEW BAG / KEEP SHOPPING XO', async ({ page }) => {
     await desktop(page, `/product/${multi.h}`);
     const b = browserWin(page);
     await expect(b.getByRole('button', { name: /Choose size/ })).toBeDisabled();
     const size = multi.sz.find((s: [string, number]) => s[1] === 1)[0];
     await b.locator('.chip label', { hasText: new RegExp(`^${size}$`) }).click();
-    await b.getByRole('button', { name: 'ADD 2 BAG' }).click();
+    await b.getByRole('button', { name: 'ADD TO BAG' }).click();
     await expect(b.getByRole('status').filter({ hasText: 'ADDED 2 BAG :)' })).toBeVisible();
     await b.getByRole('button', { name: 'VIEW BAG' }).click();
     const bag = page.getByRole('dialog', { name: 'MY BAG' });
@@ -123,7 +123,7 @@ test.describe('conversion CTAs go where they say (desktop)', () => {
     await expect(page).toHaveURL(/\/shop$/);
     await page.goto(`/product/${multi.h}`);
     await b.locator('.chip label', { hasText: new RegExp(`^${size}$`) }).click();
-    await b.getByRole('button', { name: 'ADD 2 BAG' }).click();
+    await b.getByRole('button', { name: 'ADD TO BAG' }).click();
     await b.getByRole('button', { name: 'KEEP SHOPPING XO' }).click();
     await expect(page).toHaveURL(/\/shop$/);
   });

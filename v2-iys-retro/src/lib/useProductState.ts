@@ -11,7 +11,7 @@ export function useProductState(handle: string | undefined) {
   const detail = useProductDetail(handle);
   const p = detail.status === 'ready' ? detail.product : null;
   const [selected, setSelected] = useState<(string | null)[]>([]);
-  // Quantity for ADD 2 BAG: starts at 1 on every product, always 1…MAX_QTY.
+  // Quantity for ADD TO BAG: starts at 1 on every product, always 1…MAX_QTY.
   const [qty, setQtyState] = useState(1);
   useEffect(() => {
     if (p) {

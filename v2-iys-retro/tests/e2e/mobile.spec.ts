@@ -30,7 +30,7 @@ test('mobile shop → product → add via soft key → bag', async ({ page }) =>
   await page.locator('.chip:not(.is-out) label').first().click();
   const needsColor = await page.locator('.variants__group').count();
   if (needsColor > 1) await page.locator('.variants__group').nth(1).locator('.chip:not(.is-out) label').first().click();
-  await expect(center).toHaveText('ADD 2 BAG');
+  await expect(center).toHaveText('+ MY BAG');
   await center.click();
   await expect(page.getByRole('button', { name: /My Bag, 1 items/ })).toBeVisible();
   await page.getByRole('button', { name: /My Bag, 1 items/ }).click();

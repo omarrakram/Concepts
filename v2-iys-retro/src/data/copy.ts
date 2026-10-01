@@ -178,7 +178,9 @@ export const concept = {
     newsletterNote: 'opens the real cool list on inyourshoe.com - this concept stores nothing.',
     ping: '1 new msg from PJOYS :)',
     wasHere: 'IYS was here XD',
-    add: 'ADD 2 BAG',
+    add: 'ADD TO BAG',
+    /** Mobile center soft key only: same add action, shorter label that fits the key on one line down to 320 px. */
+    addSoft: '+ MY BAG',
     addLong: 'brb adding this 2 bag',
     pickSize: 'PICK SIZE',
     soldOut: 'SOLD OUT :(',

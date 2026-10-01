@@ -257,7 +257,7 @@ export function MProduct() {
   const strip = useRef<HTMLDivElement>(null);
   useTitle(p?.title ?? indexed?.title ?? 'Product');
   const missing = p?.options.find((_, i) => !s.selected[i])?.name;
-  useClaimCenter(p ? { label: s.needsChoice ? `PICK ${(missing ?? 'size').toUpperCase()}` : variant?.available === false ? concept.y2k.soldOut : concept.y2k.add, disabled: !s.canAdd, run: () => s.add() } : null);
+  useClaimCenter(p ? { label: s.needsChoice ? `PICK ${(missing ?? 'size').toUpperCase()}` : variant?.available === false ? concept.y2k.soldOut : concept.y2k.addSoft, disabled: !s.canAdd, run: () => s.add() } : null);
   const images = useMemo(() => p?.images ?? (indexed?.image ? [{ src: indexed.image, alt: indexed.title, width: indexed.imageWidth, height: indexed.imageHeight }] : []), [p, indexed]);
   if (s.missing || detail.status === 'missing') return <MNotFound />;
   if (!indexed && !p) return <PageLoading label="Opening..." />;

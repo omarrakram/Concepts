@@ -34,14 +34,14 @@ mid-2000s. The website *is* the computer; the store runs inside it.
    primary → IYS’s Newest collection) and **Explore pjoys xo** (blue,
    secondary), both above the fold. Camera and Messages moved into MENU.
    Product pages show title, price and sizes above the fold; the green centre
-   soft key is always the next step (SHOP → PICK SIZE → ADD 2 BAG → CHECKOUT).
+   soft key is always the next step (SHOP → PICK SIZE → + MY BAG → CHECKOUT).
 3. **Y2K voice.** Concept microcopy uses 2000s slang sparingly (“omg new drop
    just landed :)”, “u + this fit = meant 2 b xx”, “subscribe 2 our newsletter
    xoxo”, “ur bag is empty :(”, “IYS was here XD”). It lives in
    `concept.y2k` in `src/data/copy.ts`, kept apart from verified official IYS
    lines; honesty notes (snapshot prices, no real orders) are kept.
 4. **Desktop keeps its OS**, gains the same CTA pair above the FW27 hero, a
-   green ADD 2 BAG / CHECKOUT, the Y2K copy and an *IYS Hills* wallpaper preset.
+   green ADD TO BAG / CHECKOUT, the Y2K copy and an *IYS Hills* wallpaper preset.
 
 ## Design thesis
 
@@ -74,7 +74,7 @@ archive photos.
 | **Home portal** | Official lines and dated announcements, FW27 hero, **TOP 8 COOL DECISIONS**, NEW STUFF (IYS’s own Newest collection), Pjoys, `C:\IYS\CAIRO\` (القاهرة), IYS × ZED, currently-online buddies, stores, IYS MAIL, a *fictional* TIME TRAVELLERS counter, an honest empty guestbook, original badges. |
 | **Shop** | Every public product, 48 per page, « Previous 1 2 3 … N Next », sort, Control-Panel filters (type, size, price, availability, sale), URL-synced state. |
 | **Search** | Fuse.js over title/type/collections/tags, typo-tolerant (“ceral” → Cereal Killer). |
-| **Product** | IYS IMAGE VIEWER + PRODUCT PROPERTIES: all photos, zoom, full-size viewer, real options and per-variant availability (no silent default size), Qty: [−] 1 [+] feeding ADD 2 BAG (same variant again increments), sale only when a real compare-at exists, description (open), the product's own official Care Guide below it (only when IYS publishes one), VIEW CURRENT ITEM ON IYS ↗. |
+| **Product** | IYS IMAGE VIEWER + PRODUCT PROPERTIES: all photos, zoom, full-size viewer, real options and per-variant availability (no silent default size), Qty: [−] 1 [+] feeding ADD TO BAG (same variant again increments), sale only when a real compare-at exists, description (open), the product's own official Care Guide below it (only when IYS publishes one), VIEW CURRENT ITEM ON IYS ↗. |
 | **Bag** | “COPYING ITEM TO: MY BAG” < 1 s, quantities, remove, subtotal in EGP, CONCEPT CHECKOUT (“No order will be placed.”). |
 | **Favorites** | ★ ADD TO FAVORITES, a browser-favorites page, persisted locally. |
 | **IYS MESSENGER** | One window: pick a buddy and the conversation opens inside it (tiny “< back 2 buddies” returns to the list). Collections as buddies. **2:13 AM — PJOYS is online: “u awake?” / “enta sa7y?”**, then real Pjoys arrive as file transfers, plus pattern tiles you can set as wallpaper. Scripted concept copy; no bot, no fake customers. |

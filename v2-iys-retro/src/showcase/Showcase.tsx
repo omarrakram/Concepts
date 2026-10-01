@@ -316,7 +316,7 @@ export default function Showcase() {
                     ))}
                   </div>
                   <span className="btn btn--go sc-add" data-sc="add">
-                    ADD 2 BAG
+                    ADD TO BAG
                   </span>
                   <u className="props__real">VIEW CURRENT ITEM ON IYS ↗</u>
                 </div>

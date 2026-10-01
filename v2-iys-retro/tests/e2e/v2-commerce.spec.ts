@@ -46,7 +46,7 @@ test.describe('product page: description, care guide, quantity (desktop)', () =>
     await expect(b.getByText('Care Guide')).toHaveCount(0);
   });
 
-  test('Quantity: starts at 1, never below 1, and ADD 2 BAG adds exactly that many; the same variant increments', async ({ page }) => {
+  test('Quantity: starts at 1, never below 1, and ADD TO BAG adds exactly that many; the same variant increments', async ({ page }) => {
     await desktop(page, `/product/${withCare.handle}`);
     const b = browserWin(page);
     const qty = b.getByRole('group', { name: 'Qty:' });
@@ -62,9 +62,9 @@ test.describe('product page: description, care guide, quantity (desktop)', () =>
     await minus.click();
     await expect(qty.locator('output')).toHaveText('3');
     await firstSize(page);
-    await b.getByRole('button', { name: 'ADD 2 BAG' }).click();
+    await b.getByRole('button', { name: 'ADD TO BAG' }).click();
     await expect(page.getByRole('button', { name: /Open My Bag, 3 items/ }).first()).toBeVisible();
-    await b.getByRole('button', { name: 'ADD 2 BAG' }).click(); // same variant again, qty 3
+    await b.getByRole('button', { name: 'ADD TO BAG' }).click(); // same variant again, qty 3
     await expect(page.getByRole('button', { name: /Open My Bag, 6 items/ }).first()).toBeVisible();
     const bag = JSON.parse((await page.evaluate(() => localStorage.getItem('iys2006.bag')))!).state.items;
     expect(bag).toHaveLength(1);
@@ -73,11 +73,11 @@ test.describe('product page: description, care guide, quantity (desktop)', () =>
     await page.goto(`/product/${noCare.handle}`);
     await expect(b.getByRole('group', { name: 'Qty:' }).locator('output')).toHaveText('1');
     await b.getByRole('group', { name: 'Qty:' }).getByRole('button', { name: 'Increase quantity' }).click();
-    await b.getByRole('button', { name: 'ADD 2 BAG' }).click();
+    await b.getByRole('button', { name: 'ADD TO BAG' }).click();
     await expect(page.getByRole('button', { name: /Open My Bag, 8 items/ }).first()).toBeVisible();
   });
 
-  test('layout: image, price and sizes stay put; only the compact Qty row sits above ADD 2 BAG; Description/Care never move it', async ({ page }) => {
+  test('layout: image, price and sizes stay put; only the compact Qty row sits above ADD TO BAG; Description/Care never move it', async ({ page }) => {
     await desktop(page, `/product/${withCare.handle}`);
     const b = browserWin(page);
     await expect(b.locator('.props__qty')).toBeVisible(); // full product loaded (not the instant shell)

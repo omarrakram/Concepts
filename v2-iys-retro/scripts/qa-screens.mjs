@@ -48,7 +48,7 @@ const shots = [
     path: '/product/cereal-killer-pjoys',
     session: true,
     wait: 2500,
-    actions: [['click', ".chip label >> text='M'"], ['click', ".chip label >> text='Black'"], ['click', 'text=ADD 2 BAG'], ['wait', 1400], ['click', '.dicon[aria-label^="Open My Bag"]'], ['wait', 900]],
+    actions: [['click', ".chip label >> text='M'"], ['click', ".chip label >> text='Black'"], ['click', 'text=ADD TO BAG'], ['wait', 1400], ['click', '.dicon[aria-label^="Open My Bag"]'], ['wait', 900]],
   },
   { name: 'stores', w: 1440, h: 900, path: '/stores', session: true, wait: 2500 },
   { name: 'mobile-home', w: 390, h: 844, mobile: true, path: '/', session: true, wait: 2000 },

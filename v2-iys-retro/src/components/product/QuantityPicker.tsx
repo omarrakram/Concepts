@@ -2,7 +2,7 @@ import { useId } from 'react';
 import { MAX_QTY } from '../../state/cart';
 
 /**
- * Qty: [−] 1 [+] for ADD 2 BAG, in the same small-button style as MY BAG.
+ * Qty: [−] 1 [+] for ADD TO BAG, in the same small-button style as MY BAG.
  * Never below 1 (− is disabled there); the upper bound is the bag's per-line
  * safeguard, not a stock count.
  */

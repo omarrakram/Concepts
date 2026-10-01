@@ -11,7 +11,7 @@ test.beforeEach(async ({ page }) => {
   await page.addInitScript(() => sessionStorage.setItem('iys2006.session', JSON.stringify({ state: { bootSeen: true, welcomeSeen: true, pjoysPinged: true }, version: 1 })));
 });
 
-test('mobile product: Description open, Care Guide below it, Qty drives ADD 2 BAG, no sideways scroll', async ({ page }) => {
+test('mobile product: Description open, Care Guide below it, Qty drives ADD TO BAG, no sideways scroll', async ({ page }) => {
   await page.goto(`/product/${withCare.handle}`);
   const desc = page.locator('details.props__desc:not(.props__care)');
   await expect(desc).toHaveJSProperty('open', true);
