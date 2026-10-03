@@ -1,5 +1,6 @@
 import { useEffect, useId, useRef, useState } from 'react';
 import { create } from 'zustand';
+import { useBatteryState, type BatteryState } from '../../lib/battery';
 
 /** A screen can claim the centre soft key (e.g. product → ADD). */
 export interface SoftAction {
@@ -48,14 +49,28 @@ function Signal() {
     </svg>
   );
 }
+/**
+ * Same 3-bar icon as always. With the real Battery Status API: 3 green /
+ * 2 orange / 1 red; an inactive bar is simply left unfilled (the shell stays,
+ * all three rects stay, so the geometry never changes). Without it: the
+ * designed 3 green bars, untouched.
+ */
+const BATTERY_BARS: Record<BatteryState, { lit: number; fill: string }> = {
+  fallback: { lit: 3, fill: '#7dff9a' },
+  high: { lit: 3, fill: '#7dff9a' },
+  medium: { lit: 2, fill: '#ffb020' },
+  low: { lit: 1, fill: '#e0292c' },
+};
 function Battery() {
+  const state = useBatteryState();
+  const { lit, fill } = BATTERY_BARS[state];
   return (
-    <svg width="26" height="13" viewBox="0 0 26 13" aria-hidden="true" shapeRendering="crispEdges">
+    <svg width="26" height="13" viewBox="0 0 26 13" aria-hidden="true" shapeRendering="crispEdges" data-battery={state}>
       <rect x="0.5" y="0.5" width="22" height="12" fill="none" stroke="#fff" />
       <rect x="23" y="4" width="2.5" height="5" fill="#fff" />
-      <rect x="2.5" y="2.5" width="5" height="8" fill="#7dff9a" />
-      <rect x="8.5" y="2.5" width="5" height="8" fill="#7dff9a" />
-      <rect x="14.5" y="2.5" width="5" height="8" fill="#7dff9a" />
+      <rect x="2.5" y="2.5" width="5" height="8" fill={lit >= 1 ? fill : 'none'} />
+      <rect x="8.5" y="2.5" width="5" height="8" fill={lit >= 2 ? fill : 'none'} />
+      <rect x="14.5" y="2.5" width="5" height="8" fill={lit >= 3 ? fill : 'none'} />
     </svg>
   );
 }
