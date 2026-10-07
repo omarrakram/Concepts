@@ -15,6 +15,8 @@ export interface GameMeta {
 
 /** The six IYS GAMES. Each game is its own lazily loaded chunk. */
 export const GAMES: GameMeta[] = [
+  { id: 'stacks', title: 'IYS STACKS', blurb: 'Fold the falling pieces into full lines. Clear four at once for a big drop.', scores: [{ id: 'stacks', label: 'BEST' }], load: () => import('./stacks/Stacks') },
+  { id: 'snake', title: 'CATCHY SNAKE', blurb: 'Catchy leads a sock trail. Eat socks, grab a Pjoy bonus, never bite yourself.', scores: [{ id: 'snake', label: 'BEST' }], load: () => import('./snake/Snake') },
 ];
 
 export const gameMeta = (id: unknown): GameMeta | undefined => GAMES.find((g) => g.id === id);
