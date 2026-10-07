@@ -19,6 +19,7 @@ export const GAMES: GameMeta[] = [
   { id: 'chomp', title: 'CATCHY CHOMP', blurb: 'Grab every sock in the closet maze. A Pjoy lets Catchy chase the laundry monsters.', scores: [{ id: 'chomp', label: 'BEST' }], load: () => import('./chomp/Chomp') },
   { id: 'stacks', title: 'IYS STACKS', blurb: 'Fold the falling pieces into full lines. Clear four at once for a big drop.', scores: [{ id: 'stacks', label: 'BEST' }], load: () => import('./stacks/Stacks') },
   { id: 'snake', title: 'CATCHY SNAKE', blurb: 'Catchy leads a sock trail. Eat socks, grab a Pjoy bonus, never bite yourself.', scores: [{ id: 'snake', label: 'BEST' }], load: () => import('./snake/Snake') },
+  { id: 'invaders', title: 'CATCHY INVADERS', blurb: 'Catchy’s UFO vs. runaway socks, laundry blobs and a boss. 5 waves.', scores: [{ id: 'invaders', label: 'BEST' }], load: () => import('./invaders/Invaders') },
 ];
 
 export const gameMeta = (id: unknown): GameMeta | undefined => GAMES.find((g) => g.id === id);
