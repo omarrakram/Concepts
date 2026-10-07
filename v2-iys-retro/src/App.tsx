@@ -7,6 +7,8 @@ const DesktopShell = lazy(() => import('./shells/DesktopShell'));
 const MobileShell = lazy(() => import('./shells/MobileShell'));
 const Showcase = lazy(() => import('./showcase/Showcase'));
 const Analytics = lazy(() => import('./lib/analytics'));
+// dev-only Catchy fidelity check (dead code in production builds)
+const CatchyCompare = import.meta.env.DEV ? lazy(() => import('./features/catchy/dev/CatchyCompare')) : null;
 
 /** Below this width the site switches to IYS MOBILE (a different shell, not a shrunk desktop). */
 export const MOBILE_QUERY = '(max-width: 699px)';
@@ -21,6 +23,13 @@ export function App() {
     if (!showcase) void loadCatalogue();
   }, [showcase]);
 
+  if (CatchyCompare && pathname === '/catchy-compare') {
+    return (
+      <Suspense fallback={null}>
+        <CatchyCompare />
+      </Suspense>
+    );
+  }
   if (showcase) {
     return (
       <Suspense fallback={null}>

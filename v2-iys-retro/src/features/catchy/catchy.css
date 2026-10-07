@@ -69,8 +69,7 @@
 
 /* ── poses: low-frame-count, old-school steps (≈ 6–10 fps) ── */
 .csprite__walk,
-.csprite__head,
-.csprite__paw {
+.csprite__head {
   transform-box: fill-box;
   transform-origin: 50% 100%;
 }
@@ -81,26 +80,10 @@
 .cpet--walk .csprite__walk {
   animation: catchy-bob 0.5s steps(2, jump-none) infinite;
 }
-.cpet--walk .csprite__paw--l,
-.cpet--run .csprite__paw--l,
-.cpet--carry-sock .csprite__paw--l,
-.cpet--carry-pjoy .csprite__paw--l {
-  animation: catchy-step 0.5s steps(1, end) infinite;
-}
-.cpet--walk .csprite__paw--r,
-.cpet--run .csprite__paw--r,
-.cpet--carry-sock .csprite__paw--r,
-.cpet--carry-pjoy .csprite__paw--r {
-  animation: catchy-step 0.5s steps(1, end) infinite reverse;
-}
 .cpet--run .csprite__walk,
 .cpet--carry-sock .csprite__walk,
 .cpet--carry-pjoy .csprite__walk {
   animation: catchy-bob 0.25s steps(2, jump-none) infinite;
-}
-.cpet--run .csprite__paw--l,
-.cpet--run .csprite__paw--r {
-  animation-duration: 0.25s;
 }
 .cpet--sit .csprite__walk {
   transform: translateY(3px);
@@ -127,8 +110,7 @@
 .cpet--dragged .csprite__walk {
   transform: rotate(6deg) translateY(-6px);
 }
-.cpet--wave .csprite__paw--r {
-  transform-origin: 0% 100%;
+.cpet--wave .csprite__walk {
   animation: catchy-wave 0.36s steps(2, jump-none) infinite;
 }
 
@@ -149,10 +131,6 @@
   from { transform: translateY(0); }
   to { transform: translateY(-3px); }
 }
-@keyframes catchy-step {
-  0% { transform: translateY(0); }
-  50% { transform: translateY(-4px); }
-}
 @keyframes catchy-stretch {
   0% { transform: translateY(0); }
   50% { transform: translateY(-4px) rotate(-3deg); }
@@ -164,8 +142,8 @@
   100% { transform: translateY(0); }
 }
 @keyframes catchy-wave {
-  from { transform: rotate(-12deg); }
-  to { transform: rotate(14deg); }
+  from { transform: rotate(-6deg); }
+  to { transform: rotate(6deg); }
 }
 
 /* ── reaction symbols + speech bubble (early messenger style) ── */
