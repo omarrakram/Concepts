@@ -83,6 +83,7 @@ archive photos.
 | **Stores** | FIND IYS IRL — every published store with address line, hours, phone, directions. |
 | **Control Panel** | Wallpaper (presets, stretch/center/tile), sound, CRT filter, Time Machine (2006 only), System (snapshot facts), About, Reset desktop. |
 | **Easter eggs** | README.TXT, RECYCLE BIN (BORING_OUTFITS, empty), `TOUCH_GRASS.EXE` (“ERROR: TOUCH GRASS NOT FOUND.” → the real product), `GAME_NIGHT.EXE`, a screensaver after 60 s idle. |
+| **IYS GAMES** | A games folder (desktop icon, IYS menu; on mobile a home-screen launcher + MENU entry) with six original, playable games starring Catchy: **PURBALE CATCHY** (Catchy Closet, Pjoy Pairs, Pack the Drop), **IYS TOWER** (auto-bounce climber through 5 worlds), **CATCHY CHOMP** (3 closet mazes, 4 laundry monsters), **IYS STACKS** (falling blocks, “DROP CLEARED!”), **CATCHY SNAKE** (sock trail + Pjoy bonus) and **CATCHY INVADERS** (5 waves + the LINT KING). Original SVG/Canvas art and synthesized blips only; each game is its own lazy chunk; MY HIGH SCORES stay on this device (`iys2006.games.<id>.highScore`). |
 | **IYS MOBILE** | A separate shell below 700 px on an original sky-and-hills screen: glossy status strip, path titles, a `welcome.htm` hero with **Shop the drop** (primary) + **Explore pjoys xo** (secondary), four shortcuts, a “just dropped” strip, a newsletter panel, list screens, swipe gallery, glossy soft keys (BACK · green context key · BAG), same catalogue/bag/favorites/routes. |
 
 ## Technology
@@ -202,7 +203,9 @@ product. Closing the browser window returns the address to `/`.
 Zustand stores: `useOS` (windows, focus, dialogs — **never persisted**, so a
 broken layout can’t be saved), `useCart` + `useFavorites` + `usePreferences`
 (sound, CRT, wallpaper → `localStorage`), `useSession` (boot / welcome / PJOYS
-ping → `sessionStorage`).
+ping → `sessionStorage`). IYS GAMES keep live game state in each game's own
+refs (never in a store); only local high scores are written, one integer per
+game under `iys2006.games.<id>.highScore`, through the same storage wrapper.
 
 ## Desktop vs mobile
 

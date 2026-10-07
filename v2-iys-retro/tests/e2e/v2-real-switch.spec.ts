@@ -84,6 +84,8 @@ test.describe('IYS 2006 ↔ REAL IYS switch (desktop)', () => {
       { key: `${sized.h}::default`, handle: sized.h, title: sized.t, variantId: null, variantTitle: null, size: null, quantity: 2, price: 100, image: null },
     ]);
     await desktop(page, '/');
+    // the IYS INTERNET window takes focus one frame after it opens; let that land first
+    await expect.poll(() => page.evaluate(() => Boolean(document.activeElement?.closest('[data-window="internet"]')))).toBe(true);
     await realSwitch(page).focus();
     await expect(realSwitch(page)).toBeFocused();
     await page.keyboard.press('Enter');
