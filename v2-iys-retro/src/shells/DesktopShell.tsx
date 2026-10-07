@@ -18,6 +18,7 @@ import { APP_ICONS } from '../components/os/Taskbar';
 import { useOS, type AppId, type Win } from '../state/os';
 import { useSession } from '../state/preferences';
 import { openChat } from '../apps/Messenger/nav';
+import { useCatchyEnabled } from '../features/catchy/storage';
 import '../styles/os.css';
 import '../styles/apps.css';
 
@@ -40,6 +41,7 @@ const LOADERS: Record<AppId, () => Promise<{ default: ComponentType<AppProps> }>
   games: () => import('../apps/Games/GamesFolder'),
   game: () => import('../apps/Games/GameWindow'),
 };
+const CatchyPet = lazy(() => import('../features/catchy/CatchyPet'));
 const APPS = Object.fromEntries(Object.entries(LOADERS).map(([k, load]) => [k, lazy(load)])) as unknown as Record<AppId, ComponentType<AppProps>>;
 
 /** Warm every app chunk once the desktop is idle, so windows open without a loading frame. */
@@ -83,6 +85,7 @@ export default function DesktopShell() {
   const deskRef = useRef<HTMLDivElement>(null);
   const cat = useCatalogue();
   const online = useOnline();
+  const catchy = useCatchyEnabled();
 
   // Desktop geometry (windows are clamped inside it).
   useLayoutEffect(() => {
@@ -148,6 +151,11 @@ export default function DesktopShell() {
         <h1 className="sr-only">IYS INTERNET 2006 - an unofficial In Your Shoe concept desktop</h1>
         <Wallpaper />
         <DesktopIcons />
+        {catchy && !booting && (
+          <Suspense fallback={null}>
+            <CatchyPet mode="desktop" />
+          </Suspense>
+        )}
         <div className="desktop__stamp">
           <img src={brand.markWhite} alt="" width={46} height={46} style={{ marginLeft: 'auto', width: 46, height: 'auto', opacity: 0.95 }} />
           <strong>{concept.name}</strong>
