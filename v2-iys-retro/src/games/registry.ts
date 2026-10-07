@@ -15,6 +15,8 @@ export interface GameMeta {
 
 /** The six IYS GAMES. Each game is its own lazily loaded chunk. */
 export const GAMES: GameMeta[] = [
+  { id: 'tower', title: 'IYS TOWER', blurb: 'Catchy bounces on its own. Steer up the wardrobe, the laundry and the Cairo sky.', scores: [{ id: 'tower', label: 'BEST' }], load: () => import('./tower/Tower') },
+  { id: 'chomp', title: 'CATCHY CHOMP', blurb: 'Grab every sock in the closet maze. A Pjoy lets Catchy chase the laundry monsters.', scores: [{ id: 'chomp', label: 'BEST' }], load: () => import('./chomp/Chomp') },
   { id: 'stacks', title: 'IYS STACKS', blurb: 'Fold the falling pieces into full lines. Clear four at once for a big drop.', scores: [{ id: 'stacks', label: 'BEST' }], load: () => import('./stacks/Stacks') },
   { id: 'snake', title: 'CATCHY SNAKE', blurb: 'Catchy leads a sock trail. Eat socks, grab a Pjoy bonus, never bite yourself.', scores: [{ id: 'snake', label: 'BEST' }], load: () => import('./snake/Snake') },
 ];
