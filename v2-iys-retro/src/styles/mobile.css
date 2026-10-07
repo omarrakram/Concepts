@@ -908,3 +908,41 @@ body:has(.m-splash) {
   min-height: 48px;
   font-size: 16px;
 }
+
+/* IYS GAMES launcher row on the home screen. */
+.m-gamesentry {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 52px;
+  padding: 6px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  border-radius: 10px;
+  background: linear-gradient(rgba(255, 255, 255, 0.95), rgba(222, 239, 255, 0.92));
+  box-shadow: 0 3px 8px rgba(0, 45, 100, 0.25);
+  color: var(--sky-deep);
+  font-family: var(--system-font);
+  text-align: left;
+}
+.m-gamesentry > span:nth-child(2) {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+.m-gamesentry b {
+  font-size: 13px;
+}
+.m-gamesentry small {
+  color: #3c5f87;
+  font-size: 11px;
+}
+.m-gamesentry:active,
+.m-gamesentry:focus-visible {
+  outline: none;
+  border-color: var(--grass-deep);
+  background: linear-gradient(#f3ffe9, var(--grass-pale));
+}
+.m-games {
+  padding: 0;
+}

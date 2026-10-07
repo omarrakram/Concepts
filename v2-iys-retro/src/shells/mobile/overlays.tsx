@@ -168,7 +168,7 @@ export function MChat({ close }: { close: () => void }) {
   );
 }
 
-export function MMenu({ close, openOverlay }: { close: () => void; openOverlay: (o: 'camera' | 'chat') => void }) {
+export function MMenu({ close, openOverlay }: { close: () => void; openOverlay: (o: 'camera' | 'chat' | 'games') => void }) {
   const cat = useCatalogue();
   const navigate = useNavigate();
   const prefs = usePreferences();
@@ -188,6 +188,12 @@ export function MMenu({ close, openOverlay }: { close: () => void; openOverlay: 
           <button type="button" onClick={() => openOverlay('camera')}>
             <Icon name="camera" size={24} />
             <span>CAMERA · DCIM</span>
+          </button>
+        </li>
+        <li>
+          <button type="button" onClick={() => openOverlay('games')}>
+            <Icon name="games" size={24} />
+            <span>IYS GAMES · 6 GAMES</span>
           </button>
         </li>
         {MENU.filter((m) => !m.collection || (cat?.collections.get(m.collection)?.count ?? 0) > 0).map((m) => (

@@ -62,6 +62,7 @@ export function StartMenu() {
     { label: 'STORES', icon: 'stores', sub: 'Find IYS IRL', act: () => go('/stores') },
     { label: 'IYS MESSENGER', icon: 'messenger', sub: 'Who’s online', act: () => app('messenger') },
     { label: 'IYS CAMERA', icon: 'camera', sub: 'DCIM photos', act: () => app('camera') },
+    { label: 'IYS GAMES', icon: 'games', sub: '6 games starring Catchy', act: () => app('games') },
     { label: 'MY WARDROBE', icon: 'wardrobe', sub: 'Browse by folder', act: () => app('wardrobe') },
     { label: 'IYS MAIL', icon: 'mail', sub: 'Support · orders@', act: () => app('mail') },
     { label: 'IYS NEWSLETTER', icon: 'newsletter', sub: 'Cool list · 10% off', act: () => app('newsletter') },

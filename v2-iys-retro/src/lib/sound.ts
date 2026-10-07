@@ -125,3 +125,14 @@ export function play(name: Sfx) {
       break;
   }
 }
+
+/**
+ * One short original game blip (IYS GAMES). Same rules as every UI sound:
+ * silent unless the visitor turned sound on, never longer than 0.6 s.
+ */
+export function blip(f: number, d = 0.08, type: OscillatorType = 'square', f2?: number, v = 0.22) {
+  if (!usePreferences.getState().sound) return;
+  const a = audio();
+  if (!a || !master) return;
+  tone(a, master, { f, f2, t0: a.currentTime + 0.005, d: Math.min(d, 0.6), type, v });
+}

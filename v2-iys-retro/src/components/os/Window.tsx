@@ -12,6 +12,8 @@ const MIN: Record<string, [number, number]> = {
   messenger: [220, 300],
   bag: [300, 300],
   viewer: [320, 280],
+  games: [360, 300],
+  game: [340, 420],
 };
 
 /** Remember what had focus when each window opened, to restore it on close. */

@@ -22,6 +22,8 @@ export const APP_ICONS: Record<AppId, IconName> = {
   help: 'help',
   exchange: 'exchange',
   essentials: 'txt',
+  games: 'games',
+  game: 'games',
 };
 
 function Clock() {

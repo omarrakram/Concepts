@@ -26,7 +26,7 @@ import { useFavorites } from '../../state/favorites';
 import { usePreferences } from '../../state/preferences';
 import { useClaimCenter } from './chrome';
 
-export type Overlay = 'bag' | 'camera' | 'chat' | 'menu' | 'filters' | null;
+export type Overlay = 'bag' | 'camera' | 'chat' | 'menu' | 'filters' | 'games' | null;
 const PER = 24;
 
 function useTitle(t: string) {
@@ -96,6 +96,14 @@ export function MHome({ open, pjoysPing }: { open: (o: Overlay) => void; pjoysPi
           </li>
         ))}
       </ul>
+      <button type="button" className="m-gamesentry" onClick={() => open('games')}>
+        <Icon name="games" size={32} />
+        <span>
+          <b>IYS GAMES</b>
+          <small>6 games starring Catchy</small>
+        </span>
+        <span aria-hidden="true">›</span>
+      </button>
       {drop.length > 0 && (
         <section className="m-panel" aria-labelledby="m-drop-title">
           <h2 className="m-panel__title" id="m-drop-title">

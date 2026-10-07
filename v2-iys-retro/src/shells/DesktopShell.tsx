@@ -37,6 +37,8 @@ const LOADERS: Record<AppId, () => Promise<{ default: ComponentType<AppProps> }>
   help: () => import('../apps/Small/Help'),
   exchange: () => import('../apps/Small/Exchange'),
   essentials: () => import('../apps/Small/Essentials'),
+  games: () => import('../apps/Games/GamesFolder'),
+  game: () => import('../apps/Games/GameWindow'),
 };
 const APPS = Object.fromEntries(Object.entries(LOADERS).map(([k, load]) => [k, lazy(load)])) as unknown as Record<AppId, ComponentType<AppProps>>;
 

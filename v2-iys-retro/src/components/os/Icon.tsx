@@ -349,6 +349,19 @@ const shapes: Record<string, JSX.Element> = {
       <path d="M21 26.5l2.5 3.5 2.3-4z" fill={C} />
     </g>
   ),
+  /** IYS GAMES: a Y2K joystick with a coral ball and a little sock flag. */
+  games: (
+    <g>
+      <path d="M4.5 21.5h23l-2 6h-19z" fill="#d9d6ce" stroke={O} strokeLinejoin="round" />
+      <rect x="4.5" y="18.5" width="23" height="4" rx="1.5" fill={B} stroke={O} />
+      <rect x="15" y="10" width="2.4" height="9" fill="#8b99ab" stroke={O} strokeWidth=".8" />
+      <circle cx="16.2" cy="8.5" r="4.5" fill={C} stroke={O} />
+      <circle cx="14.8" cy="7.2" r="1.3" fill="#fff" opacity=".8" />
+      <circle cx="23.5" cy="20.5" r="1.6" fill="#f4c430" stroke={O} strokeWidth=".6" />
+      <circle cx="8.5" cy="20.5" r="1.6" fill="#2fbf4a" stroke={O} strokeWidth=".6" />
+      <path d="M22 4.5h3v4h1.5l-.5 1.5h-4z" fill="#4aab9a" stroke={O} strokeWidth=".6" />
+    </g>
+  ),
   /** Small kids tee with a star. */
   kids: (
     <g>

@@ -75,6 +75,7 @@ export function DesktopIcons() {
   const right: DIcon[] = [
     { id: 'readme', label: 'README.TXT', icon: 'txt', aria: 'Open README.TXT', act: () => open('readme') },
     { id: 'mail', label: 'IYS MAIL', icon: 'mail', aria: 'Open IYS Mail', act: () => open('mail') },
+    { id: 'games', label: 'IYS GAMES', icon: 'games', aria: 'Open IYS Games, 6 games', act: () => open('games') },
     { id: 'recycle', label: 'RECYCLE BIN', icon: 'recycle', aria: 'Open Recycle Bin', act: () => open('recycle') },
   ];
   // Opens the curated Touch Grass product; if it ever leaves the snapshot, searches instead.
