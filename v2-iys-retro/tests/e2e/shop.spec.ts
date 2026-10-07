@@ -82,9 +82,13 @@ test.describe('IYS INTERNET commerce', () => {
     await bag.getByRole('button', { name: /Increase quantity/ }).click();
     const unit = multi.sz.find((s: [string, number, number, number?]) => s[0] === size)[3] ?? multi.p;
     await expect(bag.locator('.bag__total b')).toHaveText(`${fmt(unit * 2)} EGP`);
+    // CHECKOUT hands this exact variant × 2 to the official IYS checkout (stubbed: no live store in CI)
+    const vid = multi.sz.find((s: [string, number, number]) => s[0] === size)[2];
+    await page.route('https://inyourshoe.com/cart/**', (r) => r.fulfill({ status: 200, contentType: 'text/html', body: '<title>IYS checkout (test stub)</title>' }));
     await bag.getByRole('button', { name: 'CHECKOUT' }).click();
-    await expect(page.getByRole('alertdialog', { name: 'CONCEPT CHECKOUT' })).toContainText('No order will be placed.');
-    await page.keyboard.press('Escape');
+    await expect(page).toHaveURL(`https://inyourshoe.com/cart/${vid}:2`);
+    await page.goBack();
+    await page.getByRole('button', { name: /Open My Bag, 2 items/ }).first().click(); // the local bag survived the handoff
     await bag.getByRole('button', { name: /^Remove / }).click();
     await expect(bag).toContainText('ur bag is empty :(');
   });

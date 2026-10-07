@@ -114,7 +114,7 @@ export default function Product() {
             VIEW CURRENT ITEM ON IYS ↗
           </a>
           <p className="props__snapshot">
-            {concept.snapshot} ({p.retrievedAt?.slice(0, 10) ?? 'unknown'}). This concept cannot place orders.
+            {concept.snapshot} ({p.retrievedAt?.slice(0, 10) ?? 'unknown'}). Checkout continues on the official IYS site.
           </p>
           <EssentialLinks className="props__snapshot" label="Before u buy:" ids={['shipping', 'exchange-refund']} more />
           <ProductInfo p={p} />

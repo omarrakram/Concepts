@@ -1,0 +1,51 @@
+import { IYS_STOREFRONT_ORIGIN } from '../config/integrations';
+import { concept } from '../data/copy';
+import { MAX_QTY, useCart } from '../state/cart';
+import { useOS } from '../state/os';
+
+/**
+ * CHECKOUT: local IYS Retro bag → Shopify cart permalink → the real IYS checkout.
+ *
+ *   https://inyourshoe.com/cart/{variantId}:{quantity},{variantId}:{quantity}
+ *
+ * A bridge, isolated on purpose: a future Shopify Storefront Cart adapter can
+ * replace `checkoutPlan` (returning the API's `checkoutUrl`) without touching
+ * MY BAG. Shopify stays authoritative for live price, stock and market; the
+ * local snapshot subtotal is never presented as final.
+ */
+export interface CheckoutLine {
+  variantId: unknown;
+  quantity: unknown;
+  handle?: string;
+  title?: string;
+}
+export type CheckoutPlan = { ok: true; url: string } | { ok: false; reason: 'empty' | 'invalid-line'; bad: { handle?: string; title?: string }[] };
+
+const isVariantId = (v: unknown): v is number => typeof v === 'number' && Number.isSafeInteger(v) && v > 0;
+/** The bag's own contract: whole quantities 1…MAX_QTY. Anything else is never "fixed" into a different order. */
+const isQuantity = (q: unknown): q is number => typeof q === 'number' && Number.isSafeInteger(q) && q >= 1 && q <= MAX_QTY;
+
+/** Pure: the exact bag, line for line and in bag order, or a refusal that names every line it could not carry. */
+export function buildShopifyCheckoutUrl(items: readonly CheckoutLine[] | null | undefined): CheckoutPlan {
+  if (!Array.isArray(items) || items.length === 0) return { ok: false, reason: 'empty', bad: [] };
+  const bad = items.filter((i) => !i || !isVariantId(i.variantId) || !isQuantity(i.quantity));
+  if (bad.length) return { ok: false, reason: 'invalid-line', bad: bad.map((i) => ({ handle: i?.handle, title: i?.title })) };
+  return { ok: true, url: `${IYS_STOREFRONT_ORIGIN}/cart/${items.map((i) => `${i.variantId}:${i.quantity}`).join(',')}` };
+}
+
+/**
+ * The one CHECKOUT action (desktop MY BAG, mobile MY BAG, mobile soft key).
+ * The local bag is left as it is: Back, or a line Shopify rejects, finds it intact.
+ */
+export function startCheckout(go: (url: string) => void = (url) => window.location.assign(url)) {
+  const plan = buildShopifyCheckoutUrl(useCart.getState().items);
+  if (plan.ok) return go(plan.url);
+  if (plan.reason === 'empty') return;
+  const first = plan.bad.find((b) => b.handle);
+  useOS.getState().showDialog({
+    kind: 'error',
+    title: concept.checkout.errorTitle,
+    message: concept.checkout.errorMessage,
+    action: first?.handle ? { label: concept.checkout.errorAction, handle: first.handle } : undefined,
+  });
+}

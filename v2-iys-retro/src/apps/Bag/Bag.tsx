@@ -2,11 +2,12 @@ import { Icon } from '../../components/os/Icon';
 import { concept } from '../../data/copy';
 import { Window } from '../../components/os/Window';
 import { formatEGP } from '../../lib/catalogue/format';
+import { startCheckout } from '../../lib/checkout';
 import { productPath, useBrowse } from '../../lib/useBrowse';
 import { itemCount, subtotal, useCart } from '../../state/cart';
 import { BagList } from '../../components/shop/BagList';
 import { EssentialLinks } from '../../components/shop/EssentialLinks';
-import { useOS, type Win } from '../../state/os';
+import type { Win } from '../../state/os';
 
 export default function Bag({ win }: { win: Win }) {
   const items = useCart((s) => s.items);
@@ -51,7 +52,7 @@ export default function Bag({ win }: { win: Win }) {
           </div>
           <p className="bag__note">Snapshot prices in EGP. Delivery and offers are calculated on the real site.</p>
           <EssentialLinks className="bag__note" ids={['exchange-refund', 'shipping', 'terms-conditions']} />
-          <button type="button" className="btn btn--go bag__checkout" onClick={() => useOS.getState().showDialog({ kind: 'checkout' })}>
+          <button type="button" className="btn btn--go bag__checkout" onClick={() => startCheckout()}>
             {concept.y2k.bagCta}
           </button>
           <p className="bag__note">

@@ -60,11 +60,11 @@ export const concept = {
   wallpaperUpdated: 'WALLPAPER UPDATED xo',
   touchGrass: { title: 'TOUCH_GRASS.EXE', loaded: 'TOUCH_GRASS.EXE loaded :) go touch some grass lol' },
   gameNight: 'GAME_NIGHT.EXE',
+  /** CHECKOUT hands the bag to the official IYS checkout; this shows only if a line can't be carried over. */
   checkout: {
-    title: 'CONCEPT CHECKOUT',
-    lines: ['omg great taste xo - but this is an unofficial portfolio prototype.', 'No order will be placed.'],
-    continue: 'keep shopping xo',
-    visit: 'Visit In Your Shoe ↗',
+    errorTitle: 'CHECKOUT COULDN’T START :(',
+    errorMessage: 'ONE OF UR ITEMS NEEDS A REFRESH. open it, pick ur size again and re-add it - ur bag is still here xo',
+    errorAction: 'Open item',
   },
   /** IYS MAIL — real support mail to orders@inyourshoe.com. */
   mail: {
@@ -193,7 +193,7 @@ export const concept = {
     favEmpty: 'no favs yet :( tap ☆ on sth u love',
     bagEmpty: 'ur bag is empty :( go get sth cute',
     bagCta: 'CHECKOUT xx',
-    bagNote: 'snapshot prices in EGP · this concept can’t place real orders, lol',
+    bagNote: 'snapshot prices in EGP · final total confirmed at IYS checkout',
     stores: 'come say hi IRL :)',
     notFoundSub: 'no worries, the fits r still here. ttyl 404',
     menuHint: 'everything else lives here xo',

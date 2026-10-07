@@ -26,3 +26,10 @@ export const ODOO_HELP_FORM_URL: string | null = env(import.meta.env.VITE_ODOO_H
 
 /** 4. XCHANGE.EXE — Exchanges / Refunds Odoo form. null = placeholder state. */
 export const ODOO_EXCHANGE_REFUND_FORM_URL: string | null = env(import.meta.env.VITE_ODOO_EXCHANGE_REFUND_FORM_URL);
+
+/**
+ * 5. CHECKOUT — the official In Your Shoe Egyptian storefront (unprefixed, EGP).
+ * MY BAG hands its exact variants + quantities to this store's real Shopify
+ * checkout through a public cart permalink (src/lib/checkout.ts). No keys.
+ */
+export const IYS_STOREFRONT_ORIGIN = 'https://inyourshoe.com';

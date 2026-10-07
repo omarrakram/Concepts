@@ -58,30 +58,6 @@ export function Dialogs() {
           </p>
         </SystemDialog>
       );
-    case 'checkout':
-      return (
-        <SystemDialog
-          title={concept.checkout.title}
-          icon="warning"
-          onCancel={close}
-          actions={
-            <>
-              <button type="button" className="btn" data-autofocus onClick={close}>
-                {concept.checkout.continue}
-              </button>
-              <a className="btn btn--primary" href="https://inyourshoe.com/" target="_blank" rel="noopener noreferrer" onClick={close}>
-                {concept.checkout.visit}
-              </a>
-            </>
-          }
-        >
-          {concept.checkout.lines.map((l) => (
-            <p key={l} className={l.startsWith('No order') ? 'dialog__big' : undefined}>
-              {l}
-            </p>
-          ))}
-        </SystemDialog>
-      );
     case 'error':
       return (
         <SystemDialog

@@ -13,6 +13,7 @@ import { MENU } from '../../data/taxonomy';
 import { setWallpaperImage } from '../../lib/actions';
 import { formatCount, formatEGP } from '../../lib/catalogue/format';
 import { useCatalogue } from '../../lib/catalogue/load';
+import { startCheckout } from '../../lib/checkout';
 import { chatScript } from '../../lib/chatScript';
 import { prefersReducedMotion } from '../../lib/motion';
 import { play, unlockAudio } from '../../lib/sound';
@@ -26,7 +27,7 @@ import { useClaimCenter } from './chrome';
 export function MBag({ close }: { close: () => void }) {
   const items = useCart((s) => s.items);
   const navigate = useNavigate();
-  useClaimCenter(items.length ? { label: 'CHECKOUT', run: () => useOS.getState().showDialog({ kind: 'checkout' }) } : null);
+  useClaimCenter(items.length ? { label: 'CHECKOUT', run: () => startCheckout() } : null);
   return (
     <div className="m-page">
       <h1 className="m-h1">MY BAG ({itemCount(items)})</h1>
@@ -49,7 +50,7 @@ export function MBag({ close }: { close: () => void }) {
           </div>
           <p className="bag__note">{concept.y2k.bagNote}</p>
           <EssentialLinks className="bag__note" ids={['exchange-refund', 'shipping', 'terms-conditions']} />
-          <button type="button" className="btn btn--go m-add" onClick={() => useOS.getState().showDialog({ kind: 'checkout' })}>
+          <button type="button" className="btn btn--go m-add" onClick={() => startCheckout()}>
             {concept.y2k.bagCta}
           </button>
         </div>

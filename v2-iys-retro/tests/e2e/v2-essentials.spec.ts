@@ -116,9 +116,11 @@ test.describe('conversion CTAs go where they say (desktop)', () => {
     await b.getByRole('button', { name: 'VIEW BAG' }).click();
     const bag = page.getByRole('dialog', { name: 'MY BAG' });
     await expect(bag.locator('.bag__row')).toHaveCount(1);
+    await page.route('https://inyourshoe.com/cart/**', (r) => r.fulfill({ status: 200, contentType: 'text/html', body: '<title>IYS checkout (test stub)</title>' }));
     await bag.getByRole('button', { name: /CHECKOUT xx/ }).click();
-    await expect(page.getByRole('alertdialog', { name: 'CONCEPT CHECKOUT' })).toContainText('No order will be placed.');
-    await page.keyboard.press('Escape');
+    await expect(page).toHaveURL(`https://inyourshoe.com/cart/${multi.sz.find((s: [string, number, number]) => s[0] === size)[2]}:1`);
+    await page.goBack();
+    await page.getByRole('button', { name: /Open My Bag, 1 items/ }).first().click();
     await bag.getByRole('button', { name: 'KEEP SHOPPING XO' }).click();
     await expect(page).toHaveURL(/\/shop$/);
     await page.goto(`/product/${multi.h}`);

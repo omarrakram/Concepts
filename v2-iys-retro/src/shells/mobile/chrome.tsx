@@ -1,6 +1,7 @@
 import { useEffect, useId, useRef, useState } from 'react';
 import { create } from 'zustand';
 import { useBatteryState, type BatteryState } from '../../lib/battery';
+import { useNetworkMode } from '../../lib/network';
 
 /** A screen can claim the centre soft key (e.g. product → ADD). */
 export interface SoftAction {
@@ -40,12 +41,34 @@ export function useClaimCenter(action: SoftAction | null) {
   useEffect(() => () => put(id, null), [id, put]);
 }
 
+/**
+ * Network glyph, same 22×14 footprint in every mode. Cellular and the
+ * unknown/unsupported fallback are the designed 5 bars (a mode icon, never a
+ * measured signal strength); Wi-Fi is the fan; offline leaves the bars unlit.
+ */
 function Signal() {
+  const mode = useNetworkMode();
+  if (mode === 'wifi')
+    return (
+      <svg width="22" height="14" viewBox="0 0 22 14" aria-hidden="true" shapeRendering="crispEdges" data-network={mode}>
+        <g fill="none" stroke="#fff" strokeWidth="2">
+          <path d="M3.2 5.2 A11 11 0 0 1 18.8 5.2" />
+          <path d="M6.1 8.1 A7 7 0 0 1 15.9 8.1" />
+          <path d="M8.9 10.9 A3 3 0 0 1 13.1 10.9" />
+        </g>
+        <rect x="10" y="12" width="2" height="2" fill="#fff" />
+      </svg>
+    );
+  const off = mode === 'offline';
   return (
-    <svg width="22" height="14" viewBox="0 0 22 14" aria-hidden="true" shapeRendering="crispEdges">
-      {[0, 1, 2, 3, 4].map((i) => (
-        <rect key={i} x={i * 4.5} y={12 - (i + 1) * 2.4} width="3" height={(i + 1) * 2.4} fill="#fff" />
-      ))}
+    <svg width="22" height="14" viewBox="0 0 22 14" aria-hidden="true" shapeRendering="crispEdges" data-network={mode}>
+      {[0, 1, 2, 3, 4].map((i) =>
+        off ? (
+          <rect key={i} x={i * 4.5 + 0.5} y={12 - (i + 1) * 2.4 + 0.5} width="2" height={(i + 1) * 2.4 - 1} fill="none" stroke="#fff" />
+        ) : (
+          <rect key={i} x={i * 4.5} y={12 - (i + 1) * 2.4} width="3" height={(i + 1) * 2.4} fill="#fff" />
+        ),
+      )}
     </svg>
   );
 }

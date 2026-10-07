@@ -307,7 +307,7 @@ export function MProduct() {
               </a>
             </div>
             <p className="props__snapshot">
-              {concept.snapshot} ({p.retrievedAt?.slice(0, 10)}). No orders can be placed here.
+              {concept.snapshot} ({p.retrievedAt?.slice(0, 10)}). Checkout continues on the official IYS site.
             </p>
             <EssentialLinks className="props__snapshot" label="Before u buy:" ids={['shipping', 'exchange-refund']} />
             <ProductInfo p={p} />

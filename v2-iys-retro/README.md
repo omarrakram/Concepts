@@ -7,7 +7,7 @@
 > deployed on its own.
 
 **Unofficial speculative digital concept. Not affiliated with In Your Shoe.**
-Design & development concept by **Omar Akram, 2026**. No orders can be placed.
+Design & development concept by **Omar Akram, 2026**. CHECKOUT hands the bag (exact variants + quantities) to the official In Your Shoe Shopify checkout, where every order is placed and priced.
 Product names, logo and photography belong to their respective rights holders
 and are used here for a non-commercial portfolio concept.
 
@@ -75,7 +75,7 @@ archive photos.
 | **Shop** | Every public product, 48 per page, « Previous 1 2 3 … N Next », sort, Control-Panel filters (type, size, price, availability, sale), URL-synced state. |
 | **Search** | Fuse.js over title/type/collections/tags, typo-tolerant (“ceral” → Cereal Killer). |
 | **Product** | IYS IMAGE VIEWER + PRODUCT PROPERTIES: all photos, zoom, full-size viewer, real options and per-variant availability (no silent default size), Qty: [−] 1 [+] feeding ADD TO BAG (same variant again increments), sale only when a real compare-at exists, description (open), the product's own official Care Guide below it (only when IYS publishes one), VIEW CURRENT ITEM ON IYS ↗. |
-| **Bag** | “COPYING ITEM TO: MY BAG” < 1 s, quantities, remove, subtotal in EGP, CONCEPT CHECKOUT (“No order will be placed.”). |
+| **Bag** | “COPYING ITEM TO: MY BAG” < 1 s, quantities, remove, snapshot subtotal in EGP, CHECKOUT → the official IYS checkout via a Shopify cart permalink (`inyourshoe.com/cart/<variant>:<qty>,…`); a line without a real variant stops checkout with an honest message instead of being dropped. |
 | **Favorites** | ★ ADD TO FAVORITES, a browser-favorites page, persisted locally. |
 | **IYS MESSENGER** | One window: pick a buddy and the conversation opens inside it (tiny “< back 2 buddies” returns to the list). Collections as buddies. **2:13 AM — PJOYS is online: “u awake?” / “enta sa7y?”**, then real Pjoys arrive as file transfers, plus pattern tiles you can set as wallpaper. Scripted concept copy; no bot, no fake customers. |
 | **IYS CAMERA** | `E:\DCIM\` — CAMPAIGNS, PJOYS, CAIRO, STORES; 4:3 contact sheet, image viewer, set as wallpaper. |
