@@ -23,6 +23,7 @@ import { itemCount, subtotal, useCart } from '../../state/cart';
 import { useOS } from '../../state/os';
 import { usePreferences } from '../../state/preferences';
 import { useClaimCenter } from './chrome';
+import { useCatchyEnabled, writeEnabled } from '../../features/catchy/storage';
 
 export function MBag({ close }: { close: () => void }) {
   const items = useCart((s) => s.items);
@@ -172,6 +173,7 @@ export function MMenu({ close, openOverlay }: { close: () => void; openOverlay: 
   const cat = useCatalogue();
   const navigate = useNavigate();
   const prefs = usePreferences();
+  const catchy = useCatchyEnabled();
   useClaimCenter(null);
   return (
     <div className="m-page">
@@ -225,6 +227,10 @@ export function MMenu({ close, openOverlay }: { close: () => void; openOverlay: 
       <label className="m-setting">
         <input type="checkbox" className="check" checked={prefs.crt} onChange={(e) => prefs.setCrt(e.target.checked)} />
         CRT filter
+      </label>
+      <label className="m-setting">
+        <input type="checkbox" className="check" checked={catchy} onChange={(e) => writeEnabled(e.target.checked)} />
+        Catchy on the home screen
       </label>
       <button type="button" className="btn" onClick={() => { prefs.reset(); useOS.getState().notify(concept.wallpaperUpdated); }}>
         Reset wallpaper

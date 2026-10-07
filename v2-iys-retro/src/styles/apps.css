@@ -2446,3 +2446,11 @@ span.explorer__twisty {
   font-size: var(--fs-chrome);
   font-weight: bold;
 }
+.cp-catchy {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.cp-catchy img {
+  flex: none;
+}

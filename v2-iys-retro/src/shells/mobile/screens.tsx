@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router';
 import { Icon, type IconName } from '../../components/os/Icon';
 import { VariantPicker } from '../../components/product/VariantPicker';
@@ -25,6 +25,9 @@ import { collectionTitle, useShopQuery } from '../../lib/useShopQuery';
 import { useFavorites } from '../../state/favorites';
 import { usePreferences } from '../../state/preferences';
 import { useClaimCenter } from './chrome';
+import { useCatchyEnabled } from '../../features/catchy/storage';
+
+const CatchyPet = lazy(() => import('../../features/catchy/CatchyPet'));
 
 export type Overlay = 'bag' | 'camera' | 'chat' | 'menu' | 'filters' | 'games' | null;
 const PER = 24;
@@ -35,7 +38,8 @@ function useTitle(t: string) {
   }, [t]);
 }
 
-export function MHome({ open, pjoysPing }: { open: (o: Overlay) => void; pjoysPing: boolean }) {
+export function MHome({ open, pjoysPing, active = true }: { open: (o: Overlay) => void; pjoysPing: boolean; active?: boolean }) {
+  const catchy = useCatchyEnabled();
   const cat = useCatalogue();
   const navigate = useNavigate();
   const wp = usePreferences((s) => s.wallpaper);
@@ -96,6 +100,11 @@ export function MHome({ open, pjoysPing }: { open: (o: Overlay) => void; pjoysPi
           </li>
         ))}
       </ul>
+      {catchy && active && (
+        <Suspense fallback={null}>
+          <CatchyPet mode="mobile" />
+        </Suspense>
+      )}
       <button type="button" className="m-gamesentry" onClick={() => open('games')}>
         <Icon name="games" size={32} />
         <span>

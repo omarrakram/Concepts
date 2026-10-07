@@ -154,7 +154,7 @@ export default function MobileShell() {
         {overlay === 'games' && <MGames game={game} setGame={setGame} close={() => setOverlay(null)} />}
         <div className="m-routes" hidden={Boolean(overlay)}>
           <Routes>
-            <Route path="/" element={<MHome open={open} pjoysPing={ping} />} />
+            <Route path="/" element={<MHome open={open} pjoysPing={ping} active={!overlay} />} />
             <Route path="/shop" element={<MList open={open} />} />
             <Route path="/collections/:handle" element={<MList open={open} />} />
             <Route path="/search" element={<MSearch />} />

@@ -9,12 +9,15 @@ import { formatCount } from '../../lib/catalogue/format';
 import { play, unlockAudio } from '../../lib/sound';
 import { useOS, type Win } from '../../state/os';
 import { usePreferences, type WallpaperMode } from '../../state/preferences';
+import { useCatchyEnabled, writeEnabled } from '../../features/catchy/storage';
+import { CatchySticker } from '../../games/shared/catchy';
 
-const TABS = ['Wallpaper', 'Sound', 'Screen', 'Time Machine', 'System', 'About'] as const;
+const TABS = ['Wallpaper', 'Sound', 'Screen', 'Catchy', 'Time Machine', 'System', 'About'] as const;
 type Tab = (typeof TABS)[number];
 
 export default function ControlPanel({ win }: { win: Win }) {
   const [tab, setTab] = useState<Tab>((win.props.tab as Tab) ?? 'Wallpaper');
+  const catchy = useCatchyEnabled();
   const prefs = usePreferences();
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
   // A saved preset id that no longer exists falls back to the default (as the desktop does).
@@ -152,6 +155,18 @@ export default function ControlPanel({ win }: { win: Win }) {
                 CRT FILTER (scanlines + vignette)
               </label>
               <p className="muted small">Always very subtle after boot, never on top of product colours strongly enough to change them. Reduced-motion users get it static.</p>
+            </fieldset>
+          )}
+          {tab === 'Catchy' && (
+            <fieldset className="fieldset">
+              <legend>Catchy desktop buddy</legend>
+              <label className="field-row">
+                <input type="checkbox" className="check" checked={catchy} onChange={(e) => writeEnabled(e.target.checked)} />
+                Show Catchy on the desktop
+              </label>
+              <p className="muted small cp-catchy">
+                <CatchySticker size={32} /> CATCHY.EXE naps, wanders and reacts to MY BAG, IYS GAMES and REAL IYS. Drag him around, or right-click him for a tiny menu. Everything stays on this device. Sounds follow the Sound tab.
+              </p>
             </fieldset>
           )}
           {tab === 'Time Machine' && (
