@@ -63,6 +63,11 @@ export const concept = {
   /** CHECKOUT hands the bag to the official IYS checkout; this shows only if a line can't be carried over. */
   checkout: {
     errorTitle: 'CHECKOUT COULDN’T START :(',
+    realErrorTitle: 'REAL IYS COULDN’T OPEN :(',
+    /** The global switch: the site u r on, and the real store. */
+    here: 'IYS 2006',
+    real: 'REAL IYS',
+    realHint: 'switch to the real In Your Shoe store',
     errorMessage: 'ONE OF UR ITEMS NEEDS A REFRESH. open it, pick ur size again and re-add it - ur bag is still here xo',
     errorAction: 'Open item',
   },

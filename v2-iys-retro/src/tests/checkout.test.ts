@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { IYS_STOREFRONT_ORIGIN } from '../config/integrations';
-import { buildShopifyCheckoutUrl, startCheckout } from '../lib/checkout';
+import { buildShopifyCheckoutUrl, buildShopifyStorefrontHandoffUrl, serializeShopifyCart, startCheckout, switchToRealIYS } from '../lib/checkout';
 import { MAX_QTY, useCart, type CartItem } from '../state/cart';
 import { useOS } from '../state/os';
 
@@ -83,6 +83,72 @@ describe('startCheckout (the one CHECKOUT action)', () => {
     startCheckout(go);
     expect(go).not.toHaveBeenCalled();
     expect(useOS.getState().dialog).toMatchObject({ kind: 'error', title: 'CHECKOUT COULDN’T START :(', action: { handle: 'needs-refresh' } });
+    expect(useCart.getState().items).toEqual(items);
+  });
+});
+
+describe('REAL IYS handoff (storefront cart) vs CHECKOUT (direct checkout)', () => {
+  it('one serializer feeds both destinations', () => {
+    expect(serializeShopifyCart([line(111, 2), line(222, 1)])).toEqual({ ok: true, lines: '111:2,222:1' });
+  });
+
+  it('empty bag → the real homepage, never an empty /cart/', () => {
+    for (const empty of [[], null, undefined]) expect(buildShopifyStorefrontHandoffUrl(empty)).toEqual({ ok: true, url: 'https://inyourshoe.com/' });
+  });
+
+  it('one / several lines → the storefront cart permalink, exact IDs, quantities and order', () => {
+    expect(buildShopifyStorefrontHandoffUrl([line(111, 1)])).toEqual({ ok: true, url: 'https://inyourshoe.com/cart/111:1?storefront=true' });
+    expect(buildShopifyStorefrontHandoffUrl([line(111, 2), line(222, 1)])).toEqual({ ok: true, url: 'https://inyourshoe.com/cart/111:2,222:1?storefront=true' });
+    expect(buildShopifyStorefrontHandoffUrl([line(46152798765277, 2), line(47312166125789, 1)])).toEqual({
+      ok: true,
+      url: 'https://inyourshoe.com/cart/46152798765277:2,47312166125789:1?storefront=true',
+    });
+  });
+
+  it('regression: CHECKOUT keeps going straight to checkout (no ?storefront)', () => {
+    const items = [line(111, 2), line(222, 1)];
+    expect(buildShopifyCheckoutUrl(items)).toEqual({ ok: true, url: 'https://inyourshoe.com/cart/111:2,222:1' });
+    expect((buildShopifyCheckoutUrl(items) as { url: string }).url).not.toContain('storefront');
+    expect((buildShopifyStorefrontHandoffUrl(items) as { url: string }).url).not.toBe((buildShopifyCheckoutUrl(items) as { url: string }).url);
+  });
+
+  it('bad lines stop the handoff too: no URL, every bad line named', () => {
+    for (const [vid, q] of [[null, 1], [undefined, 1], ['111', 1], [-1, 1], [111, Number.NaN], [111, 0], [111, MAX_QTY + 1], [111, 1.5]] as const) {
+      expect(buildShopifyStorefrontHandoffUrl([line(222, 1, 'ok'), line(vid, q, 'bad')])).toEqual({ ok: false, reason: 'invalid-line', bad: [{ handle: 'bad', title: 'bad' }] });
+    }
+  });
+});
+
+describe('switchToRealIYS (the one action behind the global switch)', () => {
+  beforeEach(() => {
+    useCart.setState({ items: [] });
+    useOS.setState({ dialog: null });
+  });
+
+  it('empty bag → the real homepage, no dialog', () => {
+    const go = vi.fn();
+    switchToRealIYS(go);
+    expect(go).toHaveBeenCalledWith('https://inyourshoe.com/');
+    expect(useOS.getState().dialog).toBeNull();
+  });
+
+  it('filled bag → storefront cart with the exact bag; local bag untouched', () => {
+    const items = [item(46152798765277, 2, 'cereal-killer-pjoys'), item(47312166125789, 1, 'cotton-candy-neck-socks')];
+    useCart.setState({ items });
+    const go = vi.fn();
+    switchToRealIYS(go);
+    expect(go).toHaveBeenCalledTimes(1);
+    expect(go).toHaveBeenCalledWith('https://inyourshoe.com/cart/46152798765277:2,47312166125789:1?storefront=true');
+    expect(useCart.getState().items).toEqual(items);
+  });
+
+  it('a bad line → no navigation, the existing refresh message, bag kept', () => {
+    const items = [item(111, 1, 'fine'), item(null, 2, 'needs-refresh')];
+    useCart.setState({ items });
+    const go = vi.fn();
+    switchToRealIYS(go);
+    expect(go).not.toHaveBeenCalled();
+    expect(useOS.getState().dialog).toMatchObject({ kind: 'error', title: 'REAL IYS COULDN’T OPEN :(', message: expect.stringContaining('ONE OF UR ITEMS NEEDS A REFRESH'), action: { handle: 'needs-refresh' } });
     expect(useCart.getState().items).toEqual(items);
   });
 });

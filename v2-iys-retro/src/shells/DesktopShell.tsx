@@ -8,6 +8,7 @@ import { play } from '../lib/sound';
 import { Boot } from '../components/os/Boot';
 import { DesktopIcons, Wallpaper } from '../components/os/Desktop';
 import { Dialogs } from '../components/os/Dialogs';
+import { RealSwitch } from '../components/os/RealSwitch';
 import { Balloon, CRT, TransferDialog } from '../components/os/Overlays';
 import { Screensaver } from '../components/os/Screensaver';
 import { StartMenu } from '../components/os/StartMenu';
@@ -138,6 +139,9 @@ export default function DesktopShell() {
       <a className="skip-link" href="#iys-main" onClick={() => open('internet')}>
         Skip to IYS Internet
       </a>
+      <header className="realbar">
+        <RealSwitch />
+      </header>
       <main className="desktop" ref={deskRef} aria-label="IYS OS desktop" onMouseDown={() => setStart(false)}>
         <h1 className="sr-only">IYS INTERNET 2006 - an unofficial In Your Shoe concept desktop</h1>
         <Wallpaper />

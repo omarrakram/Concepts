@@ -1,6 +1,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Route, Routes, useLocation, useNavigate } from 'react-router';
 import { Dialogs } from '../components/os/Dialogs';
+import { RealSwitch } from '../components/os/RealSwitch';
 import { CRT, TransferDialog } from '../components/os/Overlays';
 import { brand } from '../data/assets';
 import { concept } from '../data/copy';
@@ -127,6 +128,9 @@ export default function MobileShell() {
       </a>
       <header className="m-head">
         <StatusBar />
+        <div className="m-realbar">
+          <RealSwitch />
+        </div>
         <p className="m-title">{title}</p>
       </header>
       {toast && (

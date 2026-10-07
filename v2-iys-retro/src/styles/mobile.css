@@ -54,6 +54,20 @@ body:has(.m-splash) {
   font-size: 10px;
   font-weight: bold;
 }
+/* IYS 2006 ↔ REAL IYS: its own slim row under the status bar (the status bar stays untouched) */
+.m-realbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 30px;
+  background: linear-gradient(var(--sky-deep), #0b4796);
+  border-top: 1px solid rgba(255, 255, 255, 0.25);
+}
+.m-realbar .realswitch {
+  height: 24px;
+  font-size: 12px;
+  gap: 8px;
+}
 .m-title {
   padding: 7px 12px;
   background: linear-gradient(#ffffff, #e3f2ff 50%, #cde6ff);

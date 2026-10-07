@@ -79,6 +79,7 @@
   --radius-window: 4px;
   --radius-control: 3px;
   --taskbar-h: 34px;
+  --realbar-h: 22px; /* the thin IYS 2006 ↔ REAL IYS strip above the desktop */
   --titlebar-h: 26px;
 
   /* layers — one scale, no 999999 */
