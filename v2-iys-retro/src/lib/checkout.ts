@@ -2,6 +2,7 @@ import { IYS_STOREFRONT_ORIGIN } from '../config/integrations';
 import { concept } from '../data/copy';
 import { MAX_QTY, useCart } from '../state/cart';
 import { useOS } from '../state/os';
+import { notifyCatchy, WAVE_DELAY_MS } from '../features/catchy/events';
 
 /**
  * Local IYS Retro bag → Shopify cart permalink → the real IYS store.
@@ -87,6 +88,8 @@ export function startCheckout(go: (url: string) => void = sameTab) {
  */
 export function switchToRealIYS(go: (url: string) => void = sameTab) {
   const plan = buildShopifyStorefrontHandoffUrl(useCart.getState().items);
-  if (plan.ok) return go(plan.url);
-  showRefresh(plan, concept.checkout.realErrorTitle);
+  if (!plan.ok) return showRefresh(plan, concept.checkout.realErrorTitle);
+  // Catchy may wave goodbye: at most WAVE_DELAY_MS, and only when he is actually on screen to do it.
+  if (notifyCatchy({ type: 'real-iys:leave' })) window.setTimeout(() => go(plan.url), WAVE_DELAY_MS);
+  else go(plan.url);
 }
