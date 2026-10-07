@@ -1,6 +1,6 @@
 import { useId } from 'react';
 import { assets } from '../../data/assets';
-import { CATCHY_HEAD_BACK_URI, CATCHY_HEAD_FRONT_URI, EYES, INK, MASK } from './art';
+import { CATCHY_HEAD_BACK_URI, CATCHY_HEAD_FRONT_URI, COLORS, EYES, eyeNotch, INK, MASK_PATH, VIEW } from './art';
 import type { PetState } from './types';
 
 /**
@@ -9,7 +9,7 @@ import type { PetState } from './types';
  * the Purbale Catchy artwork. Poses only move, tilt or squash these parts:
  * nothing about Catchy himself is redrawn per pose.
  *
- * viewBox 0 0 120 128: head 0–112, paws 100–124.
+ * viewBox -6 -8 132 136: the head sticker (its own 120 × 112 grid plus border), paws 100–124.
  */
 const SOCK_PHOTO = assets.products['i-love-cairo-neck-socks']?.images[0]?.src ?? null;
 const PJOY_PRINT = assets.tiles.find((t) => t.handle === 'cereal-killer-pjoys')?.src ?? null;
@@ -25,7 +25,7 @@ function Paw({ x, y, r = 0 }: { x: number; y: number; r?: number }) {
 
 export function CatchySprite({ pose, look = { x: 0, y: 0 }, blink = false }: { pose: PetState; look?: { x: number; y: number }; blink?: boolean }) {
   const clip = useId().replace(/:/g, '');
-  const closed = blink || pose === 'sleep';
+  const closed = blink;
   const happy = pose === 'happy' || pose === 'excited' || pose === 'carry-pjoy' || pose === 'carry-sock';
   const lx = Math.max(-2.5, Math.min(2.5, look.x));
   const ly = Math.max(-2, Math.min(2, look.y));
@@ -42,30 +42,33 @@ export function CatchySprite({ pose, look = { x: 0, y: 0 }, blink = false }: { p
             ? [[38, 108, 20], [82, 108, -20]]
             : [[40, 112, 0], [80, 112, 0]];
   return (
-    <svg className="csprite" viewBox="0 0 120 128" width="100%" height="100%" aria-hidden="true" focusable="false" overflow="visible">
+    <svg className="csprite" viewBox={`${VIEW.x} ${VIEW.y} ${VIEW.w} 136`} width="100%" height="100%" aria-hidden="true" focusable="false" overflow="visible">
       <defs>
         <clipPath id={`${clip}-eyes`}>
-          <path d={`M28 ${MASK.bottom} L28 44 Q28 26 45 26 Q57 26 60 35 Q63 26 75 26 Q92 26 92 44 L92 ${MASK.bottom} Z`} />
+          <path d={MASK_PATH} />
         </clipPath>
       </defs>
       <g className="csprite__walk">
         <g className="csprite__head">
-          <image href={CATCHY_HEAD_BACK_URI} x="0" y="0" width="120" height="112" />
+          <image href={CATCHY_HEAD_BACK_URI} x={VIEW.x} y={VIEW.y} width={VIEW.w} height={VIEW.h} />
           <g clipPath={`url(#${clip}-eyes)`}>
-            {closed ? (
-              EYES.map((e) => <path key={e.cx} d={`M${e.cx - 7} ${e.cy + 2} Q${e.cx} ${e.cy + 8} ${e.cx + 7} ${e.cy + 2}`} fill="none" stroke={INK} strokeWidth="3" strokeLinecap="round" />)
+            {pose === 'sleep' ? (
+              // sleepy: the same eyes, just lowered (lids of mask colour above them)
+              EYES.map((e) => <ellipse key={e.cx} cx={e.cx} cy={e.cy + 7} rx={e.rx} ry={e.ry * 0.45} fill={INK} />)
+            ) : closed ? (
+              EYES.map((e) => <path key={e.cx} d={`M${e.cx - 6} ${e.cy + 3} Q${e.cx} ${e.cy + 8} ${e.cx + 6} ${e.cy + 3}`} fill="none" stroke={INK} strokeWidth="3" strokeLinecap="round" />)
             ) : (
               <g transform={`translate(${lx} ${ly})`}>
                 {EYES.map((e) => (
                   <g key={e.cx}>
                     <ellipse cx={e.cx} cy={e.cy + (happy ? -1 : 0)} rx={e.rx} ry={e.ry} fill={INK} />
-                    <ellipse cx={e.cx - 1.5} cy={e.cy - 5} rx="1.8" ry="2.4" fill="#fff" />
+                    <ellipse {...eyeNotch(e)} cy={eyeNotch(e).cy + (happy ? -1 : 0)} fill={COLORS.yellow} />
                   </g>
                 ))}
               </g>
             )}
           </g>
-          <image href={CATCHY_HEAD_FRONT_URI} x="0" y="0" width="120" height="112" />
+          <image href={CATCHY_HEAD_FRONT_URI} x={VIEW.x} y={VIEW.y} width={VIEW.w} height={VIEW.h} />
         </g>
         {holding && (
           <g className="csprite__prop">
