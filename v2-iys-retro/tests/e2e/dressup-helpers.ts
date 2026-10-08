@@ -5,7 +5,7 @@ import { index } from './fixtures';
 
 /** The generated stylist registry, read the same way the app bundles it. */
 export const registry = JSON.parse(readFileSync(new URL('../../src/data/stylist.generated.json', import.meta.url), 'utf8')) as {
-  items: Record<string, { kind: 'on-model'; slot: Slot; looks: Partial<Record<ModelId, { file?: string; shoot?: true }>> }>;
+  items: Record<string, { kind: 'on-model'; slot: Slot; looks: Partial<Record<ModelId, { file?: string; shoot?: true; scope?: 'whole' | 'slot' }>> }>;
   skip: Record<string, string>;
 };
 /** The layer file a piece draws on a model (the official photo of them wearing it; none for the shoot piece). */
@@ -31,6 +31,8 @@ export function wearable(model: ModelId, slot: Slot, opts: { sizedAndAvailable?:
     .filter((e) => !opts.sizedAndAvailable || (e.a === 1 && (e.sz ?? []).some((s) => s[1] === 1) && (e.sz ?? []).length > 1))
     .map((e) => ({ handle: e.h, title: e.t, slot }));
 }
+/** Wearable pieces of a slot that combine (approved slot layers, not whole looks). */
+export const slotPieces = (model: ModelId, slot: Slot): Piece[] => wearable(model, slot).filter((p) => registry.items[p.handle]?.looks[model]?.scope === 'slot');
 /** The piece a model wears in the canonical photo itself. */
 export function shootPiece(model: ModelId): Piece {
   const e = products.find((x) => registry.items[x.h]?.looks[model]?.shoot)!;

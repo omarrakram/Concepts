@@ -26,7 +26,7 @@ async function tapPiece(page: Page, p: Piece) {
 test.describe('DRESSUP.EXE (IYS MOBILE)', () => {
   test('MENU → one big model, MEN | WOMEN switch, pieces sheet, independent looks, BACK steps out (20 steps)', async ({ page }) => {
     const [hoodie] = wearable('men', 'outer');
-    const womenPiece = wearable('women', 'outer').find((p) => p.handle !== hoodie!.handle)!;
+    const womenPiece = [...wearable('women', 'outer'), ...wearable('women', 'top')].find((p) => p.handle !== hoodie!.handle)!;
     await boot(page);
     const path0 = new URL(page.url()).pathname;
     // 1–2. its own MENU entry and screen (no route change)
@@ -87,7 +87,9 @@ test.describe('DRESSUP.EXE (IYS MOBILE)', () => {
     await expect(layer(page, hoodie!.handle)).toHaveCount(0);
     // 18. RANDOM LOOK only uses wearable pieces, never the bag
     await page.getByRole('button', { name: 'RANDOM LOOK' }).tap();
-    await expect(model(page).locator('.dz-layer:not(.dz-layer--head)').first()).toBeVisible();
+    // one wearable piece (the shoot piece among them draws nothing: it is the photo itself)
+    await expect(page.getByRole('button', { name: /^Take off / })).toHaveCount(1);
+    expect(await model(page).locator('.dz-layer:not(.dz-layer--head)').count()).toBeLessThanOrEqual(1);
     await expect(page.getByRole('button', { name: 'My Bag, 0 items' })).toBeVisible();
     // 19. ◀ BACK leaves DRESSUP.EXE for home
     await back(page).click();

@@ -1,7 +1,7 @@
 {
- "generatedAt": "2026-10-08T03:23:30.031Z",
+ "generatedAt": "2026-10-08T23:07:06.482Z",
  "catalogueGeneratedAt": "2026-09-30T22:38:01.482Z",
- "source": "Official IYS product photos (cdn.shopify.com, public catalogue snapshot) + the two supplied IYS studio photos. Deterministic alignment (head template match, scale + translate), backdrop flood-fill and crop only.",
+ "source": "Official IYS product photos (cdn.shopify.com, public catalogue snapshot) + the two supplied IYS studio photos. Deterministic alignment (head template match, scale + translate), backdrop flood-fill and crop only. Slot layers only from manually approved candidates (scripts/stylist/tryon/approvals.json).",
  "models": {
   "men": {
    "file": "/iys/stylist/models/men.webp",
@@ -29,7 +29,7 @@
  "items": {
   "anti-running-oversized-hoodie": {
    "kind": "on-model",
-   "slot": "outer",
+   "slot": "top",
    "looks": {
     "men": {
      "file": "/iys/stylist/look/men/anti-running-oversized-hoodie.webp",
@@ -39,6 +39,8 @@
       "w": 0.56333,
       "h": 0.81
      },
+     "source": "official",
+     "scope": "whole",
      "image": 4,
      "src": "anti-running-oversized-hoodie-printed-hoodies-in-your-shoe-693870.jpg",
      "score": 0.823
@@ -47,7 +49,7 @@
   },
   "black-basic-oversized-crewneck": {
    "kind": "on-model",
-   "slot": "outer",
+   "slot": "top",
    "looks": {
     "men": {
      "file": "/iys/stylist/look/men/black-basic-oversized-crewneck.webp",
@@ -57,6 +59,8 @@
       "w": 0.54333,
       "h": 0.81
      },
+     "source": "official",
+     "scope": "whole",
      "image": 1,
      "src": "black-basic-oversized-crewneck-crewnecks-in-your-shoe-215559.jpg",
      "score": 0.857
@@ -65,7 +69,7 @@
   },
   "blue-basic-boxy-crewneck": {
    "kind": "on-model",
-   "slot": "outer",
+   "slot": "top",
    "looks": {
     "men": {
      "file": "/iys/stylist/look/men/blue-basic-boxy-crewneck.webp",
@@ -75,6 +79,8 @@
       "w": 0.54,
       "h": 0.81
      },
+     "source": "official",
+     "scope": "whole",
      "image": 0,
      "src": "blue-basic-boxy-crewneck-crewnecks-in-your-shoe-704213.jpg",
      "score": 0.877
@@ -93,6 +99,8 @@
       "w": 0.54667,
       "h": 0.81
      },
+     "source": "official",
+     "scope": "whole",
      "image": 3,
      "src": "city-runners-oversized-long-sleeves-long-sleeves-in-your-shoe-290831.jpg",
      "score": 0.813
@@ -111,7 +119,7 @@
   },
   "el-hob-moqawma-boxy-hoodie": {
    "kind": "on-model",
-   "slot": "outer",
+   "slot": "top",
    "looks": {
     "men": {
      "file": "/iys/stylist/look/men/el-hob-moqawma-boxy-hoodie.webp",
@@ -121,6 +129,8 @@
       "w": 0.54667,
       "h": 0.81
      },
+     "source": "official",
+     "scope": "whole",
      "image": 3,
      "src": "el-hob-moqawma-boxy-hoodie-boxy-hoodies-in-your-shoe-112947.jpg",
      "score": 0.821
@@ -139,6 +149,8 @@
       "w": 0.54667,
       "h": 0.81
      },
+     "source": "official",
+     "scope": "whole",
      "image": 0,
      "src": "green-basic-boxy-zip-up-hoodie-zip-up-hoodies-in-your-shoe-589128.jpg",
      "score": 0.792
@@ -151,6 +163,8 @@
       "w": 0.68,
       "h": 0.8
      },
+     "source": "official",
+     "scope": "whole",
      "image": 0,
      "src": "green-basic-boxy-zip-up-hoodie-zip-up-hoodies-in-your-shoe-589128.jpg",
      "score": 0.746
@@ -159,7 +173,7 @@
   },
   "green-basic-oversized-crewneck": {
    "kind": "on-model",
-   "slot": "outer",
+   "slot": "top",
    "looks": {
     "men": {
      "file": "/iys/stylist/look/men/green-basic-oversized-crewneck.webp",
@@ -169,6 +183,8 @@
       "w": 0.55833,
       "h": 0.81
      },
+     "source": "official",
+     "scope": "whole",
      "image": 2,
      "src": "green-basic-oversized-crewneck-crewnecks-in-your-shoe-518639.jpg",
      "score": 0.824
@@ -177,7 +193,7 @@
   },
   "horse-race-club-oversized-hoodie": {
    "kind": "on-model",
-   "slot": "outer",
+   "slot": "top",
    "looks": {
     "men": {
      "file": "/iys/stylist/look/men/horse-race-club-oversized-hoodie.webp",
@@ -187,6 +203,8 @@
       "w": 0.54833,
       "h": 0.81
      },
+     "source": "official",
+     "scope": "whole",
      "image": 0,
      "src": "el-hob-moqawma-boxy-hoodie-boxy-hoodies-in-your-shoe-196240.jpg",
      "score": 0.734
@@ -195,7 +213,7 @@
   },
   "insane-oversized-hoodie": {
    "kind": "on-model",
-   "slot": "outer",
+   "slot": "top",
    "looks": {
     "men": {
      "file": "/iys/stylist/look/men/insane-oversized-hoodie.webp",
@@ -205,6 +223,8 @@
       "w": 0.55,
       "h": 0.81
      },
+     "source": "official",
+     "scope": "whole",
      "image": 5,
      "src": "insane-oversized-hoodie-printed-hoodies-in-your-shoe-415647.jpg",
      "score": 0.884
@@ -213,7 +233,7 @@
   },
   "iys-racing-club-oversized-crewneck": {
    "kind": "on-model",
-   "slot": "outer",
+   "slot": "top",
    "looks": {
     "men": {
      "file": "/iys/stylist/look/men/iys-racing-club-oversized-crewneck.webp",
@@ -223,6 +243,8 @@
       "w": 0.54,
       "h": 0.81
      },
+     "source": "official",
+     "scope": "whole",
      "image": 0,
      "src": "iys-racing-club-oversized-crewneck-crewnecks-in-your-shoe-169225.jpg",
      "score": 0.81
@@ -235,6 +257,8 @@
       "w": 0.72333,
       "h": 0.8
      },
+     "source": "official",
+     "scope": "whole",
      "image": 0,
      "src": "iys-racing-club-oversized-crewneck-crewnecks-in-your-shoe-169225.jpg",
      "score": 0.635
@@ -253,6 +277,8 @@
       "w": 0.54667,
       "h": 0.81
      },
+     "source": "official",
+     "scope": "whole",
      "image": 0,
      "src": "city-runners-oversized-long-sleeves-long-sleeves-in-your-shoe-290831.jpg",
      "score": 0.813

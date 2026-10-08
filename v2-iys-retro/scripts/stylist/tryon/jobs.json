@@ -1,0 +1,2728 @@
+{
+ "version": 1,
+ "catalogueGeneratedAt": "2026-09-30T22:38:01.482Z",
+ "promptVersion": 1,
+ "jobs": [
+  {
+   "id": "men--afterclass-oversized-quarter-zipper--official",
+   "method": "official",
+   "handle": "afterclass-oversized-quarter-zipper",
+   "model": "men",
+   "slot": "top",
+   "bucket": "official",
+   "rank": 1,
+   "canonical": "public/iys/stylist/models/men.webp",
+   "references": [
+    {
+     "image": 1,
+     "role": "photo"
+    }
+   ],
+   "source": {
+    "image": 1
+   }
+  },
+  {
+   "id": "men--guilty-pleasure-boxy-hoodie--official",
+   "method": "official",
+   "handle": "guilty-pleasure-boxy-hoodie",
+   "model": "men",
+   "slot": "top",
+   "bucket": "official",
+   "rank": 2,
+   "canonical": "public/iys/stylist/models/men.webp",
+   "references": [
+    {
+     "image": 1,
+     "role": "photo"
+    }
+   ],
+   "source": {
+    "image": 1
+   }
+  },
+  {
+   "id": "men--insane-oversized-hoodie--official",
+   "method": "official",
+   "handle": "insane-oversized-hoodie",
+   "model": "men",
+   "slot": "top",
+   "bucket": "official",
+   "rank": 3,
+   "canonical": "public/iys/stylist/models/men.webp",
+   "references": [
+    {
+     "image": 5,
+     "role": "photo"
+    }
+   ],
+   "source": {
+    "image": 5
+   }
+  },
+  {
+   "id": "men--blue-basic-boxy-crewneck--official",
+   "method": "official",
+   "handle": "blue-basic-boxy-crewneck",
+   "model": "men",
+   "slot": "top",
+   "bucket": "official",
+   "rank": 4,
+   "canonical": "public/iys/stylist/models/men.webp",
+   "references": [
+    {
+     "image": 0,
+     "role": "photo"
+    }
+   ],
+   "source": {
+    "image": 0
+   }
+  },
+  {
+   "id": "men--black-basic-oversized-crewneck--official",
+   "method": "official",
+   "handle": "black-basic-oversized-crewneck",
+   "model": "men",
+   "slot": "top",
+   "bucket": "official",
+   "rank": 5,
+   "canonical": "public/iys/stylist/models/men.webp",
+   "references": [
+    {
+     "image": 1,
+     "role": "photo"
+    }
+   ],
+   "source": {
+    "image": 1
+   }
+  },
+  {
+   "id": "men--green-basic-oversized-crewneck--official",
+   "method": "official",
+   "handle": "green-basic-oversized-crewneck",
+   "model": "men",
+   "slot": "top",
+   "bucket": "official",
+   "rank": 6,
+   "canonical": "public/iys/stylist/models/men.webp",
+   "references": [
+    {
+     "image": 2,
+     "role": "photo"
+    }
+   ],
+   "source": {
+    "image": 2
+   }
+  },
+  {
+   "id": "men--anti-running-oversized-hoodie--official",
+   "method": "official",
+   "handle": "anti-running-oversized-hoodie",
+   "model": "men",
+   "slot": "top",
+   "bucket": "official",
+   "rank": 7,
+   "canonical": "public/iys/stylist/models/men.webp",
+   "references": [
+    {
+     "image": 4,
+     "role": "photo"
+    }
+   ],
+   "source": {
+    "image": 4
+   }
+  },
+  {
+   "id": "men--city-runners-oversized-long-sleeves--official",
+   "method": "official",
+   "handle": "city-runners-oversized-long-sleeves",
+   "model": "men",
+   "slot": "top",
+   "bucket": "official",
+   "rank": 8,
+   "canonical": "public/iys/stylist/models/men.webp",
+   "references": [
+    {
+     "image": 3,
+     "role": "photo"
+    }
+   ],
+   "source": {
+    "image": 3
+   }
+  },
+  {
+   "id": "men--horse-race-club-oversized-hoodie--official",
+   "method": "official",
+   "handle": "horse-race-club-oversized-hoodie",
+   "model": "men",
+   "slot": "top",
+   "bucket": "official",
+   "rank": 9,
+   "canonical": "public/iys/stylist/models/men.webp",
+   "references": [
+    {
+     "image": 0,
+     "role": "photo"
+    }
+   ],
+   "source": {
+    "image": 0
+   }
+  },
+  {
+   "id": "men--dark-grey-guarded-boxy-zip-up-hoodie--official",
+   "method": "official",
+   "handle": "dark-grey-guarded-boxy-zip-up-hoodie",
+   "model": "men",
+   "slot": "outer",
+   "bucket": "official",
+   "rank": 10,
+   "canonical": "public/iys/stylist/models/men.webp",
+   "references": [
+    {
+     "image": 0,
+     "role": "photo"
+    }
+   ],
+   "source": {
+    "image": 0
+   }
+  },
+  {
+   "id": "men--green-basic-boxy-zip-up-hoodie--official",
+   "method": "official",
+   "handle": "green-basic-boxy-zip-up-hoodie",
+   "model": "men",
+   "slot": "outer",
+   "bucket": "official",
+   "rank": 11,
+   "canonical": "public/iys/stylist/models/men.webp",
+   "references": [
+    {
+     "image": 0,
+     "role": "photo"
+    }
+   ],
+   "source": {
+    "image": 0
+   }
+  },
+  {
+   "id": "men--male-dark-blue-striped-loose-fit-jeans--official",
+   "method": "official",
+   "handle": "male-dark-blue-striped-loose-fit-jeans",
+   "model": "men",
+   "slot": "bottom",
+   "bucket": "official",
+   "rank": 12,
+   "canonical": "public/iys/stylist/models/men.webp",
+   "references": [
+    {
+     "image": 0,
+     "role": "photo"
+    }
+   ],
+   "source": {
+    "image": 0
+   }
+  },
+  {
+   "id": "men--male-black-loose-parachute-pants--official",
+   "method": "official",
+   "handle": "male-black-loose-parachute-pants",
+   "model": "men",
+   "slot": "bottom",
+   "bucket": "official",
+   "rank": 13,
+   "canonical": "public/iys/stylist/models/men.webp",
+   "references": [
+    {
+     "image": 0,
+     "role": "photo"
+    }
+   ],
+   "source": {
+    "image": 0
+   }
+  },
+  {
+   "id": "men--red-plaid-fluffy-pjoys--official",
+   "method": "official",
+   "handle": "red-plaid-fluffy-pjoys",
+   "model": "men",
+   "slot": "bottom",
+   "bucket": "official",
+   "rank": 14,
+   "canonical": "public/iys/stylist/models/men.webp",
+   "references": [
+    {
+     "image": 4,
+     "role": "photo"
+    }
+   ],
+   "source": {
+    "image": 4
+   }
+  },
+  {
+   "id": "men--feels-like-magic-fluffy-pjoys--official",
+   "method": "official",
+   "handle": "feels-like-magic-fluffy-pjoys",
+   "model": "men",
+   "slot": "bottom",
+   "bucket": "official",
+   "rank": 15,
+   "canonical": "public/iys/stylist/models/men.webp",
+   "references": [
+    {
+     "image": 5,
+     "role": "photo"
+    }
+   ],
+   "source": {
+    "image": 5
+   }
+  },
+  {
+   "id": "men--gingham-fluffy-pjoys--official",
+   "method": "official",
+   "handle": "gingham-fluffy-pjoys",
+   "model": "men",
+   "slot": "bottom",
+   "bucket": "official",
+   "rank": 16,
+   "canonical": "public/iys/stylist/models/men.webp",
+   "references": [
+    {
+     "image": 3,
+     "role": "photo"
+    }
+   ],
+   "source": {
+    "image": 3
+   }
+  },
+  {
+   "id": "men--counting-sheeps-fluffy-pjoys--official",
+   "method": "official",
+   "handle": "counting-sheeps-fluffy-pjoys",
+   "model": "men",
+   "slot": "bottom",
+   "bucket": "official",
+   "rank": 17,
+   "canonical": "public/iys/stylist/models/men.webp",
+   "references": [
+    {
+     "image": 3,
+     "role": "photo"
+    }
+   ],
+   "source": {
+    "image": 3
+   }
+  },
+  {
+   "id": "men--excuses-not-to-study-fluffy-pjoys--official",
+   "method": "official",
+   "handle": "excuses-not-to-study-fluffy-pjoys",
+   "model": "men",
+   "slot": "bottom",
+   "bucket": "official",
+   "rank": 18,
+   "canonical": "public/iys/stylist/models/men.webp",
+   "references": [
+    {
+     "image": 4,
+     "role": "photo"
+    }
+   ],
+   "source": {
+    "image": 4
+   }
+  },
+  {
+   "id": "men--xmas-ornaments-fluffy-pjoys--official",
+   "method": "official",
+   "handle": "xmas-ornaments-fluffy-pjoys",
+   "model": "men",
+   "slot": "bottom",
+   "bucket": "official",
+   "rank": 19,
+   "canonical": "public/iys/stylist/models/men.webp",
+   "references": [
+    {
+     "image": 4,
+     "role": "photo"
+    }
+   ],
+   "source": {
+    "image": 4
+   }
+  },
+  {
+   "id": "women--off-white-raglan-oversized-pullover--official",
+   "method": "official",
+   "handle": "off-white-raglan-oversized-pullover",
+   "model": "women",
+   "slot": "top",
+   "bucket": "official",
+   "rank": 1,
+   "canonical": "public/iys/stylist/models/women.webp",
+   "references": [
+    {
+     "image": 0,
+     "role": "photo"
+    }
+   ],
+   "source": {
+    "image": 0,
+    "beside": true
+   }
+  },
+  {
+   "id": "women--iys-racing-club-oversized-crewneck--official",
+   "method": "official",
+   "handle": "iys-racing-club-oversized-crewneck",
+   "model": "women",
+   "slot": "top",
+   "bucket": "official",
+   "rank": 2,
+   "canonical": "public/iys/stylist/models/women.webp",
+   "references": [
+    {
+     "image": 0,
+     "role": "photo"
+    }
+   ],
+   "source": {
+    "image": 0,
+    "beside": true
+   }
+  },
+  {
+   "id": "women--green-basic-boxy-zip-up-hoodie--official",
+   "method": "official",
+   "handle": "green-basic-boxy-zip-up-hoodie",
+   "model": "women",
+   "slot": "outer",
+   "bucket": "official",
+   "rank": 3,
+   "canonical": "public/iys/stylist/models/women.webp",
+   "references": [
+    {
+     "image": 0,
+     "role": "photo"
+    }
+   ],
+   "source": {
+    "image": 0,
+    "beside": true
+   }
+  },
+  {
+   "id": "women--dropout-oversized-hoodie--official",
+   "method": "official",
+   "handle": "dropout-oversized-hoodie",
+   "model": "women",
+   "slot": "top",
+   "bucket": "official",
+   "rank": 4,
+   "canonical": "public/iys/stylist/models/women.webp",
+   "references": [
+    {
+     "image": 1,
+     "role": "photo"
+    }
+   ],
+   "source": {
+    "image": 1
+   }
+  },
+  {
+   "id": "women--brown-washed-boxy-crewneck--official",
+   "method": "official",
+   "handle": "brown-washed-boxy-crewneck",
+   "model": "women",
+   "slot": "top",
+   "bucket": "official",
+   "rank": 5,
+   "canonical": "public/iys/stylist/models/women.webp",
+   "references": [
+    {
+     "image": 1,
+     "role": "photo"
+    }
+   ],
+   "source": {
+    "image": 1
+   }
+  },
+  {
+   "id": "men--world-wide-tour-oversized-hoodie",
+   "method": "derived",
+   "handle": "world-wide-tour-oversized-hoodie",
+   "model": "men",
+   "slot": "top",
+   "bucket": "hoodie",
+   "rank": 1,
+   "canonical": "public/iys/stylist/models/men.webp",
+   "references": [
+    {
+     "image": 7,
+     "role": "packshot-front"
+    },
+    {
+     "image": 6,
+     "role": "packshot"
+    },
+    {
+     "image": 0,
+     "role": "photo"
+    },
+    {
+     "image": 1,
+     "role": "photo"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · TOP. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"Worldwide Tour Oversized Hoodie\"; where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, skin tone, body shape and proportions, pose, arms, hands and fingers; the bottoms (trousers / shorts) and the shoes exactly as they are; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the upper garment worn on the torso (the jacket and the top under it become this one top): replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "men--cairo-is-a-mindset-oversized-hoodie",
+   "method": "derived",
+   "handle": "cairo-is-a-mindset-oversized-hoodie",
+   "model": "men",
+   "slot": "top",
+   "bucket": "hoodie",
+   "rank": 2,
+   "canonical": "public/iys/stylist/models/men.webp",
+   "references": [
+    {
+     "image": 7,
+     "role": "packshot-front"
+    },
+    {
+     "image": 6,
+     "role": "packshot"
+    },
+    {
+     "image": 0,
+     "role": "photo"
+    },
+    {
+     "image": 1,
+     "role": "photo"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · TOP. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"Cairo Is A Mindset Oversized Hoodie\"; where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, skin tone, body shape and proportions, pose, arms, hands and fingers; the bottoms (trousers / shorts) and the shoes exactly as they are; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the upper garment worn on the torso (the jacket and the top under it become this one top): replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "men--heather-grey-basic-heavy-boxy-hoodie",
+   "method": "derived",
+   "handle": "heather-grey-basic-heavy-boxy-hoodie",
+   "model": "men",
+   "slot": "top",
+   "bucket": "hoodie",
+   "rank": 3,
+   "canonical": "public/iys/stylist/models/men.webp",
+   "references": [
+    {
+     "image": 8,
+     "role": "packshot-front"
+    },
+    {
+     "image": 7,
+     "role": "packshot"
+    },
+    {
+     "image": 0,
+     "role": "photo"
+    },
+    {
+     "image": 1,
+     "role": "photo"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · TOP. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"Heather Grey Basic Heavy Boxy Hoodie\"; where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, skin tone, body shape and proportions, pose, arms, hands and fingers; the bottoms (trousers / shorts) and the shoes exactly as they are; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the upper garment worn on the torso (the jacket and the top under it become this one top): replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "men--dont-panic-oversized-hoodie",
+   "method": "derived",
+   "handle": "dont-panic-oversized-hoodie",
+   "model": "men",
+   "slot": "top",
+   "bucket": "hoodie",
+   "rank": 4,
+   "canonical": "public/iys/stylist/models/men.webp",
+   "references": [
+    {
+     "image": 6,
+     "role": "packshot-front"
+    },
+    {
+     "image": 5,
+     "role": "packshot"
+    },
+    {
+     "image": 0,
+     "role": "photo"
+    },
+    {
+     "image": 1,
+     "role": "photo"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · TOP. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"Don't Panic Oversized Hoodie\"; where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, skin tone, body shape and proportions, pose, arms, hands and fingers; the bottoms (trousers / shorts) and the shoes exactly as they are; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the upper garment worn on the torso (the jacket and the top under it become this one top): replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "men--el-hob-moqawma-boxy-hoodie",
+   "method": "derived",
+   "handle": "el-hob-moqawma-boxy-hoodie",
+   "model": "men",
+   "slot": "top",
+   "bucket": "hoodie",
+   "rank": 5,
+   "canonical": "public/iys/stylist/models/men.webp",
+   "references": [
+    {
+     "image": 7,
+     "role": "packshot-front"
+    },
+    {
+     "image": 6,
+     "role": "packshot"
+    },
+    {
+     "image": 0,
+     "role": "photo"
+    },
+    {
+     "image": 1,
+     "role": "photo"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · TOP. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"El Hob Moqawma Boxy Hoodie\"; where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, skin tone, body shape and proportions, pose, arms, hands and fingers; the bottoms (trousers / shorts) and the shoes exactly as they are; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the upper garment worn on the torso (the jacket and the top under it become this one top): replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "men--blue-basic-oversized-hoodie",
+   "method": "derived",
+   "handle": "blue-basic-oversized-hoodie",
+   "model": "men",
+   "slot": "top",
+   "bucket": "hoodie",
+   "rank": 6,
+   "canonical": "public/iys/stylist/models/men.webp",
+   "references": [
+    {
+     "image": 1,
+     "role": "packshot-front"
+    },
+    {
+     "image": 0,
+     "role": "packshot"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · TOP. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"Blue Basic Oversized Hoodie\"; where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, skin tone, body shape and proportions, pose, arms, hands and fingers; the bottoms (trousers / shorts) and the shoes exactly as they are; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the upper garment worn on the torso (the jacket and the top under it become this one top): replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "men--black-basic-oversized-hoodie",
+   "method": "derived",
+   "handle": "black-basic-oversized-hoodie",
+   "model": "men",
+   "slot": "top",
+   "bucket": "hoodie",
+   "rank": 7,
+   "canonical": "public/iys/stylist/models/men.webp",
+   "references": [
+    {
+     "image": 1,
+     "role": "packshot-front"
+    },
+    {
+     "image": 0,
+     "role": "packshot"
+    },
+    {
+     "image": 2,
+     "role": "photo"
+    },
+    {
+     "image": 3,
+     "role": "photo"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · TOP. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"Black Basic Oversized Hoodie\"; where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, skin tone, body shape and proportions, pose, arms, hands and fingers; the bottoms (trousers / shorts) and the shoes exactly as they are; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the upper garment worn on the torso (the jacket and the top under it become this one top): replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "men--streets-culture-boxy-hoodie",
+   "method": "derived",
+   "handle": "streets-culture-boxy-hoodie",
+   "model": "men",
+   "slot": "top",
+   "bucket": "hoodie",
+   "rank": 8,
+   "canonical": "public/iys/stylist/models/men.webp",
+   "references": [
+    {
+     "image": 1,
+     "role": "packshot-front"
+    },
+    {
+     "image": 0,
+     "role": "packshot"
+    },
+    {
+     "image": 2,
+     "role": "photo"
+    },
+    {
+     "image": 3,
+     "role": "photo"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · TOP. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"Streets Culture Boxy Hoodie\"; where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, skin tone, body shape and proportions, pose, arms, hands and fingers; the bottoms (trousers / shorts) and the shoes exactly as they are; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the upper garment worn on the torso (the jacket and the top under it become this one top): replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "men--social-on-social-media-boxy-hoodie",
+   "method": "derived",
+   "handle": "social-on-social-media-boxy-hoodie",
+   "model": "men",
+   "slot": "top",
+   "bucket": "hoodie",
+   "rank": 9,
+   "canonical": "public/iys/stylist/models/men.webp",
+   "references": [
+    {
+     "image": 1,
+     "role": "packshot-front"
+    },
+    {
+     "image": 0,
+     "role": "packshot"
+    },
+    {
+     "image": 2,
+     "role": "photo"
+    },
+    {
+     "image": 3,
+     "role": "photo"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · TOP. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"Social On Social Media Boxy Hoodie\"; where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, skin tone, body shape and proportions, pose, arms, hands and fingers; the bottoms (trousers / shorts) and the shoes exactly as they are; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the upper garment worn on the torso (the jacket and the top under it become this one top): replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "men--universal-peace-hoodie",
+   "method": "derived",
+   "handle": "universal-peace-hoodie",
+   "model": "men",
+   "slot": "top",
+   "bucket": "hoodie",
+   "rank": 10,
+   "canonical": "public/iys/stylist/models/men.webp",
+   "references": [
+    {
+     "image": 1,
+     "role": "packshot-front"
+    },
+    {
+     "image": 0,
+     "role": "packshot"
+    },
+    {
+     "image": 2,
+     "role": "photo"
+    },
+    {
+     "image": 3,
+     "role": "photo"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · TOP. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"Universal Peace Washed Hoodie\"; where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, skin tone, body shape and proportions, pose, arms, hands and fingers; the bottoms (trousers / shorts) and the shoes exactly as they are; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the upper garment worn on the torso (the jacket and the top under it become this one top): replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "men--egyptian-culture-oversized-long-sleeves",
+   "method": "derived",
+   "handle": "egyptian-culture-oversized-long-sleeves",
+   "model": "men",
+   "slot": "top",
+   "bucket": "tee",
+   "rank": 1,
+   "canonical": "public/iys/stylist/models/men.webp",
+   "references": [
+    {
+     "image": 7,
+     "role": "packshot-front"
+    },
+    {
+     "image": 0,
+     "role": "photo"
+    },
+    {
+     "image": 1,
+     "role": "photo"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · TOP. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"Egyptian Culture Oversized Long Sleeves\"; where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, skin tone, body shape and proportions, pose, arms, hands and fingers; the bottoms (trousers / shorts) and the shoes exactly as they are; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the upper garment worn on the torso (the jacket and the top under it become this one top): replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "men--cereal-crimes-oversized-tee",
+   "method": "derived",
+   "handle": "cereal-crimes-oversized-tee",
+   "model": "men",
+   "slot": "top",
+   "bucket": "tee",
+   "rank": 2,
+   "canonical": "public/iys/stylist/models/men.webp",
+   "references": [
+    {
+     "image": 1,
+     "role": "packshot-front"
+    },
+    {
+     "image": 0,
+     "role": "packshot"
+    },
+    {
+     "image": 2,
+     "role": "photo"
+    },
+    {
+     "image": 3,
+     "role": "photo"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · TOP. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"Cereal Crimes Oversized Tee\"; where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, skin tone, body shape and proportions, pose, arms, hands and fingers; the bottoms (trousers / shorts) and the shoes exactly as they are; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the upper garment worn on the torso (the jacket and the top under it become this one top): replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "men--botox-oversized-tee",
+   "method": "derived",
+   "handle": "botox-oversized-tee",
+   "model": "men",
+   "slot": "top",
+   "bucket": "tee",
+   "rank": 3,
+   "canonical": "public/iys/stylist/models/men.webp",
+   "references": [
+    {
+     "image": 1,
+     "role": "packshot-front"
+    },
+    {
+     "image": 0,
+     "role": "packshot"
+    },
+    {
+     "image": 2,
+     "role": "photo"
+    },
+    {
+     "image": 3,
+     "role": "photo"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · TOP. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"Botoxic Oversized Tee\"; where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, skin tone, body shape and proportions, pose, arms, hands and fingers; the bottoms (trousers / shorts) and the shoes exactly as they are; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the upper garment worn on the torso (the jacket and the top under it become this one top): replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "men--chaos-regular-tee",
+   "method": "derived",
+   "handle": "chaos-regular-tee",
+   "model": "men",
+   "slot": "top",
+   "bucket": "tee",
+   "rank": 4,
+   "canonical": "public/iys/stylist/models/men.webp",
+   "references": [
+    {
+     "image": 1,
+     "role": "packshot-front"
+    },
+    {
+     "image": 0,
+     "role": "packshot"
+    },
+    {
+     "image": 2,
+     "role": "photo"
+    },
+    {
+     "image": 3,
+     "role": "photo"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · TOP. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"Chaos Regular Tee\"; where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, skin tone, body shape and proportions, pose, arms, hands and fingers; the bottoms (trousers / shorts) and the shoes exactly as they are; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the upper garment worn on the torso (the jacket and the top under it become this one top): replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "men--rich-baked-oversized-tee",
+   "method": "derived",
+   "handle": "rich-baked-oversized-tee",
+   "model": "men",
+   "slot": "top",
+   "bucket": "tee",
+   "rank": 5,
+   "canonical": "public/iys/stylist/models/men.webp",
+   "references": [
+    {
+     "image": 1,
+     "role": "packshot-front"
+    },
+    {
+     "image": 0,
+     "role": "packshot"
+    },
+    {
+     "image": 2,
+     "role": "photo"
+    },
+    {
+     "image": 3,
+     "role": "photo"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · TOP. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"Rich & Baked Oversized Tee\"; where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, skin tone, body shape and proportions, pose, arms, hands and fingers; the bottoms (trousers / shorts) and the shoes exactly as they are; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the upper garment worn on the torso (the jacket and the top under it become this one top): replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "men--burgundy-washed-striped-boxy-tee",
+   "method": "derived",
+   "handle": "burgundy-washed-striped-boxy-tee",
+   "model": "men",
+   "slot": "top",
+   "bucket": "tee",
+   "rank": 6,
+   "canonical": "public/iys/stylist/models/men.webp",
+   "references": [
+    {
+     "image": 1,
+     "role": "packshot-front"
+    },
+    {
+     "image": 0,
+     "role": "packshot"
+    },
+    {
+     "image": 2,
+     "role": "photo"
+    },
+    {
+     "image": 3,
+     "role": "photo"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · TOP. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"Burgundy Washed Striped Boxy Tee\"; where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, skin tone, body shape and proportions, pose, arms, hands and fingers; the bottoms (trousers / shorts) and the shoes exactly as they are; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the upper garment worn on the torso (the jacket and the top under it become this one top): replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "men--black-basic-boxy-tee",
+   "method": "derived",
+   "handle": "black-basic-boxy-tee",
+   "model": "men",
+   "slot": "top",
+   "bucket": "tee",
+   "rank": 7,
+   "canonical": "public/iys/stylist/models/men.webp",
+   "references": [
+    {
+     "image": 1,
+     "role": "packshot-front"
+    },
+    {
+     "image": 0,
+     "role": "packshot"
+    },
+    {
+     "image": 2,
+     "role": "photo"
+    },
+    {
+     "image": 3,
+     "role": "photo"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · TOP. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"Black Basic Boxy Tee\"; where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, skin tone, body shape and proportions, pose, arms, hands and fingers; the bottoms (trousers / shorts) and the shoes exactly as they are; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the upper garment worn on the torso (the jacket and the top under it become this one top): replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "men--burgundy-washed-oversized-long-sleeves",
+   "method": "derived",
+   "handle": "burgundy-washed-oversized-long-sleeves",
+   "model": "men",
+   "slot": "top",
+   "bucket": "tee",
+   "rank": 8,
+   "canonical": "public/iys/stylist/models/men.webp",
+   "references": [
+    {
+     "image": 0,
+     "role": "packshot-front"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · TOP. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"Burgundy Washed Oversized Long Sleeves\"; where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, skin tone, body shape and proportions, pose, arms, hands and fingers; the bottoms (trousers / shorts) and the shoes exactly as they are; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the upper garment worn on the torso (the jacket and the top under it become this one top): replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "men--black-washed-striped-boxy-tee",
+   "method": "derived",
+   "handle": "black-washed-striped-boxy-tee",
+   "model": "men",
+   "slot": "top",
+   "bucket": "tee",
+   "rank": 9,
+   "canonical": "public/iys/stylist/models/men.webp",
+   "references": [
+    {
+     "image": 1,
+     "role": "packshot-front"
+    },
+    {
+     "image": 0,
+     "role": "packshot"
+    },
+    {
+     "image": 2,
+     "role": "photo"
+    },
+    {
+     "image": 3,
+     "role": "photo"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · TOP. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"Black Washed Striped Boxy Tee\"; where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, skin tone, body shape and proportions, pose, arms, hands and fingers; the bottoms (trousers / shorts) and the shoes exactly as they are; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the upper garment worn on the torso (the jacket and the top under it become this one top): replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "men--brown-basic-boxy-tee",
+   "method": "derived",
+   "handle": "brown-basic-boxy-tee",
+   "model": "men",
+   "slot": "top",
+   "bucket": "tee",
+   "rank": 10,
+   "canonical": "public/iys/stylist/models/men.webp",
+   "references": [
+    {
+     "image": 1,
+     "role": "packshot-front"
+    },
+    {
+     "image": 0,
+     "role": "packshot"
+    },
+    {
+     "image": 2,
+     "role": "photo"
+    },
+    {
+     "image": 3,
+     "role": "photo"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · TOP. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"Brown Basic Boxy Tee\"; where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, skin tone, body shape and proportions, pose, arms, hands and fingers; the bottoms (trousers / shorts) and the shoes exactly as they are; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the upper garment worn on the torso (the jacket and the top under it become this one top): replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "men--iys-racing-club-oversized-crewneck",
+   "method": "derived",
+   "handle": "iys-racing-club-oversized-crewneck",
+   "model": "men",
+   "slot": "top",
+   "bucket": "crewneck",
+   "rank": 1,
+   "canonical": "public/iys/stylist/models/men.webp",
+   "references": [
+    {
+     "image": 6,
+     "role": "packshot-front"
+    },
+    {
+     "image": 5,
+     "role": "packshot"
+    },
+    {
+     "image": 0,
+     "role": "photo"
+    },
+    {
+     "image": 1,
+     "role": "photo"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · TOP. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"IYS Racing Club Oversized Crewneck\"; where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, skin tone, body shape and proportions, pose, arms, hands and fingers; the bottoms (trousers / shorts) and the shoes exactly as they are; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the upper garment worn on the torso (the jacket and the top under it become this one top): replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "men--burgundy-basic-oversized-crewneck",
+   "method": "derived",
+   "handle": "burgundy-basic-oversized-crewneck",
+   "model": "men",
+   "slot": "top",
+   "bucket": "crewneck",
+   "rank": 2,
+   "canonical": "public/iys/stylist/models/men.webp",
+   "references": [
+    {
+     "image": 6,
+     "role": "packshot-front"
+    },
+    {
+     "image": 5,
+     "role": "packshot"
+    },
+    {
+     "image": 0,
+     "role": "photo"
+    },
+    {
+     "image": 1,
+     "role": "photo"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · TOP. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"Burgundy Basic Oversized Crewneck\"; where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, skin tone, body shape and proportions, pose, arms, hands and fingers; the bottoms (trousers / shorts) and the shoes exactly as they are; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the upper garment worn on the torso (the jacket and the top under it become this one top): replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "men--brown-washed-boxy-crewneck",
+   "method": "derived",
+   "handle": "brown-washed-boxy-crewneck",
+   "model": "men",
+   "slot": "top",
+   "bucket": "crewneck",
+   "rank": 3,
+   "canonical": "public/iys/stylist/models/men.webp",
+   "references": [
+    {
+     "image": 0,
+     "role": "photo"
+    },
+    {
+     "image": 1,
+     "role": "photo"
+    },
+    {
+     "image": 2,
+     "role": "photo"
+    },
+    {
+     "image": 3,
+     "role": "photo"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · TOP. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"Brown Washed Boxy Crewneck\"; where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, skin tone, body shape and proportions, pose, arms, hands and fingers; the bottoms (trousers / shorts) and the shoes exactly as they are; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the upper garment worn on the torso (the jacket and the top under it become this one top): replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "men--greige-oversized-quarter-zipper",
+   "method": "derived",
+   "handle": "greige-oversized-quarter-zipper",
+   "model": "men",
+   "slot": "top",
+   "bucket": "crewneck",
+   "rank": 4,
+   "canonical": "public/iys/stylist/models/men.webp",
+   "references": [
+    {
+     "image": 0,
+     "role": "photo"
+    },
+    {
+     "image": 1,
+     "role": "photo"
+    },
+    {
+     "image": 2,
+     "role": "photo"
+    },
+    {
+     "image": 3,
+     "role": "photo"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · TOP. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"Greige Oversized Quarter Zipper\"; where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, skin tone, body shape and proportions, pose, arms, hands and fingers; the bottoms (trousers / shorts) and the shoes exactly as they are; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the upper garment worn on the torso (the jacket and the top under it become this one top): replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "men--burgundy-oversized-quarter-zipper",
+   "method": "derived",
+   "handle": "burgundy-oversized-quarter-zipper",
+   "model": "men",
+   "slot": "top",
+   "bucket": "crewneck",
+   "rank": 5,
+   "canonical": "public/iys/stylist/models/men.webp",
+   "references": [
+    {
+     "image": 0,
+     "role": "photo"
+    },
+    {
+     "image": 1,
+     "role": "photo"
+    },
+    {
+     "image": 2,
+     "role": "photo"
+    },
+    {
+     "image": 3,
+     "role": "photo"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · TOP. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"Burgundy Oversized Quarter Zipper\"; where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, skin tone, body shape and proportions, pose, arms, hands and fingers; the bottoms (trousers / shorts) and the shoes exactly as they are; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the upper garment worn on the torso (the jacket and the top under it become this one top): replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "men--black-worldwide-oversized-mock-neck",
+   "method": "derived",
+   "handle": "black-worldwide-oversized-mock-neck",
+   "model": "men",
+   "slot": "top",
+   "bucket": "crewneck",
+   "rank": 6,
+   "canonical": "public/iys/stylist/models/men.webp",
+   "references": [
+    {
+     "image": 0,
+     "role": "photo"
+    },
+    {
+     "image": 1,
+     "role": "photo"
+    },
+    {
+     "image": 2,
+     "role": "photo"
+    },
+    {
+     "image": 3,
+     "role": "photo"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · TOP. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"Black Worldwide Oversized Mock Neck\"; where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, skin tone, body shape and proportions, pose, arms, hands and fingers; the bottoms (trousers / shorts) and the shoes exactly as they are; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the upper garment worn on the torso (the jacket and the top under it become this one top): replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "men--brown-embroidered-oversized-leather-jacket",
+   "method": "derived",
+   "handle": "brown-embroidered-oversized-leather-jacket",
+   "model": "men",
+   "slot": "outer",
+   "bucket": "layer",
+   "rank": 1,
+   "canonical": "public/iys/stylist/models/men.webp",
+   "references": [
+    {
+     "image": 8,
+     "role": "packshot-front"
+    },
+    {
+     "image": 7,
+     "role": "packshot"
+    },
+    {
+     "image": 0,
+     "role": "photo"
+    },
+    {
+     "image": 1,
+     "role": "photo"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · OUTERWEAR. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"Brown Embroidered Oversized Leather Jacket\"; where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, skin tone, body shape and proportions, pose, arms, hands and fingers; the top underneath where it shows, the bottoms and the shoes exactly as they are; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the outer layer: put this garment on as the outermost layer over the existing top, worn open or closed as in its product photos: replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "men--teal-embroidered-oversized-leather-jacket",
+   "method": "derived",
+   "handle": "teal-embroidered-oversized-leather-jacket",
+   "model": "men",
+   "slot": "outer",
+   "bucket": "layer",
+   "rank": 2,
+   "canonical": "public/iys/stylist/models/men.webp",
+   "references": [
+    {
+     "image": 9,
+     "role": "packshot-front"
+    },
+    {
+     "image": 8,
+     "role": "packshot"
+    },
+    {
+     "image": 0,
+     "role": "photo"
+    },
+    {
+     "image": 1,
+     "role": "photo"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · OUTERWEAR. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"Teal Embroidered Oversized Leather Jacket\"; where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, skin tone, body shape and proportions, pose, arms, hands and fingers; the top underneath where it shows, the bottoms and the shoes exactly as they are; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the outer layer: put this garment on as the outermost layer over the existing top, worn open or closed as in its product photos: replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "men--grey-washed-boxy-zip-up-hoodie",
+   "method": "derived",
+   "handle": "grey-washed-boxy-zip-up-hoodie",
+   "model": "men",
+   "slot": "outer",
+   "bucket": "layer",
+   "rank": 3,
+   "canonical": "public/iys/stylist/models/men.webp",
+   "references": [
+    {
+     "image": 1,
+     "role": "packshot-front"
+    },
+    {
+     "image": 0,
+     "role": "packshot"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · OUTERWEAR. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"Grey Washed Boxy Zip-Up Hoodie\"; where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, skin tone, body shape and proportions, pose, arms, hands and fingers; the top underneath where it shows, the bottoms and the shoes exactly as they are; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the outer layer: put this garment on as the outermost layer over the existing top, worn open or closed as in its product photos: replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "men--black-basic-oversized-zip-up-hoodie",
+   "method": "derived",
+   "handle": "black-basic-oversized-zip-up-hoodie",
+   "model": "men",
+   "slot": "outer",
+   "bucket": "layer",
+   "rank": 4,
+   "canonical": "public/iys/stylist/models/men.webp",
+   "references": [
+    {
+     "image": 1,
+     "role": "packshot-front"
+    },
+    {
+     "image": 0,
+     "role": "packshot"
+    },
+    {
+     "image": 2,
+     "role": "photo"
+    },
+    {
+     "image": 3,
+     "role": "photo"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · OUTERWEAR. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"Black Basic Oversized Zip-Up Hoodie\"; where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, skin tone, body shape and proportions, pose, arms, hands and fingers; the top underneath where it shows, the bottoms and the shoes exactly as they are; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the outer layer: put this garment on as the outermost layer over the existing top, worn open or closed as in its product photos: replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "men--burgundy-washed-boxy-zip-up-hoodie",
+   "method": "derived",
+   "handle": "burgundy-washed-boxy-zip-up-hoodie",
+   "model": "men",
+   "slot": "outer",
+   "bucket": "layer",
+   "rank": 5,
+   "canonical": "public/iys/stylist/models/men.webp",
+   "references": [
+    {
+     "image": 1,
+     "role": "packshot-front"
+    },
+    {
+     "image": 0,
+     "role": "packshot"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · OUTERWEAR. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"Burgundy Washed Boxy Zip-Up Hoodie\"; where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, skin tone, body shape and proportions, pose, arms, hands and fingers; the top underneath where it shows, the bottoms and the shoes exactly as they are; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the outer layer: put this garment on as the outermost layer over the existing top, worn open or closed as in its product photos: replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "men--blue-regular-windbreaker",
+   "method": "derived",
+   "handle": "blue-regular-windbreaker",
+   "model": "men",
+   "slot": "outer",
+   "bucket": "layer",
+   "rank": 6,
+   "canonical": "public/iys/stylist/models/men.webp",
+   "references": [
+    {
+     "image": 0,
+     "role": "photo"
+    },
+    {
+     "image": 1,
+     "role": "photo"
+    },
+    {
+     "image": 2,
+     "role": "photo"
+    },
+    {
+     "image": 3,
+     "role": "photo"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · OUTERWEAR. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"Blue Regular Windbreaker\"; where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, skin tone, body shape and proportions, pose, arms, hands and fingers; the top underneath where it shows, the bottoms and the shoes exactly as they are; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the outer layer: put this garment on as the outermost layer over the existing top, worn open or closed as in its product photos: replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "men--solid-lilac-swim-shorts",
+   "method": "derived",
+   "handle": "solid-lilac-swim-shorts",
+   "model": "men",
+   "slot": "bottom",
+   "bucket": "bottom",
+   "rank": 1,
+   "canonical": "public/iys/stylist/models/men.webp",
+   "references": [
+    {
+     "image": 6,
+     "role": "packshot-front"
+    },
+    {
+     "image": 5,
+     "role": "packshot"
+    },
+    {
+     "image": 0,
+     "role": "photo"
+    },
+    {
+     "image": 1,
+     "role": "photo"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · BOTTOM. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"Solid Lilac Swim Shorts\"; where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, skin tone, body shape and proportions, pose, arms, hands and fingers; the top and any layer exactly as they are (including how the hem falls over the waistband), and the shoes; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the lower garment (the trousers / shorts / skirt), from the waist down: replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "men--solid-butter-yellow-swim-shorts",
+   "method": "derived",
+   "handle": "solid-butter-yellow-swim-shorts",
+   "model": "men",
+   "slot": "bottom",
+   "bucket": "bottom",
+   "rank": 2,
+   "canonical": "public/iys/stylist/models/men.webp",
+   "references": [
+    {
+     "image": 5,
+     "role": "packshot-front"
+    },
+    {
+     "image": 6,
+     "role": "packshot"
+    },
+    {
+     "image": 0,
+     "role": "photo"
+    },
+    {
+     "image": 1,
+     "role": "photo"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · BOTTOM. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"Solid Butter Yellow Swim Shorts\"; where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, skin tone, body shape and proportions, pose, arms, hands and fingers; the top and any layer exactly as they are (including how the hem falls over the waistband), and the shoes; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the lower garment (the trousers / shorts / skirt), from the waist down: replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "men--black-peace-love-wide-leg-washed-sworts",
+   "method": "derived",
+   "handle": "black-peace-love-wide-leg-washed-sworts",
+   "model": "men",
+   "slot": "bottom",
+   "bucket": "bottom",
+   "rank": 3,
+   "canonical": "public/iys/stylist/models/men.webp",
+   "references": [
+    {
+     "image": 3,
+     "role": "packshot-front"
+    },
+    {
+     "image": 0,
+     "role": "photo"
+    },
+    {
+     "image": 1,
+     "role": "photo"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · BOTTOM. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"Black Peace & Love Washed Wide-Leg Sworts\"; where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, skin tone, body shape and proportions, pose, arms, hands and fingers; the top and any layer exactly as they are (including how the hem falls over the waistband), and the shoes; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the lower garment (the trousers / shorts / skirt), from the waist down: replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "men--male-dark-grey-loose-parachute-pants",
+   "method": "derived",
+   "handle": "male-dark-grey-loose-parachute-pants",
+   "model": "men",
+   "slot": "bottom",
+   "bucket": "bottom",
+   "rank": 4,
+   "canonical": "public/iys/stylist/models/men.webp",
+   "references": [
+    {
+     "image": 0,
+     "role": "photo"
+    },
+    {
+     "image": 1,
+     "role": "photo"
+    },
+    {
+     "image": 2,
+     "role": "photo"
+    },
+    {
+     "image": 3,
+     "role": "photo"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · BOTTOM. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"Male Dark Grey Loose Parachute Pants\"; where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, skin tone, body shape and proportions, pose, arms, hands and fingers; the top and any layer exactly as they are (including how the hem falls over the waistband), and the shoes; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the lower garment (the trousers / shorts / skirt), from the waist down: replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "men--cereal-killer-fluffy-pjoys",
+   "method": "derived",
+   "handle": "cereal-killer-fluffy-pjoys",
+   "model": "men",
+   "slot": "bottom",
+   "bucket": "bottom",
+   "rank": 5,
+   "canonical": "public/iys/stylist/models/men.webp",
+   "color": "White",
+   "references": [
+    {
+     "image": 6,
+     "role": "photo"
+    },
+    {
+     "image": 7,
+     "role": "photo"
+    },
+    {
+     "image": 8,
+     "role": "photo"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · BOTTOM. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"Cereal Killer Fluffy Pjoys\", in its White colourway (only that colour); where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, skin tone, body shape and proportions, pose, arms, hands and fingers; the top and any layer exactly as they are (including how the hem falls over the waistband), and the shoes; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the lower garment (the trousers / shorts / skirt), from the waist down: replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "men--male-beige-washed-baggy-jeans",
+   "method": "derived",
+   "handle": "male-beige-washed-baggy-jeans",
+   "model": "men",
+   "slot": "bottom",
+   "bucket": "bottom",
+   "rank": 6,
+   "canonical": "public/iys/stylist/models/men.webp",
+   "references": [
+    {
+     "image": 0,
+     "role": "photo"
+    },
+    {
+     "image": 1,
+     "role": "photo"
+    },
+    {
+     "image": 2,
+     "role": "photo"
+    },
+    {
+     "image": 3,
+     "role": "photo"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · BOTTOM. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"Male Beige Washed Baggy Jeans\"; where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, skin tone, body shape and proportions, pose, arms, hands and fingers; the top and any layer exactly as they are (including how the hem falls over the waistband), and the shoes; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the lower garment (the trousers / shorts / skirt), from the waist down: replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "men--beige-washed-wide-leg-swants",
+   "method": "derived",
+   "handle": "beige-washed-wide-leg-swants",
+   "model": "men",
+   "slot": "bottom",
+   "bucket": "bottom",
+   "rank": 7,
+   "canonical": "public/iys/stylist/models/men.webp",
+   "references": [
+    {
+     "image": 0,
+     "role": "photo"
+    },
+    {
+     "image": 1,
+     "role": "photo"
+    },
+    {
+     "image": 2,
+     "role": "photo"
+    },
+    {
+     "image": 3,
+     "role": "photo"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · BOTTOM. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"Beige Washed Wide Leg Swants\"; where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, skin tone, body shape and proportions, pose, arms, hands and fingers; the top and any layer exactly as they are (including how the hem falls over the waistband), and the shoes; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the lower garment (the trousers / shorts / skirt), from the waist down: replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "men--cereal-killer-pjoys",
+   "method": "derived",
+   "handle": "cereal-killer-pjoys",
+   "model": "men",
+   "slot": "bottom",
+   "bucket": "bottom",
+   "rank": 8,
+   "canonical": "public/iys/stylist/models/men.webp",
+   "color": "Black",
+   "references": [
+    {
+     "image": 0,
+     "role": "photo"
+    },
+    {
+     "image": 1,
+     "role": "photo"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · BOTTOM. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"Cereal Killer Pjoys\", in its Black colourway (only that colour); where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, skin tone, body shape and proportions, pose, arms, hands and fingers; the top and any layer exactly as they are (including how the hem falls over the waistband), and the shoes; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the lower garment (the trousers / shorts / skirt), from the waist down: replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "men--love-you-so-matcha-pjoys",
+   "method": "derived",
+   "handle": "love-you-so-matcha-pjoys",
+   "model": "men",
+   "slot": "bottom",
+   "bucket": "bottom",
+   "rank": 9,
+   "canonical": "public/iys/stylist/models/men.webp",
+   "references": [
+    {
+     "image": 0,
+     "role": "photo"
+    },
+    {
+     "image": 1,
+     "role": "photo"
+    },
+    {
+     "image": 2,
+     "role": "photo"
+    },
+    {
+     "image": 3,
+     "role": "photo"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · BOTTOM. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"Love You So Matcha Pjoys\"; where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, skin tone, body shape and proportions, pose, arms, hands and fingers; the top and any layer exactly as they are (including how the hem falls over the waistband), and the shoes; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the lower garment (the trousers / shorts / skirt), from the waist down: replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "men--sage-green-washed-wide-leg-swants",
+   "method": "derived",
+   "handle": "sage-green-washed-wide-leg-swants",
+   "model": "men",
+   "slot": "bottom",
+   "bucket": "bottom",
+   "rank": 10,
+   "canonical": "public/iys/stylist/models/men.webp",
+   "references": [
+    {
+     "image": 0,
+     "role": "photo"
+    },
+    {
+     "image": 1,
+     "role": "photo"
+    },
+    {
+     "image": 2,
+     "role": "photo"
+    },
+    {
+     "image": 3,
+     "role": "photo"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · BOTTOM. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"Sage Green Washed Wide Leg Swants\"; where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, skin tone, body shape and proportions, pose, arms, hands and fingers; the top and any layer exactly as they are (including how the hem falls over the waistband), and the shoes; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the lower garment (the trousers / shorts / skirt), from the waist down: replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "women--world-wide-tour-oversized-hoodie",
+   "method": "derived",
+   "handle": "world-wide-tour-oversized-hoodie",
+   "model": "women",
+   "slot": "top",
+   "bucket": "hoodie-crewneck",
+   "rank": 1,
+   "canonical": "public/iys/stylist/models/women.webp",
+   "references": [
+    {
+     "image": 7,
+     "role": "packshot-front"
+    },
+    {
+     "image": 6,
+     "role": "packshot"
+    },
+    {
+     "image": 0,
+     "role": "photo"
+    },
+    {
+     "image": 1,
+     "role": "photo"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · TOP. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"Worldwide Tour Oversized Hoodie\"; where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, glasses, skin tone, body shape and proportions, pose, arms, hands and fingers; the bottoms (trousers / shorts) and the shoes exactly as they are; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the upper garment worn on the torso (the jacket and the top under it become this one top): replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "women--cairo-is-a-mindset-oversized-hoodie",
+   "method": "derived",
+   "handle": "cairo-is-a-mindset-oversized-hoodie",
+   "model": "women",
+   "slot": "top",
+   "bucket": "hoodie-crewneck",
+   "rank": 2,
+   "canonical": "public/iys/stylist/models/women.webp",
+   "references": [
+    {
+     "image": 7,
+     "role": "packshot-front"
+    },
+    {
+     "image": 6,
+     "role": "packshot"
+    },
+    {
+     "image": 0,
+     "role": "photo"
+    },
+    {
+     "image": 1,
+     "role": "photo"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · TOP. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"Cairo Is A Mindset Oversized Hoodie\"; where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, glasses, skin tone, body shape and proportions, pose, arms, hands and fingers; the bottoms (trousers / shorts) and the shoes exactly as they are; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the upper garment worn on the torso (the jacket and the top under it become this one top): replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "women--heather-grey-basic-heavy-boxy-hoodie",
+   "method": "derived",
+   "handle": "heather-grey-basic-heavy-boxy-hoodie",
+   "model": "women",
+   "slot": "top",
+   "bucket": "hoodie-crewneck",
+   "rank": 3,
+   "canonical": "public/iys/stylist/models/women.webp",
+   "references": [
+    {
+     "image": 8,
+     "role": "packshot-front"
+    },
+    {
+     "image": 7,
+     "role": "packshot"
+    },
+    {
+     "image": 0,
+     "role": "photo"
+    },
+    {
+     "image": 1,
+     "role": "photo"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · TOP. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"Heather Grey Basic Heavy Boxy Hoodie\"; where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, glasses, skin tone, body shape and proportions, pose, arms, hands and fingers; the bottoms (trousers / shorts) and the shoes exactly as they are; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the upper garment worn on the torso (the jacket and the top under it become this one top): replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "women--dont-panic-oversized-hoodie",
+   "method": "derived",
+   "handle": "dont-panic-oversized-hoodie",
+   "model": "women",
+   "slot": "top",
+   "bucket": "hoodie-crewneck",
+   "rank": 4,
+   "canonical": "public/iys/stylist/models/women.webp",
+   "references": [
+    {
+     "image": 6,
+     "role": "packshot-front"
+    },
+    {
+     "image": 5,
+     "role": "packshot"
+    },
+    {
+     "image": 0,
+     "role": "photo"
+    },
+    {
+     "image": 1,
+     "role": "photo"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · TOP. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"Don't Panic Oversized Hoodie\"; where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, glasses, skin tone, body shape and proportions, pose, arms, hands and fingers; the bottoms (trousers / shorts) and the shoes exactly as they are; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the upper garment worn on the torso (the jacket and the top under it become this one top): replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "women--el-hob-moqawma-boxy-hoodie",
+   "method": "derived",
+   "handle": "el-hob-moqawma-boxy-hoodie",
+   "model": "women",
+   "slot": "top",
+   "bucket": "hoodie-crewneck",
+   "rank": 5,
+   "canonical": "public/iys/stylist/models/women.webp",
+   "references": [
+    {
+     "image": 7,
+     "role": "packshot-front"
+    },
+    {
+     "image": 6,
+     "role": "packshot"
+    },
+    {
+     "image": 0,
+     "role": "photo"
+    },
+    {
+     "image": 1,
+     "role": "photo"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · TOP. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"El Hob Moqawma Boxy Hoodie\"; where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, glasses, skin tone, body shape and proportions, pose, arms, hands and fingers; the bottoms (trousers / shorts) and the shoes exactly as they are; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the upper garment worn on the torso (the jacket and the top under it become this one top): replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "women--blue-basic-oversized-hoodie",
+   "method": "derived",
+   "handle": "blue-basic-oversized-hoodie",
+   "model": "women",
+   "slot": "top",
+   "bucket": "hoodie-crewneck",
+   "rank": 6,
+   "canonical": "public/iys/stylist/models/women.webp",
+   "references": [
+    {
+     "image": 1,
+     "role": "packshot-front"
+    },
+    {
+     "image": 0,
+     "role": "packshot"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · TOP. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"Blue Basic Oversized Hoodie\"; where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, glasses, skin tone, body shape and proportions, pose, arms, hands and fingers; the bottoms (trousers / shorts) and the shoes exactly as they are; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the upper garment worn on the torso (the jacket and the top under it become this one top): replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "women--black-basic-oversized-crewneck",
+   "method": "derived",
+   "handle": "black-basic-oversized-crewneck",
+   "model": "women",
+   "slot": "top",
+   "bucket": "hoodie-crewneck",
+   "rank": 7,
+   "canonical": "public/iys/stylist/models/women.webp",
+   "references": [
+    {
+     "image": 6,
+     "role": "packshot-front"
+    },
+    {
+     "image": 5,
+     "role": "packshot"
+    },
+    {
+     "image": 0,
+     "role": "photo"
+    },
+    {
+     "image": 1,
+     "role": "photo"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · TOP. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"Black Basic Oversized Crewneck\"; where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, glasses, skin tone, body shape and proportions, pose, arms, hands and fingers; the bottoms (trousers / shorts) and the shoes exactly as they are; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the upper garment worn on the torso (the jacket and the top under it become this one top): replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "women--green-basic-oversized-crewneck",
+   "method": "derived",
+   "handle": "green-basic-oversized-crewneck",
+   "model": "women",
+   "slot": "top",
+   "bucket": "hoodie-crewneck",
+   "rank": 8,
+   "canonical": "public/iys/stylist/models/women.webp",
+   "references": [
+    {
+     "image": 7,
+     "role": "packshot-front"
+    },
+    {
+     "image": 6,
+     "role": "packshot"
+    },
+    {
+     "image": 0,
+     "role": "photo"
+    },
+    {
+     "image": 1,
+     "role": "photo"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · TOP. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"Green Basic Oversized Crewneck\"; where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, glasses, skin tone, body shape and proportions, pose, arms, hands and fingers; the bottoms (trousers / shorts) and the shoes exactly as they are; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the upper garment worn on the torso (the jacket and the top under it become this one top): replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "women--black-basic-oversized-hoodie",
+   "method": "derived",
+   "handle": "black-basic-oversized-hoodie",
+   "model": "women",
+   "slot": "top",
+   "bucket": "hoodie-crewneck",
+   "rank": 9,
+   "canonical": "public/iys/stylist/models/women.webp",
+   "references": [
+    {
+     "image": 1,
+     "role": "packshot-front"
+    },
+    {
+     "image": 0,
+     "role": "packshot"
+    },
+    {
+     "image": 2,
+     "role": "photo"
+    },
+    {
+     "image": 3,
+     "role": "photo"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · TOP. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"Black Basic Oversized Hoodie\"; where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, glasses, skin tone, body shape and proportions, pose, arms, hands and fingers; the bottoms (trousers / shorts) and the shoes exactly as they are; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the upper garment worn on the torso (the jacket and the top under it become this one top): replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "women--streets-culture-boxy-hoodie",
+   "method": "derived",
+   "handle": "streets-culture-boxy-hoodie",
+   "model": "women",
+   "slot": "top",
+   "bucket": "hoodie-crewneck",
+   "rank": 10,
+   "canonical": "public/iys/stylist/models/women.webp",
+   "references": [
+    {
+     "image": 1,
+     "role": "packshot-front"
+    },
+    {
+     "image": 0,
+     "role": "packshot"
+    },
+    {
+     "image": 2,
+     "role": "photo"
+    },
+    {
+     "image": 3,
+     "role": "photo"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · TOP. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"Streets Culture Boxy Hoodie\"; where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, glasses, skin tone, body shape and proportions, pose, arms, hands and fingers; the bottoms (trousers / shorts) and the shoes exactly as they are; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the upper garment worn on the torso (the jacket and the top under it become this one top): replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "women--female-red-striped-regular-shirt",
+   "method": "derived",
+   "handle": "female-red-striped-regular-shirt",
+   "model": "women",
+   "slot": "top",
+   "bucket": "top",
+   "rank": 1,
+   "canonical": "public/iys/stylist/models/women.webp",
+   "references": [
+    {
+     "image": 0,
+     "role": "photo"
+    },
+    {
+     "image": 1,
+     "role": "photo"
+    },
+    {
+     "image": 2,
+     "role": "photo"
+    },
+    {
+     "image": 3,
+     "role": "photo"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · TOP. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"Female Red Striped Regular Shirt\"; where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, glasses, skin tone, body shape and proportions, pose, arms, hands and fingers; the bottoms (trousers / shorts) and the shoes exactly as they are; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the upper garment worn on the torso (the jacket and the top under it become this one top): replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "women--brown-striped-loose-fit-baby-tee",
+   "method": "derived",
+   "handle": "brown-striped-loose-fit-baby-tee",
+   "model": "women",
+   "slot": "top",
+   "bucket": "top",
+   "rank": 2,
+   "canonical": "public/iys/stylist/models/women.webp",
+   "references": [
+    {
+     "image": 0,
+     "role": "photo"
+    },
+    {
+     "image": 1,
+     "role": "photo"
+    },
+    {
+     "image": 2,
+     "role": "photo"
+    },
+    {
+     "image": 3,
+     "role": "photo"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · TOP. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"Brown Striped Loose Fit Baby Tee\"; where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, glasses, skin tone, body shape and proportions, pose, arms, hands and fingers; the bottoms (trousers / shorts) and the shoes exactly as they are; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the upper garment worn on the torso (the jacket and the top under it become this one top): replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "women--female-beige-striped-regular-shirt",
+   "method": "derived",
+   "handle": "female-beige-striped-regular-shirt",
+   "model": "women",
+   "slot": "top",
+   "bucket": "top",
+   "rank": 3,
+   "canonical": "public/iys/stylist/models/women.webp",
+   "references": [
+    {
+     "image": 0,
+     "role": "photo"
+    },
+    {
+     "image": 1,
+     "role": "photo"
+    },
+    {
+     "image": 2,
+     "role": "photo"
+    },
+    {
+     "image": 3,
+     "role": "photo"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · TOP. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"Female Beige Striped Regular Shirt\"; where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, glasses, skin tone, body shape and proportions, pose, arms, hands and fingers; the bottoms (trousers / shorts) and the shoes exactly as they are; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the upper garment worn on the torso (the jacket and the top under it become this one top): replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "women--pink-striped-loose-fit-baby-tee",
+   "method": "derived",
+   "handle": "pink-striped-loose-fit-baby-tee",
+   "model": "women",
+   "slot": "top",
+   "bucket": "top",
+   "rank": 4,
+   "canonical": "public/iys/stylist/models/women.webp",
+   "references": [
+    {
+     "image": 0,
+     "role": "photo"
+    },
+    {
+     "image": 1,
+     "role": "photo"
+    },
+    {
+     "image": 2,
+     "role": "photo"
+    },
+    {
+     "image": 3,
+     "role": "photo"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · TOP. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"Pink Striped Loose Fit Baby Tee\"; where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, glasses, skin tone, body shape and proportions, pose, arms, hands and fingers; the bottoms (trousers / shorts) and the shoes exactly as they are; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the upper garment worn on the torso (the jacket and the top under it become this one top): replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "women--brown-stitched-tank-top",
+   "method": "derived",
+   "handle": "brown-stitched-tank-top",
+   "model": "women",
+   "slot": "top",
+   "bucket": "top",
+   "rank": 5,
+   "canonical": "public/iys/stylist/models/women.webp",
+   "references": [
+    {
+     "image": 0,
+     "role": "photo"
+    },
+    {
+     "image": 1,
+     "role": "photo"
+    },
+    {
+     "image": 2,
+     "role": "photo"
+    },
+    {
+     "image": 3,
+     "role": "photo"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · TOP. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"Brown Stitched Tank Top\"; where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, glasses, skin tone, body shape and proportions, pose, arms, hands and fingers; the bottoms (trousers / shorts) and the shoes exactly as they are; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the upper garment worn on the torso (the jacket and the top under it become this one top): replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "women--youth-nation-oversized-polo",
+   "method": "derived",
+   "handle": "youth-nation-oversized-polo",
+   "model": "women",
+   "slot": "top",
+   "bucket": "top",
+   "rank": 6,
+   "canonical": "public/iys/stylist/models/women.webp",
+   "references": [
+    {
+     "image": 0,
+     "role": "photo"
+    },
+    {
+     "image": 1,
+     "role": "photo"
+    },
+    {
+     "image": 2,
+     "role": "photo"
+    },
+    {
+     "image": 3,
+     "role": "photo"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · TOP. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"Youth Nation Oversized Polo\"; where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, glasses, skin tone, body shape and proportions, pose, arms, hands and fingers; the bottoms (trousers / shorts) and the shoes exactly as they are; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the upper garment worn on the torso (the jacket and the top under it become this one top): replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "women--olive-stitched-tank-top",
+   "method": "derived",
+   "handle": "olive-stitched-tank-top",
+   "model": "women",
+   "slot": "top",
+   "bucket": "top",
+   "rank": 7,
+   "canonical": "public/iys/stylist/models/women.webp",
+   "references": [
+    {
+     "image": 0,
+     "role": "photo"
+    },
+    {
+     "image": 1,
+     "role": "photo"
+    },
+    {
+     "image": 2,
+     "role": "photo"
+    },
+    {
+     "image": 3,
+     "role": "photo"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · TOP. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"Olive Stitched Tank Top\"; where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, glasses, skin tone, body shape and proportions, pose, arms, hands and fingers; the bottoms (trousers / shorts) and the shoes exactly as they are; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the upper garment worn on the torso (the jacket and the top under it become this one top): replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "women--youth-culture-cropped-jersey",
+   "method": "derived",
+   "handle": "youth-culture-cropped-jersey",
+   "model": "women",
+   "slot": "top",
+   "bucket": "top",
+   "rank": 8,
+   "canonical": "public/iys/stylist/models/women.webp",
+   "references": [
+    {
+     "image": 0,
+     "role": "photo"
+    },
+    {
+     "image": 1,
+     "role": "photo"
+    },
+    {
+     "image": 2,
+     "role": "photo"
+    },
+    {
+     "image": 3,
+     "role": "photo"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · TOP. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"Youth Culture Cropped Jersey\"; where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, glasses, skin tone, body shape and proportions, pose, arms, hands and fingers; the bottoms (trousers / shorts) and the shoes exactly as they are; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the upper garment worn on the torso (the jacket and the top under it become this one top): replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "women--olive-double-layer-strap-top",
+   "method": "derived",
+   "handle": "olive-double-layer-strap-top",
+   "model": "women",
+   "slot": "top",
+   "bucket": "top",
+   "rank": 9,
+   "canonical": "public/iys/stylist/models/women.webp",
+   "references": [
+    {
+     "image": 0,
+     "role": "photo"
+    },
+    {
+     "image": 1,
+     "role": "photo"
+    },
+    {
+     "image": 2,
+     "role": "photo"
+    },
+    {
+     "image": 3,
+     "role": "photo"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · TOP. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"Olive Double Layered Strap Top\"; where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, glasses, skin tone, body shape and proportions, pose, arms, hands and fingers; the bottoms (trousers / shorts) and the shoes exactly as they are; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the upper garment worn on the torso (the jacket and the top under it become this one top): replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "women--female-black-striped-long-sleeve-knit-top",
+   "method": "derived",
+   "handle": "female-black-striped-long-sleeve-knit-top",
+   "model": "women",
+   "slot": "top",
+   "bucket": "top",
+   "rank": 10,
+   "canonical": "public/iys/stylist/models/women.webp",
+   "references": [
+    {
+     "image": 0,
+     "role": "photo"
+    },
+    {
+     "image": 1,
+     "role": "photo"
+    },
+    {
+     "image": 2,
+     "role": "photo"
+    },
+    {
+     "image": 3,
+     "role": "photo"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · TOP. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"Female Black Striped Long Sleeve Knit Top\"; where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, glasses, skin tone, body shape and proportions, pose, arms, hands and fingers; the bottoms (trousers / shorts) and the shoes exactly as they are; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the upper garment worn on the torso (the jacket and the top under it become this one top): replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "women--brown-embroidered-oversized-leather-jacket",
+   "method": "derived",
+   "handle": "brown-embroidered-oversized-leather-jacket",
+   "model": "women",
+   "slot": "outer",
+   "bucket": "layer",
+   "rank": 1,
+   "canonical": "public/iys/stylist/models/women.webp",
+   "references": [
+    {
+     "image": 8,
+     "role": "packshot-front"
+    },
+    {
+     "image": 7,
+     "role": "packshot"
+    },
+    {
+     "image": 0,
+     "role": "photo"
+    },
+    {
+     "image": 1,
+     "role": "photo"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · OUTERWEAR. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"Brown Embroidered Oversized Leather Jacket\"; where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, glasses, skin tone, body shape and proportions, pose, arms, hands and fingers; the top underneath where it shows, the bottoms and the shoes exactly as they are; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the outer layer: put this garment on as the outermost layer over the existing top, worn open or closed as in its product photos: replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "women--teal-embroidered-oversized-leather-jacket",
+   "method": "derived",
+   "handle": "teal-embroidered-oversized-leather-jacket",
+   "model": "women",
+   "slot": "outer",
+   "bucket": "layer",
+   "rank": 2,
+   "canonical": "public/iys/stylist/models/women.webp",
+   "references": [
+    {
+     "image": 9,
+     "role": "packshot-front"
+    },
+    {
+     "image": 8,
+     "role": "packshot"
+    },
+    {
+     "image": 0,
+     "role": "photo"
+    },
+    {
+     "image": 1,
+     "role": "photo"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · OUTERWEAR. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"Teal Embroidered Oversized Leather Jacket\"; where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, glasses, skin tone, body shape and proportions, pose, arms, hands and fingers; the top underneath where it shows, the bottoms and the shoes exactly as they are; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the outer layer: put this garment on as the outermost layer over the existing top, worn open or closed as in its product photos: replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "women--grey-washed-boxy-zip-up-hoodie",
+   "method": "derived",
+   "handle": "grey-washed-boxy-zip-up-hoodie",
+   "model": "women",
+   "slot": "outer",
+   "bucket": "layer",
+   "rank": 3,
+   "canonical": "public/iys/stylist/models/women.webp",
+   "references": [
+    {
+     "image": 1,
+     "role": "packshot-front"
+    },
+    {
+     "image": 0,
+     "role": "packshot"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · OUTERWEAR. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"Grey Washed Boxy Zip-Up Hoodie\"; where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, glasses, skin tone, body shape and proportions, pose, arms, hands and fingers; the top underneath where it shows, the bottoms and the shoes exactly as they are; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the outer layer: put this garment on as the outermost layer over the existing top, worn open or closed as in its product photos: replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "women--black-basic-oversized-zip-up-hoodie",
+   "method": "derived",
+   "handle": "black-basic-oversized-zip-up-hoodie",
+   "model": "women",
+   "slot": "outer",
+   "bucket": "layer",
+   "rank": 4,
+   "canonical": "public/iys/stylist/models/women.webp",
+   "references": [
+    {
+     "image": 1,
+     "role": "packshot-front"
+    },
+    {
+     "image": 0,
+     "role": "packshot"
+    },
+    {
+     "image": 2,
+     "role": "photo"
+    },
+    {
+     "image": 3,
+     "role": "photo"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · OUTERWEAR. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"Black Basic Oversized Zip-Up Hoodie\"; where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, glasses, skin tone, body shape and proportions, pose, arms, hands and fingers; the top underneath where it shows, the bottoms and the shoes exactly as they are; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the outer layer: put this garment on as the outermost layer over the existing top, worn open or closed as in its product photos: replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "women--burgundy-washed-boxy-zip-up-hoodie",
+   "method": "derived",
+   "handle": "burgundy-washed-boxy-zip-up-hoodie",
+   "model": "women",
+   "slot": "outer",
+   "bucket": "layer",
+   "rank": 5,
+   "canonical": "public/iys/stylist/models/women.webp",
+   "references": [
+    {
+     "image": 1,
+     "role": "packshot-front"
+    },
+    {
+     "image": 0,
+     "role": "packshot"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · OUTERWEAR. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"Burgundy Washed Boxy Zip-Up Hoodie\"; where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, glasses, skin tone, body shape and proportions, pose, arms, hands and fingers; the top underneath where it shows, the bottoms and the shoes exactly as they are; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the outer layer: put this garment on as the outermost layer over the existing top, worn open or closed as in its product photos: replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "women--blue-regular-windbreaker",
+   "method": "derived",
+   "handle": "blue-regular-windbreaker",
+   "model": "women",
+   "slot": "outer",
+   "bucket": "layer",
+   "rank": 6,
+   "canonical": "public/iys/stylist/models/women.webp",
+   "references": [
+    {
+     "image": 0,
+     "role": "photo"
+    },
+    {
+     "image": 1,
+     "role": "photo"
+    },
+    {
+     "image": 2,
+     "role": "photo"
+    },
+    {
+     "image": 3,
+     "role": "photo"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · OUTERWEAR. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"Blue Regular Windbreaker\"; where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, glasses, skin tone, body shape and proportions, pose, arms, hands and fingers; the top underneath where it shows, the bottoms and the shoes exactly as they are; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the outer layer: put this garment on as the outermost layer over the existing top, worn open or closed as in its product photos: replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "women--female-brown-mid-rise-barrel-leg-jeans",
+   "method": "derived",
+   "handle": "female-brown-mid-rise-barrel-leg-jeans",
+   "model": "women",
+   "slot": "bottom",
+   "bucket": "bottom",
+   "rank": 1,
+   "canonical": "public/iys/stylist/models/women.webp",
+   "references": [
+    {
+     "image": 0,
+     "role": "photo"
+    },
+    {
+     "image": 1,
+     "role": "photo"
+    },
+    {
+     "image": 2,
+     "role": "photo"
+    },
+    {
+     "image": 3,
+     "role": "photo"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · BOTTOM. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"Female Brown Barrel Fit Jeans\"; where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, glasses, skin tone, body shape and proportions, pose, arms, hands and fingers; the top and any layer exactly as they are (including how the hem falls over the waistband), and the shoes; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the lower garment (the trousers / shorts / skirt), from the waist down: replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "women--female-beige-cropped-balloon-pants",
+   "method": "derived",
+   "handle": "female-beige-cropped-balloon-pants",
+   "model": "women",
+   "slot": "bottom",
+   "bucket": "bottom",
+   "rank": 2,
+   "canonical": "public/iys/stylist/models/women.webp",
+   "references": [
+    {
+     "image": 0,
+     "role": "photo"
+    },
+    {
+     "image": 1,
+     "role": "photo"
+    },
+    {
+     "image": 2,
+     "role": "photo"
+    },
+    {
+     "image": 3,
+     "role": "photo"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · BOTTOM. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"Female Beige Cropped Balloon Pants\"; where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, glasses, skin tone, body shape and proportions, pose, arms, hands and fingers; the top and any layer exactly as they are (including how the hem falls over the waistband), and the shoes; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the lower garment (the trousers / shorts / skirt), from the waist down: replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "women--blue-cargo-jorts",
+   "method": "derived",
+   "handle": "blue-cargo-jorts",
+   "model": "women",
+   "slot": "bottom",
+   "bucket": "bottom",
+   "rank": 3,
+   "canonical": "public/iys/stylist/models/women.webp",
+   "references": [
+    {
+     "image": 0,
+     "role": "photo"
+    },
+    {
+     "image": 1,
+     "role": "photo"
+    },
+    {
+     "image": 2,
+     "role": "photo"
+    },
+    {
+     "image": 3,
+     "role": "photo"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · BOTTOM. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"Blue Cargo Jorts\"; where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, glasses, skin tone, body shape and proportions, pose, arms, hands and fingers; the top and any layer exactly as they are (including how the hem falls over the waistband), and the shoes; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the lower garment (the trousers / shorts / skirt), from the waist down: replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "women--female-navy-washed-barrel-fit-jeans",
+   "method": "derived",
+   "handle": "female-navy-washed-barrel-fit-jeans",
+   "model": "women",
+   "slot": "bottom",
+   "bucket": "bottom",
+   "rank": 4,
+   "canonical": "public/iys/stylist/models/women.webp",
+   "references": [
+    {
+     "image": 0,
+     "role": "photo"
+    },
+    {
+     "image": 1,
+     "role": "photo"
+    },
+    {
+     "image": 2,
+     "role": "photo"
+    },
+    {
+     "image": 3,
+     "role": "photo"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · BOTTOM. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"Female Navy Washed Barrel Fit Jeans\"; where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, glasses, skin tone, body shape and proportions, pose, arms, hands and fingers; the top and any layer exactly as they are (including how the hem falls over the waistband), and the shoes; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the lower garment (the trousers / shorts / skirt), from the waist down: replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "women--female-brown-corduroy-pants-1",
+   "method": "derived",
+   "handle": "female-brown-corduroy-pants-1",
+   "model": "women",
+   "slot": "bottom",
+   "bucket": "bottom",
+   "rank": 5,
+   "canonical": "public/iys/stylist/models/women.webp",
+   "references": [
+    {
+     "image": 0,
+     "role": "photo"
+    },
+    {
+     "image": 1,
+     "role": "photo"
+    },
+    {
+     "image": 2,
+     "role": "photo"
+    },
+    {
+     "image": 3,
+     "role": "photo"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · BOTTOM. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"Female Brown Corduroy Pants\"; where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, glasses, skin tone, body shape and proportions, pose, arms, hands and fingers; the top and any layer exactly as they are (including how the hem falls over the waistband), and the shoes; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the lower garment (the trousers / shorts / skirt), from the waist down: replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "women--crabby-satin-flowy-wrap",
+   "method": "derived",
+   "handle": "crabby-satin-flowy-wrap",
+   "model": "women",
+   "slot": "bottom",
+   "bucket": "bottom",
+   "rank": 6,
+   "canonical": "public/iys/stylist/models/women.webp",
+   "references": [
+    {
+     "image": 0,
+     "role": "photo"
+    },
+    {
+     "image": 1,
+     "role": "photo"
+    },
+    {
+     "image": 2,
+     "role": "photo"
+    },
+    {
+     "image": 3,
+     "role": "photo"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · BOTTOM. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"Crabby Satin Flowy Wrap\"; where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, glasses, skin tone, body shape and proportions, pose, arms, hands and fingers; the top and any layer exactly as they are (including how the hem falls over the waistband), and the shoes; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the lower garment (the trousers / shorts / skirt), from the waist down: replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "women--female-sage-green-linen-wide-leg-pants",
+   "method": "derived",
+   "handle": "female-sage-green-linen-wide-leg-pants",
+   "model": "women",
+   "slot": "bottom",
+   "bucket": "bottom",
+   "rank": 7,
+   "canonical": "public/iys/stylist/models/women.webp",
+   "references": [
+    {
+     "image": 0,
+     "role": "photo"
+    },
+    {
+     "image": 1,
+     "role": "photo"
+    },
+    {
+     "image": 2,
+     "role": "photo"
+    },
+    {
+     "image": 3,
+     "role": "photo"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · BOTTOM. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"Female Sage Green Linen Wide Leg Pants\"; where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, glasses, skin tone, body shape and proportions, pose, arms, hands and fingers; the top and any layer exactly as they are (including how the hem falls over the waistband), and the shoes; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the lower garment (the trousers / shorts / skirt), from the waist down: replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "women--black-flared-leggings",
+   "method": "derived",
+   "handle": "black-flared-leggings",
+   "model": "women",
+   "slot": "bottom",
+   "bucket": "bottom",
+   "rank": 8,
+   "canonical": "public/iys/stylist/models/women.webp",
+   "references": [
+    {
+     "image": 0,
+     "role": "photo"
+    },
+    {
+     "image": 1,
+     "role": "photo"
+    },
+    {
+     "image": 2,
+     "role": "photo"
+    },
+    {
+     "image": 3,
+     "role": "photo"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · BOTTOM. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"Black Flared Leggings\"; where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, glasses, skin tone, body shape and proportions, pose, arms, hands and fingers; the top and any layer exactly as they are (including how the hem falls over the waistband), and the shoes; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the lower garment (the trousers / shorts / skirt), from the waist down: replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "women--female-beige-linen-wide-leg-pants",
+   "method": "derived",
+   "handle": "female-beige-linen-wide-leg-pants",
+   "model": "women",
+   "slot": "bottom",
+   "bucket": "bottom",
+   "rank": 9,
+   "canonical": "public/iys/stylist/models/women.webp",
+   "references": [
+    {
+     "image": 0,
+     "role": "photo"
+    },
+    {
+     "image": 1,
+     "role": "photo"
+    },
+    {
+     "image": 2,
+     "role": "photo"
+    },
+    {
+     "image": 3,
+     "role": "photo"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · BOTTOM. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"Female Beige Linen Wide Leg Pants\"; where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, glasses, skin tone, body shape and proportions, pose, arms, hands and fingers; the top and any layer exactly as they are (including how the hem falls over the waistband), and the shoes; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the lower garment (the trousers / shorts / skirt), from the waist down: replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  },
+  {
+   "id": "women--purple-flared-leggings",
+   "method": "derived",
+   "handle": "purple-flared-leggings",
+   "model": "women",
+   "slot": "bottom",
+   "bucket": "bottom",
+   "rank": 10,
+   "canonical": "public/iys/stylist/models/women.webp",
+   "references": [
+    {
+     "image": 0,
+     "role": "photo"
+    },
+    {
+     "image": 1,
+     "role": "photo"
+    },
+    {
+     "image": 2,
+     "role": "photo"
+    },
+    {
+     "image": 3,
+     "role": "photo"
+    }
+   ],
+   "prompt": "IMAGE EDIT · VIRTUAL TRY-ON · BOTTOM. Input 1 is the canonical photo to edit. Inputs 2+ are the official product photos of the garment \"Purple Flared Leggings\"; where they show it on someone, take only the garment from them, never that person's face, body, pose or styling.\n\nKEEP EXACTLY, pixel for pixel wherever possible: this exact person's identity, face, expression, hair, glasses, skin tone, body shape and proportions, pose, arms, hands and fingers; the top and any layer exactly as they are (including how the hem falls over the waistband), and the shoes; the room and props behind them; the lighting and white balance; the camera angle, lens, framing and image size.\n\nCHANGE ONLY the lower garment (the trousers / shorts / skirt), from the waist down: replace it with the exact garment from the product photos, fitted and draped the way it is worn in its on-model product photos.\n\nGARMENT FIDELITY (non-negotiable): the exact colour; the exact print, artwork, logo, typography and embroidery, in the same place and at the same scale; the same collar, hood, cuffs, hem, waistband, pockets and zipper (count, placement, colour); the same sleeve length, fit and silhouette; text stays exactly as printed (e.g. \"IYS\" never becomes \"IY5\"). No invented details.\n\nDO NOT: change the face, hair, body, pose or hands; invent a new pose; change or restyle any garment other than the target; add accessories, jewellery or extra layers; beautify, retouch, slim or stylise; change the background, props or light; crop, zoom, rotate or reframe.\n\nThis is a faithful e-commerce try-on asset, not a new editorial photograph. Return ONE full-frame image with exactly the framing of input 1 (2:3, at least 600 × 900).",
+   "promptVersion": 1
+  }
+ ]
+}

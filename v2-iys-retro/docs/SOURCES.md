@@ -94,7 +94,7 @@ non-generative, rebuildable; no AI, no runtime image processing.
   layer cut from the same photo (`*-head.webp`, studio wall removed inside a
   hand-measured outline), drawn over every piece. No generated,
   replaced or stock people.
-- **Pieces (on-model only)**: `public/iys/stylist/look/{men,women}/<handle>.webp`,
+- **Whole looks (on-model only)**: `public/iys/stylist/look/{men,women}/<handle>.webp`,
   each made from one official product photo of that product in the public
   catalogue snapshot in which the same canonical model wears it (reviewed list:
   `src/features/dressup/looks.ts`). The canonical head is found in the photo by
@@ -114,6 +114,17 @@ non-generative, rebuildable; no AI, no runtime image processing.
   that still looked pasted on full-size review. Flat packshots never dress a
   model (headwear, bags and neckwear included): they can't look worn. Source
   photos are cached in `.cache/stylist/` (not committed).
+- **Slot layers (approval-gated)**: `public/iys/stylist/slot/{men,women}/<handle>.webp`
+  (+ `.inner.webp`, an open layer's front), and the canonical photo split into
+  `models/{men,women}-{room,upper,lower,inner}.webp`, are written only for
+  candidates approved in `scripts/stylist/tryon/approvals.json` (none yet).
+  A candidate is either an official photo of the same canonical model aligned
+  as above and cut to one slot, or an offline image edit of the canonical
+  photo made outside this repo from the job's official product photos and
+  strict prompt (`scripts/stylist/tryon/jobs.json`). Each record names its
+  job and the reviewed candidate's sha256; `scripts/stylist/tryon/built.json`
+  pairs that hash with the layer file built from it. Candidates, packs and
+  review sheets stay in `.cache/stylist/tryon/` (not committed).
 
 ## Local assets
 

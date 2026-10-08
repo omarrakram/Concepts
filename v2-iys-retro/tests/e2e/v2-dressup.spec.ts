@@ -1,6 +1,6 @@
 import type { Locator, Page } from '@playwright/test';
 import { axe, desktop, expect, test } from './fixtures';
-import { chooseAll, layerFile, regexEscape, registry, shootPiece, viewOnly, wearable, type Piece } from './dressup-helpers';
+import { chooseAll, layerFile, regexEscape, registry, shootPiece, slotPieces, viewOnly, wearable, type Piece } from './dressup-helpers';
 
 const dz = (page: Page) => page.locator('[data-window="dressup"]');
 const frame = (page: Page, model: 'men' | 'women') => dz(page).locator(`.dz-model[data-model="${model}"]`);
@@ -91,10 +91,11 @@ test.describe('DRESSUP.EXE (desktop)', () => {
   });
 
   test('selecting real IYS pieces visibly changes what each model wears (24 steps)', async ({ page }) => {
-    const [hoodie, hoodie2] = wearable('men', 'outer');
-    const [tee] = wearable('men', 'top');
+    // whole looks: each piece is one official photo of him in it (its whole outfit)
+    const [hoodie, hoodie2] = wearable('men', 'top');
+    const [zip] = wearable('men', 'outer');
     const [pants] = wearable('men', 'bottom');
-    const womenPiece = wearable('women', 'outer').find((p) => p.handle !== hoodie!.handle && p.handle !== hoodie2!.handle)!;
+    const womenPiece = [...wearable('women', 'outer'), ...wearable('women', 'top')].find((p) => p.handle !== hoodie!.handle && p.handle !== hoodie2!.handle)!;
     const bag0 = await (async () => {
       await desktop(page, '/');
       return bagCount(page);
@@ -124,25 +125,25 @@ test.describe('DRESSUP.EXE (desktop)', () => {
     // 9. his own head goes back on top: the face never changes, the hood sits behind it
     await expect(frame(page, 'men').locator('.dz-layer--head')).toHaveCount(1);
     const order = await frame(page, 'men').locator('img').evaluateAll((els) => els.map((e) => e.getAttribute('data-slot')));
-    expect(order.indexOf('outer')).toBeLessThan(order.indexOf('@head'));
+    expect(order.indexOf('top')).toBeLessThan(order.indexOf('@head'));
     // 10. CURRENT LOOK lists it
     const look = dz(page).getByRole('region', { name: 'Current look, MEN' });
     await expect(look).toContainText(hoodie!.title);
-    // 11. another layer replaces it (one piece per slot)
+    // 11. another top replaces it (one piece per slot)
     await (await card(page, hoodie2!)).click();
     await expect(layer(page, 'men', hoodie2!.handle)).toBeVisible();
     await expect(layer(page, 'men', hoodie!.handle)).toHaveCount(0);
-    // 12. a top is another official photo: it replaces the layer (one body photo at a time)
-    await (await card(page, tee!)).click();
-    await expect(layer(page, 'men', tee!.handle)).toBeVisible();
+    // 12. a layer is another official photo: it replaces the top (one body photo at a time)
+    await (await card(page, zip!)).click();
+    await expect(layer(page, 'men', zip!.handle)).toBeVisible();
     await expect(layer(page, 'men', hoodie2!.handle)).toHaveCount(0);
     await expect(look).not.toContainText(hoodie2!.title);
     // 13. so is a bottom: the trousers come with the rest of their photo's outfit
     await (await card(page, pants!)).click();
     await expect(layer(page, 'men', pants!.handle)).toBeVisible();
-    await expect(layer(page, 'men', tee!.handle)).toHaveCount(0);
+    await expect(layer(page, 'men', zip!.handle)).toHaveCount(0);
     await expect(look).toContainText(/rest of that outfit comes with it/);
-    // 14. and the layer replaces the bottom again
+    // 14. and the top replaces the bottom again
     await (await card(page, hoodie2!)).click();
     await expect(layer(page, 'men', hoodie2!.handle)).toBeVisible();
     await expect(layer(page, 'men', pants!.handle)).toHaveCount(0);
@@ -166,14 +167,16 @@ test.describe('DRESSUP.EXE (desktop)', () => {
     await (await card(page, hoodie!)).click();
     await expect(layer(page, 'men', hoodie!.handle)).toHaveCount(0);
     // 19. CLEAR LOOK clears MEN only
-    await (await card(page, tee!)).click();
-    await expect(layer(page, 'men', tee!.handle)).toBeVisible();
+    await (await card(page, zip!)).click();
+    await expect(layer(page, 'men', zip!.handle)).toBeVisible();
     await look.getByRole('button', { name: 'CLEAR LOOK' }).click();
     await expect(frame(page, 'men').locator('.dz-layer')).toHaveCount(0);
     await expect(layer(page, 'women', womenPiece.handle)).toBeVisible();
     // 20. RANDOM LOOK dresses MEN in one wearable piece and never touches the bag
     await dz(page).getByRole('toolbar', { name: 'DRESSUP.EXE controls' }).getByRole('button', { name: 'RANDOM LOOK' }).click();
-    await expect(frame(page, 'men').locator('.dz-layer:not(.dz-layer--head)')).toHaveCount(1);
+    // (the shoot piece among them draws nothing: it is the photo itself)
+    await expect(look.getByRole('button', { name: /^Take off / })).toHaveCount(1);
+    expect(await frame(page, 'men').locator('.dz-layer:not(.dz-layer--head)').count()).toBeLessThanOrEqual(1);
     for (const h of await frame(page, 'men').locator('.dz-layer[data-handle]').evaluateAll((els) => els.map((e) => e.getAttribute('data-handle')!))) expect(registry.items[h], h).toBeTruthy();
     expect(await bagCount(page)).toBe(bag0);
     // 21. category filter narrows to real categories
@@ -184,8 +187,8 @@ test.describe('DRESSUP.EXE (desktop)', () => {
     for (const h of handles) expect(registry.items[h]!.slot).toBe('outer');
     // 22. search finds by real title
     await dz(page).getByRole('combobox', { name: 'Category' }).selectOption('all');
-    await dz(page).getByRole('searchbox', { name: 'Search pieces' }).fill(tee!.title);
-    await expect(dz(page).locator(`.dz-card__main[data-handle="${tee!.handle}"]`)).toBeVisible();
+    await dz(page).getByRole('searchbox', { name: 'Search pieces' }).fill(zip!.title);
+    await expect(dz(page).locator(`.dz-card__main[data-handle="${zip!.handle}"]`)).toBeVisible();
     // 23. view-only pieces stay discoverable and say why
     const vo = viewOnly('men');
     const v = await card(page, vo, 'VIEW-ONLY');
@@ -200,6 +203,71 @@ test.describe('DRESSUP.EXE (desktop)', () => {
     await expect(layer(page, 'women', womenPiece.handle)).toBeVisible();
     const style = await frame(page, 'women').locator('.dz-layer').first().getAttribute('style');
     expect(style).toMatch(/left: -?[\d.]+%; top: -?[\d.]+%; width: [\d.]+%/);
+  });
+
+  // TOP / BOTTOM / OUTERWEAR independence on the real stage: runs as soon as approved slot layers exist
+  // (scripts/stylist/tryon); until then production has whole looks only and the rules are unit-tested
+  // on fixtures (src/tests/dressup-stack.test.ts, dressup-tryon.test.ts).
+  for (const model of ['men', 'women'] as const) {
+    test(`slot independence on ${model.toUpperCase()}: top, bottom and layer change on their own`, async ({ page }) => {
+      const tops = slotPieces(model, 'top'), bottoms = slotPieces(model, 'bottom'), layers = slotPieces(model, 'outer');
+      test.skip(tops.length < 2 || bottoms.length < 2, `no approved slot layers on ${model} yet (${tops.length} tops, ${bottoms.length} bottoms)`);
+      const [tA, tB] = tops, [bA, bB] = bottoms, [o] = layers;
+      await desktop(page, '/');
+      await openFromStart(page);
+      if (model === 'women') await dressing(page, 'WOMEN');
+      const L = (h: string) => layer(page, model, h);
+      const look = dz(page).getByRole('region', { name: `Current look, ${model.toUpperCase()}` });
+      // 1–3. top A + bottom A: both on
+      await (await card(page, tA!)).click();
+      await (await card(page, bA!)).click();
+      await expect(L(tA!.handle)).toBeVisible();
+      await expect(L(bA!.handle)).toBeVisible();
+      const topSrc = await L(tA!.handle).getAttribute('src');
+      // 4–5. bottom B: top A unchanged
+      await (await card(page, bB!)).click();
+      await expect(L(bB!.handle)).toBeVisible();
+      await expect(L(bA!.handle)).toHaveCount(0);
+      expect(await L(tA!.handle).getAttribute('src')).toBe(topSrc);
+      // 6–7. top B: bottom B unchanged
+      await (await card(page, tB!)).click();
+      await expect(L(tB!.handle)).toBeVisible();
+      await expect(L(tA!.handle)).toHaveCount(0);
+      await expect(L(bB!.handle)).toBeVisible();
+      if (!o) return;
+      // 8–9. a layer over them; 10–11. off again: top B is back, bottom B still on
+      await (await card(page, o)).click();
+      await expect(L(o.handle)).toBeVisible();
+      await expect(look).toContainText(tB!.title);
+      await expect(L(bB!.handle)).toBeVisible();
+      await look.getByRole('button', { name: `Take off ${o.title}` }).click();
+      await expect(L(o.handle)).toHaveCount(0);
+      await expect(L(tB!.handle)).toBeVisible();
+      await expect(L(bB!.handle)).toBeVisible();
+    });
+  }
+
+  test('zero generation at runtime: dressing, RANDOM LOOK and details only fetch static files and the catalogue', async ({ page }) => {
+    const hosts = new Set<string>();
+    const urls: string[] = [];
+    page.on('request', (r) => {
+      urls.push(r.url());
+      hosts.add(new URL(r.url()).host);
+    });
+    const [a, b] = wearable('men', 'top');
+    await desktop(page, '/');
+    await openFromStart(page);
+    await (await card(page, a!)).click();
+    await (await card(page, b!)).click();
+    await dz(page).getByRole('toolbar', { name: 'DRESSUP.EXE controls' }).getByRole('button', { name: 'RANDOM LOOK' }).click();
+    await card(page, a!);
+    await dz(page).getByRole('button', { name: `Details for ${a!.title}` }).click();
+    await expect(dz(page).getByRole('region', { name: `${a!.title} details` })).toBeVisible();
+    const origin = new URL(page.url()).host;
+    for (const h of hosts) expect([origin, 'cdn.shopify.com'], h).toContain(h);
+    // every stylist file is a static, pre-built asset; nothing is posted anywhere
+    for (const u of urls.filter((x) => x.includes('/iys/stylist/'))) expect(u, u).toMatch(/\/iys\/stylist\/(models|look|slot)\/(men|women)[a-z0-9./-]*\.webp$/);
+    expect(urls.some((u) => /openai|replicate|stability|huggingface|generativelanguage|anthropic|fal\.(ai|run)/i.test(u))).toBe(false);
   });
 
   test('commerce: real price, details, no preselected size, ADD TO BAG via the one bag, VIEW PRODUCT canonical', async ({ page }) => {

@@ -107,8 +107,20 @@
   user-select: none;
   animation: dz-pin 0.18s ease-out;
 }
-.dz-layer--head {
+.dz-layer--head,
+.dz-layer--room,
+.dz-layer--base {
   animation: none;
+}
+/* a top seen through an open layer's front: the frame-sized mask is that opening */
+.dz-clip {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
 }
 @keyframes dz-pin {
   from {

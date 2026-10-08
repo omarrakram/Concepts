@@ -10,11 +10,17 @@ import type { ViewOnlyReason } from './overrides';
  * to draw and where. Titles, prices, sale state, availability and variants are
  * always read from the catalogue, never from here.
  *
- * Every layer is on-model: the body of an OFFICIAL product photo in which that
- * same model wears the piece, aligned to the canonical photo (clothes, arms and
- * hands from the official photo; the canonical head stays on top). One per
- * model the piece was photographed on. A flat packshot never dresses a model:
- * it can't look worn.
+ * Every layer is the model actually wearing the piece; a flat packshot never
+ * dresses a model (it can't look worn). Two scopes:
+ *  - whole: an OFFICIAL product photo of that same model in the piece, aligned
+ *    to the canonical photo: the model's whole body below the chin, i.e. that
+ *    photo's full outfit. One body photo at a time.
+ *  - slot: one slot only (a top's upper body with its arms and hands, a
+ *    bottom's legs), drawn over the canonical photo's empty room, so slots
+ *    combine freely. Only from candidates that passed the manual approval
+ *    gate (scripts/stylist/tryon/): an official photo cut to the slot, or a
+ *    development-time try-on of the canonical photo (source 'derived').
+ * The canonical head always goes back on top.
  *
  * Stale-safe by construction: a mapping is used only when its handle is in the
  * catalogue AND the classifier still files it under the same slot AND the
@@ -28,17 +34,27 @@ export interface Box {
   w: number;
   h: number;
 }
-export interface LookLayer {
+/** A layer image placed in the model frame (normalised box). */
+export interface Layer {
   file: string;
-  /** Where the layer sits in the model frame (normalised). */
   box: Box;
-  /** Official product image it was made from + its CDN filename. */
-  image: number;
-  src: string;
-  /** Head-alignment match score (masked normalised cross-correlation). */
-  score: number;
 }
-/** The piece the model wears in the canonical photo itself: nothing to draw, the shoot photo already shows it. */
+export type LookSourceType = 'official' | 'derived';
+export type LookScope = 'whole' | 'slot';
+export interface LookLayer extends Layer {
+  source: LookSourceType;
+  scope: LookScope;
+  /** official: the product image it was made from (index + CDN filename) and the head-match score. */
+  image?: number;
+  src?: string;
+  score?: number;
+  /** slot: the approved job and the reviewed candidate's content hash (provenance). */
+  job?: string;
+  candidate?: string;
+  /** An open layer's front (full-frame mask of the top it was photographed over): where a chosen top shows instead. */
+  inner?: Layer;
+}
+/** The piece the model wears in the canonical photo itself: its own layers (the model's base) are the piece. */
 export interface ShootLook {
   shoot: true;
   /** The supplied studio photo's filename (provenance). */
@@ -51,11 +67,26 @@ export interface OnModelItem {
 }
 export type MappedItem = OnModelItem;
 
+/** The canonical photo split into what the slots need. */
+export interface ModelLayers {
+  file: string;
+  headFile: string;
+  head: Box;
+  /** The photo with the model's body below the chin removed (the empty room). */
+  room?: Layer;
+  /** The canonical upper body (garment, arms, hands) and trousers, worn while nothing replaces them. */
+  upper?: Layer;
+  lower?: Layer;
+  /** The canonical layer's open front (full-frame mask: his tee between the jacket's panels), if any. */
+  inner?: Layer;
+  bytes: number;
+}
+
 export interface Registry {
   generatedAt: string;
   catalogueGeneratedAt: string;
   source: string;
-  models: Record<ModelId, { file: string; headFile: string; head: Box; bytes: number }> | null;
+  models: Record<ModelId, ModelLayers> | null;
   items: Record<string, MappedItem>;
   skip: Record<string, ViewOnlyReason>;
 }
@@ -73,11 +104,28 @@ export type StylistEntry =
 
 const unit = (n: unknown) => typeof n === 'number' && Number.isFinite(n) && n >= 0 && n <= 1;
 const validBox = (b: Box | undefined) => Boolean(b && unit(b.x) && unit(b.y) && unit(b.w) && unit(b.h) && b.w > 0 && b.h > 0 && b.x + b.w <= 1.0001 && b.y + b.h <= 1.0001);
-export const validLook = (l: LookLayer | ShootLook | undefined): l is LookLayer | ShootLook =>
-  Boolean(l && ('shoot' in l ? l.shoot === true : typeof l.file === 'string' && /^\/iys\/stylist\/look\/(men|women)\/[a-z0-9-]+\.webp$/.test(l.file) && validBox(l.box)));
+const WHOLE_FILE = /^\/iys\/stylist\/look\/(men|women)\/[a-z0-9-]+\.webp$/;
+const SLOT_FILE = /^\/iys\/stylist\/slot\/(men|women)\/[a-z0-9-]+(\.inner)?\.webp$/;
+const MODEL_FILE = /^\/iys\/stylist\/models\/(men|women)(-head|-room|-upper|-lower|-inner)?\.webp$/;
+const validLayer = (l: Layer | undefined, re: RegExp) => Boolean(l && typeof l.file === 'string' && re.test(l.file) && validBox(l.box));
+export const validLook = (l: LookLayer | ShootLook | undefined): l is LookLayer | ShootLook => {
+  if (!l) return false;
+  if ('shoot' in l) return l.shoot === true;
+  // a whole look is always an official photo; a slot layer only ever enters through the approval gate
+  if (l.scope === 'whole') return l.source === 'official' && validLayer(l, WHOLE_FILE);
+  if (l.scope === 'slot') return (l.source === 'official' || l.source === 'derived') && validLayer(l, SLOT_FILE) && typeof l.job === 'string' && typeof l.candidate === 'string' && (l.inner === undefined || validLayer(l.inner, SLOT_FILE));
+  return false;
+};
+/** Slots a worn layer can fill (accessories have no on-model source). */
+export const LAYER_SLOTS: Slot[] = ['top', 'outer', 'bottom', 'onepiece'];
+
+/** Are a model's canonical slot layers all there (else the stage shows the plain photo)? */
+export const validBase = (b: ModelLayers | undefined): b is ModelLayers & Required<Pick<ModelLayers, 'room' | 'upper' | 'lower'>> =>
+  Boolean(b && [b.room, b.upper, b.lower, ...(b.inner ? [b.inner] : [])].every((l) => validLayer(l, MODEL_FILE)) && MODEL_FILE.test(b.headFile) && validBox(b.head));
 
 /** Is a registry record well-formed enough to draw? */
-export const validItem = (it: MappedItem | undefined): it is MappedItem => Boolean(it && it.kind === 'on-model' && Object.values(it.looks ?? {}).some(validLook));
+export const validItem = (it: MappedItem | undefined): it is MappedItem =>
+  Boolean(it && it.kind === 'on-model' && LAYER_SLOTS.includes(it.slot) && Object.values(it.looks ?? {}).some(validLook));
 
 /** Which models a mapping can dress: the models it was photographed on (and is listed for). */
 export const mappedModels = (it: MappedItem, audience: Audience): ModelId[] => (['men', 'women'] as const).filter((m) => fitsModel(audience, m) && validLook(it.looks[m]));
@@ -104,6 +152,16 @@ export function layerFor(e: StylistEntry | undefined, m: ModelId): LookLayer | S
   const look = e.item.looks[m];
   return validLook(look) ? look : null;
 }
+
+/** Is what this entry puts on this model a whole look (its photo's full outfit, one at a time)? */
+export function isWholeOn(e: StylistEntry | undefined, m: ModelId): boolean {
+  const l = layerFor(e, m);
+  return Boolean(l && !('shoot' in l) && l.scope === 'whole');
+}
+
+/** The handles worn whole on a model (for wearPiece). */
+export const wholesOf = (s: StylistCatalogue, m: ModelId): ReadonlySet<string> =>
+  new Set(s.entries.flatMap((e) => (e.kind === 'wearable' && isWholeOn(e, m) ? [e.product.handle] : [])));
 
 export interface StylistCatalogue {
   entries: StylistEntry[];
@@ -150,9 +208,19 @@ export function buildStylist(cat: Catalogue, reg: Pick<Registry, 'items' | 'skip
   return { entries, byHandle: new Map(entries.map((e) => [e.product.handle, e])), counts };
 }
 
-/** Wearable handles per slot for one model (RANDOM LOOK's pool). */
-export function wearablePool(s: StylistCatalogue, model: ModelId, onlyAvailable = true): Partial<Record<Slot, string[]>> {
-  const pool: Partial<Record<Slot, string[]>> = {};
-  for (const e of s.entries) if (wearableOn(e, model) && (!onlyAvailable || e.product.available !== false)) (pool[e.slot] ??= []).push(e.product.handle);
-  return pool;
+/** RANDOM LOOK's pools for one model: slot pieces per slot (they combine) and pieces worn one at a time (whole looks, the shoot piece). */
+export function wearablePool(s: StylistCatalogue, model: ModelId, onlyAvailable = true): { slots: Partial<Record<Slot, string[]>>; wholes: string[]; slotOf: Record<string, Slot> } {
+  const slots: Partial<Record<Slot, string[]>> = {};
+  const wholes: string[] = [];
+  const slotOf: Record<string, Slot> = {};
+  for (const e of s.entries) {
+    if (!wearableOn(e, model) || (onlyAvailable && e.product.available === false)) continue;
+    const l = layerFor(e, model);
+    if (!l) continue;
+    slotOf[e.product.handle] = e.slot;
+    // (the shoot piece is drawn by no layer: worn alone it is the photo itself, as deployed)
+    if ('shoot' in l || l.scope === 'whole') wholes.push(e.product.handle);
+    else (slots[e.slot] ??= []).push(e.product.handle);
+  }
+  return { slots, wholes, slotOf };
 }

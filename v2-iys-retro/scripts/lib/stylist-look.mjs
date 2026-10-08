@@ -301,7 +301,7 @@ export function person(d, ch, valid, a, seam = null, [WALL_TOL, STEP, useField] 
       if (dx > 0.36 || (y > H * 0.7 && dx > a.hipW * 0.95)) fg[y * W + x] = 0;
     }
   fg.seam = seam;
-  fg.sliced = 0;
+  fg.sliced = new Uint8Array(H);
   fg.bg = bg;
   return fg;
 }
@@ -310,8 +310,8 @@ export function person(d, ch, valid, a, seam = null, [WALL_TOL, STEP, useField] 
  * Pair shots: the cheapest top-to-bottom path between the two heads (x0..x1),
  * moving at most 1 px per row. Wall is nearly free; through clothes, a strong
  * colour edge (where one sleeve meets the other) is cheap and flat fabric is
- * dear. `sliced`: rows below the chin where the path still crosses flat fabric
- * (the two touch and nothing tells them apart), which a straight cut would show.
+ * dear. `sliced` flags the rows below the chin where the path still crosses flat
+ * fabric (the two touch and nothing tells them apart): a straight cut would show.
  */
 function separate(d, ch, valid, bg, x0, x1, yChin) {
   x0 = Math.max(1, x0);
@@ -340,11 +340,11 @@ function separate(d, ch, valid, bg, x0, x1, yChin) {
   let x = 0;
   for (let k = 1; k < n; k++) if (M[(H - 1) * n + k] < M[(H - 1) * n + x]) x = k;
   const seam = new Int16Array(H);
-  let sliced = 0;
+  const sliced = new Uint8Array(H);
   for (let y = H - 1; y >= 0; y--) {
     seam[y] = x0 + x;
     const i = y * W + seam[y];
-    if (y >= yChin && valid(i) && !bg[i] && grad(seam[y], y) < 24) sliced++;
+    if (y >= yChin && valid(i) && !bg[i] && grad(seam[y], y) < 24) sliced[y] = 1;
     x += from[y * n + x];
   }
   return { seam, sliced };
@@ -354,18 +354,194 @@ function separate(d, ch, valid, bg, x0, x1, yChin) {
 export async function prepareBase(modelFile, a) {
   const base = await sharp(modelFile).removeAlpha().raw().toBuffer();
   const fg = person(base, 3, () => true, a);
-  // fixed frame: below the hands only the legs are body (the props and floor never are)
-  for (let y = Math.round(a.legsFrom * H); y < H; y++) {
-    const t = (y / H - a.legsFrom) / (1 - a.legsFrom);
-    const half = (a.legsHalf[0] * (1 - t) + a.legsHalf[1] * t) * W;
-    for (let x = 0; x < W; x++) if (Math.abs(x - a.cx * W) > half) fg[y * W + x] = 0;
-  }
+  // whole looks (as deployed): below the hands only the legs are body (the props and floor never are)
+  if (a.legsFrom)
+    for (let y = Math.round(a.legsFrom * H); y < H; y++) {
+      const t = (y / H - a.legsFrom) / (1 - a.legsFrom);
+      const half = (a.legsHalf[0] * (1 - t) + a.legsHalf[1] * t) * W;
+      for (let x = 0; x < W; x++) if (Math.abs(x - a.cx * W) > half) fg[y * W + x] = 0;
+    }
+  // slot layers: the hand-measured outline keeps the props beside the legs and hands out of the body
+  if (a.outline) for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) if (fg[y * W + x] && !inPoly(x / W, y / H, a.outline)) fg[y * W + x] = 0;
   return { base, fg, a };
 }
 
+/** Is (x, y) inside the polygon (even-odd rule)? */
+export function inPoly(x, y, poly) {
+  let inside = false;
+  for (let i = 0, j = poly.length - 1; i < poly.length; j = i++) {
+    const [xi, yi] = poly[i], [xj, yj] = poly[j];
+    if (yi > y !== yj > y && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi) inside = !inside;
+  }
+  return inside;
+}
+
 /**
- * Compose one on-model layer. Returns null + a reason when the photo can't
- * produce a convincing worn result (too short, body not found, …).
+ * The canonical model's own body below the chin removed: the room behind it,
+ * interpolated along each row (plain wall above the floor line, the floor's
+ * planks below), the wall smoothed vertically so row-to-row changes never
+ * streak. Every slot layer is drawn over this, so wherever a new piece is
+ * slimmer than the canonical outfit the room shows, never the old clothes.
+ */
+export function roomPlate(B, { floorY = 0.8 } = {}) {
+  const { base, fg, a } = B;
+  // clean wall: light and neutral (a cream fan base or a light grille is not wall)
+  const isWall = (i) => {
+    const r = base[i * 3], g = base[i * 3 + 1], b = base[i * 3 + 2];
+    return Math.min(r, g, b) > 190 && Math.max(r, g, b) - Math.min(r, g, b) < 22;
+  };
+  const yStart = Math.round(a.chinY * H), yFloor = Math.round(floorY * H);
+  // 2 px past the silhouette, so the body's anti-aliased rim never survives as an outline
+  const grown = outsideBand(fg, 2);
+  const under = (j) => fg[j] || grown[j];
+  const room = Buffer.from(base);
+  const filled = new Uint8Array(W * H);
+  // the room's wooden floor (warm mid browns): a bag, a shelf or records standing on it aren't floor
+  const isFloor = (i) => {
+    const r = base[i * 3], g = base[i * 3 + 1], b = base[i * 3 + 2];
+    return r > 90 && r < 240 && r - b > 35 && g - b > 8 && r >= g;
+  };
+  for (let y = yStart; y < H; y++) {
+    // (below the generic floor line the skirting rows can still be wall)
+    const ok = (j) => (y > yFloor ? isFloor(j) || isWall(j) : isWall(j));
+    for (let x = 0; x < W; x++) {
+      const i = y * W + x;
+      if (!under(i)) continue;
+      // nearest plain room pixel each side, looking past a prop standing next to the body (a bag, books)
+      let l = x, r = x;
+      while (l > 0 && (under(y * W + l) || (!ok(y * W + l) && x - l < 160))) l--;
+      while (r < W - 1 && (under(y * W + r) || (!ok(y * W + r) && r - x < 160))) r++;
+      const lOk = !under(y * W + l) && ok(y * W + l), rOk = !under(y * W + r) && ok(y * W + r);
+      if (!lOk && !rOk) continue;
+      const u = lOk && rOk ? (x - l) / Math.max(1, r - l) : lOk ? 0 : 1;
+      for (let k = 0; k < 3; k++) room[i * 3 + k] = Math.round(base[(y * W + l) * 3 + k] * (1 - u) + base[(y * W + r) * 3 + k] * u);
+      filled[i] = 1;
+    }
+  }
+  // anything still unset takes the room filled in just above it
+  for (let y = yStart + 1; y < H; y++)
+    for (let x = 0; x < W; x++) {
+      const i = y * W + x;
+      if (under(i) && !filled[i] && filled[i - W]) {
+        for (let k = 0; k < 3; k++) room[i * 3 + k] = room[(i - W) * 3 + k];
+        filled[i] = 1;
+      }
+    }
+  const R2 = 7;
+  const copy = Buffer.from(room);
+  for (let x = 0; x < W; x++)
+    for (let y = yStart; y < yFloor; y++) {
+      const i = y * W + x;
+      if (!filled[i]) continue;
+      const acc = [0, 0, 0];
+      let n = 0;
+      for (let dy = -R2; dy <= R2; dy++) {
+        const yy = y + dy;
+        if (yy < yStart || yy >= yFloor || !filled[yy * W + x]) continue;
+        for (let k = 0; k < 3; k++) acc[k] += copy[(yy * W + x) * 3 + k];
+        n++;
+      }
+      for (let k = 0; k < 3; k++) room[i * 3 + k] = Math.round(acc[k] / n);
+    }
+  return room;
+}
+
+/**
+ * The person in an official photo, in the canonical frame: aligned pixels +
+ * body mask + the backdrop mask, or a reason it can't be used. Refused:
+ * photos that don't cover the frame, no body found, a coloured studio (the
+ * body is lit differently from the canonical photo).
+ */
+export async function body(buf, loc, head, B) {
+  const { base, fg: bFg, a } = B;
+  const P = await warp(buf, loc, head);
+  const valid = (i) => P.data[i * 4 + 3] > 0;
+  // the photo must cover the frame below the chin across the body, or the layer would end mid-air
+  for (const fx of [a.cx - 0.12, a.cx, a.cx + 0.12]) for (const fy of [a.chinY, 0.6, 0.99]) if (!valid(Math.round(fy * (H - 1)) * W + Math.round(fx * W))) return { reason: 'photo-too-short' };
+  // backdrop flood, loose → strict (a white garment on a white wall needs the strict end)
+  let fg = null;
+  for (const flood of FLOOD) {
+    const m = person(P.data, 4, valid, { ...a, headBand: [head.y + head.h * 0.15, head.y + head.h * 0.6] }, null, flood, { carryFloor: true });
+    let n = 0;
+    for (let i = 0; i < W * H; i++) n += m[i];
+    if (n >= W * H * 0.08) {
+      fg = m;
+      break;
+    }
+  }
+  if (!fg) return { reason: 'body-not-found' };
+  clearFloor(P.data, fg, valid);
+  const bg = fg.bg;
+  smooth(fg, 2);
+  // same neutral studio as the canonical photo? (the wall's gain per channel, away from both bodies)
+  const gain = [0, 1, 2].map((k) => {
+    let s1 = 0, s2 = 0;
+    for (let y = 5; y < H * 0.18; y++)
+      for (let x = 10; x < W - 10; x += 3) {
+        const i = y * W + x;
+        if (fg[i] || bFg[i] || !valid(i) || Math.abs(x - a.cx * W) < 0.2 * W) continue;
+        s1 += base[i * 3 + k];
+        s2 += P.data[i * 4 + k];
+      }
+    return s2 ? s1 / s2 : 0;
+  });
+  if (!(gain.every((g) => g > 0.8 && g < 1.25) && Math.max(...gain) - Math.min(...gain) < 0.12)) return { reason: 'studio-mismatch' };
+  return { P, valid, fg, bg, pair: Boolean(fg.seam), busy: busyness(fg, valid, a), sliced: fg.sliced };
+}
+
+/**
+ * A transparent layer of `mask` (y ≥ yStart). Edge pixels mix the body with
+ * the source's studio wall (a light outline over the canonical room), so each
+ * is unmixed against the known backdrop: colour = the body just inside,
+ * coverage = where the pixel sits between the local wall colour and that body
+ * colour. `paint` may supply colours for pixels the photo can't (a filled
+ * hole, a continuation under the hem); those are opaque, and `sample` (the
+ * pixels really seen) is where edge colours are taken from.
+ */
+export async function matte(data, ch, mask, bg, { yStart = 0, paint = null, sample = mask } = {}) {
+  const depth = ringDepth(mask, 4);
+  const near = outsideBand(mask, 2);
+  const layer = Buffer.alloc(W * H * 4);
+  const at = (j) => [data[j * ch], data[j * ch + 1], data[j * ch + 2]];
+  for (let y = yStart; y < H; y++)
+    for (let x = 0; x < W; x++) {
+      const i = y * W + x, t = i * 4;
+      const painted = paint?.(i);
+      if (painted) {
+        for (let k = 0; k < 3; k++) layer[t + k] = painted[k];
+        layer[t + 3] = 255;
+        continue;
+      }
+      let F = null, cover = 0;
+      if (mask[i] && depth[i] >= 4) (F = at(i)), (cover = 1);
+      else if (mask[i] || near[i]) {
+        F = meanOf(data, ch, x, y, (j) => sample[j] && depth[j] >= 4);
+        const Bk = meanOf(data, ch, x, y, (j) => bg[j]);
+        if (F && Bk) {
+          let num = 0, den = 0;
+          const C = at(i);
+          for (let k = 0; k < 3; k++) (num += (C[k] - Bk[k]) * (F[k] - Bk[k])), (den += (F[k] - Bk[k]) ** 2);
+          // body close to the wall colour (a white tee): coverage can't be told apart, keep the mask
+          if (den < 300) (cover = +mask[i]), (F = at(i));
+          else cover = Math.min(1, Math.max(0, num / den));
+        } else if (mask[i]) (F = at(i)), (cover = 1);
+        // inside the photo but no backdrop nearby (a hem over trousers, a cut seam): a plain edge
+        else F = null;
+      }
+      if (F && cover > 0) {
+        for (let k = 0; k < 3; k++) layer[t + k] = Math.round(F[k]);
+        layer[t + 3] = Math.round(cover * 255);
+      }
+    }
+  return finish(layer);
+}
+
+/**
+ * A WHOLE-LOOK layer: the person's whole body below the chin from an official
+ * photo (the full outfit of that photo, worn one at a time), over the
+ * canonical room where the canonical outfit would show past it. This is the
+ * deployed official-look compositor, kept as it shipped. Returns a reason
+ * when the photo can't look worn (too short, body not found, …).
  */
 export async function compose(buf, loc, head, B, { floorY = 0.8 } = {}) {
   const { base, fg: bFg, a } = B;
@@ -391,7 +567,7 @@ export async function compose(buf, loc, head, B, { floorY = 0.8 } = {}) {
   smooth(pFg, 2);
   const busy = busyness(pFg, valid, a);
   if (busy > BUSY_MAX) return { reason: 'busy-backdrop', busy };
-  const sliced = pFg.sliced;
+  const sliced = pFg.sliced.reduce((n, v) => n + v, 0);
   if (sliced > SLICE_MAX) return { reason: 'pair-overlap', sliced };
   // same neutral studio as the canonical photo? (the wall's gain per channel, away from both bodies)
   const gain = [0, 1, 2].map((k) => {
@@ -464,8 +640,8 @@ export async function compose(buf, loc, head, B, { floorY = 0.8 } = {}) {
       let F = null, cover = 0;
       if (pFg[i] && depth[i] >= 4) (F = [P.data[t], P.data[t + 1], P.data[t + 2]]), (cover = 1);
       else if (pFg[i] || near[i]) {
-        F = meanOf(P.data, x, y, (j) => pFg[j] && depth[j] >= 4);
-        const Bk = meanOf(P.data, x, y, (j) => P.bgMask[j]);
+        F = meanOf(P.data, 4, x, y, (j) => pFg[j] && depth[j] >= 4);
+        const Bk = meanOf(P.data, 4, x, y, (j) => P.bgMask[j]);
         if (F && Bk) {
           let num = 0, den = 0;
           for (let k = 0; k < 3; k++) (num += (P.data[t + k] - Bk[k]) * (F[k] - Bk[k])), (den += (F[k] - Bk[k]) ** 2);
@@ -512,6 +688,7 @@ function busyness(fg, valid, a) {
  * edge no photo has. Wall between them is reached from the cut, so a clean
  * pair shot leaves the cut untouched.
  */
+/** Pair shots: most rows (in the zone a layer uses) a seam may cut through flat fabric. */
 export const SLICE_MAX = 8;
 
 /**
@@ -567,15 +744,15 @@ function ringDepth(mask, max) {
   for (let i = 0; i < W * H; i++) if (mask[i] && !d[i]) d[i] = max;
   return d;
 }
-/** Mean colour (RGBA data) of the pixels around (x, y) (7 × 7) that pass `use`, or null. */
-function meanOf(data, x, y, use) {
+/** Mean colour of the pixels around (x, y) (7 × 7) that pass `use`, or null. */
+function meanOf(data, ch, x, y, use) {
   const acc = [0, 0, 0];
   let n = 0;
   for (let yy = Math.max(0, y - 3); yy <= Math.min(H - 1, y + 3); yy++)
     for (let xx = Math.max(0, x - 3); xx <= Math.min(W - 1, x + 3); xx++) {
       const j = yy * W + xx;
       if (!use(j)) continue;
-      for (let k = 0; k < 3; k++) acc[k] += data[j * 4 + k];
+      for (let k = 0; k < 3; k++) acc[k] += data[j * ch + k];
       n++;
     }
   return n ? acc.map((v) => v / n) : null;

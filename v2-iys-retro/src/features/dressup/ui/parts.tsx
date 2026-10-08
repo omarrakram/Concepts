@@ -10,9 +10,10 @@ import { paginate } from '../../../lib/catalogue/query';
 import { CATEGORIES, CATEGORY_LABEL, fitsModel, type Category, type ModelId, type Slot } from '../classify';
 import { missingOption, useStylistProduct } from '../commerce';
 import { MODELS, MODEL_IDS } from '../models';
-import { BODY, LAYER_ORDER, paintOrder, SLOT_LABEL, type Outfit } from '../outfit';
+import { LAYER_ORDER, SLOT_LABEL, type Outfit } from '../outfit';
 import { VIEW_ONLY_COPY } from '../overrides';
-import { layerFor, wearableOn, type StylistCatalogue, type StylistEntry } from '../registry';
+import { isWholeOn, wearableOn, wholesOf, type StylistCatalogue, type StylistEntry } from '../registry';
+import { stackFor, type DrawLayer, type Stack } from '../stack';
 import { lookPlacement, placementStyle } from '../stage';
 import { useLooks } from '../store';
 import { REGISTRY } from '../useStylist';
@@ -28,47 +29,81 @@ export function lookSummary(s: StylistCatalogue, outfit: Outfit): string {
 
 // ── Stage ────────────────────────────────────────────────────────────────
 /**
- * One model: the canonical photo, then what they wear. A piece is the
- * model's body from an official photo of them wearing it (aligned to this
- * frame); the canonical head always goes back on top, so the face never changes.
+ * The stack to draw: a new one only once all its layers are loaded (the
+ * previous outfit stays until then), so a change is one clean swap, never a
+ * body missing for a moment. Gives up waiting after 1.5 s.
+ */
+function useSettled(stack: Stack | null): Stack | null {
+  const [shown, setShown] = useState(stack);
+  const key = stack ? stack.layers.map((l) => `${l.key}=${l.file}`).join('|') : '';
+  useEffect(() => {
+    if (!stack) {
+      setShown(null);
+      return;
+    }
+    let live = true;
+    const show = () => live && setShown(stack);
+    const files = [...new Set(stack.layers.flatMap((l) => (l.clip ? [l.file, l.clip.file] : [l.file])))];
+    void Promise.all(
+      files.map(
+        (f) =>
+          new Promise<void>((done) => {
+            const im = new Image();
+            im.onload = im.onerror = () => done();
+            im.src = f;
+          }),
+      ),
+    ).then(show);
+    const t = setTimeout(show, 1500);
+    return () => {
+      live = false;
+      clearTimeout(t);
+    };
+    // the key is the stack's identity (a new array each render otherwise)
+  }, [key]);
+  return stack ? shown : null;
+}
+
+/**
+ * One model: the canonical photo, and over it what they wear, one layer per
+ * slot (stack.ts): the room with the body removed, the bottom, the top or the
+ * layer, then the canonical head, so the face never changes. Nothing chosen
+ * (or only the piece they wear in the photo itself) → the photo as it is.
  */
 export function ModelFrame({ s, model, active, onSelect, grid }: { s: StylistCatalogue; model: ModelId; active: boolean; onSelect?: () => void; grid?: boolean }) {
   const m = MODELS[model];
   const outfit = useLooks((st) => st.looks[model]);
-  const head = REGISTRY.models?.[model]?.head;
-  const drawn = new Set(paintOrder(outfit));
-  // the canonical head goes back on top of another photo's body (the shoot piece is the canonical photo itself)
-  const dressed = BODY.some((b) => {
-    const l = drawn.has(b) ? layerFor(s.byHandle.get(outfit[b]!), model) : null;
-    return l && !('shoot' in l);
-  });
-  const layers = LAYER_ORDER.flatMap((l) => {
-    if (l === '@head') return head && dressed ? [{ key: '@head', src: m.headFile, style: placementStyle(lookPlacement(head)), slot: '@head', handle: '', kind: 'head' }] : [];
-    if (!drawn.has(l)) return [];
-    const handle = outfit[l]!;
-    const look = layerFor(s.byHandle.get(handle), model);
-    return look && !('shoot' in look) ? [{ key: `${l}:${handle}`, src: look.file, style: placementStyle(lookPlacement(look.box)), slot: l, handle, kind: 'look' }] : [];
-  });
+  const stack = useSettled(stackFor(s, model, outfit, REGISTRY.models?.[model]));
+  const img = (x: DrawLayer, extra = '') => (
+    <img
+      key={x.key}
+      className={`dz-layer dz-layer--${x.part === 'head' ? 'head' : x.part === 'room' ? 'room' : x.part === 'base' ? 'base' : 'look'}${extra}`}
+      src={x.file}
+      alt=""
+      draggable={false}
+      decoding="async"
+      style={placementStyle(lookPlacement(x.box)) as CSSProperties}
+      data-slot={x.part === 'head' ? '@head' : x.part}
+      data-handle={x.handle}
+      // a layer that fails to load is hidden, never a broken-image box on the model
+      onError={(ev) => {
+        ev.currentTarget.hidden = true;
+      }}
+    />
+  );
   const body = (
     <>
       <img className="dz-photo" src={m.file} width={m.width} height={m.height} alt="" draggable={false} decoding="async" />
-      {layers.map((x) => (
-        <img
-          key={x.key}
-          className={`dz-layer dz-layer--${x.kind}`}
-          src={x.src}
-          alt=""
-          draggable={false}
-          decoding="async"
-          style={x.style as CSSProperties}
-          data-slot={x.slot}
-          data-handle={x.handle || undefined}
-          // a fitting photo that fails to load is hidden, never a broken-image box on the model
-          onError={(ev) => {
-            ev.currentTarget.hidden = true;
-          }}
-        />
-      ))}
+      {stack?.layers.map((x) =>
+        x.clip ? (
+          // the top seen through an open layer's front: clipped to that opening
+          <span key={x.key} className="dz-clip" style={{ maskImage: `url(${x.clip.file})`, WebkitMaskImage: `url(${x.clip.file})` }}>
+            {img({ ...x, key: `${x.key}:img` }, ' dz-layer--front')}
+          </span>
+        ) : (
+          img(x)
+        ),
+      )}
       {grid && <AlignmentGrid model={model} />}
       <span className="dz-tag" aria-hidden="true">
         {m.label}
@@ -113,6 +148,7 @@ export function CurrentLook({ s, model, onOpen, compact }: { s: StylistCatalogue
   const dispatch = useLooks((st) => st.dispatch);
   const worn = LAYER_ORDER.filter((l): l is Slot => l !== '@head' && l in outfit);
   const m = MODELS[model];
+  const covered = Boolean(stackFor(s, model, outfit, REGISTRY.models?.[model])?.coveredTop);
   return (
     <section className={`dz-look${compact ? ' dz-look--compact' : ''}`} aria-label={`Current look, ${m.label}`}>
       <h3 className="dz-look__h">
@@ -141,7 +177,8 @@ export function CurrentLook({ s, model, onOpen, compact }: { s: StylistCatalogue
           })}
         </ul>
       ) : null}
-      {worn.some((sl) => BODY.includes(sl)) && <p className="dz-look__note">As in its official photo: the rest of that outfit comes with it.</p>}
+      {worn.some((sl) => isWholeOn(s.byHandle.get(outfit[sl]!), model)) && <p className="dz-look__note">As in its official photo: the rest of that outfit comes with it.</p>}
+      {covered && <p className="dz-look__note">The top is on, under the closed layer.</p>}
       {!worn.length && (
         <p className="dz-look__empty">{m.shootLook}. Pick a piece to dress {m.label === 'MEN' ? 'him' : 'her'} xo</p>
       )}
@@ -163,7 +200,7 @@ export function useWear(s: StylistCatalogue) {
   const dispatch = useLooks((st) => st.dispatch);
   return (model: ModelId, handle: string) => {
     const e = s.byHandle.get(handle);
-    if (wearableOn(e, model)) dispatch({ type: 'wear', model, slot: e.slot, handle });
+    if (wearableOn(e, model)) dispatch({ type: 'wear', model, slot: e.slot, handle, wholes: wholesOf(s, model) });
   };
 }
 

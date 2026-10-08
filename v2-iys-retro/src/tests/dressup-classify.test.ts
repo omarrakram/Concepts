@@ -6,7 +6,8 @@ import { hydrate } from '../lib/catalogue/hydrate';
 import type { IndexFile, Product } from '../lib/catalogue/types';
 import { audienceOf, CATEGORY_SLOT, classify, fitsModel, isKids, type ClassifyInput } from '../features/dressup/classify';
 import { buildStylist, layerFor, resolveEntry, type MappedItem, type Registry } from '../features/dressup/registry';
-import { LOOK_SOURCES, SHOOT_LOOKS } from '../features/dressup/looks';
+import { OFFICIAL_SLOT_CANDIDATES, SHOOT_LOOKS, WHOLE_LOOKS } from '../features/dressup/looks';
+import { jobId } from '../features/dressup/tryon';
 import { MODELS } from '../features/dressup/models';
 
 const cat = hydrate(index as unknown as IndexFile);
@@ -23,6 +24,10 @@ describe('DRESSUP.EXE classification', () => {
   it('maps real product types to the right slot (tops under layers, PJOYS are bottoms)', () => {
     expect(classify(p({ productType: 'Printed Oversized Tees' }))).toMatchObject({ relevant: true, category: 'tops', slot: 'top' });
     expect(classify(p({ productType: 'Zip Up Hoodies' }))).toMatchObject({ category: 'layers', slot: 'outer' });
+    // a pullover hoodie or crewneck is the top (a zip-up or jacket goes over it)
+    expect(classify(p({ productType: 'Printed Hoodies' }))).toMatchObject({ category: 'tops', slot: 'top' });
+    expect(classify(p({ productType: 'Crewnecks' }))).toMatchObject({ category: 'tops', slot: 'top' });
+    expect(classify(p({ productType: 'Denim Jacket' }))).toMatchObject({ category: 'layers', slot: 'outer' });
     expect(classify(p({ productType: 'PJOYS' }))).toMatchObject({ category: 'bottoms', slot: 'bottom' });
     expect(classify(p({ productType: 'Knit Dress' }))).toMatchObject({ category: 'sets', slot: 'onepiece' });
     expect(classify(p({ productType: 'Washed Cap' }))).toMatchObject({ category: 'headwear', slot: 'head' });
@@ -74,7 +79,7 @@ describe('DRESSUP.EXE classification', () => {
       const c = classify(x);
       return c.relevant && c.slot === 'outer' && c.audience === 'shared';
     })!;
-    const look = { file: '/iys/stylist/look/men/x.webp', box: { x: 0.1, y: 0.2, w: 0.8, h: 0.8 }, image: 0, src: 'x.jpg', score: 0.8 };
+    const look = { file: '/iys/stylist/look/men/x.webp', box: { x: 0.1, y: 0.2, w: 0.8, h: 0.8 }, source: 'official' as const, scope: 'whole' as const, image: 0, src: 'x.jpg', score: 0.8 };
     const item: MappedItem = { kind: 'on-model', slot: 'outer', looks: { men: look } };
     const one = (it: unknown) => resolveEntry(hoodie, { items: { [hoodie.handle]: it as MappedItem }, skip: {} });
     expect(one(item)).toMatchObject({ kind: 'wearable', models: ['men'] });
@@ -87,6 +92,17 @@ describe('DRESSUP.EXE classification', () => {
     expect(one({ ...item, looks: { men: { ...look, file: 'https://evil.example/x.png' } } }).kind).toBe('view-only');
     expect(one({ ...item, looks: { men: { ...look, box: { ...look.box, w: Number.NaN } } } }).kind).toBe('view-only');
     expect(one({ ...item, looks: {} }).kind).toBe('view-only');
+    // an unknown source class or scope is never drawn; a whole look is always an official photo
+    expect(one({ ...item, looks: { men: { ...look, source: 'generated' } } }).kind).toBe('view-only');
+    expect(one({ ...item, looks: { men: { ...look, source: 'derived' } } }).kind).toBe('view-only');
+    expect(one({ ...item, looks: { men: { ...look, scope: undefined } } }).kind).toBe('view-only');
+    // a slot layer only with its approved job + reviewed candidate, from the slot folder
+    const slot = { ...look, scope: 'slot' as const, file: '/iys/stylist/slot/men/x.webp', job: 'men--x', candidate: 'a'.repeat(64) };
+    expect(one({ ...item, looks: { men: slot } })).toMatchObject({ kind: 'wearable' });
+    expect(one({ ...item, looks: { men: { ...slot, source: 'derived' } } })).toMatchObject({ kind: 'wearable' });
+    expect(one({ ...item, looks: { men: { ...slot, job: undefined } } }).kind).toBe('view-only');
+    expect(one({ ...item, looks: { men: { ...slot, candidate: undefined } } }).kind).toBe('view-only');
+    expect(one({ ...item, looks: { men: { ...slot, file: '/iys/stylist/look/men/x.webp' } } }).kind).toBe('view-only');
     // the piece worn at the shoot: wearable, and nothing is drawn (the canonical photo already shows it)
     expect(layerFor(one({ ...item, looks: { men: { shoot: true, src: 'reference-men.webp' } } }), 'men')).toEqual({ shoot: true, src: 'reference-men.webp' });
     // a flat packshot (the retired kind of layer) never dresses a model: it would look pasted on
@@ -113,7 +129,7 @@ describe('DRESSUP.EXE classification', () => {
         // the piece worn at the shoot draws nothing: the canonical photo already shows it
         if ('shoot' in l) expect(SHOOT_LOOKS[m as keyof typeof SHOOT_LOOKS], h).toBe(h);
         else {
-          expect(l.file, h).toBe(`/iys/stylist/look/${m}/${h}.webp`);
+          expect(l.file, h).toBe(`/iys/stylist/${l.scope === 'whole' ? 'look' : 'slot'}/${m}/${h}.webp`);
           expect(existsSync(`public${l.file}`), l.file).toBe(true);
         }
       }
@@ -121,21 +137,60 @@ describe('DRESSUP.EXE classification', () => {
     for (const h of Object.keys(registry.skip)) expect(cat.byHandle.has(h), h).toBe(true);
   });
 
-  it('every on-model layer comes from a reviewed official photo of that same product (or the shoot photo itself)', () => {
+  it('every whole look is a reviewed official photo of that same product (or the shoot piece itself)', () => {
     const details: Record<string, { images: { src: string }[] }> = Object.assign({}, ...readdirSync('public/catalogue').map((f) => JSON.parse(readFileSync(`public/catalogue/${f}`, 'utf8'))));
     let n = 0;
-    for (const [h, it] of Object.entries(registry.items)) {
-      for (const [m, l] of Object.entries(it.looks) as [keyof typeof LOOK_SOURCES, NonNullable<(typeof it.looks)['men']>][]) {
-        n++;
+    for (const [h, it] of Object.entries(registry.items))
+      for (const [m, l] of Object.entries(it.looks) as [keyof typeof WHOLE_LOOKS, NonNullable<(typeof it.looks)['men']>][]) {
         if ('shoot' in l) {
           expect(SHOOT_LOOKS[m], h).toBe(h);
           expect(l.src, h).toBe(MODELS[m].source.file.split('/').pop());
           continue;
         }
-        expect(LOOK_SOURCES[m].some((x) => x.handle === h && x.image === l.image), `${m} ${h}#${l.image} reviewed`).toBe(true);
-        expect(details[h]!.images[l.image]!.src.split('?')[0]!.endsWith(`/${l.src}`), `${h} provenance`).toBe(true);
+        if (l.scope !== 'whole') continue;
+        n++;
+        expect(l.source, h).toBe('official');
+        expect(WHOLE_LOOKS[m].some((x) => x.handle === h && x.image === l.image), `${m} ${h}#${l.image} reviewed`).toBe(true);
+        expect(details[h]!.images[l.image!]!.src.split('?')[0]!.endsWith(`/${l.src}`), `${h} provenance`).toBe(true);
       }
-    }
     expect(n).toBeGreaterThan(0);
+  });
+
+  it('every slot layer is an approved job of exactly the reviewed candidate (official or derived)', () => {
+    const approvals: { id: string; decision: string; candidate: string }[] = JSON.parse(readFileSync('scripts/stylist/tryon/approvals.json', 'utf8'));
+    for (const [h, it] of Object.entries(registry.items))
+      for (const [m, l] of Object.entries(it.looks) as [keyof typeof WHOLE_LOOKS, NonNullable<(typeof it.looks)['men']>][]) {
+        if ('shoot' in l || l.scope !== 'slot') continue;
+        expect(l.job, `${m} ${h}`).toBe(jobId(l.source, m, h));
+        const a = approvals.filter((x) => x.id === l.job).at(-1);
+        expect(a?.decision, `${m} ${h}`).toBe('approved');
+        expect(l.candidate, `${m} ${h}`).toBe(a!.candidate);
+        if (l.source === 'official') expect(OFFICIAL_SLOT_CANDIDATES[m].some((x) => x.handle === h && x.image === l.image), `${m} ${h}`).toBe(true);
+      }
+  });
+
+  it('a model gets its canonical room / upper / lower layers only when it has slot layers (else the plain photo + head)', () => {
+    for (const [id, b] of Object.entries(registry.models!)) {
+      expect(existsSync(`public${b.headFile}`), id).toBe(true);
+      expect(b.head.y).toBeLessThan(0.15);
+      const hasSlots = Object.values(registry.items).some((it) => {
+        const l = it.looks[id as keyof typeof it.looks];
+        return l && !('shoot' in l) && l.scope === 'slot';
+      });
+      const parts = [b.room, b.upper, b.lower, b.inner];
+      if (!hasSlots) {
+        expect(parts.filter(Boolean), id).toEqual([]);
+        for (const p of ['room', 'upper', 'lower', 'inner']) expect(existsSync(`public/iys/stylist/models/${id}-${p}.webp`), `${id}-${p}`).toBe(false);
+        continue;
+      }
+      for (const l of parts.filter((x) => x !== undefined)) {
+        expect(existsSync(`public${l.file}`), l.file).toBe(true);
+        expect(l.box.x + l.box.w).toBeLessThanOrEqual(1.0001);
+        expect(l.box.y + l.box.h).toBeLessThanOrEqual(1.0001);
+      }
+      expect(b.room!.box).toEqual({ x: 0, y: 0, w: 1, h: 1 });
+      expect(b.upper!.box.y).toBeGreaterThan(b.head.y);
+      expect(b.lower!.box.y + b.lower!.box.h).toBeCloseTo(1, 2);
+    }
   });
 });

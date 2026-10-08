@@ -2,54 +2,61 @@
  * npm run build-stylist [-- --models-only]
  *
  * Prepares DRESSUP.EXE's assets, deterministically (no AI, no generative step,
- * no runtime vision): same catalogue + same photos in → same files out.
+ * no runtime vision): same catalogue + same photos + same approvals in →
+ * same files out.
  *
  *  1. Models: crops the two supplied official IYS studio photos
  *     (scripts/stylist/reference-*.webp, kept untouched) to 600 × 900, and cuts
  *     each head + hair out of the same photo (studio wall removed inside a
  *     hand-measured outline), the layer drawn over every outfit.
- *  2. Pieces, on-model only: for each official product photo listed in
- *     src/features/dressup/looks.ts (one of the two canonical models wearing
- *     the piece), the canonical head is found in the photo, the photo is
- *     scaled + shifted onto the canonical frame, and the model's body below
- *     the chin (the piece as really worn, arms and hands included) becomes one
- *     transparent layer (scripts/lib/stylist-look.mjs). A piece without such
- *     a photo, or whose composite fails the checks, stays view-only: a flat
- *     packshot on a model never looks worn.
+ *  2. Whole looks (official, worn one at a time): for each official product
+ *     photo in src/features/dressup/looks.ts WHOLE_LOOKS (one of the two
+ *     canonical models wearing the piece), the canonical head is found in the
+ *     photo, the photo is scaled + shifted onto the canonical frame, and the
+ *     model's body below the chin (that photo's whole outfit, arms and hands
+ *     included) becomes one transparent layer (scripts/lib/stylist-look.mjs).
+ *  3. Slot layers (they combine: any top with any bottom): ONLY from the
+ *     manually approved candidates of the job manifest
+ *     (scripts/stylist/tryon/, scripts/lib/tryon-pipeline.mjs): an approved
+ *     official photo cut to its slot, or an approved offline try-on of the
+ *     canonical photo. A slot layer replaces that piece's whole look on that
+ *     model. Only a model with at least one slot layer gets its canonical
+ *     photo split into the room / upper body / trousers they are drawn over.
+ *  A piece with none of these stays view-only: a flat packshot never looks worn.
  *
  * Writes:
  *   public/iys/stylist/models/{men,women}{,-head}.webp
- *   public/iys/stylist/look/{men,women}/<handle>.webp   on-model layers
- *   src/data/stylist.generated.json                     the mapping registry (stylist data only)
+ *   public/iys/stylist/models/{men,women}-{room,upper,lower,inner}.webp   only with slot layers
+ *   public/iys/stylist/look/{men,women}/<handle>.webp                     whole looks
+ *   public/iys/stylist/slot/{men,women}/<handle>{,.inner}.webp            approved slot layers
+ *   scripts/stylist/tryon/built.json                                      what each approved layer was built from
+ *   src/data/stylist.generated.json                                       the registry (stylist data only)
  *
  * Sources are official IYS photos only: the public catalogue snapshot's CDN
- * images (cached under .cache/stylist/, never committed) and the two
- * supplied reference photos. Needs Node ≥ 22.18 (imports the shared .ts).
- * Behind an HTTP proxy, run node with NODE_USE_ENV_PROXY=1.
+ * images (cached under .cache/stylist/, never committed), the two supplied
+ * reference photos, and approved candidates (.cache/stylist/tryon/, never
+ * committed). Needs Node ≥ 22.18 (imports the shared .ts). Behind an HTTP
+ * proxy, run node with NODE_USE_ENV_PROXY=1.
  */
-import { createHash } from 'node:crypto';
-import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readdirSync, rmSync, statSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
-import { get } from './lib/http.mjs';
-import { hydrate } from '../src/lib/catalogue/hydrate.ts';
 import { classify, fitsModel } from '../src/features/dressup/classify.ts';
 import { MODELS } from '../src/features/dressup/models.ts';
 import { SLOT_POLICY } from '../src/features/dressup/overrides.ts';
-import { FIT_REJECTED, LOOK_SOURCES, SHOOT_LOOKS } from '../src/features/dressup/looks.ts';
+import { FIT_REJECTED, SHOOT_LOOKS, WHOLE_LOOKS } from '../src/features/dressup/looks.ts';
 import { compose, H, locate, locateBeside, prepareBase, W } from './lib/stylist-look.mjs';
+import { canonical, cdn, context, fetchCached, ingest, loadCatalogue, saveLayer, saveMask } from './lib/tryon-pipeline.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const modelsOnly = process.argv.includes('--models-only');
-const cacheDir = resolve(root, '.cache/stylist');
 const outDir = resolve(root, 'public/iys/stylist');
-mkdirSync(cacheDir, { recursive: true });
-const log = (...a) => console.log('[stylist]', ...a);
+const ctx = context(root, { log: (...a) => console.log('[stylist]', ...a) });
+const log = ctx.log;
 
-const index = JSON.parse(readFileSync(resolve(root, 'src/data/catalogue-index.json'), 'utf8'));
-const cat = hydrate(index);
-const details = Object.assign({}, ...readdirSync(resolve(root, 'public/catalogue')).map((f) => JSON.parse(readFileSync(resolve(root, 'public/catalogue', f), 'utf8'))));
+const C = loadCatalogue(root);
+const { index, cat, details } = C;
 
 /** Body slots: the only ones an official on-model photo can dress. */
 const BODY = new Set(['top', 'outer', 'bottom', 'onepiece']);
@@ -57,21 +64,6 @@ const BODY = new Set(['top', 'outer', 'bottom', 'onepiece']);
 const LOOK_W = 1000;
 /** Head-match floor: below it the photo changed since review (or shows someone else). */
 const MIN_SCORE = { solo: 0.72, beside: 0.5 };
-
-const cdn = (src, width) => {
-  const u = new URL(src);
-  u.search = '';
-  u.searchParams.set('width', String(width));
-  if (/\.heic$/i.test(u.pathname)) u.searchParams.set('format', 'jpg');
-  return u.toString();
-};
-async function fetchCached(url) {
-  const file = resolve(cacheDir, createHash('sha1').update(url).digest('hex'));
-  if (existsSync(file)) return readFileSync(file);
-  const buf = await get(url, { as: 'buffer' });
-  writeFileSync(file, buf);
-  return buf;
-}
 
 // ── pixel helpers ───────────────────────────────────────────────────────
 function bboxOf(mask, w, h, on = 1) {
@@ -166,7 +158,6 @@ async function buildModels() {
   return out;
 }
 
-// ── 2. on-model layers ──────────────────────────────────────────────────
 async function saveLook(model, handle, res) {
   const { x0, y0, x1, y1 } = res.box;
   const bw = x1 - x0 + 1, bh = y1 - y0 + 1;
@@ -178,6 +169,7 @@ async function saveLook(model, handle, res) {
   return { file: `/iys/stylist/${rel}`, box: { x: f(x0 / W), y: f(y0 / H), w: f(bw / W), h: f(bh / H) } };
 }
 
+/** 2. Whole looks, exactly as deployed. */
 async function buildLooks(models, bySlot) {
   const looks = {};
   const failed = new Set();
@@ -188,12 +180,12 @@ async function buildLooks(models, bySlot) {
     const B = await prepareBase(resolve(root, 'public' + m.file), a);
     const add = async (handle, res, image, src, score) => {
       const saved = await saveLook(m.id, handle, res);
-      (looks[handle] ??= {})[m.id] = { file: saved.file, box: saved.box, image, src, score: +score.toFixed(3) };
+      (looks[handle] ??= {})[m.id] = { file: saved.file, box: saved.box, source: 'official', scope: 'whole', image, src, score: +score.toFixed(3) };
     };
     // the piece worn in the canonical photo: nothing to draw, the photo already shows it
     const shoot = SHOOT_LOOKS[m.id];
     if (BODY.has(bySlot.get(shoot))) (looks[shoot] ??= {})[m.id] = { shoot: true, src: m.source.file.split('/').pop() };
-    for (const s of LOOK_SOURCES[m.id]) {
+    for (const s of WHOLE_LOOKS[m.id]) {
       const tag = `look ${m.id} ${s.handle}#${s.image}`;
       if (!BODY.has(bySlot.get(s.handle))) {
         log(`${tag}: not a garment in the catalogue any more, skipped`);
@@ -205,7 +197,7 @@ async function buildLooks(models, bySlot) {
         failed.add(s.handle);
         continue;
       }
-      const buf = await fetchCached(cdn(im.src, LOOK_W));
+      const buf = await fetchCached(ctx, cdn(im.src, LOOK_W));
       // pair shot: find him first, then her beside him (a free search is unreliable)
       const anchor = await locate(buf, headFile(s.beside ? 'men' : m.id));
       const loc = s.beside ? await locateBeside(buf, headFile(m.id), anchor, -1) : anchor;
@@ -227,12 +219,41 @@ async function buildLooks(models, bySlot) {
   return { looks, failed };
 }
 
+// ── 3. slot layers (approved candidates only) ───────────────────────────
+const CANON_PARTS = ['room', 'upper', 'lower', 'inner'];
+/** A model's canonical photo split into what slot layers are drawn over (only for a model with slot layers). */
+async function writeCanonical(models, model) {
+  const K = await canonical(ctx, model);
+  const rel = (p) => `/iys/stylist/models/${model}-${p}.webp`;
+  await sharp(K.room, { raw: { width: W, height: H, channels: 3 } }).webp({ quality: 84, effort: 6, smartSubsample: true }).toFile(resolve(root, 'public' + rel('room')));
+  const layers = {
+    room: { file: rel('room'), box: { x: 0, y: 0, w: 1, h: 1 } },
+    upper: await saveLayer(ctx, K.upper, rel('upper')),
+    lower: await saveLayer(ctx, K.lower, rel('lower')),
+    ...(K.inner ? { inner: await saveMask(ctx, K.inner, rel('inner')) } : {}),
+  };
+  for (const l of Object.values(layers)) models[model].bytes += statSync(resolve(root, 'public' + l.file)).size;
+  Object.assign(models[model], layers);
+  log(`model ${model}: room + upper + lower${K.inner ? ' + open front' : ''} (slot layers are drawn over them)`);
+}
+
 // ── main ────────────────────────────────────────────────────────────────
 const models = await buildModels();
 if (modelsOnly) process.exit(0);
 const relevant = cat.products.map((p) => ({ p, c: classify(p) })).filter((x) => x.c.relevant);
 log(`catalogue ${cat.products.length}, stylist-relevant ${relevant.length}`);
 const { looks, failed } = await buildLooks(models, new Map(relevant.map(({ p, c }) => [p.handle, c.slot])));
+
+const { looks: slots, report } = await ingest(ctx, C);
+for (const s of report.stale) log(`slot job ${s.id}: stale (${s.reason}), not ingested`);
+for (const s of report.skipped) log(`slot job ${s.id}: ${s.reason}, not ingested`);
+const slotModels = new Set(Object.values(slots).flatMap((l) => Object.keys(l)));
+for (const m of Object.keys(MODELS)) {
+  if (slotModels.has(m)) await writeCanonical(models, m);
+  else for (const p of CANON_PARTS) rmSync(resolve(outDir, `models/${m}-${p}.webp`), { force: true });
+}
+// an approved slot layer replaces that piece's whole look on that model (it combines with the other slots)
+for (const [h, by] of Object.entries(slots)) Object.assign((looks[h] ??= {}), by);
 
 const items = {};
 const skip = {};
@@ -247,21 +268,22 @@ for (const { p, c } of relevant) {
   const own = Object.fromEntries(Object.entries(looks[p.handle] ?? {}).filter(([m]) => fitsModel(c.audience, m)));
   if (Object.keys(own).length) {
     items[p.handle] = { kind: 'on-model', slot: c.slot, looks: own };
-    for (const l of Object.values(own)) if (l.file) keepFiles.add(l.file);
-  } else skip[p.handle] = looks[p.handle] ? 'other-model' : failed.has(p.handle) || FIT_REJECTED.includes(p.handle) ? 'fit-rejected' : 'not-on-these-models';
+    for (const l of Object.values(own)) for (const f of [l.file, l.inner?.file]) if (f) keepFiles.add(f);
+  } else skip[p.handle] = looks[p.handle] ? 'other-model' : failed.has(p.handle) || p.handle in FIT_REJECTED ? 'fit-rejected' : 'not-on-these-models';
 }
 
-// Drop layers no mapping uses (products that left the catalogue, rejected photos) and the
-// retired flat cut-outs: stale files never linger.
+// Drop layers no mapping uses (products that left the catalogue, rejected photos, withdrawn
+// approvals) and the retired flat cut-outs: stale files never linger.
 rmSync(resolve(outDir, 'g'), { recursive: true, force: true });
-for (const dir of ['look/men', 'look/women'])
+for (const dir of ['look/men', 'look/women', 'slot/men', 'slot/women'])
   for (const f of existsSync(resolve(outDir, dir)) ? readdirSync(resolve(outDir, dir)) : []) if (!keepFiles.has(`/iys/stylist/${dir}/${f}`)) rmSync(resolve(outDir, dir, f));
+for (const dir of ['slot/men', 'slot/women', 'slot']) if (existsSync(resolve(outDir, dir)) && !readdirSync(resolve(outDir, dir)).length) rmSync(resolve(outDir, dir), { recursive: true });
 
 const bytes = [...keepFiles].reduce((n, f) => n + statSync(resolve(root, 'public' + f)).size, 0);
 const registry = {
   generatedAt: new Date().toISOString(),
   catalogueGeneratedAt: index.generatedAt,
-  source: 'Official IYS product photos (cdn.shopify.com, public catalogue snapshot) + the two supplied IYS studio photos. Deterministic alignment (head template match, scale + translate), backdrop flood-fill and crop only.',
+  source: 'Official IYS product photos (cdn.shopify.com, public catalogue snapshot) + the two supplied IYS studio photos. Deterministic alignment (head template match, scale + translate), backdrop flood-fill and crop only. Slot layers only from manually approved candidates (scripts/stylist/tryon/approvals.json).',
   models,
   items: Object.fromEntries(Object.entries(items).sort(([a], [b]) => a.localeCompare(b))),
   skip: Object.fromEntries(Object.entries(skip).sort(([a], [b]) => a.localeCompare(b))),
@@ -269,10 +291,11 @@ const registry = {
 writeFileSync(resolve(root, 'src/data/stylist.generated.json'), JSON.stringify(registry, null, 1) + '\n');
 const bySlot = {};
 const perModel = { men: 0, women: 0 };
+let slotN = 0;
 for (const it of Object.values(items)) {
   bySlot[it.slot] = (bySlot[it.slot] ?? 0) + 1;
-  for (const m of Object.keys(it.looks)) perModel[m]++;
+  for (const [m, l] of Object.entries(it.looks)) perModel[m]++, (slotN += l.scope === 'slot' ? 1 : 0);
 }
 const reasons = {};
 for (const r of Object.values(skip)) reasons[r] = (reasons[r] ?? 0) + 1;
-log(`wearable ${Object.keys(items).length} ${JSON.stringify(bySlot)} (layers ${JSON.stringify(perModel)}); view-only ${Object.keys(skip).length} ${JSON.stringify(reasons)}; layers ${(bytes / 1024).toFixed(0)} KB`);
+log(`wearable ${Object.keys(items).length} ${JSON.stringify(bySlot)} (layers ${JSON.stringify(perModel)}, slot layers ${slotN}); view-only ${Object.keys(skip).length} ${JSON.stringify(reasons)}; layers ${(bytes / 1024).toFixed(0)} KB`);

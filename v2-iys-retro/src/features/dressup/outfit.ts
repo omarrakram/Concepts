@@ -33,19 +33,23 @@ export const SLOT_LABEL: Record<Slot, string> = {
 };
 
 /**
- * The body pieces. Each is shown as the model actually wearing it, from an
- * official photo of that model in that piece, so only one body photo can be on
- * at a time: wearing a top, layer, bottom or set takes the other body piece
- * off. (Mixing the bodies of two photos would mean inventing the join.)
+ * The body slots. A slot piece is its own layer cut to its slot (a top's upper
+ * body, a bottom's legs), so they combine freely: changing the bottom never
+ * changes the top, and a layer goes over whichever top is on. Only a set (one
+ * piece covering both) conflicts with a top or a bottom.
+ *
+ * A whole look is different: one official photo's full outfit. It dresses the
+ * whole body, so it is worn alone (wearPiece): putting it on takes every other
+ * body piece off, and any other body piece takes it off.
  */
 export const BODY: Slot[] = ['top', 'outer', 'bottom', 'onepiece'];
 
 /** Wearing a slot takes these slots off. */
 export const CONFLICTS: Record<Slot, Slot[]> = {
-  top: BODY.filter((s) => s !== 'top'),
-  outer: BODY.filter((s) => s !== 'outer'),
-  bottom: BODY.filter((s) => s !== 'bottom'),
-  onepiece: BODY.filter((s) => s !== 'onepiece'),
+  top: ['onepiece'],
+  outer: [],
+  bottom: ['onepiece'],
+  onepiece: ['top', 'bottom'],
   head: [],
   neck: [],
   socks: [],
@@ -56,7 +60,7 @@ export const CONFLICTS: Record<Slot, Slot[]> = {
 export const emptyLooks = (): Looks => ({ men: {}, women: {} });
 
 export type OutfitAction =
-  | { type: 'wear'; model: ModelId; slot: Slot; handle: string }
+  | { type: 'wear'; model: ModelId; slot: Slot; handle: string; wholes?: ReadonlySet<string> }
   | { type: 'remove'; model: ModelId; slot: Slot }
   | { type: 'clear'; model: ModelId }
   | { type: 'set'; model: ModelId; outfit: Outfit };
@@ -69,6 +73,21 @@ export function wear(o: Outfit, slot: Slot, handle: string): Outfit {
   next[slot] = handle;
   return next;
 }
+/**
+ * Put a piece on, whole looks included: `wholes` are the handles that are
+ * whole looks on this model. A whole look is worn alone on the body; any
+ * other body piece takes a whole look off. Same piece again = take it off.
+ */
+export function wearPiece(o: Outfit, slot: Slot, handle: string, wholes: ReadonlySet<string> = new Set()): Outfit {
+  if (o[slot] === handle) return remove(o, slot);
+  const next = wear(o, slot, handle);
+  for (const b of BODY) {
+    if (b === slot || !(b in next)) continue;
+    if (wholes.has(handle) || wholes.has(next[b]!)) delete next[b];
+  }
+  return next;
+}
+
 export function remove(o: Outfit, slot: Slot): Outfit {
   if (!(slot in o)) return o;
   const next: Outfit = { ...o };
@@ -84,7 +103,7 @@ export function isValid(o: Outfit): boolean {
 export function looksReducer(state: Looks, a: OutfitAction): Looks {
   switch (a.type) {
     case 'wear':
-      return { ...state, [a.model]: wear(state[a.model], a.slot, a.handle) };
+      return { ...state, [a.model]: wearPiece(state[a.model], a.slot, a.handle, a.wholes) };
     case 'remove':
       return { ...state, [a.model]: remove(state[a.model], a.slot) };
     case 'clear':
@@ -100,15 +119,27 @@ export function paintOrder(o: Outfit): Slot[] {
 }
 
 /**
- * RANDOM LOOK: one wearable body piece (each is a whole official photo).
- * `rand` is injected (Math.random in the app, a seeded PRNG in tests).
+ * RANDOM LOOK, from wearable pieces only: a top + a bottom (sometimes a layer)
+ * when slot pieces exist, a set instead when only sets do, else one whole
+ * look. `rand` is injected (Math.random in the app, a seeded PRNG in tests).
  * Nothing is ever added to MY BAG.
  */
-export function randomLook(pool: Partial<Record<Slot, string[]>>, rand: () => number): Outfit {
-  const body = BODY.flatMap((s) => (pool[s] ?? []).map((h) => [s, h] as const));
-  if (!body.length) return {};
-  const [s, h] = body[Math.floor(rand() * body.length) % body.length]!;
-  return { [s]: h };
+export function randomLook(pool: { slots: Partial<Record<Slot, string[]>>; wholes?: string[]; slotOf?: Record<string, Slot> }, rand: () => number): Outfit {
+  const pick = (list: string[] | undefined) => (list?.length ? list[Math.floor(rand() * list.length) % list.length] : undefined);
+  const o: Outfit = {};
+  const top = pick(pool.slots.top), bottom = pick(pool.slots.bottom), outer = pick(pool.slots.outer);
+  if (top) o.top = top;
+  if (bottom) o.bottom = bottom;
+  if (outer && (rand() < 0.4 || (!top && !bottom))) o.outer = outer;
+  if (!top && !bottom) {
+    const set = pick(pool.slots.onepiece);
+    if (set) o.onepiece = set;
+  }
+  if (!Object.keys(o).length) {
+    const w = pick(pool.wholes);
+    if (w) o[pool.slotOf?.[w] ?? 'top'] = w;
+  }
+  return o;
 }
 
 /** A tiny seeded PRNG (mulberry32) for reproducible tests and QA. */

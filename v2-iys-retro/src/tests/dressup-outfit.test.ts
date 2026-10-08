@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { readFileSync } from 'node:fs';
-import { BODY, CONFLICTS, emptyLooks, isValid, LAYER_ORDER, layerIndex, looksReducer, paintOrder, randomLook, remove, seeded, wear, type Outfit } from '../features/dressup/outfit';
+import { BODY, CONFLICTS, emptyLooks, isValid, LAYER_ORDER, layerIndex, looksReducer, paintOrder, randomLook, remove, seeded, wear, wearPiece, type Outfit } from '../features/dressup/outfit';
 import { lookPlacement, placementStyle } from '../features/dressup/stage';
 
 describe('DRESSUP.EXE outfit domain', () => {
@@ -12,22 +12,55 @@ describe('DRESSUP.EXE outfit domain', () => {
     expect(o).toEqual({ top: 'tee-b', head: 'cap-a' });
   });
 
-  it('body pieces are one official photo each, so only one is on at a time (other slots are untouched)', () => {
-    let o: Outfit = wear({ head: 'cap' }, 'top', 'tee');
-    o = wear(o, 'outer', 'hoodie');
-    expect(o).toEqual({ head: 'cap', outer: 'hoodie' });
-    o = wear(o, 'bottom', 'pjoys');
-    expect(o).toEqual({ head: 'cap', bottom: 'pjoys' });
-    o = wear(o, 'onepiece', 'set');
-    expect(o).toEqual({ head: 'cap', onepiece: 'set' });
-    for (const b of BODY) expect(CONFLICTS[b].sort()).toEqual(BODY.filter((x) => x !== b).sort());
-    expect(CONFLICTS.head).toEqual([]);
-    expect(isValid({ top: 't', outer: 'h' })).toBe(false);
-    expect(isValid({ outer: 'h', head: 'c' })).toBe(true);
+  it('slot independence (the V2 invariant): top, bottom and layer change on their own', () => {
+    // 1–2. top A, then bottom A
+    let o: Outfit = wear({}, 'top', 'top-a');
+    o = wear(o, 'bottom', 'bottom-a');
+    // 3. top A remains
+    expect(o.top).toBe('top-a');
+    // 4–5. bottom B: top A unchanged
+    o = wear(o, 'bottom', 'bottom-b');
+    expect(o).toEqual({ top: 'top-a', bottom: 'bottom-b' });
+    // 6–7. top B: bottom B unchanged
+    o = wear(o, 'top', 'top-b');
+    expect(o).toEqual({ top: 'top-b', bottom: 'bottom-b' });
+    // 8–9. a layer: top and bottom stay underneath
+    o = wear(o, 'outer', 'layer-a');
+    expect(o).toEqual({ top: 'top-b', bottom: 'bottom-b', outer: 'layer-a' });
+    // 10–11. layer off: the same top is back
+    o = remove(o, 'outer');
+    expect(o).toEqual({ top: 'top-b', bottom: 'bottom-b' });
+    expect(CONFLICTS.outer).toEqual([]);
+  });
+
+  it('a set replaces top + bottom (a top or a bottom replaces a set); the layer stays over either', () => {
+    const set = wear({ top: 't', bottom: 'b', outer: 'h' }, 'onepiece', 'dress');
+    expect(set).toEqual({ outer: 'h', onepiece: 'dress' });
+    expect(wear(set, 'bottom', 'jeans')).toEqual({ outer: 'h', bottom: 'jeans' });
+    expect(CONFLICTS.onepiece).toEqual(['top', 'bottom']);
+    expect(isValid({ top: 't', onepiece: 'd' })).toBe(false);
+    expect(isValid({ top: 't', outer: 'h', bottom: 'b' })).toBe(true);
+    expect(BODY).toEqual(['top', 'outer', 'bottom', 'onepiece']);
   });
 
   it('wearing the same piece again takes it off (toggle)', () => {
     expect(wear({ top: 'tee-a' }, 'top', 'tee-a')).toEqual({});
+  });
+
+  it('a whole look (one official photo’s whole outfit) is worn alone on the body, as deployed', () => {
+    const wholes = new Set(['look-a', 'look-b']);
+    let o = wearPiece({ top: 't', bottom: 'b', head: 'cap' }, 'top', 'look-a', wholes);
+    // the other body pieces come off; accessories stay
+    expect(o).toEqual({ top: 'look-a', head: 'cap' });
+    o = wearPiece(o, 'outer', 'look-b', wholes);
+    expect(o).toEqual({ outer: 'look-b', head: 'cap' });
+    // any other body piece takes the whole look off
+    expect(wearPiece(o, 'bottom', 'jeans', wholes)).toEqual({ bottom: 'jeans', head: 'cap' });
+    // the same piece again takes it off
+    expect(wearPiece(o, 'outer', 'look-b', wholes)).toEqual({ head: 'cap' });
+    // slot pieces keep combining
+    expect(wearPiece({ top: 't' }, 'bottom', 'b', wholes)).toEqual({ top: 't', bottom: 'b' });
+    expect(looksReducer(emptyLooks(), { type: 'wear', model: 'men', slot: 'top', handle: 'look-a', wholes }).men).toEqual({ top: 'look-a' });
   });
 
   it('every reachable outfit is valid', () => {
@@ -63,7 +96,7 @@ describe('DRESSUP.EXE outfit domain', () => {
     expect(layerIndex('outer')).toBeLessThan(layerIndex('@head'));
     expect(layerIndex('@head')).toBeLessThan(layerIndex('head'));
     expect(LAYER_ORDER.at(-1)).toBe('bag');
-    expect(paintOrder({ head: 'cap', top: 't' })).toEqual(['top', 'head']);
+    expect(paintOrder({ head: 'cap', top: 't', bottom: 'b' })).toEqual(['bottom', 'top', 'head']);
   });
 
   it('placements live in the normalised stage space: an on-model layer keeps the box measured at build time', () => {
@@ -72,18 +105,33 @@ describe('DRESSUP.EXE outfit domain', () => {
     expect(placementStyle(p)).toEqual({ left: '10.000%', top: '20.000%', width: '80.000%' });
   });
 
-  it('RANDOM LOOK is reproducible, uses only the given wearable pool: one body piece, nothing else', () => {
-    const pool = { top: ['t1', 't2'], outer: ['o1'], bottom: ['b1'], onepiece: ['d1'], head: ['c1'], bag: ['bag1'] };
+  it('RANDOM LOOK is reproducible and combines wearable pieces only: a top + a bottom, sometimes a layer', () => {
+    const slots = { top: ['t1', 't2'], outer: ['o1'], bottom: ['b1', 'b2'], onepiece: ['d1'], head: ['c1'], bag: ['bag1'] };
+    const pool = { slots, wholes: ['w1'], slotOf: { w1: 'top' as const } };
     const a = randomLook(pool, seeded(7));
     expect(randomLook(pool, seeded(7))).toEqual(a);
-    expect(isValid(a)).toBe(true);
-    for (const [slot, h] of Object.entries(a)) expect((pool as Record<string, string[]>)[slot]).toContain(h);
-    for (let seed = 0; seed < 50; seed++) {
+    let layered = 0;
+    for (let seed = 0; seed < 60; seed++) {
       const o = randomLook(pool, seeded(seed));
-      expect(Object.keys(o)).toHaveLength(1);
-      expect(BODY).toContain(Object.keys(o)[0]);
+      expect(isValid(o)).toBe(true);
+      expect(o.top && o.bottom).toBeTruthy();
+      for (const [slot, h] of Object.entries(o)) expect((slots as Record<string, string[]>)[slot]).toContain(h);
+      // accessories, sets and whole looks never join a slot combination
+      expect('head' in o || 'bag' in o || 'onepiece' in o || Object.values(o).includes('w1')).toBe(false);
+      if (o.outer) layered++;
     }
-    expect(randomLook({}, seeded(1))).toEqual({});
+    expect(layered).toBeGreaterThan(5);
+    // only a set is wearable → the set
+    expect(randomLook({ slots: { onepiece: ['d1'] } }, seeded(1))).toEqual({ onepiece: 'd1' });
+    // only tops → a top alone, never an invented bottom
+    expect(randomLook({ slots: { top: ['t1'] } }, seeded(2))).toEqual({ top: 't1' });
+    // no slot pieces (production today): one whole look, in its own slot
+    for (let seed = 0; seed < 20; seed++) {
+      const o = randomLook({ slots: {}, wholes: ['w1', 'w2'], slotOf: { w1: 'top', w2: 'bottom' } }, seeded(seed));
+      expect(Object.entries(o).length).toBe(1);
+      expect([['top', 'w1'], ['bottom', 'w2']]).toContainEqual(Object.entries(o)[0]);
+    }
+    expect(randomLook({ slots: {} }, seeded(1))).toEqual({});
   });
 
   it('outfits are never persisted: the looks store has no storage at all', () => {

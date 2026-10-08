@@ -70,13 +70,14 @@ const TYPE_CATEGORY: Record<string, Category | 'not-worn'> = {
   'Knit Top': 'tops', 'Boxy Linen Shirts': 'tops', 'Fitted Shirts': 'tops', 'Waffled Shirt': 'tops', 'Corduroy Shirts': 'tops',
   'Crochet Shirt': 'tops', 'Linen Shirt': 'tops', 'Half Sleeve Tops': 'tops', 'Worker Shirt': 'tops', 'Stitched Cropped T-shirts': 'tops',
   'PJ Long Sleeves': 'tops',
-  // layers (hoodies, sweats, jackets: worn over a top)
-  'Printed Hoodies': 'layers', 'Acid Washed Hoodies': 'layers', 'Boxy Hoodies': 'layers', 'Plain Hoodies': 'layers',
-  'Acid Washed Crewnecks': 'layers', 'Windbreaker': 'layers', 'Crewnecks': 'layers', 'Zip Up Hoodies': 'layers', 'Linen Vest': 'layers',
-  'Knit Sweater': 'layers', 'Coats': 'layers', 'Curduroy Jackets': 'layers', 'Pullovers': 'layers', 'Cardigans': 'layers',
-  'Quarter Zipper': 'layers', 'Fleece Jacket': 'layers', 'Cropped Hoodies': 'layers', 'Fleece Vest': 'layers', 'Leather Jacket': 'layers',
-  'Knit Jacket': 'layers', 'Knit Pullover': 'layers', 'Knit Vest': 'layers', 'Denim Jacket': 'layers', 'Balloon Fit Hoodies': 'layers',
-  'Cropped Sweatshirts': 'layers', 'Overshirt Jacket': 'layers', 'Robes': 'layers', 'Floppy Robes': 'layers',
+  // pullovers are tops too (a hoodie or crewneck is the top; a zip-up or jacket goes over it)
+  'Printed Hoodies': 'tops', 'Acid Washed Hoodies': 'tops', 'Boxy Hoodies': 'tops', 'Plain Hoodies': 'tops', 'Acid Washed Crewnecks': 'tops',
+  'Crewnecks': 'tops', 'Knit Sweater': 'tops', 'Pullovers': 'tops', 'Quarter Zipper': 'tops', 'Cropped Hoodies': 'tops', 'Knit Pullover': 'tops',
+  'Balloon Fit Hoodies': 'tops', 'Cropped Sweatshirts': 'tops',
+  // layers (open at the front, worn over a top)
+  'Windbreaker': 'layers', 'Zip Up Hoodies': 'layers', 'Linen Vest': 'layers', 'Coats': 'layers', 'Curduroy Jackets': 'layers', 'Cardigans': 'layers',
+  'Fleece Jacket': 'layers', 'Fleece Vest': 'layers', 'Leather Jacket': 'layers', 'Knit Jacket': 'layers', 'Knit Vest': 'layers', 'Denim Jacket': 'layers',
+  'Overshirt Jacket': 'layers', 'Robes': 'layers', 'Floppy Robes': 'layers',
   // bottoms (PJOYS are IYS pyjama pants)
   'Jeans': 'bottoms', 'Pants': 'bottoms', 'Swim Shorts': 'bottoms', 'Pshorts': 'bottoms', 'Swants': 'bottoms', 'Skirt': 'bottoms',
   'Sworts': 'bottoms', 'Jorts': 'bottoms', 'Linen Pants': 'bottoms', 'Leggings': 'bottoms', 'Linen Shorts': 'bottoms', 'Boxer Pants': 'bottoms',
