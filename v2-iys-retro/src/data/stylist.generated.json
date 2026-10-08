@@ -1,7 +1,7 @@
 {
- "generatedAt": "2026-10-08T01:34:25.321Z",
+ "generatedAt": "2026-10-08T03:23:30.031Z",
  "catalogueGeneratedAt": "2026-09-30T22:38:01.482Z",
- "source": "Official IYS product photos (cdn.shopify.com, public catalogue snapshot) + the two supplied IYS studio photos. Deterministic crop / flood-fill cut-out only.",
+ "source": "Official IYS product photos (cdn.shopify.com, public catalogue snapshot) + the two supplied IYS studio photos. Deterministic alignment (head template match, scale + translate), backdrop flood-fill and crop only.",
  "models": {
   "men": {
    "file": "/iys/stylist/models/men.webp",
@@ -27,4229 +27,1347 @@
   }
  },
  "items": {
-  "alex-taxi-regular-tee": {
-   "slot": "top",
-   "file": "/iys/stylist/g/alex-taxi-regular-tee.webp",
-   "w": 360,
-   "h": 345,
-   "image": 1,
-   "src": "alex-taxi-regular-tee-printed-regular-tees-in-your-shoe-382560.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.6145,
-    "cx": 0.4977,
-    "shoulderY": 0.0691,
-    "waistW": 0.3464
-   }
-  },
-  "angels-hoodie": {
-   "slot": "outer",
-   "file": "/iys/stylist/g/angels-hoodie.webp",
-   "w": 360,
-   "h": 350,
-   "image": 1,
-   "src": "angels-hoodie-printed-hoodies-in-your-shoe-372329.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.5443,
-    "cx": 0.4992,
-    "shoulderY": 0.327,
-    "waistW": 0.1407
-   }
-  },
-  "anti-9-5-club-hoodie": {
-   "slot": "outer",
-   "file": "/iys/stylist/g/anti-9-5-club-hoodie.webp",
-   "w": 360,
-   "h": 352,
-   "image": 1,
-   "src": "anti-9-5-club-hoodie-printed-hoodies-in-your-shoe-537188.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.5442,
-    "cx": 0.4992,
-    "shoulderY": 0.3339,
-    "waistW": 0.1404
-   }
-  },
   "anti-running-oversized-hoodie": {
+   "kind": "on-model",
    "slot": "outer",
-   "file": "/iys/stylist/g/anti-running-oversized-hoodie.webp",
-   "w": 360,
-   "h": 352,
-   "image": 6,
-   "src": "anti-running-oversized-hoodie-printed-hoodies-in-your-shoe-287295.jpg",
-   "packshots": [
-    5,
-    6
-   ],
-   "fit": {
-    "hemW": 0.5411,
-    "cx": 0.4985,
-    "shoulderY": 0.3313,
-    "waistW": 0.1405
-   }
-  },
-  "artificial-intelligence-oversized-tee": {
-   "slot": "top",
-   "file": "/iys/stylist/g/artificial-intelligence-oversized-tee.webp",
-   "w": 360,
-   "h": 303,
-   "image": 1,
-   "src": "artificial-intelligence-oversized-tee-printed-oversized-tees-in-your-shoe-139344.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.6235,
-    "cx": 0.5008,
-    "shoulderY": 0.0789,
-    "waistW": 0.3042
-   }
-  },
-  "artist-washed-hoodie": {
-   "slot": "outer",
-   "file": "/iys/stylist/g/artist-washed-hoodie.webp",
-   "w": 360,
-   "h": 353,
-   "image": 1,
-   "src": "artist-washed-hoodie-acid-washed-hoodies-in-your-shoe-278612.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.5425,
-    "cx": 0.4991,
-    "shoulderY": 0.3333,
-    "waistW": 0.1395
-   }
-  },
-  "astrobility-washed-hoodie": {
-   "slot": "outer",
-   "file": "/iys/stylist/g/astrobility-washed-hoodie.webp",
-   "w": 360,
-   "h": 351,
-   "image": 1,
-   "src": "astrobility-washed-hoodie-acid-washed-hoodies-in-your-shoe-545348.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.5432,
-    "cx": 0.4992,
-    "shoulderY": 0.3296,
-    "waistW": 0.1358
-   }
-  },
-  "baby-blue-iys-printed-regular-tee": {
-   "slot": "top",
-   "file": "/iys/stylist/g/baby-blue-iys-printed-regular-tee.webp",
-   "w": 360,
-   "h": 343,
-   "image": 1,
-   "src": "baby-blue-iys-printed-regular-tee-printed-regular-tees-in-your-shoe-803257.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.6157,
-    "cx": 0.4992,
-    "shoulderY": 0.0619,
-    "waistW": 0.351
-   }
-  },
-  "beige-basic-hoodie": {
-   "slot": "outer",
-   "file": "/iys/stylist/g/beige-basic-hoodie.webp",
-   "w": 360,
-   "h": 352,
-   "image": 1,
-   "src": "dark-olive-basic-hoodie-plain-hoodies-in-your-shoe-473565.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.5427,
-    "cx": 0.4992,
-    "shoulderY": 0.3302,
-    "waistW": 0.1372
-   }
-  },
-  "beige-washed-oversized-long-sleeves": {
-   "slot": "top",
-   "file": "/iys/stylist/g/beige-washed-oversized-long-sleeves.webp",
-   "w": 360,
-   "h": 300,
-   "image": 0,
-   "src": "beige-washed-oversized-long-sleeves-long-sleeves-in-your-shoe-180135.jpg",
-   "packshots": [
-    0
-   ],
-   "fit": {
-    "hemW": 0.607,
-    "cx": 0.4992,
-    "shoulderY": 0.0844,
-    "waistW": 0.2966
-   }
-  },
-  "big-grill-energy-oversized-hoodie": {
-   "slot": "outer",
-   "file": "/iys/stylist/g/big-grill-energy-oversized-hoodie.webp",
-   "w": 360,
-   "h": 350,
-   "image": 1,
-   "src": "big-grill-energy-oversized-hoodie-printed-hoodies-in-your-shoe-834367.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.5425,
-    "cx": 0.5,
-    "shoulderY": 0.3292,
-    "waistW": 0.1371
-   }
-  },
-  "black-and-pink-swim-shorts": {
-   "slot": "bottom",
-   "file": "/iys/stylist/g/black-and-pink-swim-shorts.webp",
-   "w": 300,
-   "h": 297,
-   "image": 6,
-   "src": "black-and-pink-swim-shorts-swim-shorts-in-your-shoe-635465.jpg",
-   "packshots": [
-    6,
-    7
-   ],
-   "fit": {
-    "hemW": 0.986,
-    "cx": 0.4986,
-    "shoulderY": 0.1133,
-    "waistW": 0.7493
-   }
-  },
-  "black-basic-boxy-tee": {
-   "slot": "top",
-   "file": "/iys/stylist/g/black-basic-boxy-tee.webp",
-   "w": 360,
-   "h": 301,
-   "image": 1,
-   "src": "black-basic-boxy-tee-basic-boxy-tee-in-your-shoe-721618.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.6093,
-    "cx": 0.4985,
-    "shoulderY": 0.0699,
-    "waistW": 0.3249
-   }
-  },
-  "black-basic-heavy-boxy-hoodie": {
-   "slot": "outer",
-   "file": "/iys/stylist/g/black-basic-heavy-boxy-hoodie.webp",
-   "w": 360,
-   "h": 353,
-   "image": 1,
-   "src": "black-basic-oversized-zip-up-hoodie-zip-up-hoodies-in-your-shoe-626686.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.542,
-    "cx": 0.4992,
-    "shoulderY": 0.3292,
-    "waistW": 0.1441
+   "looks": {
+    "men": {
+     "file": "/iys/stylist/look/men/anti-running-oversized-hoodie.webp",
+     "box": {
+      "x": 0.25333,
+      "y": 0.19,
+      "w": 0.56333,
+      "h": 0.81
+     },
+     "image": 4,
+     "src": "anti-running-oversized-hoodie-printed-hoodies-in-your-shoe-693870.jpg",
+     "score": 0.823
+    }
    }
   },
   "black-basic-oversized-crewneck": {
+   "kind": "on-model",
    "slot": "outer",
-   "file": "/iys/stylist/g/black-basic-oversized-crewneck.webp",
-   "w": 360,
-   "h": 350,
-   "image": 6,
-   "src": "black-basic-oversized-crewneck-acid-washed-crewnecks-in-your-shoe-687878.jpg",
-   "packshots": [
-    5,
-    6
-   ],
-   "fit": {
-    "hemW": 0.6016,
-    "cx": 0.5,
-    "shoulderY": 0.0691,
-    "waistW": 0.3408
+   "looks": {
+    "men": {
+     "file": "/iys/stylist/look/men/black-basic-oversized-crewneck.webp",
+     "box": {
+      "x": 0.27333,
+      "y": 0.19,
+      "w": 0.54333,
+      "h": 0.81
+     },
+     "image": 1,
+     "src": "black-basic-oversized-crewneck-crewnecks-in-your-shoe-215559.jpg",
+     "score": 0.857
+    }
    }
   },
-  "black-basic-oversized-hoodie": {
+  "blue-basic-boxy-crewneck": {
+   "kind": "on-model",
    "slot": "outer",
-   "file": "/iys/stylist/g/black-basic-oversized-hoodie.webp",
-   "w": 360,
-   "h": 352,
-   "image": 1,
-   "src": "black-basic-hoodie-plain-hoodies-in-your-shoe-704472.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.5424,
-    "cx": 0.4992,
-    "shoulderY": 0.3318,
-    "waistW": 0.1409
+   "looks": {
+    "men": {
+     "file": "/iys/stylist/look/men/blue-basic-boxy-crewneck.webp",
+     "box": {
+      "x": 0.27667,
+      "y": 0.19,
+      "w": 0.54,
+      "h": 0.81
+     },
+     "image": 0,
+     "src": "blue-basic-boxy-crewneck-crewnecks-in-your-shoe-704213.jpg",
+     "score": 0.877
+    }
    }
   },
-  "black-basic-oversized-tee": {
+  "city-runners-oversized-long-sleeves": {
+   "kind": "on-model",
    "slot": "top",
-   "file": "/iys/stylist/g/black-basic-oversized-tee.webp",
-   "w": 360,
-   "h": 302,
-   "image": 1,
-   "src": "black-basic-oversized-tee-basic-oversized-tees-in-your-shoe-497199.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.608,
-    "cx": 0.5,
-    "shoulderY": 0.0746,
-    "waistW": 0.3055
+   "looks": {
+    "men": {
+     "file": "/iys/stylist/look/men/city-runners-oversized-long-sleeves.webp",
+     "box": {
+      "x": 0.27,
+      "y": 0.19,
+      "w": 0.54667,
+      "h": 0.81
+     },
+     "image": 3,
+     "src": "city-runners-oversized-long-sleeves-long-sleeves-in-your-shoe-290831.jpg",
+     "score": 0.813
+    }
    }
   },
-  "black-basic-oversized-zip-up-hoodie": {
+  "dark-grey-guarded-boxy-zip-up-hoodie": {
+   "kind": "on-model",
    "slot": "outer",
-   "file": "/iys/stylist/g/black-basic-oversized-zip-up-hoodie.webp",
-   "w": 360,
-   "h": 353,
-   "image": 1,
-   "src": "black-basic-oversized-zip-up-hoodie-zip-up-hoodies-in-your-shoe-626686.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.542,
-    "cx": 0.4992,
-    "shoulderY": 0.3292,
-    "waistW": 0.1441
-   }
-  },
-  "black-iys-printed-regular-tee": {
-   "slot": "top",
-   "file": "/iys/stylist/g/black-iys-printed-regular-tee.webp",
-   "w": 360,
-   "h": 351,
-   "image": 1,
-   "src": "black-iys-printed-regular-tee-printed-regular-tees-in-your-shoe-840539.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.6108,
-    "cx": 0.4954,
-    "shoulderY": 0.0695,
-    "waistW": 0.3246
-   }
-  },
-  "black-serial-griller-swim-shorts": {
-   "slot": "bottom",
-   "file": "/iys/stylist/g/black-serial-griller-swim-shorts.webp",
-   "w": 300,
-   "h": 351,
-   "image": 7,
-   "src": "black-serial-griller-swim-shorts-swim-shorts-in-your-shoe-306468.jpg",
-   "packshots": [
-    6,
-    7
-   ],
-   "fit": {
-    "hemW": 0.9854,
-    "cx": 0.5,
-    "shoulderY": 0.1239,
-    "waistW": 0.7452
-   }
-  },
-  "black-washed-striped-boxy-tee": {
-   "slot": "top",
-   "file": "/iys/stylist/g/black-washed-striped-boxy-tee.webp",
-   "w": 360,
-   "h": 300,
-   "image": 1,
-   "src": "black-washed-striped-boxy-tee-printed-boxy-tee-in-your-shoe-775165.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.6215,
-    "cx": 0.4993,
-    "shoulderY": 0.0733,
-    "waistW": 0.3234
-   }
-  },
-  "blue-basic-oversized-hoodie": {
-   "slot": "outer",
-   "file": "/iys/stylist/g/blue-basic-oversized-hoodie.webp",
-   "w": 360,
-   "h": 352,
-   "image": 1,
-   "src": "blue-basic-oversized-hoodie-plain-hoodies-in-your-shoe-294285.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.5426,
-    "cx": 0.4985,
-    "shoulderY": 0.3313,
-    "waistW": 0.1405
-   }
-  },
-  "blue-basic-oversized-tee-1": {
-   "slot": "top",
-   "file": "/iys/stylist/g/blue-basic-oversized-tee-1.webp",
-   "w": 360,
-   "h": 303,
-   "image": 1,
-   "src": "blue-oversized-tee-basic-oversized-tees-in-your-shoe-530106.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.6084,
-    "cx": 0.5,
-    "shoulderY": 0.0753,
-    "waistW": 0.3057
-   }
-  },
-  "blue-basic-regular-tee": {
-   "slot": "top",
-   "file": "/iys/stylist/g/blue-basic-regular-tee.webp",
-   "w": 360,
-   "h": 345,
-   "image": 1,
-   "src": "blue-basic-regular-tee-basic-regular-tee-in-your-shoe-488800.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.616,
-    "cx": 0.4985,
-    "shoulderY": 0.0691,
-    "waistW": 0.3464
-   }
-  },
-  "blue-washed-cap": {
-   "slot": "head",
-   "file": "/iys/stylist/g/blue-washed-cap.webp",
-   "w": 220,
-   "h": 119,
-   "image": 1,
-   "src": "blue-washed-cap-washed-cap-in-your-shoe-853696.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.9635,
-    "cx": 0.502,
-    "shoulderY": 0.5564,
-    "waistW": 0
-   }
-  },
-  "born-to-be-cool-hoodie": {
-   "slot": "outer",
-   "file": "/iys/stylist/g/born-to-be-cool-hoodie.webp",
-   "w": 360,
-   "h": 350,
-   "image": 1,
-   "src": "born-to-be-cool-hoodie-printed-hoodies-in-your-shoe-827314.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.543,
-    "cx": 0.5,
-    "shoulderY": 0.3292,
-    "waistW": 0.1342
-   }
-  },
-  "botox-oversized-tee": {
-   "slot": "top",
-   "file": "/iys/stylist/g/botox-oversized-tee.webp",
-   "w": 360,
-   "h": 302,
-   "image": 1,
-   "src": "botox-oversized-tee-printed-oversized-tees-in-your-shoe-496058.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.6244,
-    "cx": 0.5007,
-    "shoulderY": 0.0783,
-    "waistW": 0.313
-   }
-  },
-  "broke-hoodie": {
-   "slot": "outer",
-   "file": "/iys/stylist/g/broke-hoodie.webp",
-   "w": 360,
-   "h": 352,
-   "image": 1,
-   "src": "broke-oversized-hoodie-printed-hoodies-in-your-shoe-200123.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.5419,
-    "cx": 0.5,
-    "shoulderY": 0.3317,
-    "waistW": 0.1387
-   }
-  },
-  "brown-basic-boxy-tee": {
-   "slot": "top",
-   "file": "/iys/stylist/g/brown-basic-boxy-tee.webp",
-   "w": 360,
-   "h": 308,
-   "image": 1,
-   "src": "brown-basic-boxy-tee-basic-boxy-tee-in-your-shoe-538567.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.6187,
-    "cx": 0.5015,
-    "shoulderY": 0.0698,
-    "waistW": 0.3262
-   }
-  },
-  "brown-basic-heavy-boxy-hoodie-1": {
-   "slot": "outer",
-   "file": "/iys/stylist/g/brown-basic-heavy-boxy-hoodie-1.webp",
-   "w": 360,
-   "h": 352,
-   "image": 8,
-   "src": "brown-basic-heavy-boxy-hoodie-plain-hoodies-in-your-shoe-472792.jpg",
-   "packshots": [
-    7,
-    8
-   ],
-   "fit": {
-    "hemW": 0.5433,
-    "cx": 0.4993,
-    "shoulderY": 0.3313,
-    "waistW": 0.1418
-   }
-  },
-  "brown-basic-oversized-hoodie": {
-   "slot": "outer",
-   "file": "/iys/stylist/g/brown-basic-oversized-hoodie.webp",
-   "w": 360,
-   "h": 352,
-   "image": 1,
-   "src": "brown-basic-hoodie-plain-hoodies-in-your-shoe-985119.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.5424,
-    "cx": 0.4992,
-    "shoulderY": 0.3313,
-    "waistW": 0.1379
-   }
-  },
-  "brown-embroidered-oversized-leather-jacket": {
-   "slot": "outer",
-   "file": "/iys/stylist/g/brown-embroidered-oversized-leather-jacket.webp",
-   "w": 360,
-   "h": 258,
-   "image": 8,
-   "src": "brown-printed-oversized-leather-jacket-leather-jacket-in-your-shoe-861866.jpg",
-   "packshots": [
-    7,
-    8
-   ],
-   "fit": {
-    "hemW": 0.5733,
-    "cx": 0.5067,
-    "shoulderY": 0.1219,
-    "waistW": 0.1911
-   }
-  },
-  "brown-washed-hoodie": {
-   "slot": "outer",
-   "file": "/iys/stylist/g/brown-washed-hoodie.webp",
-   "w": 360,
-   "h": 353,
-   "image": 1,
-   "src": "brown-washed-hoodie-acid-washed-hoodies-in-your-shoe-831580.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.5413,
-    "cx": 0.4977,
-    "shoulderY": 0.3318,
-    "waistW": 0.1346
-   }
-  },
-  "burgundy-basic-oversized-crewneck": {
-   "slot": "outer",
-   "file": "/iys/stylist/g/burgundy-basic-oversized-crewneck.webp",
-   "w": 360,
-   "h": 347,
-   "image": 6,
-   "src": "burgundy-basic-oversized-crewneck-crewnecks-in-your-shoe-246809.jpg",
-   "packshots": [
-    5,
-    6
-   ],
-   "fit": {
-    "hemW": 0.5994,
-    "cx": 0.4992,
-    "shoulderY": 0.0677,
-    "waistW": 0.3482
-   }
-  },
-  "burgundy-basic-sleeveless-tee": {
-   "slot": "top",
-   "file": "/iys/stylist/g/burgundy-basic-sleeveless-tee.webp",
-   "w": 360,
-   "h": 479,
-   "image": 1,
-   "src": "burgundy-sleeveless-tee-sleeveless-tees-in-your-shoe-505246.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.9739,
-    "cx": 0.497,
-    "shoulderY": 0.0783,
-    "waistW": 0.4649
-   }
-  },
-  "burgundy-iys-printed-regular-tee": {
-   "slot": "top",
-   "file": "/iys/stylist/g/burgundy-iys-printed-regular-tee.webp",
-   "w": 360,
-   "h": 343,
-   "image": 1,
-   "src": "burgundy-iys-printed-regular-tee-printed-regular-tees-in-your-shoe-608711.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.6163,
-    "cx": 0.5008,
-    "shoulderY": 0.0634,
-    "waistW": 0.3444
-   }
-  },
-  "burgundy-washed-boxy-zip-up-hoodie": {
-   "slot": "outer",
-   "file": "/iys/stylist/g/burgundy-washed-boxy-zip-up-hoodie.webp",
-   "w": 360,
-   "h": 379,
-   "image": 1,
-   "src": "burgundy-washed-boxy-zip-up-hoodie-zip-up-hoodies-in-your-shoe-226176.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.5427,
-    "cx": 0.5,
-    "shoulderY": 0.3292,
-    "waistW": 0.4487,
-    "hemFromSlot": true
-   }
-  },
-  "burgundy-washed-cap": {
-   "slot": "head",
-   "file": "/iys/stylist/g/burgundy-washed-cap.webp",
-   "w": 220,
-   "h": 233,
-   "image": 0,
-   "src": "burgundy-washed-cap-washed-cap-in-your-shoe-433819.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.9118,
-    "cx": 0.4972,
-    "shoulderY": 0.1646,
-    "waistW": 0.1985
-   }
-  },
-  "burgundy-washed-hoodie": {
-   "slot": "outer",
-   "file": "/iys/stylist/g/burgundy-washed-hoodie.webp",
-   "w": 360,
-   "h": 352,
-   "image": 1,
-   "src": "burgundy-washed-hoodie-acid-washed-hoodies-in-your-shoe-670521.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.5429,
-    "cx": 0.4992,
-    "shoulderY": 0.3328,
-    "waistW": 0.1442
-   }
-  },
-  "burgundy-washed-oversized-long-sleeves": {
-   "slot": "top",
-   "file": "/iys/stylist/g/burgundy-washed-oversized-long-sleeves.webp",
-   "w": 360,
-   "h": 299,
-   "image": 0,
-   "src": "burgundy-washed-oversized-long-sleeves-long-sleeves-in-your-shoe-558216.jpg",
-   "packshots": [
-    0
-   ],
-   "fit": {
-    "hemW": 0.607,
-    "cx": 0.4985,
-    "shoulderY": 0.0846,
-    "waistW": 0.3043
-   }
-  },
-  "burgundy-washed-striped-boxy-tee": {
-   "slot": "top",
-   "file": "/iys/stylist/g/burgundy-washed-striped-boxy-tee.webp",
-   "w": 360,
-   "h": 299,
-   "image": 1,
-   "src": "burgundy-washed-striped-boxy-tee-printed-boxy-tee-in-your-shoe-860049.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.6205,
-    "cx": 0.4985,
-    "shoulderY": 0.0733,
-    "waistW": 0.3229
-   }
-  },
-  "butter-yellow-basic-oversized-tee": {
-   "slot": "top",
-   "file": "/iys/stylist/g/butter-yellow-basic-oversized-tee.webp",
-   "w": 360,
-   "h": 303,
-   "image": 1,
-   "src": "butter-yellow-oversized-tee-basic-oversized-tees-in-your-shoe-420521.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.6077,
-    "cx": 0.5007,
-    "shoulderY": 0.0737,
-    "waistW": 0.3156
-   }
-  },
-  "butter-yellow-basic-regular-tee": {
-   "slot": "top",
-   "file": "/iys/stylist/g/butter-yellow-basic-regular-tee.webp",
-   "w": 360,
-   "h": 343,
-   "image": 1,
-   "src": "butter-yellow-basic-regular-tee-basic-regular-tee-in-your-shoe-712933.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.6148,
-    "cx": 0.5,
-    "shoulderY": 0.0634,
-    "waistW": 0.3429
-   }
-  },
-  "caffeine-chaos-hoodie": {
-   "slot": "outer",
-   "file": "/iys/stylist/g/caffeine-chaos-hoodie.webp",
-   "w": 360,
-   "h": 350,
-   "image": 1,
-   "src": "caffeine-chaos-hoodie-printed-hoodies-in-your-shoe-785438.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.5432,
-    "cx": 0.5,
-    "shoulderY": 0.3292,
-    "waistW": 0.1351
-   }
-  },
-  "cairo-cavalier-hoodie": {
-   "slot": "outer",
-   "file": "/iys/stylist/g/cairo-cavalier-hoodie.webp",
-   "w": 360,
-   "h": 350,
-   "image": 1,
-   "src": "cairo-cavalier-hoodie-printed-hoodies-in-your-shoe-825908.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.5413,
-    "cx": 0.4992,
-    "shoulderY": 0.3286,
-    "waistW": 0.133
-   }
-  },
-  "cairo-club-hoodie": {
-   "slot": "outer",
-   "file": "/iys/stylist/g/cairo-club-hoodie.webp",
-   "w": 360,
-   "h": 350,
-   "image": 1,
-   "src": "cairo-club-hoodie-printed-hoodies-in-your-shoe-943892.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.5435,
-    "cx": 0.4992,
-    "shoulderY": 0.3285,
-    "waistW": 0.1382
-   }
-  },
-  "cairo-is-a-mindset-oversized-hoodie": {
-   "slot": "outer",
-   "file": "/iys/stylist/g/cairo-is-a-mindset-oversized-hoodie.webp",
-   "w": 360,
-   "h": 350,
-   "image": 7,
-   "src": "cairo-is-a-mindset-oversized-hoodie-printed-hoodies-in-your-shoe-703371.jpg",
-   "packshots": [
-    6,
-    7
-   ],
-   "fit": {
-    "hemW": 0.5432,
-    "cx": 0.4993,
-    "shoulderY": 0.3292,
-    "waistW": 0.1384
-   }
-  },
-  "cairo-legacy-oversized-hoodie": {
-   "slot": "outer",
-   "file": "/iys/stylist/g/cairo-legacy-oversized-hoodie.webp",
-   "w": 360,
-   "h": 350,
-   "image": 7,
-   "src": "cairo-legacy-oversized-hoodie-printed-hoodies-in-your-shoe-803112.jpg",
-   "packshots": [
-    6,
-    7
-   ],
-   "fit": {
-    "hemW": 0.5438,
-    "cx": 0.5,
-    "shoulderY": 0.3267,
-    "waistW": 0.1412
-   }
-  },
-  "cairo-project-hoodie": {
-   "slot": "outer",
-   "file": "/iys/stylist/g/cairo-project-hoodie.webp",
-   "w": 360,
-   "h": 350,
-   "image": 1,
-   "src": "cairo-project-hoodie-printed-hoodies-in-your-shoe-202750.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.5432,
-    "cx": 0.5,
-    "shoulderY": 0.3292,
-    "waistW": 0.1351
-   }
-  },
-  "call-me-hoodie": {
-   "slot": "outer",
-   "file": "/iys/stylist/g/call-me-hoodie.webp",
-   "w": 360,
-   "h": 350,
-   "image": 1,
-   "src": "call-me-hoodie-printed-hoodies-in-your-shoe-528112.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.5428,
-    "cx": 0.5,
-    "shoulderY": 0.3296,
-    "waistW": 0.1384
-   }
-  },
-  "cereal-crimes-hoodie": {
-   "slot": "outer",
-   "file": "/iys/stylist/g/cereal-crimes-hoodie.webp",
-   "w": 360,
-   "h": 350,
-   "image": 1,
-   "src": "cereal-crimes-hoodie-printed-hoodies-in-your-shoe-346123.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.5427,
-    "cx": 0.4992,
-    "shoulderY": 0.3281,
-    "waistW": 0.1387
-   }
-  },
-  "cereal-crimes-oversized-tee": {
-   "slot": "top",
-   "file": "/iys/stylist/g/cereal-crimes-oversized-tee.webp",
-   "w": 360,
-   "h": 302,
-   "image": 1,
-   "src": "cereal-crimes-oversized-tee-printed-oversized-tees-in-your-shoe-413886.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.6231,
-    "cx": 0.5008,
-    "shoulderY": 0.0771,
-    "waistW": 0.3153
-   }
-  },
-  "cereal-killer-pt-2-hoodie": {
-   "slot": "outer",
-   "file": "/iys/stylist/g/cereal-killer-pt-2-hoodie.webp",
-   "w": 360,
-   "h": 350,
-   "image": 1,
-   "src": "cereal-killer-pt2-hoodie-printed-hoodies-in-your-shoe-304869.jpg",
-   "packshots": [
-    0,
-    1,
-    2,
-    3
-   ],
-   "fit": {
-    "hemW": 0.5424,
-    "cx": 0.5,
-    "shoulderY": 0.3296,
-    "waistW": 0.1371
-   }
-  },
-  "cereal-killer-pt-2-printed-oversized-tee": {
-   "slot": "top",
-   "file": "/iys/stylist/g/cereal-killer-pt-2-printed-oversized-tee.webp",
-   "w": 360,
-   "h": 302,
-   "image": 1,
-   "src": "cereal-killer-pt2-printed-oversized-tee-printed-oversized-tees-in-your-shoe-671671.jpg",
-   "packshots": [
-    0,
-    1,
-    2,
-    3
-   ],
-   "fit": {
-    "hemW": 0.6213,
-    "cx": 0.5007,
-    "shoulderY": 0.0776,
-    "waistW": 0.318
-   }
-  },
-  "chaos-regular-tee": {
-   "slot": "top",
-   "file": "/iys/stylist/g/chaos-regular-tee.webp",
-   "w": 360,
-   "h": 344,
-   "image": 1,
-   "src": "chaos-regular-tee-printed-regular-tees-in-your-shoe-954529.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.6163,
-    "cx": 0.5008,
-    "shoulderY": 0.0649,
-    "waistW": 0.3399
-   }
-  },
-  "city-of-chaos-boxy-washed-hoodie": {
-   "slot": "outer",
-   "file": "/iys/stylist/g/city-of-chaos-boxy-washed-hoodie.webp",
-   "w": 360,
-   "h": 351,
-   "image": 1,
-   "src": "city-of-chaos-boxy-washed-hoodie-boxy-hoodies-in-your-shoe-874898.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.5422,
-    "cx": 0.4993,
-    "shoulderY": 0.3323,
-    "waistW": 0.1422
-   }
-  },
-  "creamy-basic-boxy-tee": {
-   "slot": "top",
-   "file": "/iys/stylist/g/creamy-basic-boxy-tee.webp",
-   "w": 360,
-   "h": 308,
-   "image": 1,
-   "src": "creamy-boxy-tee-basic-boxy-tee-in-your-shoe-844346.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.6196,
-    "cx": 0.5008,
-    "shoulderY": 0.0681,
-    "waistW": 0.3359
-   }
-  },
-  "cute-but-regular-tee": {
-   "slot": "top",
-   "file": "/iys/stylist/g/cute-but-regular-tee.webp",
-   "w": 360,
-   "h": 344,
-   "image": 1,
-   "src": "cute-but-regular-tee-printed-regular-tees-in-your-shoe-728204.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.6161,
-    "cx": 0.5,
-    "shoulderY": 0.062,
-    "waistW": 0.352
-   }
-  },
-  "daddy-not-cool-washed-oversized-tee": {
-   "slot": "top",
-   "file": "/iys/stylist/g/daddy-not-cool-washed-oversized-tee.webp",
-   "w": 360,
-   "h": 302,
-   "image": 1,
-   "src": "daddy-not-cool-washed-oversized-tee-washed-oversized-tee-in-your-shoe-103825.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.6241,
-    "cx": 0.5015,
-    "shoulderY": 0.0761,
-    "waistW": 0.312
-   }
-  },
-  "dark-grey-washed-cap": {
-   "slot": "head",
-   "file": "/iys/stylist/g/dark-grey-washed-cap.webp",
-   "w": 220,
-   "h": 205,
-   "image": 0,
-   "src": "dark-grey-washed-cap-washed-cap-in-your-shoe-853920.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.9097,
-    "cx": 0.5043,
-    "shoulderY": 0.2104,
-    "waistW": 0.1406
-   }
-  },
-  "dark-minds-hoodie": {
-   "slot": "outer",
-   "file": "/iys/stylist/g/dark-minds-hoodie.webp",
-   "w": 360,
-   "h": 350,
-   "image": 1,
-   "src": "dark-minds-hoodie-printed-hoodies-in-your-shoe-262673.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.5429,
-    "cx": 0.4992,
-    "shoulderY": 0.3297,
-    "waistW": 0.135
-   }
-  },
-  "dark-purple-washed-cap": {
-   "slot": "head",
-   "file": "/iys/stylist/g/dark-purple-washed-cap.webp",
-   "w": 220,
-   "h": 117,
-   "image": 1,
-   "src": "dark-purple-washed-cap-washed-cap-in-your-shoe-619364.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.9554,
-    "cx": 0.5061,
-    "shoulderY": 0.5544,
-    "waistW": 0
-   }
-  },
-  "deep-cherry-basic-heavy-boxy-hoodie": {
-   "slot": "outer",
-   "file": "/iys/stylist/g/deep-cherry-basic-heavy-boxy-hoodie.webp",
-   "w": 360,
-   "h": 352,
-   "image": 1,
-   "src": "deep-cherry-basic-heavy-boxy-hoodie-plain-hoodies-in-your-shoe-515064.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.5433,
-    "cx": 0.5,
-    "shoulderY": 0.3308,
-    "waistW": 0.1418
-   }
-  },
-  "desert-culture-washed-hoodie": {
-   "slot": "outer",
-   "file": "/iys/stylist/g/desert-culture-washed-hoodie.webp",
-   "w": 360,
-   "h": 351,
-   "image": 1,
-   "src": "desert-culture-washed-hoodie-acid-washed-hoodies-in-your-shoe-635789.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.5427,
-    "cx": 0.4992,
-    "shoulderY": 0.3273,
-    "waistW": 0.1304
-   }
-  },
-  "dont-panic-oversized-hoodie": {
-   "slot": "outer",
-   "file": "/iys/stylist/g/dont-panic-oversized-hoodie.webp",
-   "w": 360,
-   "h": 350,
-   "image": 6,
-   "src": "dont-panic-oversized-hoodie-printed-hoodies-in-your-shoe-350919.jpg",
-   "packshots": [
-    5,
-    6
-   ],
-   "fit": {
-    "hemW": 0.5425,
-    "cx": 0.5,
-    "shoulderY": 0.3292,
-    "waistW": 0.1386
-   }
-  },
-  "dont-panic-oversized-tee": {
-   "slot": "top",
-   "file": "/iys/stylist/g/dont-panic-oversized-tee.webp",
-   "w": 360,
-   "h": 302,
-   "image": 1,
-   "src": "dont-panic-oversized-tee-printed-oversized-tees-in-your-shoe-670565.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.6235,
-    "cx": 0.5013,
-    "shoulderY": 0.0789,
-    "waistW": 0.3239
-   }
-  },
-  "dreamer-hoodie": {
-   "slot": "outer",
-   "file": "/iys/stylist/g/dreamer-hoodie.webp",
-   "w": 360,
-   "h": 350,
-   "image": 1,
-   "src": "dreamer-hoodie-printed-hoodies-in-your-shoe-778178.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.5434,
-    "cx": 0.5,
-    "shoulderY": 0.3271,
-    "waistW": 0.1385
-   }
-  },
-  "dropout-oversized-hoodie": {
-   "slot": "outer",
-   "file": "/iys/stylist/g/dropout-oversized-hoodie.webp",
-   "w": 360,
-   "h": 352,
-   "image": 6,
-   "src": "dropout-oversized-hoodie-printed-hoodies-in-your-shoe-109020.jpg",
-   "packshots": [
-    5,
-    6
-   ],
-   "fit": {
-    "hemW": 0.5418,
-    "cx": 0.4985,
-    "shoulderY": 0.3328,
-    "waistW": 0.1418
-   }
-  },
-  "dusty-pink-basic-boxy-tee": {
-   "slot": "top",
-   "file": "/iys/stylist/g/dusty-pink-basic-boxy-tee.webp",
-   "w": 360,
-   "h": 308,
-   "image": 1,
-   "src": "dusty-pink-boxy-tee-basic-boxy-tee-in-your-shoe-764738.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.6187,
-    "cx": 0.5015,
-    "shoulderY": 0.0698,
-    "waistW": 0.3262
-   }
-  },
-  "egyptian-culture-oversized-long-sleeves": {
-   "slot": "top",
-   "file": "/iys/stylist/g/egyptian-culture-oversized-long-sleeves.webp",
-   "w": 360,
-   "h": 294,
-   "image": 7,
-   "src": "egyptian-culture-oversized-long-sleeves-long-sleeves-in-your-shoe-716968.jpg",
-   "packshots": [
-    7
-   ],
-   "fit": {
-    "hemW": 0.5801,
-    "cx": 0.5008,
-    "shoulderY": 0.085,
-    "waistW": 0.287
-   }
-  },
-  "el-giza-boxy-tee": {
-   "slot": "top",
-   "file": "/iys/stylist/g/el-giza-boxy-tee.webp",
-   "w": 360,
-   "h": 308,
-   "image": 1,
-   "src": "el-giza-boxy-tee-printed-boxy-tee-in-your-shoe-896980.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.6206,
-    "cx": 0.5015,
-    "shoulderY": 0.0682,
-    "waistW": 0.3379
+   "looks": {
+    "women": {
+     "shoot": true,
+     "src": "reference-women.webp"
+    }
    }
   },
   "el-hob-moqawma-boxy-hoodie": {
+   "kind": "on-model",
    "slot": "outer",
-   "file": "/iys/stylist/g/el-hob-moqawma-boxy-hoodie.webp",
-   "w": 360,
-   "h": 350,
-   "image": 7,
-   "src": "el-hob-moqawma-boxy-hoodie-boxy-hoodies-in-your-shoe-860230.jpg",
-   "packshots": [
-    6,
-    7
-   ],
-   "fit": {
-    "hemW": 0.5438,
-    "cx": 0.5,
-    "shoulderY": 0.3282,
-    "waistW": 0.1412
+   "looks": {
+    "men": {
+     "file": "/iys/stylist/look/men/el-hob-moqawma-boxy-hoodie.webp",
+     "box": {
+      "x": 0.27,
+      "y": 0.19,
+      "w": 0.54667,
+      "h": 0.81
+     },
+     "image": 3,
+     "src": "el-hob-moqawma-boxy-hoodie-boxy-hoodies-in-your-shoe-112947.jpg",
+     "score": 0.821
+    }
    }
   },
-  "el-mamno3-marghob-oversized-tee": {
-   "slot": "top",
-   "file": "/iys/stylist/g/el-mamno3-marghob-oversized-tee.webp",
-   "w": 360,
-   "h": 302,
-   "image": 1,
-   "src": "el-mamno3-marghob-oversized-tee-printed-oversized-tees-in-your-shoe-689613.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.6226,
-    "cx": 0.5007,
-    "shoulderY": 0.0762,
-    "waistW": 0.315
-   }
-  },
-  "emotional-hoodie": {
+  "green-basic-boxy-zip-up-hoodie": {
+   "kind": "on-model",
    "slot": "outer",
-   "file": "/iys/stylist/g/emotional-hoodie.webp",
-   "w": 360,
-   "h": 353,
-   "image": 1,
-   "src": "emotional-hoodie-printed-hoodies-in-your-shoe-830939.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.5421,
-    "cx": 0.4992,
-    "shoulderY": 0.3339,
-    "waistW": 0.1371
-   }
-  },
-  "emotionally-unavailable-oversized-tee": {
-   "slot": "top",
-   "file": "/iys/stylist/g/emotionally-unavailable-oversized-tee.webp",
-   "w": 360,
-   "h": 302,
-   "image": 1,
-   "src": "emotionally-unavailable-oversized-tee-printed-oversized-tees-in-your-shoe-155582.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.6071,
-    "cx": 0.4993,
-    "shoulderY": 0.0764,
-    "waistW": 0.3036
-   }
-  },
-  "expression-printed-oversized-tee": {
-   "slot": "top",
-   "file": "/iys/stylist/g/expression-printed-oversized-tee.webp",
-   "w": 360,
-   "h": 302,
-   "image": 1,
-   "src": "expression-printed-oversized-tee-printed-oversized-tees-in-your-shoe-x-samsung-503238.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.6235,
-    "cx": 0.5013,
-    "shoulderY": 0.0773,
-    "waistW": 0.3171
-   }
-  },
-  "fawda-hoodie": {
-   "slot": "outer",
-   "file": "/iys/stylist/g/fawda-hoodie.webp",
-   "w": 360,
-   "h": 350,
-   "image": 5,
-   "src": "fawda-hoodie-printed-hoodies-in-your-shoe-250331.jpg",
-   "packshots": [
-    0,
-    5
-   ],
-   "fit": {
-    "hemW": 0.5427,
-    "cx": 0.4992,
-    "shoulderY": 0.3292,
-    "waistW": 0.1341
-   }
-  },
-  "fearless-mind-boxy-washed-hoodie": {
-   "slot": "outer",
-   "file": "/iys/stylist/g/fearless-mind-boxy-washed-hoodie.webp",
-   "w": 360,
-   "h": 350,
-   "image": 1,
-   "src": "fearless-mind-boxy-washed-hoodie-boxy-hoodies-in-your-shoe-225443.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.543,
-    "cx": 0.4992,
-    "shoulderY": 0.3295,
-    "waistW": 0.1354
-   }
-  },
-  "fight-me-like-a-man-hoodie": {
-   "slot": "outer",
-   "file": "/iys/stylist/g/fight-me-like-a-man-hoodie.webp",
-   "w": 360,
-   "h": 350,
-   "image": 1,
-   "src": "fight-me-like-a-man-hoodie-printed-hoodies-in-your-shoe-616158.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.5407,
-    "cx": 0.5,
-    "shoulderY": 0.3286,
-    "waistW": 0.1352
-   }
-  },
-  "flowers-grow-hoodie": {
-   "slot": "outer",
-   "file": "/iys/stylist/g/flowers-grow-hoodie.webp",
-   "w": 360,
-   "h": 350,
-   "image": 1,
-   "src": "flowers-grow-hoodie-printed-hoodies-in-your-shoe-104802.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.5422,
-    "cx": 0.5,
-    "shoulderY": 0.3286,
-    "waistW": 0.1382
-   }
-  },
-  "frog-pond-swim-shorts": {
-   "slot": "bottom",
-   "file": "/iys/stylist/g/frog-pond-swim-shorts.webp",
-   "w": 300,
-   "h": 331,
-   "image": 7,
-   "src": "frog-pond-swim-shorts-swim-shorts-in-your-shoe-188640.jpg",
-   "packshots": [
-    6,
-    7
-   ],
-   "fit": {
-    "hemW": 0.9837,
-    "cx": 0.5007,
-    "shoulderY": 0.1358,
-    "waistW": 0.717
-   }
-  },
-  "ghost-me-please-boxy-hoodie": {
-   "slot": "outer",
-   "file": "/iys/stylist/g/ghost-me-please-boxy-hoodie.webp",
-   "w": 360,
-   "h": 352,
-   "image": 1,
-   "src": "ghost-me-please-boxy-hoodie-boxy-hoodies-in-your-shoe-540915.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.5427,
-    "cx": 0.4993,
-    "shoulderY": 0.3328,
-    "waistW": 0.1439
-   }
-  },
-  "give-me-a-raise-oversized-hoodie": {
-   "slot": "outer",
-   "file": "/iys/stylist/g/give-me-a-raise-oversized-hoodie.webp",
-   "w": 360,
-   "h": 350,
-   "image": 1,
-   "src": "give-me-a-raise-oversized-hoodie-printed-hoodies-in-your-shoe-496996.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.5423,
-    "cx": 0.4993,
-    "shoulderY": 0.3282,
-    "waistW": 0.1382
-   }
-  },
-  "give-me-a-raise-oversized-tee": {
-   "slot": "top",
-   "file": "/iys/stylist/g/give-me-a-raise-oversized-tee.webp",
-   "w": 360,
-   "h": 302,
-   "image": 1,
-   "src": "give-me-a-raise-oversized-tee-printed-oversized-tees-in-your-shoe-981120.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.6241,
-    "cx": 0.5015,
-    "shoulderY": 0.0771,
-    "waistW": 0.3158
-   }
-  },
-  "glitch-on-the-beach-oversized-tee": {
-   "slot": "top",
-   "file": "/iys/stylist/g/glitch-on-the-beach-oversized-tee.webp",
-   "w": 360,
-   "h": 302,
-   "image": 1,
-   "src": "dreamers-club-oversized-tee-printed-oversized-tees-in-your-shoe-627257.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.6231,
-    "cx": 0.5007,
-    "shoulderY": 0.0779,
-    "waistW": 0.3116
-   }
-  },
-  "go-outdoors-hoodie": {
-   "slot": "outer",
-   "file": "/iys/stylist/g/go-outdoors-hoodie.webp",
-   "w": 360,
-   "h": 352,
-   "image": 1,
-   "src": "go-outdoors-hoodie-printed-hoodies-in-your-shoe-539041.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.5424,
-    "cx": 0.4992,
-    "shoulderY": 0.3328,
-    "waistW": 0.1379
-   }
-  },
-  "good-things-happen-oversized-tee": {
-   "slot": "top",
-   "file": "/iys/stylist/g/good-things-happen-oversized-tee.webp",
-   "w": 360,
-   "h": 303,
-   "image": 1,
-   "src": "good-things-happen-oversized-tee-printed-oversized-tees-in-your-shoe-723147.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.625,
-    "cx": 0.5007,
-    "shoulderY": 0.0779,
-    "waistW": 0.311
-   }
-  },
-  "grand-cairo-oversized-tee": {
-   "slot": "top",
-   "file": "/iys/stylist/g/grand-cairo-oversized-tee.webp",
-   "w": 360,
-   "h": 302,
-   "image": 1,
-   "src": "grand-cairo-oversized-tee-printed-oversized-tees-in-your-shoe-191111.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.622,
-    "cx": 0.5007,
-    "shoulderY": 0.0762,
-    "waistW": 0.317
+   "looks": {
+    "men": {
+     "file": "/iys/stylist/look/men/green-basic-boxy-zip-up-hoodie.webp",
+     "box": {
+      "x": 0.27,
+      "y": 0.19,
+      "w": 0.54667,
+      "h": 0.81
+     },
+     "image": 0,
+     "src": "green-basic-boxy-zip-up-hoodie-zip-up-hoodies-in-your-shoe-589128.jpg",
+     "score": 0.792
+    },
+    "women": {
+     "file": "/iys/stylist/look/women/green-basic-boxy-zip-up-hoodie.webp",
+     "box": {
+      "x": 0.18167,
+      "y": 0.2,
+      "w": 0.68,
+      "h": 0.8
+     },
+     "image": 0,
+     "src": "green-basic-boxy-zip-up-hoodie-zip-up-hoodies-in-your-shoe-589128.jpg",
+     "score": 0.746
+    }
    }
   },
   "green-basic-oversized-crewneck": {
+   "kind": "on-model",
    "slot": "outer",
-   "file": "/iys/stylist/g/green-basic-oversized-crewneck.webp",
-   "w": 360,
-   "h": 347,
-   "image": 7,
-   "src": "green-basic-oversized-crewneck-acid-washed-crewnecks-in-your-shoe-712622.jpg",
-   "packshots": [
-    6,
-    7
-   ],
-   "fit": {
-    "hemW": 0.5965,
-    "cx": 0.5,
-    "shoulderY": 0.0706,
-    "waistW": 0.3339
-   }
-  },
-  "green-washed-cap": {
-   "slot": "head",
-   "file": "/iys/stylist/g/green-washed-cap.webp",
-   "w": 220,
-   "h": 111,
-   "image": 1,
-   "src": "green-washed-cap-washed-cap-in-your-shoe-594514.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.9459,
-    "cx": 0.5122,
-    "shoulderY": 0.56,
-    "waistW": 0
-   }
-  },
-  "green-washed-striped-boxy-tee": {
-   "slot": "top",
-   "file": "/iys/stylist/g/green-washed-striped-boxy-tee.webp",
-   "w": 360,
-   "h": 300,
-   "image": 1,
-   "src": "green-washed-striped-boxy-tee-printed-boxy-tee-in-your-shoe-995474.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.6215,
-    "cx": 0.4993,
-    "shoulderY": 0.0733,
-    "waistW": 0.3234
-   }
-  },
-  "greige-washed-cap": {
-   "slot": "head",
-   "file": "/iys/stylist/g/greige-washed-cap.webp",
-   "w": 220,
-   "h": 114,
-   "image": 1,
-   "src": "greige-washed-cap-washed-cap-in-your-shoe-478849.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.9531,
-    "cx": 0.5087,
-    "shoulderY": 0.549,
-    "waistW": 0
-   }
-  },
-  "grey-sleeveless-tee": {
-   "slot": "top",
-   "file": "/iys/stylist/g/grey-sleeveless-tee.webp",
-   "w": 360,
-   "h": 479,
-   "image": 1,
-   "src": "grey-sleeveless-tee-sleeveless-tees-in-your-shoe-348019.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.9719,
-    "cx": 0.497,
-    "shoulderY": 0.0783,
-    "waistW": 0.4649
-   }
-  },
-  "grey-washed-boxy-zip-up-hoodie": {
-   "slot": "outer",
-   "file": "/iys/stylist/g/grey-washed-boxy-zip-up-hoodie.webp",
-   "w": 360,
-   "h": 370,
-   "image": 1,
-   "src": "grey-washed-boxy-zip-up-hoodie-zip-up-hoodies-in-your-shoe-794899.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.5427,
-    "cx": 0.5,
-    "shoulderY": 0.3292,
-    "waistW": 0.4327,
-    "hemFromSlot": true
-   }
-  },
-  "habibo-printed-oversized-tee": {
-   "slot": "top",
-   "file": "/iys/stylist/g/habibo-printed-oversized-tee.webp",
-   "w": 360,
-   "h": 302,
-   "image": 1,
-   "src": "habibo-printed-oversized-tee-printed-oversized-tees-in-your-shoe-238971.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.6235,
-    "cx": 0.5008,
-    "shoulderY": 0.0772,
-    "waistW": 0.3148
-   }
-  },
-  "hangduck-boxy-washed-hoodie": {
-   "slot": "outer",
-   "file": "/iys/stylist/g/hangduck-boxy-washed-hoodie.webp",
-   "w": 360,
-   "h": 350,
-   "image": 1,
-   "src": "hangduck-boxy-washed-hoodie-boxy-hoodies-in-your-shoe-478758.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.5421,
-    "cx": 0.4992,
-    "shoulderY": 0.3269,
-    "waistW": 0.1402
-   }
-  },
-  "heather-grey-basic-heavy-boxy-hoodie": {
-   "slot": "outer",
-   "file": "/iys/stylist/g/heather-grey-basic-heavy-boxy-hoodie.webp",
-   "w": 360,
-   "h": 351,
-   "image": 8,
-   "src": "heather-grey-basic-heavy-boxy-hoodie-plain-hoodies-in-your-shoe-388858.jpg",
-   "packshots": [
-    7,
-    8
-   ],
-   "fit": {
-    "hemW": 0.5418,
-    "cx": 0.4985,
-    "shoulderY": 0.3333,
-    "waistW": 0.1388
-   }
-  },
-  "heliopolis-regular-tee": {
-   "slot": "top",
-   "file": "/iys/stylist/g/heliopolis-regular-tee.webp",
-   "w": 360,
-   "h": 343,
-   "image": 1,
-   "src": "heliopolis-regular-tee-printed-regular-tees-in-your-shoe-457785.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.6148,
-    "cx": 0.5,
-    "shoulderY": 0.0634,
-    "waistW": 0.3429
-   }
-  },
-  "heritage-culture-oversized-hoodie": {
-   "slot": "outer",
-   "file": "/iys/stylist/g/heritage-culture-oversized-hoodie.webp",
-   "w": 360,
-   "h": 350,
-   "image": 1,
-   "src": "heritage-culture-oversized-hoodie-printed-hoodies-in-your-shoe-662471.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.5432,
-    "cx": 0.4993,
-    "shoulderY": 0.3277,
-    "waistW": 0.1414
-   }
-  },
-  "home-town-hoodie": {
-   "slot": "outer",
-   "file": "/iys/stylist/g/home-town-hoodie.webp",
-   "w": 360,
-   "h": 350,
-   "image": 1,
-   "src": "home-town-hoodie-printed-hoodies-in-your-shoe-327261.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.5443,
-    "cx": 0.4992,
-    "shoulderY": 0.3285,
-    "waistW": 0.1377
+   "looks": {
+    "men": {
+     "file": "/iys/stylist/look/men/green-basic-oversized-crewneck.webp",
+     "box": {
+      "x": 0.25833,
+      "y": 0.19,
+      "w": 0.55833,
+      "h": 0.81
+     },
+     "image": 2,
+     "src": "green-basic-oversized-crewneck-crewnecks-in-your-shoe-518639.jpg",
+     "score": 0.824
+    }
    }
   },
   "horse-race-club-oversized-hoodie": {
+   "kind": "on-model",
    "slot": "outer",
-   "file": "/iys/stylist/g/horse-race-club-oversized-hoodie.webp",
-   "w": 360,
-   "h": 350,
-   "image": 6,
-   "src": "horse-race-club-oversized-hoodie-printed-hoodies-in-your-shoe-968040.jpg",
-   "packshots": [
-    5,
-    6
-   ],
-   "fit": {
-    "hemW": 0.5423,
-    "cx": 0.5,
-    "shoulderY": 0.3282,
-    "waistW": 0.1412
-   }
-  },
-  "hot-pink-basic-oversized-tee": {
-   "slot": "top",
-   "file": "/iys/stylist/g/hot-pink-basic-oversized-tee.webp",
-   "w": 360,
-   "h": 302,
-   "image": 1,
-   "src": "hot-pink-oversized-tee-basic-oversized-tees-in-your-shoe-518853.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.608,
-    "cx": 0.5,
-    "shoulderY": 0.0746,
-    "waistW": 0.3055
-   }
-  },
-  "hot-tatts-swim-shorts": {
-   "slot": "bottom",
-   "file": "/iys/stylist/g/hot-tatts-swim-shorts.webp",
-   "w": 300,
-   "h": 373,
-   "image": 1,
-   "src": "hot-tatts-swim-shorts-swim-shorts-in-your-shoe-830753.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.9738,
-    "cx": 0.506,
-    "shoulderY": 0.021,
-    "waistW": 0.837
-   }
-  },
-  "how-long-regular-tee": {
-   "slot": "top",
-   "file": "/iys/stylist/g/how-long-regular-tee.webp",
-   "w": 360,
-   "h": 346,
-   "image": 0,
-   "src": "how-long-regular-tee-printed-regular-tees-in-your-shoe-716383.jpg",
-   "packshots": [
-    0
-   ],
-   "fit": {
-    "hemW": 0.6163,
-    "cx": 0.4977,
-    "shoulderY": 0.0692,
-    "waistW": 0.3429
-   }
-  },
-  "i-hate-people-oversized-tee": {
-   "slot": "top",
-   "file": "/iys/stylist/g/i-hate-people-oversized-tee.webp",
-   "w": 360,
-   "h": 303,
-   "image": 1,
-   "src": "i-hate-people-oversized-tee-printed-oversized-tees-in-your-shoe-644477.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.6235,
-    "cx": 0.5008,
-    "shoulderY": 0.0789,
-    "waistW": 0.3042
-   }
-  },
-  "i-love-my-job-hoodie": {
-   "slot": "outer",
-   "file": "/iys/stylist/g/i-love-my-job-hoodie.webp",
-   "w": 360,
-   "h": 350,
-   "image": 1,
-   "src": "i-love-my-job-hoodie-printed-hoodies-in-your-shoe-935849.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.5435,
-    "cx": 0.5,
-    "shoulderY": 0.3297,
-    "waistW": 0.1374
-   }
-  },
-  "indigo-oversized-tee": {
-   "slot": "top",
-   "file": "/iys/stylist/g/indigo-oversized-tee.webp",
-   "w": 360,
-   "h": 303,
-   "image": 1,
-   "src": "indigo-oversized-tee-basic-oversized-tees-in-your-shoe-998526.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.6086,
-    "cx": 0.5,
-    "shoulderY": 0.0761,
-    "waistW": 0.3051
+   "looks": {
+    "men": {
+     "file": "/iys/stylist/look/men/horse-race-club-oversized-hoodie.webp",
+     "box": {
+      "x": 0.26833,
+      "y": 0.19,
+      "w": 0.54833,
+      "h": 0.81
+     },
+     "image": 0,
+     "src": "el-hob-moqawma-boxy-hoodie-boxy-hoodies-in-your-shoe-196240.jpg",
+     "score": 0.734
+    }
    }
   },
   "insane-oversized-hoodie": {
+   "kind": "on-model",
    "slot": "outer",
-   "file": "/iys/stylist/g/insane-oversized-hoodie.webp",
-   "w": 360,
-   "h": 351,
-   "image": 7,
-   "src": "insane-oversized-hoodie-printed-hoodies-in-your-shoe-184247.jpg",
-   "packshots": [
-    6,
-    7
-   ],
-   "fit": {
-    "hemW": 0.5432,
-    "cx": 0.4993,
-    "shoulderY": 0.3282,
-    "waistW": 0.1354
-   }
-  },
-  "international-council-oversized-hoodie": {
-   "slot": "outer",
-   "file": "/iys/stylist/g/international-council-oversized-hoodie.webp",
-   "w": 360,
-   "h": 350,
-   "image": 7,
-   "src": "international-council-oversized-hoodie-printed-hoodies-in-your-shoe-716699.jpg",
-   "packshots": [
-    6,
-    7
-   ],
-   "fit": {
-    "hemW": 0.543,
-    "cx": 0.4993,
-    "shoulderY": 0.3282,
-    "waistW": 0.1409
+   "looks": {
+    "men": {
+     "file": "/iys/stylist/look/men/insane-oversized-hoodie.webp",
+     "box": {
+      "x": 0.26667,
+      "y": 0.19,
+      "w": 0.55,
+      "h": 0.81
+     },
+     "image": 5,
+     "src": "insane-oversized-hoodie-printed-hoodies-in-your-shoe-415647.jpg",
+     "score": 0.884
+    }
    }
   },
   "iys-racing-club-oversized-crewneck": {
+   "kind": "on-model",
    "slot": "outer",
-   "file": "/iys/stylist/g/iys-racing-club-oversized-crewneck.webp",
-   "w": 360,
-   "h": 347,
-   "image": 6,
-   "src": "iys-racing-club-oversized-crewneck-crewnecks-in-your-shoe-704062.jpg",
-   "packshots": [
-    5,
-    6
-   ],
-   "fit": {
-    "hemW": 0.5994,
-    "cx": 0.4992,
-    "shoulderY": 0.0692,
-    "waistW": 0.3418
+   "looks": {
+    "men": {
+     "file": "/iys/stylist/look/men/iys-racing-club-oversized-crewneck.webp",
+     "box": {
+      "x": 0.27667,
+      "y": 0.19,
+      "w": 0.54,
+      "h": 0.81
+     },
+     "image": 0,
+     "src": "iys-racing-club-oversized-crewneck-crewnecks-in-your-shoe-169225.jpg",
+     "score": 0.81
+    },
+    "women": {
+     "file": "/iys/stylist/look/women/iys-racing-club-oversized-crewneck.webp",
+     "box": {
+      "x": 0.13833,
+      "y": 0.2,
+      "w": 0.72333,
+      "h": 0.8
+     },
+     "image": 0,
+     "src": "iys-racing-club-oversized-crewneck-crewnecks-in-your-shoe-169225.jpg",
+     "score": 0.635
+    }
    }
   },
-  "kherha-fe-gherha-boxy-tee": {
-   "slot": "top",
-   "file": "/iys/stylist/g/kherha-fe-gherha-boxy-tee.webp",
-   "w": 360,
-   "h": 299,
-   "image": 1,
-   "src": "kherha-fe-gherha-boxy-tee-printed-boxy-tee-in-your-shoe-687676.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.6096,
-    "cx": 0.4985,
-    "shoulderY": 0.0721,
-    "waistW": 0.3231
-   }
-  },
-  "light-grey-washed-cap": {
-   "slot": "head",
-   "file": "/iys/stylist/g/light-grey-washed-cap.webp",
-   "w": 220,
-   "h": 113,
-   "image": 1,
-   "src": "light-grey-washed-cap-washed-cap-in-your-shoe-171335.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.9633,
-    "cx": 0.5075,
-    "shoulderY": 0.582,
-    "waistW": 0.2011
-   }
-  },
-  "local-dealer-pt-2-oversized-tee": {
-   "slot": "top",
-   "file": "/iys/stylist/g/local-dealer-pt-2-oversized-tee.webp",
-   "w": 360,
-   "h": 302,
-   "image": 1,
-   "src": "local-dealer-pt2-oversized-tee-printed-oversized-tees-in-your-shoe-309809.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.6241,
-    "cx": 0.5015,
-    "shoulderY": 0.0771,
-    "waistW": 0.3158
-   }
-  },
-  "local-dealer-pt-2-washed-hoodie": {
-   "slot": "outer",
-   "file": "/iys/stylist/g/local-dealer-pt-2-washed-hoodie.webp",
-   "w": 360,
-   "h": 350,
-   "image": 1,
-   "src": "local-dealer-pt2-hoodie-printed-hoodies-in-your-shoe-696024.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.543,
-    "cx": 0.4992,
-    "shoulderY": 0.3279,
-    "waistW": 0.1385
-   }
-  },
-  "love-and-peace-boxy-hoodie": {
-   "slot": "outer",
-   "file": "/iys/stylist/g/love-and-peace-boxy-hoodie.webp",
-   "w": 360,
-   "h": 350,
-   "image": 1,
-   "src": "love-and-peace-boxy-hoodie-boxy-hoodies-in-your-shoe-278114.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.5427,
-    "cx": 0.4993,
-    "shoulderY": 0.33,
-    "waistW": 0.1391
-   }
-  },
-  "make-mistakes-printed-oversized-tee": {
-   "slot": "top",
-   "file": "/iys/stylist/g/make-mistakes-printed-oversized-tee.webp",
-   "w": 360,
-   "h": 303,
-   "image": 1,
-   "src": "make-mistakes-printed-oversized-tee-printed-oversized-tees-in-your-shoe-631574.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.6089,
-    "cx": 0.5,
-    "shoulderY": 0.0773,
-    "waistW": 0.3022
-   }
-  },
-  "manifest-oversized-tee": {
-   "slot": "top",
-   "file": "/iys/stylist/g/manifest-oversized-tee.webp",
-   "w": 360,
-   "h": 300,
-   "image": 1,
-   "src": "manifest-oversized-tee-printed-oversized-tees-in-your-shoe-628829.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.6183,
-    "cx": 0.5007,
-    "shoulderY": 0.0798,
-    "waistW": 0.2959
-   }
-  },
-  "manifest-washed-hoodie": {
-   "slot": "outer",
-   "file": "/iys/stylist/g/manifest-washed-hoodie.webp",
-   "w": 360,
-   "h": 350,
-   "image": 1,
-   "src": "manifest-washed-hoodie-acid-washed-hoodies-in-your-shoe-556113.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.5418,
-    "cx": 0.4992,
-    "shoulderY": 0.328,
-    "waistW": 0.1424
-   }
-  },
-  "mesh-mohtam-hoodie": {
-   "slot": "outer",
-   "file": "/iys/stylist/g/mesh-mohtam-hoodie.webp",
-   "w": 360,
-   "h": 349,
-   "image": 1,
-   "src": "mesh-mohtam-hoodie-printed-hoodies-in-your-shoe-297508.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.5424,
-    "cx": 0.5,
-    "shoulderY": 0.3286,
-    "waistW": 0.1371
-   }
-  },
-  "mint-washed-cap": {
-   "slot": "head",
-   "file": "/iys/stylist/g/mint-washed-cap.webp",
-   "w": 220,
-   "h": 109,
-   "image": 1,
-   "src": "mint-washed-cap-washed-cap-in-your-shoe-619513.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.9603,
-    "cx": 0.4987,
-    "shoulderY": 0.6,
-    "waistW": 0.2063
-   }
-  },
-  "modern-art-oversized-tee": {
-   "slot": "top",
-   "file": "/iys/stylist/g/modern-art-oversized-tee.webp",
-   "w": 360,
-   "h": 303,
-   "image": 1,
-   "src": "modern-art-oversized-tee-printed-oversized-tees-in-your-shoe-627866.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.608,
-    "cx": 0.5,
-    "shoulderY": 0.0745,
-    "waistW": 0.3055
-   }
-  },
-  "mustard-washed-cap": {
-   "slot": "head",
-   "file": "/iys/stylist/g/mustard-washed-cap.webp",
-   "w": 220,
-   "h": 224,
-   "image": 0,
-   "src": "mustard-washed-cap-washed-cap-in-your-shoe-291578.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.9362,
-    "cx": 0.4964,
-    "shoulderY": 0.1857,
-    "waistW": 0.0911
-   }
-  },
-  "nature-oversized-tee": {
-   "slot": "top",
-   "file": "/iys/stylist/g/nature-oversized-tee.webp",
-   "w": 360,
-   "h": 302,
-   "image": 1,
-   "src": "nature-oversized-tee-printed-oversized-tees-in-your-shoe-595694.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.6241,
-    "cx": 0.5015,
-    "shoulderY": 0.0779,
-    "waistW": 0.3105
-   }
-  },
-  "nine-to-five-oversized-tee": {
-   "slot": "top",
-   "file": "/iys/stylist/g/nine-to-five-oversized-tee.webp",
-   "w": 360,
-   "h": 302,
-   "image": 0,
-   "src": "nine-to-five-oversized-tee-printed-oversized-tees-in-your-shoe-619457.jpg",
-   "packshots": [
-    0
-   ],
-   "fit": {
-    "hemW": 0.6244,
-    "cx": 0.5007,
-    "shoulderY": 0.0783,
-    "waistW": 0.3115
-   }
-  },
-  "no-heroes-hoodie": {
-   "slot": "outer",
-   "file": "/iys/stylist/g/no-heroes-hoodie.webp",
-   "w": 360,
-   "h": 350,
-   "image": 1,
-   "src": "no-heroes-hoodie-printed-hoodies-in-your-shoe-982264.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.5423,
-    "cx": 0.4992,
-    "shoulderY": 0.3292,
-    "waistW": 0.1314
-   }
-  },
-  "no-sense-makes-sense-hoodie": {
-   "slot": "outer",
-   "file": "/iys/stylist/g/no-sense-makes-sense-hoodie.webp",
-   "w": 360,
-   "h": 349,
-   "image": 1,
-   "src": "no-sense-makes-sense-hoodie-printed-hoodies-in-your-shoe-275771.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.5408,
-    "cx": 0.5008,
-    "shoulderY": 0.3279,
-    "waistW": 0.1364
-   }
-  },
-  "olive-washed-cap": {
-   "slot": "head",
-   "file": "/iys/stylist/g/olive-washed-cap.webp",
-   "w": 220,
-   "h": 224,
-   "image": 0,
-   "src": "olive-washed-cap-washed-cap-in-your-shoe-648046.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.8279,
-    "cx": 0.5069,
-    "shoulderY": 0.1557,
-    "waistW": 0.1652
-   }
-  },
-  "paranoid-regular-tee": {
-   "slot": "top",
-   "file": "/iys/stylist/g/paranoid-regular-tee.webp",
-   "w": 360,
-   "h": 346,
-   "image": 0,
-   "src": "paranoid-regular-tee-printed-regular-tees-in-your-shoe-125786.jpg",
-   "packshots": [
-    0
-   ],
-   "fit": {
-    "hemW": 0.6163,
-    "cx": 0.4977,
-    "shoulderY": 0.0692,
-    "waistW": 0.3429
-   }
-  },
-  "peace-dreams-boxy-washed-hoodie": {
-   "slot": "outer",
-   "file": "/iys/stylist/g/peace-dreams-boxy-washed-hoodie.webp",
-   "w": 360,
-   "h": 349,
-   "image": 1,
-   "src": "peace-dreams-boxy-washed-hoodie-boxy-hoodies-in-your-shoe-267399.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.5427,
-    "cx": 0.4992,
-    "shoulderY": 0.3208,
-    "waistW": 0.1418
-   }
-  },
-  "peace-is-punk-hoodie": {
-   "slot": "outer",
-   "file": "/iys/stylist/g/peace-is-punk-hoodie.webp",
-   "w": 360,
-   "h": 350,
-   "image": 1,
-   "src": "peace-is-punk-hoodie-printed-hoodies-in-your-shoe-866097.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.5429,
-    "cx": 0.4992,
-    "shoulderY": 0.3246,
-    "waistW": 0.1381
-   }
-  },
-  "picnic-regular-tee": {
-   "slot": "top",
-   "file": "/iys/stylist/g/picnic-regular-tee.webp",
-   "w": 360,
-   "h": 345,
-   "image": 0,
-   "src": "picnic-regular-tee-printed-regular-tees-in-your-shoe-167428.jpg",
-   "packshots": [
-    0
-   ],
-   "fit": {
-    "hemW": 0.6145,
-    "cx": 0.4977,
-    "shoulderY": 0.0675,
-    "waistW": 0.3479
-   }
-  },
-  "pink-basic-regular-tee": {
-   "slot": "top",
-   "file": "/iys/stylist/g/pink-basic-regular-tee.webp",
-   "w": 360,
-   "h": 343,
-   "image": 1,
-   "src": "pink-basic-regular-tee-basic-regular-tee-in-your-shoe-428405.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.6157,
-    "cx": 0.4992,
-    "shoulderY": 0.0619,
-    "waistW": 0.351
-   }
-  },
-  "pink-iys-printed-regular-tee": {
-   "slot": "top",
-   "file": "/iys/stylist/g/pink-iys-printed-regular-tee.webp",
-   "w": 360,
-   "h": 344,
-   "image": 1,
-   "src": "pink-iys-printed-regular-tee-printed-regular-tees-in-your-shoe-455864.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.6167,
-    "cx": 0.5,
-    "shoulderY": 0.0635,
-    "waistW": 0.3485
-   }
-  },
-  "pink-washed-cap": {
-   "slot": "head",
-   "file": "/iys/stylist/g/pink-washed-cap.webp",
-   "w": 220,
-   "h": 114,
-   "image": 1,
-   "src": "pink-washed-cap-washed-cap-in-your-shoe-463489.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.9542,
-    "cx": 0.5074,
-    "shoulderY": 0.5714,
-    "waistW": 0
-   }
-  },
-  "purple-washed-cap": {
-   "slot": "head",
-   "file": "/iys/stylist/g/purple-washed-cap.webp",
-   "w": 220,
-   "h": 107,
-   "image": 1,
-   "src": "purple-washed-cap-washed-cap-in-your-shoe-775678.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.9572,
-    "cx": 0.5083,
-    "shoulderY": 0.5876,
-    "waistW": 0
-   }
-  },
-  "qasr-el-nile-regular-tee": {
-   "slot": "top",
-   "file": "/iys/stylist/g/qasr-el-nile-regular-tee.webp",
-   "w": 360,
-   "h": 346,
-   "image": 0,
-   "src": "qasr-el-nile-regular-tee-printed-regular-tees-in-your-shoe-585613.jpg",
-   "packshots": [
-    0
-   ],
-   "fit": {
-    "hemW": 0.6163,
-    "cx": 0.4977,
-    "shoulderY": 0.0692,
-    "waistW": 0.3429
-   }
-  },
-  "reality-sh-t-regular-tee": {
-   "slot": "top",
-   "file": "/iys/stylist/g/reality-sh-t-regular-tee.webp",
-   "w": 360,
-   "h": 344,
-   "image": 1,
-   "src": "reality-sht-regular-tee-printed-regular-tees-in-your-shoe-402835.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.6167,
-    "cx": 0.5,
-    "shoulderY": 0.0635,
-    "waistW": 0.3485
-   }
-  },
-  "rebel-minds-oversized-tee": {
-   "slot": "top",
-   "file": "/iys/stylist/g/rebel-minds-oversized-tee.webp",
-   "w": 360,
-   "h": 303,
-   "image": 1,
-   "src": "rebel-minds-oversized-tee-printed-oversized-tees-in-your-shoe-721531.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.6235,
-    "cx": 0.5008,
-    "shoulderY": 0.0789,
-    "waistW": 0.3042
-   }
-  },
-  "red-washed-cap": {
-   "slot": "head",
-   "file": "/iys/stylist/g/red-washed-cap.webp",
-   "w": 220,
-   "h": 118,
-   "image": 1,
-   "src": "red-washed-cap-washed-cap-in-your-shoe-864168.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.9537,
-    "cx": 0.498,
-    "shoulderY": 0.5443,
-    "waistW": 0.2411
-   }
-  },
-  "responsibility-regular-tee": {
-   "slot": "top",
-   "file": "/iys/stylist/g/responsibility-regular-tee.webp",
-   "w": 360,
-   "h": 348,
-   "image": 1,
-   "src": "responsibility-regular-tee-printed-regular-tees-in-your-shoe-200916.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.6115,
-    "cx": 0.4977,
-    "shoulderY": 0.0675,
-    "waistW": 0.3399
-   }
-  },
-  "rich-baked-oversized-tee": {
-   "slot": "top",
-   "file": "/iys/stylist/g/rich-baked-oversized-tee.webp",
-   "w": 360,
-   "h": 302,
-   "image": 1,
-   "src": "rich-baked-oversized-tee-printed-oversized-tees-in-your-shoe-130367.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.6094,
-    "cx": 0.5,
-    "shoulderY": 0.0736,
-    "waistW": 0.3167
-   }
-  },
-  "rise-high-boxy-hoodie": {
-   "slot": "outer",
-   "file": "/iys/stylist/g/rise-high-boxy-hoodie.webp",
-   "w": 360,
-   "h": 348,
-   "image": 1,
-   "src": "rise-high-boxy-hoodie-boxy-hoodies-in-your-shoe-209988.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.5402,
-    "cx": 0.4992,
-    "shoulderY": 0.328,
-    "waistW": 0.1409
-   }
-  },
-  "rvng-washed-hoodie": {
-   "slot": "outer",
-   "file": "/iys/stylist/g/rvng-washed-hoodie.webp",
-   "w": 360,
-   "h": 352,
-   "image": 1,
-   "src": "rvng-washed-hoodie-acid-washed-hoodies-in-your-shoe-543520.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.5419,
-    "cx": 0.4992,
-    "shoulderY": 0.3333,
-    "waistW": 0.1398
-   }
-  },
-  "save-the-turtles-boxy-tee": {
-   "slot": "top",
-   "file": "/iys/stylist/g/save-the-turtles-boxy-tee.webp",
-   "w": 360,
-   "h": 308,
-   "image": 0,
-   "src": "save-the-turtles-boxy-tee-printed-boxy-tee-in-your-shoe-242624.jpg",
-   "packshots": [
-    0,
-    1,
-    2,
-    3
-   ],
-   "fit": {
-    "hemW": 0.6206,
-    "cx": 0.5015,
-    "shoulderY": 0.0682,
-    "waistW": 0.3379
-   }
-  },
-  "save-the-turtles-oversized-hoodie": {
-   "slot": "outer",
-   "file": "/iys/stylist/g/save-the-turtles-oversized-hoodie.webp",
-   "w": 360,
-   "h": 349,
-   "image": 1,
-   "src": "save-the-turtles-oversized-hoodie-printed-hoodies-in-your-shoe-445779.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.5438,
-    "cx": 0.5,
-    "shoulderY": 0.3277,
-    "waistW": 0.1412
-   }
-  },
-  "scientific-experiment-oversized-tee": {
-   "slot": "top",
-   "file": "/iys/stylist/g/scientific-experiment-oversized-tee.webp",
-   "w": 360,
-   "h": 302,
-   "image": 1,
-   "src": "scientific-experiment-oversized-tee-printed-oversized-tees-in-your-shoe-937446.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.623,
-    "cx": 0.5007,
-    "shoulderY": 0.0772,
-    "waistW": 0.324
-   }
-  },
-  "seashells-regular-tee": {
-   "slot": "top",
-   "file": "/iys/stylist/g/seashells-regular-tee.webp",
-   "w": 360,
-   "h": 345,
-   "image": 1,
-   "src": "seashells-regular-tee-printed-regular-tees-in-your-shoe-248786.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.6145,
-    "cx": 0.4977,
-    "shoulderY": 0.0691,
-    "waistW": 0.3449
-   }
-  },
-  "serial-griller-oversized-hoodie": {
-   "slot": "outer",
-   "file": "/iys/stylist/g/serial-griller-oversized-hoodie.webp",
-   "w": 360,
-   "h": 350,
-   "image": 1,
-   "src": "serial-griller-oversized-hoodie-printed-hoodies-in-your-shoe-424454.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.5425,
-    "cx": 0.5,
-    "shoulderY": 0.3292,
-    "waistW": 0.1371
-   }
-  },
-  "serial-griller-oversized-tee": {
-   "slot": "top",
-   "file": "/iys/stylist/g/serial-griller-oversized-tee.webp",
-   "w": 360,
-   "h": 302,
-   "image": 1,
-   "src": "serial-griller-oversized-tee-printed-oversized-tees-in-your-shoe-686579.jpg",
-   "packshots": [
-    0,
-    1,
-    2,
-    3
-   ],
-   "fit": {
-    "hemW": 0.6235,
-    "cx": 0.5015,
-    "shoulderY": 0.078,
-    "waistW": 0.314
-   }
-  },
-  "shabab-el-mostakbal-hoodie": {
-   "slot": "outer",
-   "file": "/iys/stylist/g/shabab-el-mostakbal-hoodie.webp",
-   "w": 360,
-   "h": 350,
-   "image": 1,
-   "src": "shabab-el-mostakbal-hoodie-printed-hoodies-in-your-shoe-715569.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.5421,
-    "cx": 0.4992,
-    "shoulderY": 0.3253,
-    "waistW": 0.1449
-   }
-  },
-  "sharing-is-caring-hoodie": {
-   "slot": "outer",
-   "file": "/iys/stylist/g/sharing-is-caring-hoodie.webp",
-   "w": 360,
-   "h": 350,
-   "image": 1,
-   "src": "sharing-is-caring-hoodie-printed-hoodies-in-your-shoe-601180.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.5416,
-    "cx": 0.4992,
-    "shoulderY": 0.329,
-    "waistW": 0.1381
-   }
-  },
-  "sharing-is-caring-pt-2-oversized-tee": {
-   "slot": "top",
-   "file": "/iys/stylist/g/sharing-is-caring-pt-2-oversized-tee.webp",
-   "w": 360,
-   "h": 302,
-   "image": 1,
-   "src": "sharing-is-caring-pt2-oversized-tee-printed-oversized-tees-in-your-shoe-831767.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.6228,
-    "cx": 0.5007,
-    "shoulderY": 0.0776,
-    "waistW": 0.3195
-   }
-  },
-  "shwareena-oversized-tee": {
-   "slot": "top",
-   "file": "/iys/stylist/g/shwareena-oversized-tee.webp",
-   "w": 360,
-   "h": 303,
-   "image": 1,
-   "src": "shwareena-oversized-tee-printed-oversized-tees-in-your-shoe-824486.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.625,
-    "cx": 0.5007,
-    "shoulderY": 0.0779,
-    "waistW": 0.3095
-   }
-  },
-  "sleepscape-oversized-tee": {
-   "slot": "top",
-   "file": "/iys/stylist/g/sleepscape-oversized-tee.webp",
-   "w": 360,
-   "h": 302,
-   "image": 1,
-   "src": "sleepscape-oversized-tee-printed-oversized-tees-in-your-shoe-530675.jpg",
-   "packshots": [
-    1
-   ],
-   "fit": {
-    "hemW": 0.6244,
-    "cx": 0.5007,
-    "shoulderY": 0.0783,
-    "waistW": 0.3085
-   }
-  },
-  "snakes-swim-shorts": {
+  "male-black-loose-parachute-pants": {
+   "kind": "on-model",
    "slot": "bottom",
-   "file": "/iys/stylist/g/snakes-swim-shorts.webp",
-   "w": 300,
-   "h": 374,
-   "image": 1,
-   "src": "snakes-swim-shorts-swim-shorts-in-your-shoe-694061.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.9623,
-    "cx": 0.5079,
-    "shoulderY": 0.0191,
-    "waistW": 0.8512
+   "looks": {
+    "men": {
+     "file": "/iys/stylist/look/men/male-black-loose-parachute-pants.webp",
+     "box": {
+      "x": 0.27,
+      "y": 0.19,
+      "w": 0.54667,
+      "h": 0.81
+     },
+     "image": 0,
+     "src": "city-runners-oversized-long-sleeves-long-sleeves-in-your-shoe-290831.jpg",
+     "score": 0.813
+    }
    }
   },
-  "social-on-social-media-boxy-hoodie": {
+  "mustard-guarded-boxy-zip-up-hoodie": {
+   "kind": "on-model",
    "slot": "outer",
-   "file": "/iys/stylist/g/social-on-social-media-boxy-hoodie.webp",
-   "w": 360,
-   "h": 350,
-   "image": 1,
-   "src": "social-on-social-media-boxy-hoodie-boxy-hoodies-in-your-shoe-719126.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.5427,
-    "cx": 0.5,
-    "shoulderY": 0.3284,
-    "waistW": 0.132
-   }
-  },
-  "solid-butter-yellow-swim-shorts": {
-   "slot": "bottom",
-   "file": "/iys/stylist/g/solid-butter-yellow-swim-shorts.webp",
-   "w": 300,
-   "h": 330,
-   "image": 5,
-   "src": "solid-butter-yellow-swim-shorts-swim-shorts-in-your-shoe-490847.jpg",
-   "packshots": [
-    5,
-    6
-   ],
-   "fit": {
-    "hemW": 0.987,
-    "cx": 0.4993,
-    "shoulderY": 0.1434,
-    "waistW": 0.7246
-   }
-  },
-  "solid-lilac-swim-shorts": {
-   "slot": "bottom",
-   "file": "/iys/stylist/g/solid-lilac-swim-shorts.webp",
-   "w": 300,
-   "h": 321,
-   "image": 6,
-   "src": "solid-lilac-swim-shorts-swim-shorts-in-your-shoe-966407.jpg",
-   "packshots": [
-    5,
-    6
-   ],
-   "fit": {
-    "hemW": 0.9844,
-    "cx": 0.5,
-    "shoulderY": 0.1534,
-    "waistW": 0.7054
-   }
-  },
-  "solid-olive-swim-shorts": {
-   "slot": "bottom",
-   "file": "/iys/stylist/g/solid-olive-swim-shorts.webp",
-   "w": 300,
-   "h": 313,
-   "image": 0,
-   "src": "solid-olive-swim-shorts-swim-shorts-in-your-shoe-962959.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.9708,
-    "cx": 0.5024,
-    "shoulderY": 0.0156,
-    "waistW": 0.7955
-   }
-  },
-  "solid-yellow-swim-shorts": {
-   "slot": "bottom",
-   "file": "/iys/stylist/g/solid-yellow-swim-shorts.webp",
-   "w": 300,
-   "h": 375,
-   "image": 1,
-   "src": "solid-yellow-swim-shorts-swim-shorts-in-your-shoe-349654.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.9805,
-    "cx": 0.4942,
-    "shoulderY": 0.0125,
-    "waistW": 0.8791
-   }
-  },
-  "soot-el-shabab-oversized-tee": {
-   "slot": "top",
-   "file": "/iys/stylist/g/soot-el-shabab-oversized-tee.webp",
-   "w": 360,
-   "h": 303,
-   "image": 1,
-   "src": "soot-el-shabab-oversized-tee-printed-oversized-tees-in-your-shoe-461607.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.608,
-    "cx": 0.5,
-    "shoulderY": 0.0745,
-    "waistW": 0.3085
-   }
-  },
-  "soot-elshare3-oversized-tee": {
-   "slot": "top",
-   "file": "/iys/stylist/g/soot-elshare3-oversized-tee.webp",
-   "w": 360,
-   "h": 301,
-   "image": 1,
-   "src": "soot-elshare3-oversized-tee-printed-oversized-tees-in-your-shoe-671632.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.6222,
-    "cx": 0.5015,
-    "shoulderY": 0.0779,
-    "waistW": 0.323
-   }
-  },
-  "stargaze-swim-shorts": {
-   "slot": "bottom",
-   "file": "/iys/stylist/g/stargaze-swim-shorts.webp",
-   "w": 300,
-   "h": 342,
-   "image": 7,
-   "src": "stargaze-swim-shorts-swim-shorts-in-your-shoe-214424.jpg",
-   "packshots": [
-    6,
-    7
-   ],
-   "fit": {
-    "hemW": 0.9801,
-    "cx": 0.5,
-    "shoulderY": 0.1062,
-    "waistW": 0.745
-   }
-  },
-  "stop-meditating-sleeveless-tee": {
-   "slot": "top",
-   "file": "/iys/stylist/g/stop-meditating-sleeveless-tee.webp",
-   "w": 360,
-   "h": 479,
-   "image": 1,
-   "src": "stop-meditating-sleeveless-tee-sleeveless-tees-in-your-shoe-737392.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.9719,
-    "cx": 0.498,
-    "shoulderY": 0.0783,
-    "waistW": 0.4669
-   }
-  },
-  "streets-culture-boxy-hoodie": {
-   "slot": "outer",
-   "file": "/iys/stylist/g/streets-culture-boxy-hoodie.webp",
-   "w": 360,
-   "h": 349,
-   "image": 1,
-   "src": "streets-culture-boxy-hoodie-boxy-hoodies-in-your-shoe-741017.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.5423,
-    "cx": 0.4992,
-    "shoulderY": 0.3302,
-    "waistW": 0.136
-   }
-  },
-  "sugar-spikes-oversized-tee": {
-   "slot": "top",
-   "file": "/iys/stylist/g/sugar-spikes-oversized-tee.webp",
-   "w": 360,
-   "h": 302,
-   "image": 1,
-   "src": "sugar-spikes-oversized-tee-printed-oversized-tees-in-your-shoe-404512.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.6226,
-    "cx": 0.5007,
-    "shoulderY": 0.078,
-    "waistW": 0.315
-   }
-  },
-  "taught-by-mistake-oversized-tee": {
-   "slot": "top",
-   "file": "/iys/stylist/g/taught-by-mistake-oversized-tee.webp",
-   "w": 360,
-   "h": 302,
-   "image": 1,
-   "src": "taught-by-mistake-oversized-tee-printed-oversized-tees-in-your-shoe-837512.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.608,
-    "cx": 0.5,
-    "shoulderY": 0.0746,
-    "waistW": 0.3055
-   }
-  },
-  "teal-basic-heavy-boxy-hoodie": {
-   "slot": "outer",
-   "file": "/iys/stylist/g/teal-basic-heavy-boxy-hoodie.webp",
-   "w": 360,
-   "h": 352,
-   "image": 1,
-   "src": "teal-basic-heavy-oversized-hoodie-plain-hoodies-in-your-shoe-201231.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.5444,
-    "cx": 0.4992,
-    "shoulderY": 0.3318,
-    "waistW": 0.1429
-   }
-  },
-  "teal-embroidered-oversized-leather-jacket": {
-   "slot": "outer",
-   "file": "/iys/stylist/g/teal-embroidered-oversized-leather-jacket.webp",
-   "w": 360,
-   "h": 258,
-   "image": 9,
-   "src": "teal-printed-oversized-leather-jacket-leather-jacket-in-your-shoe-878501.jpg",
-   "packshots": [
-    8,
-    9
-   ],
-   "fit": {
-    "hemW": 0.5733,
-    "cx": 0.5067,
-    "shoulderY": 0.1219,
-    "waistW": 0.1956
-   }
-  },
-  "the-archives-sphinx-sleeveless-tee": {
-   "slot": "top",
-   "file": "/iys/stylist/g/the-archives-sphinx-sleeveless-tee.webp",
-   "w": 360,
-   "h": 479,
-   "image": 1,
-   "src": "the-archives-sphinx-sleeveless-tee-sleeveless-tees-in-your-shoe-596222.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.9719,
-    "cx": 0.498,
-    "shoulderY": 0.0783,
-    "waistW": 0.4609
-   }
-  },
-  "the-city-that-never-sleeps-oversized-tee": {
-   "slot": "top",
-   "file": "/iys/stylist/g/the-city-that-never-sleeps-oversized-tee.webp",
-   "w": 360,
-   "h": 301,
-   "image": 1,
-   "src": "the-city-that-never-sleeps-oversized-tee-printed-oversized-tees-in-your-shoe-280383.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.6208,
-    "cx": 0.4993,
-    "shoulderY": 0.0771,
-    "waistW": 0.3206
-   }
-  },
-  "the-rolling-stoner-hoodie": {
-   "slot": "outer",
-   "file": "/iys/stylist/g/the-rolling-stoner-hoodie.webp",
-   "w": 360,
-   "h": 350,
-   "image": 1,
-   "src": "the-rolling-stoner-hoodie-printed-hoodies-in-your-shoe-325967.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.5417,
-    "cx": 0.5,
-    "shoulderY": 0.3297,
-    "waistW": 0.132
-   }
-  },
-  "tired-oversized-tee": {
-   "slot": "top",
-   "file": "/iys/stylist/g/tired-oversized-tee.webp",
-   "w": 360,
-   "h": 303,
-   "image": 1,
-   "src": "tired-oversized-tee-printed-oversized-tees-in-your-shoe-598802.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.6084,
-    "cx": 0.5,
-    "shoulderY": 0.0753,
-    "waistW": 0.3042
-   }
-  },
-  "trippy-floral-swim-shorts": {
-   "slot": "bottom",
-   "file": "/iys/stylist/g/trippy-floral-swim-shorts.webp",
-   "w": 300,
-   "h": 377,
-   "image": 1,
-   "src": "trippy-floral-swim-shorts-swim-shorts-in-your-shoe-902589.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.9687,
-    "cx": 0.5083,
-    "shoulderY": 0.0176,
-    "waistW": 0.8803
-   }
-  },
-  "universal-peace-hoodie": {
-   "slot": "outer",
-   "file": "/iys/stylist/g/universal-peace-hoodie.webp",
-   "w": 360,
-   "h": 352,
-   "image": 1,
-   "src": "universal-peace-washed-hoodie-acid-washed-hoodies-in-your-shoe-549430.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.5422,
-    "cx": 0.5,
-    "shoulderY": 0.3333,
-    "waistW": 0.1412
-   }
-  },
-  "view-the-world-oversized-tee": {
-   "slot": "top",
-   "file": "/iys/stylist/g/view-the-world-oversized-tee.webp",
-   "w": 360,
-   "h": 302,
-   "image": 1,
-   "src": "view-the-world-oversized-tee-printed-oversized-tees-in-your-shoe-596792.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.6231,
-    "cx": 0.5007,
-    "shoulderY": 0.0779,
-    "waistW": 0.3131
-   }
-  },
-  "virtual-escape-hoodie": {
-   "slot": "outer",
-   "file": "/iys/stylist/g/virtual-escape-hoodie.webp",
-   "w": 360,
-   "h": 351,
-   "image": 1,
-   "src": "virtual-escape-hoodie-printed-hoodies-in-your-shoe-264713.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.5435,
-    "cx": 0.5,
-    "shoulderY": 0.3276,
-    "waistW": 0.1405
-   }
-  },
-  "what-do-you-want-computer-hoodie": {
-   "slot": "outer",
-   "file": "/iys/stylist/g/what-do-you-want-computer-hoodie.webp",
-   "w": 360,
-   "h": 349,
-   "image": 1,
-   "src": "what-do-you-want-computer-hoodie-printed-hoodies-in-your-shoe-728404.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.5416,
-    "cx": 0.5,
-    "shoulderY": 0.3301,
-    "waistW": 0.1397
-   }
-  },
-  "white-basic-oversized-hoodie": {
-   "slot": "outer",
-   "file": "/iys/stylist/g/white-basic-oversized-hoodie.webp",
-   "w": 360,
-   "h": 352,
-   "image": 1,
-   "src": "white-basic-hoodie-plain-hoodies-in-your-shoe-198610.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.5433,
-    "cx": 0.4993,
-    "shoulderY": 0.3338,
-    "waistW": 0.1403
-   }
-  },
-  "white-basic-oversized-tee": {
-   "slot": "top",
-   "file": "/iys/stylist/g/white-basic-oversized-tee.webp",
-   "w": 360,
-   "h": 303,
-   "image": 0,
-   "src": "white-basic-oversized-tee-basic-oversized-tees-in-your-shoe-352067.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.6239,
-    "cx": 0.5007,
-    "shoulderY": 0.0789,
-    "waistW": 0.3112
-   }
-  },
-  "white-serial-griller-swim-shorts": {
-   "slot": "bottom",
-   "file": "/iys/stylist/g/white-serial-griller-swim-shorts.webp",
-   "w": 300,
-   "h": 335,
-   "image": 6,
-   "src": "white-serial-griller-swim-shorts-swim-shorts-in-your-shoe-792245.jpg",
-   "packshots": [
-    6
-   ],
-   "fit": {
-    "hemW": 0.9847,
-    "cx": 0.4992,
-    "shoulderY": 0.0944,
-    "waistW": 0.7573
-   }
-  },
-  "world-wide-tour-oversized-hoodie": {
-   "slot": "outer",
-   "file": "/iys/stylist/g/world-wide-tour-oversized-hoodie.webp",
-   "w": 360,
-   "h": 350,
-   "image": 7,
-   "src": "worldwide-tour-oversized-hoodie-printed-hoodies-in-your-shoe-371774.jpg",
-   "packshots": [
-    6,
-    7
-   ],
-   "fit": {
-    "hemW": 0.5423,
-    "cx": 0.4993,
-    "shoulderY": 0.3282,
-    "waistW": 0.1367
-   }
-  },
-  "wrong-neighbourhood-hoodie": {
-   "slot": "outer",
-   "file": "/iys/stylist/g/wrong-neighbourhood-hoodie.webp",
-   "w": 360,
-   "h": 350,
-   "image": 1,
-   "src": "wrong-neighbourhood-hoodie-printed-hoodies-in-your-shoe-143540.jpg",
-   "packshots": [
-    0,
-    1
-   ],
-   "fit": {
-    "hemW": 0.5433,
-    "cx": 0.4993,
-    "shoulderY": 0.3282,
-    "waistW": 0.1373
+   "looks": {
+    "men": {
+     "shoot": true,
+     "src": "reference-men.webp"
+    }
    }
   }
  },
  "skip": {
-  "3azama-3ala-3azama-white-long-sleeves": "no-packshot",
+  "3azama-3ala-3azama-white-long-sleeves": "not-on-these-models",
   "abstract-neck-socks": "not-in-frame",
-  "afterclass-oversized-quarter-zipper": "no-packshot",
-  "al-kahera-studio-jersey": "no-packshot",
-  "antique-green-drop-shoulder-cardigan": "no-packshot",
-  "anywhere-everywhere-acid-washed-oversized-tee": "no-packshot",
-  "anywhere-everywhere-washed-hoodie": "no-packshot",
-  "aop-regular-fleece-vest": "no-packshot",
-  "aqua-crochet-hat": "no-packshot",
-  "aqua-lemon-crochet-bucket-hat": "no-packshot",
-  "aqua-plain-fluffy-pjoys": "no-packshot",
+  "afterclass-oversized-quarter-zipper": "fit-rejected",
+  "al-kahera-studio-jersey": "not-on-these-models",
+  "alex-taxi-regular-tee": "not-on-these-models",
+  "angels-hoodie": "not-on-these-models",
+  "anti-9-5-club-hoodie": "not-on-these-models",
+  "antique-green-drop-shoulder-cardigan": "not-on-these-models",
+  "anywhere-everywhere-acid-washed-oversized-tee": "not-on-these-models",
+  "anywhere-everywhere-washed-hoodie": "not-on-these-models",
+  "aop-regular-fleece-vest": "not-on-these-models",
+  "aqua-crochet-hat": "flat-accessory",
+  "aqua-lemon-crochet-bucket-hat": "flat-accessory",
+  "aqua-plain-fluffy-pjoys": "not-on-these-models",
   "arcade-fluffy-socks": "not-in-frame",
-  "astrobility-fluffy-pjoys": "no-packshot",
-  "baby-blue-cropped-camp-shirt": "no-packshot",
-  "baby-blue-gabardine-shorts": "no-packshot",
-  "baby-blue-knit-flowy-wrap": "no-packshot",
-  "baby-blue-maxi-flowy-wrap": "no-packshot",
-  "baby-blue-washed-halter-tank-top": "no-packshot",
-  "baby-blue-wide-leg-sworts": "no-packshot",
-  "baby-blue-wrinkled-top": "no-packshot",
-  "baby-pink-plaid-mini-wrap": "no-packshot",
-  "bandit-onesie": "no-packshot",
-  "beach-day-hawaiian-shirt": "no-packshot",
-  "beanie-pjoys": "no-packshot",
-  "beige-boyfriend-linen-shirt": "no-packshot",
-  "beige-cable-knit-sweater": "no-packshot",
-  "beige-cargo-pants": "no-packshot",
-  "beige-casual-linen-set": "no-packshot",
-  "beige-casual-tied-up-linen-vest": "no-packshot",
-  "beige-crochet-cropped-top": "no-packshot",
-  "beige-crochet-hat": "no-packshot",
-  "beige-crochet-pants": "no-packshot",
-  "beige-crochet-set": "no-packshot",
-  "beige-crochet-shirt": "no-packshot",
-  "beige-crochet-top": "no-packshot",
-  "beige-flare-pants": "no-packshot",
-  "beige-fleece-jacket": "no-packshot",
-  "beige-linen-breeze-set-1": "no-packshot",
-  "beige-linen-pants": "no-packshot",
-  "beige-linen-short": "no-packshot",
-  "beige-linen-skirt": "no-packshot",
-  "beige-linen-vest": "no-packshot",
-  "beige-net-tote-bag": "no-packshot",
-  "beige-oversized-coat": "no-packshot",
-  "beige-oversized-light-gabardine-coat": "no-packshot",
-  "beige-red-crochet-bucket-hat": "no-packshot",
-  "beige-short-sleeve-shirt": "no-packshot",
-  "beige-striped-bow-shorts": "no-packshot",
-  "beige-swants": "no-packshot",
-  "beige-tied-up-linen-vest": "no-packshot",
-  "beige-washed-cowboy-bucket-hat": "no-packshot",
-  "beige-washed-halter-tank-top": "no-packshot",
-  "beige-washed-wide-leg-swants": "no-packshot",
-  "black-acid-washed-crewneck": "no-packshot",
-  "black-acid-washed-hoodie": "no-packshot",
+  "artificial-intelligence-oversized-tee": "not-on-these-models",
+  "artist-washed-hoodie": "not-on-these-models",
+  "astrobility-fluffy-pjoys": "not-on-these-models",
+  "astrobility-washed-hoodie": "not-on-these-models",
+  "baby-blue-cropped-camp-shirt": "not-on-these-models",
+  "baby-blue-gabardine-shorts": "not-on-these-models",
+  "baby-blue-iys-printed-regular-tee": "not-on-these-models",
+  "baby-blue-knit-flowy-wrap": "not-on-these-models",
+  "baby-blue-maxi-flowy-wrap": "not-on-these-models",
+  "baby-blue-washed-halter-tank-top": "not-on-these-models",
+  "baby-blue-wide-leg-sworts": "not-on-these-models",
+  "baby-blue-wrinkled-top": "not-on-these-models",
+  "baby-pink-plaid-mini-wrap": "not-on-these-models",
+  "bandit-onesie": "not-on-these-models",
+  "beach-day-hawaiian-shirt": "not-on-these-models",
+  "beanie-pjoys": "not-on-these-models",
+  "beige-basic-hoodie": "not-on-these-models",
+  "beige-boyfriend-linen-shirt": "not-on-these-models",
+  "beige-cable-knit-sweater": "not-on-these-models",
+  "beige-cargo-pants": "not-on-these-models",
+  "beige-casual-linen-set": "not-on-these-models",
+  "beige-casual-tied-up-linen-vest": "not-on-these-models",
+  "beige-crochet-cropped-top": "not-on-these-models",
+  "beige-crochet-hat": "flat-accessory",
+  "beige-crochet-pants": "not-on-these-models",
+  "beige-crochet-set": "not-on-these-models",
+  "beige-crochet-shirt": "not-on-these-models",
+  "beige-crochet-top": "not-on-these-models",
+  "beige-flare-pants": "not-on-these-models",
+  "beige-fleece-jacket": "not-on-these-models",
+  "beige-linen-breeze-set-1": "not-on-these-models",
+  "beige-linen-pants": "not-on-these-models",
+  "beige-linen-short": "not-on-these-models",
+  "beige-linen-skirt": "not-on-these-models",
+  "beige-linen-vest": "not-on-these-models",
+  "beige-net-tote-bag": "flat-accessory",
+  "beige-oversized-coat": "not-on-these-models",
+  "beige-oversized-light-gabardine-coat": "not-on-these-models",
+  "beige-red-crochet-bucket-hat": "flat-accessory",
+  "beige-short-sleeve-shirt": "not-on-these-models",
+  "beige-striped-bow-shorts": "not-on-these-models",
+  "beige-swants": "not-on-these-models",
+  "beige-tied-up-linen-vest": "not-on-these-models",
+  "beige-washed-cowboy-bucket-hat": "flat-accessory",
+  "beige-washed-halter-tank-top": "not-on-these-models",
+  "beige-washed-oversized-long-sleeves": "not-on-these-models",
+  "beige-washed-wide-leg-swants": "not-on-these-models",
+  "big-grill-energy-oversized-hoodie": "not-on-these-models",
+  "black-acid-washed-crewneck": "not-on-these-models",
+  "black-acid-washed-hoodie": "not-on-these-models",
+  "black-and-pink-swim-shorts": "not-on-these-models",
   "black-and-white-striped-headband": "flat-accessory",
-  "black-basic-boxy-zip-up-hoodie": "no-packshot",
-  "black-boxy-crewneck": "no-packshot",
-  "black-boyfriend-linen-shirt": "no-packshot",
-  "black-cairo-jersey-shorts": "no-packshot",
-  "black-camo-jersey": "no-packshot",
-  "black-cargo-pants": "no-packshot",
-  "black-casual-linen-set": "no-packshot",
-  "black-casual-tied-up-linen-vest": "no-packshot",
+  "black-basic-boxy-tee": "not-on-these-models",
+  "black-basic-boxy-zip-up-hoodie": "fit-rejected",
+  "black-basic-heavy-boxy-hoodie": "not-on-these-models",
+  "black-basic-oversized-hoodie": "not-on-these-models",
+  "black-basic-oversized-tee": "not-on-these-models",
+  "black-basic-oversized-zip-up-hoodie": "not-on-these-models",
+  "black-boxy-crewneck": "not-on-these-models",
+  "black-boyfriend-linen-shirt": "not-on-these-models",
+  "black-cairo-jersey-shorts": "not-on-these-models",
+  "black-camo-jersey": "not-on-these-models",
+  "black-cargo-pants": "not-on-these-models",
+  "black-casual-linen-set": "not-on-these-models",
+  "black-casual-tied-up-linen-vest": "not-on-these-models",
   "black-core-short-socks": "not-in-frame",
-  "black-cotton-jorts": "no-packshot",
-  "black-crinkled-pants": "no-packshot",
-  "black-crinkled-set": "no-packshot",
-  "black-crinkled-top": "no-packshot",
-  "black-cropped-v-neck-sweatshirt": "no-packshot",
-  "black-denim-bucket-hat": "no-packshot",
-  "black-fitted-long-sleeve-top": "no-packshot",
-  "black-flared-leggings": "no-packshot",
-  "black-fleece-jacket": "no-packshot",
-  "black-flowy-short": "no-packshot",
+  "black-cotton-jorts": "not-on-these-models",
+  "black-crinkled-pants": "not-on-these-models",
+  "black-crinkled-set": "not-on-these-models",
+  "black-crinkled-top": "not-on-these-models",
+  "black-cropped-v-neck-sweatshirt": "not-on-these-models",
+  "black-denim-bucket-hat": "flat-accessory",
+  "black-fitted-long-sleeve-top": "not-on-these-models",
+  "black-flared-leggings": "not-on-these-models",
+  "black-fleece-jacket": "not-on-these-models",
+  "black-flowy-short": "not-on-these-models",
   "black-fluffy-socks": "not-in-frame",
-  "black-green-oversized-striped-polo": "no-packshot",
-  "black-heavy-boxy-hoodie": "no-packshot",
-  "black-iys-bucket-hat": "no-packshot",
-  "black-leather-handbag": "no-packshot",
-  "black-linen-breeze-set": "no-packshot",
-  "black-linen-pants": "no-packshot",
-  "black-linen-skirt": "no-packshot",
-  "black-maxi-balloon-skirt": "no-packshot",
-  "black-maxi-skirt": "no-packshot",
-  "black-mini-balloon-skirt": "no-packshot",
-  "black-mini-skort": "no-packshot",
-  "black-off-shoulder-double-layered-top": "no-packshot",
-  "black-onesie": "no-packshot",
-  "black-overshirt-jacket": "no-packshot",
-  "black-oversized-coat": "no-packshot",
-  "black-oversized-corduroy-puffer-jacket": "no-packshot",
-  "black-oversized-gym-tote-bag": "no-packshot",
-  "black-oversized-light-gabardine-coat": "no-packshot",
-  "black-oversized-quarter-zipper": "no-packshot",
-  "black-oversized-short-sleeve-shirt": "no-packshot",
-  "black-oversized-sleeves-cardigan": "no-packshot",
-  "black-oversized-sweat-jorts": "no-packshot",
-  "black-paneled-washed-wide-leg-swants": "no-packshot",
-  "black-peace-love-wide-leg-washed-sworts": "no-packshot",
-  "black-plaid-asymmetric-cross-skirt": "no-packshot",
-  "black-plaid-tote-bag": "no-packshot",
-  "black-plain-fluffy-pjoys": "no-packshot",
-  "black-plain-oversized-thick-windbreaker": "no-packshot",
-  "black-red-multicolor-plaid-boxer-pants": "no-packshot",
-  "black-red-multicolor-plaid-boxer-shorts": "no-packshot",
-  "black-ribbed-mock-neck-top": "no-packshot",
-  "black-ruffled-midi-dress": "no-packshot",
-  "black-short-sleeve-shirt": "no-packshot",
-  "black-short-sleeve-worker-shirt": "no-packshot",
-  "black-sleeveless-cropped-top": "no-packshot",
-  "black-slouchy-sling-bag": "no-packshot",
-  "black-striped-bow-shorts": "no-packshot",
-  "black-striped-sleeve-boxy-tee": "no-packshot",
-  "black-super-oversized-swants": "no-packshot",
-  "black-tank-top": "no-packshot",
-  "black-tied-up-linen-vest": "no-packshot",
-  "black-waffle-set": "no-packshot",
-  "black-washed-cowboy-bucket-hat": "no-packshot",
-  "black-washed-crewneck": "no-packshot",
-  "black-washed-hoodie": "no-packshot",
-  "black-washed-long-sleeves": "no-packshot",
-  "black-washed-oversized-long-sleeves": "no-packshot",
+  "black-green-oversized-striped-polo": "not-on-these-models",
+  "black-heavy-boxy-hoodie": "not-on-these-models",
+  "black-iys-bucket-hat": "flat-accessory",
+  "black-iys-printed-regular-tee": "not-on-these-models",
+  "black-leather-handbag": "flat-accessory",
+  "black-linen-breeze-set": "not-on-these-models",
+  "black-linen-pants": "not-on-these-models",
+  "black-linen-skirt": "not-on-these-models",
+  "black-maxi-balloon-skirt": "not-on-these-models",
+  "black-maxi-skirt": "not-on-these-models",
+  "black-mini-balloon-skirt": "not-on-these-models",
+  "black-mini-skort": "not-on-these-models",
+  "black-off-shoulder-double-layered-top": "not-on-these-models",
+  "black-onesie": "not-on-these-models",
+  "black-overshirt-jacket": "not-on-these-models",
+  "black-oversized-coat": "not-on-these-models",
+  "black-oversized-corduroy-puffer-jacket": "not-on-these-models",
+  "black-oversized-gym-tote-bag": "flat-accessory",
+  "black-oversized-light-gabardine-coat": "not-on-these-models",
+  "black-oversized-quarter-zipper": "not-on-these-models",
+  "black-oversized-short-sleeve-shirt": "not-on-these-models",
+  "black-oversized-sleeves-cardigan": "not-on-these-models",
+  "black-oversized-sweat-jorts": "not-on-these-models",
+  "black-paneled-washed-wide-leg-swants": "not-on-these-models",
+  "black-peace-love-wide-leg-washed-sworts": "not-on-these-models",
+  "black-plaid-asymmetric-cross-skirt": "not-on-these-models",
+  "black-plaid-tote-bag": "flat-accessory",
+  "black-plain-fluffy-pjoys": "not-on-these-models",
+  "black-plain-oversized-thick-windbreaker": "not-on-these-models",
+  "black-red-multicolor-plaid-boxer-pants": "not-on-these-models",
+  "black-red-multicolor-plaid-boxer-shorts": "not-on-these-models",
+  "black-ribbed-mock-neck-top": "not-on-these-models",
+  "black-ruffled-midi-dress": "not-on-these-models",
+  "black-serial-griller-swim-shorts": "not-on-these-models",
+  "black-short-sleeve-shirt": "not-on-these-models",
+  "black-short-sleeve-worker-shirt": "not-on-these-models",
+  "black-sleeveless-cropped-top": "not-on-these-models",
+  "black-slouchy-sling-bag": "flat-accessory",
+  "black-striped-bow-shorts": "not-on-these-models",
+  "black-striped-sleeve-boxy-tee": "not-on-these-models",
+  "black-super-oversized-swants": "not-on-these-models",
+  "black-tank-top": "not-on-these-models",
+  "black-tied-up-linen-vest": "not-on-these-models",
+  "black-waffle-set": "not-on-these-models",
+  "black-washed-cowboy-bucket-hat": "flat-accessory",
+  "black-washed-crewneck": "not-on-these-models",
+  "black-washed-hoodie": "not-on-these-models",
+  "black-washed-long-sleeves": "not-on-these-models",
+  "black-washed-oversized-long-sleeves": "not-on-these-models",
+  "black-washed-striped-boxy-tee": "not-on-these-models",
   "black-white-neck-socks": "not-in-frame",
   "black-white-polka-dots-neck-socks": "not-in-frame",
-  "black-wide-leg-sworts": "no-packshot",
-  "black-wide-leg-washed-sworts": "no-packshot",
-  "black-worldwide-oversized-mock-neck": "no-packshot",
-  "black-zed-stars-sworts": "no-packshot",
-  "black-zed-stars-wide-leg-swants": "no-packshot",
-  "blackened-pearl-wide-leg-washed-sworts": "no-packshot",
+  "black-wide-leg-sworts": "not-on-these-models",
+  "black-wide-leg-washed-sworts": "not-on-these-models",
+  "black-worldwide-oversized-mock-neck": "not-on-these-models",
+  "black-zed-stars-sworts": "fit-rejected",
+  "black-zed-stars-wide-leg-swants": "fit-rejected",
+  "blackened-pearl-wide-leg-washed-sworts": "not-on-these-models",
   "blue-argyle-neck-socks": "not-in-frame",
-  "blue-aurora-leggings": "no-packshot",
-  "blue-barrel-track-pants": "no-packshot",
-  "blue-basic-boxy-crewneck": "no-packshot",
-  "blue-basic-hoodie": "no-packshot",
-  "blue-bear-onesie": "no-packshot",
-  "blue-cargo-jorts": "no-packshot",
+  "blue-aurora-leggings": "not-on-these-models",
+  "blue-barrel-track-pants": "not-on-these-models",
+  "blue-basic-hoodie": "not-on-these-models",
+  "blue-basic-oversized-hoodie": "not-on-these-models",
+  "blue-basic-oversized-tee-1": "not-on-these-models",
+  "blue-basic-regular-tee": "not-on-these-models",
+  "blue-bear-onesie": "not-on-these-models",
+  "blue-cargo-jorts": "not-on-these-models",
   "blue-checks-crochet-bandana": "flat-accessory",
-  "blue-cotton-jorts": "no-packshot",
-  "blue-fishnet-top": "no-packshot",
-  "blue-flowy-short": "no-packshot",
-  "blue-green-striped-tank-top": "no-packshot",
+  "blue-cotton-jorts": "not-on-these-models",
+  "blue-fishnet-top": "not-on-these-models",
+  "blue-flowy-short": "not-on-these-models",
+  "blue-green-striped-tank-top": "not-on-these-models",
   "blue-headband": "flat-accessory",
-  "blue-knit-crossbody-bag": "no-packshot",
-  "blue-knit-set": "no-packshot",
+  "blue-knit-crossbody-bag": "flat-accessory",
+  "blue-knit-set": "not-on-these-models",
   "blue-mint-color-block-neck-socks": "not-in-frame",
-  "blue-narrow-striped-boxy-polo": "no-packshot",
-  "blue-navy-striped-daydreamer-boxy-long-sleeves": "no-packshot",
-  "blue-oversized-knit-jacket": "no-packshot",
-  "blue-oversized-textured-windbreaker": "no-packshot",
-  "blue-pink-multicolor-plaid-boxer-pants": "no-packshot",
-  "blue-pink-multicolor-plaid-boxer-shorts": "no-packshot",
-  "blue-plaid-mini-wrap": "no-packshot",
+  "blue-narrow-striped-boxy-polo": "not-on-these-models",
+  "blue-navy-striped-daydreamer-boxy-long-sleeves": "not-on-these-models",
+  "blue-oversized-knit-jacket": "not-on-these-models",
+  "blue-oversized-textured-windbreaker": "not-on-these-models",
+  "blue-pink-multicolor-plaid-boxer-pants": "not-on-these-models",
+  "blue-pink-multicolor-plaid-boxer-shorts": "not-on-these-models",
+  "blue-plaid-mini-wrap": "not-on-these-models",
   "blue-playground-neck-socks": "not-in-frame",
-  "blue-purple-regular-fleece-vest": "no-packshot",
-  "blue-regular-knit-pants": "no-packshot",
-  "blue-regular-windbreaker": "no-packshot",
-  "blue-striped-bow-shorts": "no-packshot",
-  "blue-striped-oversized-tee": "no-packshot",
+  "blue-purple-regular-fleece-vest": "not-on-these-models",
+  "blue-regular-knit-pants": "not-on-these-models",
+  "blue-regular-windbreaker": "not-on-these-models",
+  "blue-striped-bow-shorts": "not-on-these-models",
+  "blue-striped-oversized-tee": "not-on-these-models",
   "blue-striped-pantoufle": "not-in-frame",
-  "blue-stripped-square-neck-top": "no-packshot",
-  "blue-washed-long-sleeves": "no-packshot",
-  "blue-washed-star-jorts": "no-packshot",
-  "blue-white-striped-statement-oversized-rugby-polo": "no-packshot",
-  "blue-wild-clay-satin-flowy-wrap": "no-packshot",
-  "bojak-pjoys": "no-packshot",
-  "bojak-pshorts": "no-packshot",
-  "breaking-brgr-hoodie": "no-packshot",
-  "brick-barrel-track-pants": "no-packshot",
-  "brick-pjoys": "no-packshot",
-  "brick-plaid-asymmetric-cross-skirt": "no-packshot",
-  "brick-pshorts": "no-packshot",
-  "brick-red-cable-knit-sweater": "no-packshot",
+  "blue-stripped-square-neck-top": "not-on-these-models",
+  "blue-washed-cap": "flat-accessory",
+  "blue-washed-long-sleeves": "not-on-these-models",
+  "blue-washed-star-jorts": "not-on-these-models",
+  "blue-white-striped-statement-oversized-rugby-polo": "not-on-these-models",
+  "blue-wild-clay-satin-flowy-wrap": "not-on-these-models",
+  "bojak-pjoys": "not-on-these-models",
+  "bojak-pshorts": "not-on-these-models",
+  "born-to-be-cool-hoodie": "not-on-these-models",
+  "botox-oversized-tee": "not-on-these-models",
+  "breaking-brgr-hoodie": "not-on-these-models",
+  "brick-barrel-track-pants": "not-on-these-models",
+  "brick-pjoys": "not-on-these-models",
+  "brick-plaid-asymmetric-cross-skirt": "not-on-these-models",
+  "brick-pshorts": "not-on-these-models",
+  "brick-red-cable-knit-sweater": "not-on-these-models",
   "brit-pop-neck-socks": "not-in-frame",
+  "broke-hoodie": "not-on-these-models",
   "brown-and-blue-striped-headband": "flat-accessory",
   "brown-and-creme-striped-headband": "flat-accessory",
-  "brown-basic-heavy-boxy-hoodie": "no-packshot",
-  "brown-crochet-fishnet-dress": "no-packshot",
-  "brown-crochet-shirt": "no-packshot",
-  "brown-flare-pants": "no-packshot",
-  "brown-flared-leggings": "no-packshot",
+  "brown-basic-boxy-tee": "not-on-these-models",
+  "brown-basic-heavy-boxy-hoodie": "not-on-these-models",
+  "brown-basic-heavy-boxy-hoodie-1": "not-on-these-models",
+  "brown-basic-oversized-hoodie": "not-on-these-models",
+  "brown-crochet-fishnet-dress": "not-on-these-models",
+  "brown-crochet-shirt": "not-on-these-models",
+  "brown-embroidered-oversized-leather-jacket": "not-on-these-models",
+  "brown-flare-pants": "not-on-these-models",
+  "brown-flared-leggings": "not-on-these-models",
   "brown-fluffy-socks": "not-in-frame",
-  "brown-gabardine-tote-bag": "no-packshot",
+  "brown-gabardine-tote-bag": "flat-accessory",
   "brown-granny-crochet-bandana": "flat-accessory",
-  "brown-knit-crossbody-bag": "no-packshot",
-  "brown-knit-set": "no-packshot",
-  "brown-knot-vest": "no-packshot",
+  "brown-knit-crossbody-bag": "flat-accessory",
+  "brown-knit-set": "not-on-these-models",
+  "brown-knot-vest": "not-on-these-models",
   "brown-neck-socks": "not-in-frame",
-  "brown-oversized-coat": "no-packshot",
-  "brown-oversized-corduroy-puffer-jacket": "no-packshot",
-  "brown-oversized-knit-jacket": "no-packshot",
-  "brown-oversized-quarter-zipper": "no-packshot",
-  "brown-oversized-sleeves-cardigan": "no-packshot",
-  "brown-oversized-textured-windbreaker": "no-packshot",
-  "brown-oversized-washed-corduroy-shirt": "no-packshot",
-  "brown-plaid-balloon-pants": "no-packshot",
-  "brown-regular-knit-pants": "no-packshot",
-  "brown-spaghetti-strap-top": "no-packshot",
-  "brown-stitched-tank-top": "no-packshot",
-  "brown-striped-loose-fit-baby-tee": "no-packshot",
-  "brown-stripped-square-neck-top": "no-packshot",
-  "brown-super-loose-swants": "no-packshot",
-  "brown-super-oversized-swants": "no-packshot",
+  "brown-oversized-coat": "not-on-these-models",
+  "brown-oversized-corduroy-puffer-jacket": "not-on-these-models",
+  "brown-oversized-knit-jacket": "not-on-these-models",
+  "brown-oversized-quarter-zipper": "not-on-these-models",
+  "brown-oversized-sleeves-cardigan": "not-on-these-models",
+  "brown-oversized-textured-windbreaker": "not-on-these-models",
+  "brown-oversized-washed-corduroy-shirt": "not-on-these-models",
+  "brown-plaid-balloon-pants": "not-on-these-models",
+  "brown-regular-knit-pants": "not-on-these-models",
+  "brown-spaghetti-strap-top": "not-on-these-models",
+  "brown-stitched-tank-top": "not-on-these-models",
+  "brown-striped-loose-fit-baby-tee": "not-on-these-models",
+  "brown-stripped-square-neck-top": "not-on-these-models",
+  "brown-super-loose-swants": "not-on-these-models",
+  "brown-super-oversized-swants": "not-on-these-models",
   "brown-tribal-fluffy-socks": "not-in-frame",
-  "brown-washed-boxy-crewneck": "no-packshot",
-  "brown-washed-tank-top": "no-packshot",
-  "brown-washed-wide-leg-swants-1": "no-packshot",
-  "brown-white-oversized-striped-polo": "no-packshot",
-  "brown-zip-up-super-heavy-oversized-hoodie": "no-packshot",
-  "burgundy-acid-washed-crewneck": "no-packshot",
-  "burgundy-gabardine-shorts": "no-packshot",
-  "burgundy-leather-handbag": "no-packshot",
+  "brown-washed-boxy-crewneck": "not-on-these-models",
+  "brown-washed-hoodie": "not-on-these-models",
+  "brown-washed-tank-top": "not-on-these-models",
+  "brown-washed-wide-leg-swants-1": "not-on-these-models",
+  "brown-white-oversized-striped-polo": "not-on-these-models",
+  "brown-zip-up-super-heavy-oversized-hoodie": "not-on-these-models",
+  "burgundy-acid-washed-crewneck": "not-on-these-models",
+  "burgundy-basic-oversized-crewneck": "fit-rejected",
+  "burgundy-basic-sleeveless-tee": "not-on-these-models",
+  "burgundy-gabardine-shorts": "not-on-these-models",
+  "burgundy-iys-printed-regular-tee": "not-on-these-models",
+  "burgundy-leather-handbag": "flat-accessory",
   "burgundy-lollipop-neck-socks": "not-in-frame",
   "burgundy-mini-bandana": "flat-accessory",
-  "burgundy-off-shoulder-double-layered-top": "no-packshot",
-  "burgundy-oversized-quarter-zipper": "no-packshot",
-  "burgundy-oversized-textured-windbreaker": "no-packshot",
-  "burgundy-pink-striped-daydreamer-boxy-long-sleeves": "no-packshot",
-  "burgundy-powder-pink-striped-boxy-rugby-polo": "no-packshot",
-  "burgundy-striped-colorful-short-sleeve-shirt": "no-packshot",
-  "burgundy-washed-crewneck": "no-packshot",
-  "burgundy-zip-backpack": "no-packshot",
-  "burn-rules-hoodie": "no-packshot",
-  "but-daddy-i-love-him-cropped-tee": "no-packshot",
+  "burgundy-off-shoulder-double-layered-top": "not-on-these-models",
+  "burgundy-oversized-quarter-zipper": "not-on-these-models",
+  "burgundy-oversized-textured-windbreaker": "not-on-these-models",
+  "burgundy-pink-striped-daydreamer-boxy-long-sleeves": "not-on-these-models",
+  "burgundy-powder-pink-striped-boxy-rugby-polo": "not-on-these-models",
+  "burgundy-striped-colorful-short-sleeve-shirt": "not-on-these-models",
+  "burgundy-washed-boxy-zip-up-hoodie": "not-on-these-models",
+  "burgundy-washed-cap": "flat-accessory",
+  "burgundy-washed-crewneck": "not-on-these-models",
+  "burgundy-washed-hoodie": "not-on-these-models",
+  "burgundy-washed-oversized-long-sleeves": "not-on-these-models",
+  "burgundy-washed-striped-boxy-tee": "not-on-these-models",
+  "burgundy-zip-backpack": "flat-accessory",
+  "burn-rules-hoodie": "not-on-these-models",
+  "but-daddy-i-love-him-cropped-tee": "not-on-these-models",
   "butter-crochet-bandana": "flat-accessory",
-  "butter-yellow-mini-balloon-skirt": "no-packshot",
-  "butter-yellow-raglan-oversized-pullover": "no-packshot",
-  "butter-yellow-spaghetti-strap-top": "no-packshot",
-  "cairo-desert-pjoys": "no-packshot",
-  "cairo-desert-pshorts": "no-packshot",
-  "cairo-studio-long-sleeve-tee": "no-packshot",
-  "camel-brown-boyfriend-linen-shirt": "no-packshot",
-  "camel-brown-linen-pants": "no-packshot",
+  "butter-yellow-basic-oversized-tee": "not-on-these-models",
+  "butter-yellow-basic-regular-tee": "not-on-these-models",
+  "butter-yellow-mini-balloon-skirt": "not-on-these-models",
+  "butter-yellow-raglan-oversized-pullover": "fit-rejected",
+  "butter-yellow-spaghetti-strap-top": "not-on-these-models",
+  "caffeine-chaos-hoodie": "not-on-these-models",
+  "cairo-cavalier-hoodie": "not-on-these-models",
+  "cairo-club-hoodie": "not-on-these-models",
+  "cairo-desert-pjoys": "not-on-these-models",
+  "cairo-desert-pshorts": "not-on-these-models",
+  "cairo-is-a-mindset-oversized-hoodie": "fit-rejected",
+  "cairo-legacy-oversized-hoodie": "not-on-these-models",
+  "cairo-project-hoodie": "not-on-these-models",
+  "cairo-studio-long-sleeve-tee": "not-on-these-models",
+  "call-me-hoodie": "not-on-these-models",
+  "camel-brown-boyfriend-linen-shirt": "not-on-these-models",
+  "camel-brown-linen-pants": "not-on-these-models",
   "candy-cane-neck-socks": "not-in-frame",
-  "candy-cane-onesie": "no-packshot",
-  "catchy-onesie": "no-packshot",
-  "cereal-griller-boxy-shirt": "no-packshot",
-  "cereal-killer-fluffy-pjoys": "no-packshot",
-  "cereal-killer-pjoys": "no-packshot",
-  "chaos-washed-cap": "no-packshot",
-  "chicken-onesie": "no-packshot",
-  "chilli-swim-shorts": "no-packshot",
-  "choco-and-beige-balloon-knitwear-pullover": "no-packshot",
-  "chores-pshorts": "no-packshot",
-  "ciao-baby-cropped-tee": "no-packshot",
-  "cinnamon-corduroy-jacket": "no-packshot",
+  "candy-cane-onesie": "not-on-these-models",
+  "catchy-onesie": "not-on-these-models",
+  "cereal-crimes-hoodie": "not-on-these-models",
+  "cereal-crimes-oversized-tee": "not-on-these-models",
+  "cereal-griller-boxy-shirt": "not-on-these-models",
+  "cereal-killer-fluffy-pjoys": "not-on-these-models",
+  "cereal-killer-pjoys": "not-on-these-models",
+  "cereal-killer-pt-2-hoodie": "not-on-these-models",
+  "cereal-killer-pt-2-printed-oversized-tee": "not-on-these-models",
+  "chaos-regular-tee": "not-on-these-models",
+  "chaos-washed-cap": "flat-accessory",
+  "chicken-onesie": "not-on-these-models",
+  "chilli-swim-shorts": "not-on-these-models",
+  "choco-and-beige-balloon-knitwear-pullover": "not-on-these-models",
+  "chores-pshorts": "not-on-these-models",
+  "ciao-baby-cropped-tee": "not-on-these-models",
+  "cinnamon-corduroy-jacket": "not-on-these-models",
   "circus-neck-socks-1": "not-in-frame",
-  "city-runners-oversized-long-sleeves": "no-packshot",
-  "claimed-territory-oversized-long-sleeves": "no-packshot",
-  "cocoa-tank-top": "no-packshot",
-  "coffee-fleece-jacket": "no-packshot",
-  "coffee-pjoys": "no-packshot",
-  "coffee-waffle-shirt": "no-packshot",
-  "coffee-washed-balloon-fit-hoodie": "no-packshot",
-  "cold-but-still-hot-fluffy-pjoys": "no-packshot",
-  "colorful-set-1": "no-packshot",
-  "colorful-sleeveless-top": "no-packshot",
-  "colorful-swim-shorts": "no-packshot",
-  "colorful-tube-skirt": "no-packshot",
+  "city-of-chaos-boxy-washed-hoodie": "not-on-these-models",
+  "claimed-territory-oversized-long-sleeves": "fit-rejected",
+  "cocoa-tank-top": "not-on-these-models",
+  "coffee-fleece-jacket": "not-on-these-models",
+  "coffee-pjoys": "not-on-these-models",
+  "coffee-waffle-shirt": "not-on-these-models",
+  "coffee-washed-balloon-fit-hoodie": "not-on-these-models",
+  "cold-but-still-hot-fluffy-pjoys": "not-on-these-models",
+  "colorful-set-1": "not-on-these-models",
+  "colorful-sleeveless-top": "not-on-these-models",
+  "colorful-swim-shorts": "not-on-these-models",
+  "colorful-tube-skirt": "not-on-these-models",
   "confetti-neck-socks": "not-in-frame",
-  "consciousness-hoodie": "no-packshot",
+  "consciousness-hoodie": "not-on-these-models",
   "contrast-stripes-neck-socks": "not-in-frame",
-  "cooking-pjoys": "no-packshot",
-  "cooking-pshorts": "no-packshot",
+  "cooking-pjoys": "not-on-these-models",
+  "cooking-pshorts": "not-on-these-models",
   "cool-aid-neck-socks": "not-in-frame",
-  "cosmic-checkers-fluffy-pjoys": "no-packshot",
-  "cosmic-vision-washed-hoodie": "no-packshot",
+  "cosmic-checkers-fluffy-pjoys": "not-on-these-models",
+  "cosmic-vision-washed-hoodie": "not-on-these-models",
   "cotton-candy-neck-socks": "not-in-frame",
-  "couldnt-care-less-loose-cropped-baby-tee": "no-packshot",
-  "counting-sheeps-fluffy-pjoys": "no-packshot",
-  "crabby-satin-flowy-wrap": "no-packshot",
+  "couldnt-care-less-loose-cropped-baby-tee": "not-on-these-models",
+  "counting-sheeps-fluffy-pjoys": "fit-rejected",
+  "crabby-satin-flowy-wrap": "not-on-these-models",
   "crabs-satin-bandana": "flat-accessory",
-  "crazy-town-washed-hoodie": "no-packshot",
-  "creamy-beige-square-neck-top": "no-packshot",
-  "creamy-cargo-jorts": "no-packshot",
-  "creamy-wide-leg-swants": "no-packshot",
-  "creative-team-jersey": "no-packshot",
-  "crocodile-chiffon-flowy-wrap": "no-packshot",
-  "crocodile-onesie-copy": "no-packshot",
-  "cyan-knitted-fishnet-dress": "no-packshot",
-  "dark-beige-wide-leg-swants": "no-packshot",
-  "dark-beige-wide-leg-sworts": "no-packshot",
-  "dark-green-loose-swants": "no-packshot",
-  "dark-grey-barrel-track-pants": "no-packshot",
-  "dark-grey-cable-knit-sweater": "no-packshot",
-  "dark-grey-guarded-boxy-zip-up-hoodie": "no-packshot",
-  "dark-grey-oversized-coat": "no-packshot",
-  "dark-grey-oversized-textured-windbreaker": "no-packshot",
-  "dark-grey-oversized-washed-corduroy-shirt": "no-packshot",
-  "dark-grey-printed-swants": "no-packshot",
-  "dark-grey-regular-windbreaker": "no-packshot",
-  "dark-grey-stripped-square-neck-top": "no-packshot",
-  "dark-grey-washed-halter-tank-top": "no-packshot",
-  "dark-grey-washed-long-sleeve-top": "no-packshot",
-  "dark-grey-washed-short-sleeve-top": "no-packshot",
-  "dark-grey-washed-zip-up-hoodie": "no-packshot",
-  "dark-grey-wide-leg-swants": "no-packshot",
+  "crazy-town-washed-hoodie": "not-on-these-models",
+  "creamy-basic-boxy-tee": "not-on-these-models",
+  "creamy-beige-square-neck-top": "not-on-these-models",
+  "creamy-cargo-jorts": "not-on-these-models",
+  "creamy-wide-leg-swants": "not-on-these-models",
+  "creative-team-jersey": "not-on-these-models",
+  "crocodile-chiffon-flowy-wrap": "not-on-these-models",
+  "crocodile-onesie-copy": "not-on-these-models",
+  "cute-but-regular-tee": "not-on-these-models",
+  "cyan-knitted-fishnet-dress": "not-on-these-models",
+  "daddy-not-cool-washed-oversized-tee": "not-on-these-models",
+  "dark-beige-wide-leg-swants": "not-on-these-models",
+  "dark-beige-wide-leg-sworts": "not-on-these-models",
+  "dark-green-loose-swants": "not-on-these-models",
+  "dark-grey-barrel-track-pants": "not-on-these-models",
+  "dark-grey-cable-knit-sweater": "not-on-these-models",
+  "dark-grey-oversized-coat": "not-on-these-models",
+  "dark-grey-oversized-textured-windbreaker": "not-on-these-models",
+  "dark-grey-oversized-washed-corduroy-shirt": "not-on-these-models",
+  "dark-grey-printed-swants": "not-on-these-models",
+  "dark-grey-regular-windbreaker": "not-on-these-models",
+  "dark-grey-stripped-square-neck-top": "not-on-these-models",
+  "dark-grey-washed-cap": "flat-accessory",
+  "dark-grey-washed-halter-tank-top": "not-on-these-models",
+  "dark-grey-washed-long-sleeve-top": "not-on-these-models",
+  "dark-grey-washed-short-sleeve-top": "not-on-these-models",
+  "dark-grey-washed-zip-up-hoodie": "not-on-these-models",
+  "dark-grey-wide-leg-swants": "not-on-these-models",
+  "dark-minds-hoodie": "not-on-these-models",
   "dark-navy-thin-scarf": "flat-accessory",
-  "dark-olive-washed-tank-top": "no-packshot",
-  "dark-purple-striped-oversized-tee": "no-packshot",
-  "day-dreamers-society-oversized-long-sleeves": "no-packshot",
-  "deep-black-green-ribbed-mock-neck-top": "no-packshot",
-  "deep-cherry-cropped-oversized-zip-up-hoodie": "no-packshot",
-  "deep-cherry-heavy-boxy-hoodie": "no-packshot",
-  "deep-red-baggy-jeans": "no-packshot",
-  "delusional-cropped-tee": "no-packshot",
-  "denim-blue-linen-breeze-set": "no-packshot",
-  "denim-blue-linen-skirt": "no-packshot",
-  "denim-blue-tied-up-linen-vest": "no-packshot",
+  "dark-olive-washed-tank-top": "not-on-these-models",
+  "dark-purple-striped-oversized-tee": "not-on-these-models",
+  "dark-purple-washed-cap": "flat-accessory",
+  "day-dreamers-society-oversized-long-sleeves": "not-on-these-models",
+  "deep-black-green-ribbed-mock-neck-top": "not-on-these-models",
+  "deep-cherry-basic-heavy-boxy-hoodie": "not-on-these-models",
+  "deep-cherry-cropped-oversized-zip-up-hoodie": "not-on-these-models",
+  "deep-cherry-heavy-boxy-hoodie": "not-on-these-models",
+  "deep-red-baggy-jeans": "not-on-these-models",
+  "delusional-cropped-tee": "not-on-these-models",
+  "denim-blue-linen-breeze-set": "not-on-these-models",
+  "denim-blue-linen-skirt": "not-on-these-models",
+  "denim-blue-tied-up-linen-vest": "not-on-these-models",
+  "desert-culture-washed-hoodie": "not-on-these-models",
   "diamond-pantoufle": "not-in-frame",
-  "diamonds-fluffy-pjoys": "no-packshot",
-  "digital-senses-acid-washed-oversized-tee": "no-packshot",
-  "distorted-youth-dept-jersey": "no-packshot",
-  "dna-is-football-oversized-tee": "no-packshot",
-  "doggies-pjoys": "no-packshot",
-  "doggies-pshorts": "no-packshot",
-  "dont-call-me-sweety-fluffy-pjoys": "no-packshot",
+  "diamonds-fluffy-pjoys": "fit-rejected",
+  "digital-senses-acid-washed-oversized-tee": "not-on-these-models",
+  "distorted-youth-dept-jersey": "fit-rejected",
+  "dna-is-football-oversized-tee": "not-on-these-models",
+  "doggies-pjoys": "not-on-these-models",
+  "doggies-pshorts": "not-on-these-models",
+  "dont-call-me-sweety-fluffy-pjoys": "not-on-these-models",
   "dont-call-me-sweety-pantoufle": "not-in-frame",
-  "dont-go-out-fluffy-pjoys": "no-packshot",
-  "dont-go-out-pjoys": "no-packshot",
-  "double-cream-brown-striped-boxy-rugby-polo": "no-packshot",
-  "dust-pink-mini-balloon-skirt": "no-packshot",
-  "dusty-pink-basic-regular-tee": "no-packshot",
-  "dusty-pink-checks-maxi-flowy-wrap": "no-packshot",
-  "dusty-red-linen-shirt": "no-packshot",
-  "dying-to-live-hoodie": "no-packshot",
-  "el-beit-beity-olive-oversized-tee": "no-packshot",
-  "everyday-black-denim-tote-bag": "no-packshot",
-  "excuses-not-to-study-fluffy-pjoys": "no-packshot",
-  "fallen-nights-printed-oversized-tee": "no-packshot",
-  "fantasy-leggings": "no-packshot",
-  "feels-like-magic-fluffy-pjoys": "no-packshot",
-  "feels-like-xmas-fluffy-pjoys": "no-packshot",
-  "female-baby-blue-striped-boxer-pants": "no-packshot",
-  "female-beige-crinkled-shorts": "no-packshot",
-  "female-beige-cropped-balloon-pants": "no-packshot",
-  "female-beige-linen-wide-leg-pants": "no-packshot",
-  "female-beige-striped-regular-shirt": "no-packshot",
-  "female-black-leather-pants": "no-packshot",
-  "female-black-oversized-leather-coat": "no-packshot",
-  "female-black-raw-denim-flared-jeans": "no-packshot",
-  "female-black-striped-knit-set": "no-packshot",
-  "female-black-striped-long-sleeve-knit-top": "no-packshot",
-  "female-black-striped-oversized-knit-shorts": "no-packshot",
-  "female-black-washed-skater-jeans": "no-packshot",
-  "female-black-washed-wide-leg-jeans": "no-packshot",
-  "female-blue-barrel-fit-jeans": "no-packshot",
-  "female-blue-horizontal-striped-knit-dress": "no-packshot",
-  "female-blue-mid-rise-relaxed-jeans": "no-packshot",
-  "female-blue-striped-oversized-set": "no-packshot",
-  "female-blue-striped-oversized-short-sleeve-shirt": "no-packshot",
-  "female-blue-striped-oversized-shorts": "no-packshot",
-  "female-blue-washed-skater-jeans": "no-packshot",
-  "female-blue-washed-wide-leg-jeans": "no-packshot",
-  "female-blue-wide-leg-boxer-jorts": "no-packshot",
-  "female-brown-baggy-leather-pants": "no-packshot",
-  "female-brown-corduroy-pants-1": "no-packshot",
-  "female-brown-mid-rise-barrel-leg-jeans": "no-packshot",
-  "female-brown-oversized-jeans": "no-packshot",
-  "female-butter-yellow-linen-wide-leg-pants": "no-packshot",
-  "female-butter-yellow-oversized-linen-set": "no-packshot",
-  "female-butter-yellow-oversized-linen-shorts": "no-packshot",
-  "female-butter-yellow-oversized-linen-vest": "no-packshot",
-  "female-creamy-super-oversized-linen-pants": "no-packshot",
-  "female-dark-blue-striped-boxer-pants": "no-packshot",
-  "female-denim-blue-washed-wide-leg-jeans": "no-packshot",
-  "female-fuchsia-plaid-fitted-shirt": "no-packshot",
-  "female-fuchsia-plaid-oversized-shirt": "no-packshot",
-  "female-green-corduroy-pants-1": "no-packshot",
-  "female-green-oversized-linen-set": "no-packshot",
-  "female-green-oversized-linen-shorts": "no-packshot",
-  "female-green-oversized-linen-vest": "no-packshot",
-  "female-green-plaid-oversized-shirt": "no-packshot",
-  "female-green-straight-terry-pants": "no-packshot",
-  "female-greige-super-oversized-linen-pants": "no-packshot",
-  "female-grey-striped-oversized-set": "no-packshot",
-  "female-grey-striped-oversized-short-sleeve-shirt": "no-packshot",
-  "female-grey-striped-oversized-shorts": "no-packshot",
-  "female-light-blue-mid-rise-relaxed-jeans": "no-packshot",
-  "female-light-blue-oversized-jeans": "no-packshot",
-  "female-light-blue-wide-leg-jorts": "no-packshot",
-  "female-light-grey-oversized-jeans": "no-packshot",
-  "female-mint-striped-boxer-pants": "no-packshot",
-  "female-navy-aqua-mini-crochet-skirt": "no-packshot",
-  "female-navy-blue-barrel-fit-cropped-pants": "no-packshot",
-  "female-navy-washed-barrel-fit-jeans": "no-packshot",
-  "female-off-white-wide-leg-jorts": "no-packshot",
-  "female-pastel-green-mom-jeans": "no-packshot",
-  "female-pink-horizontal-striped-knit-dress": "no-packshot",
-  "female-pink-mom-jeans": "no-packshot",
-  "female-pink-oversized-linen-set": "no-packshot",
-  "female-pink-oversized-linen-shorts": "no-packshot",
-  "female-pink-oversized-linen-vest": "no-packshot",
-  "female-pink-striped-boxer-pants": "no-packshot",
-  "female-pink-striped-knit-set": "no-packshot",
-  "female-pink-striped-long-sleeve-knit-top": "no-packshot",
-  "female-pink-striped-oversized-knit-shorts": "no-packshot",
-  "female-pink-vertical-striped-knit-dress": "no-packshot",
-  "female-purple-straight-terry-pants": "no-packshot",
-  "female-red-off-white-mini-crochet-skirt": "no-packshot",
-  "female-red-striped-oversized-set": "no-packshot",
-  "female-red-striped-oversized-short-sleeve-shirt": "no-packshot",
-  "female-red-striped-oversized-shorts": "no-packshot",
-  "female-red-striped-regular-shirt": "no-packshot",
-  "female-reddish-brown-super-oversized-linen-pants": "no-packshot",
-  "female-sage-green-linen-wide-leg-pants": "no-packshot",
-  "female-sky-blue-striped-oversized-shirt": "no-packshot",
-  "female-white-green-striped-oversized-shirt": "no-packshot",
-  "female-white-vertical-striped-knit-dress": "no-packshot",
-  "female-wide-leg-grey-washed-cargo-jeans": "no-packshot",
-  "female-wide-leg-grey-washed-jeans": "no-packshot",
-  "female-wide-leg-light-blue-washed-cargo-jeans": "no-packshot",
-  "female-wide-leg-yellow-tint-washed-jeans": "no-packshot",
-  "female-yellow-crinkled-shorts": "no-packshot",
-  "female-yellow-plaid-fitted-shirt": "no-packshot",
-  "female-yellow-super-oversized-linen-pants": "no-packshot",
-  "female-yellow-wide-leg-boxer-jorts": "no-packshot",
+  "dont-go-out-fluffy-pjoys": "not-on-these-models",
+  "dont-go-out-pjoys": "not-on-these-models",
+  "dont-panic-oversized-hoodie": "fit-rejected",
+  "dont-panic-oversized-tee": "not-on-these-models",
+  "double-cream-brown-striped-boxy-rugby-polo": "not-on-these-models",
+  "dreamer-hoodie": "not-on-these-models",
+  "dropout-oversized-hoodie": "fit-rejected",
+  "dust-pink-mini-balloon-skirt": "not-on-these-models",
+  "dusty-pink-basic-boxy-tee": "not-on-these-models",
+  "dusty-pink-basic-regular-tee": "not-on-these-models",
+  "dusty-pink-checks-maxi-flowy-wrap": "not-on-these-models",
+  "dusty-red-linen-shirt": "not-on-these-models",
+  "dying-to-live-hoodie": "not-on-these-models",
+  "egyptian-culture-oversized-long-sleeves": "fit-rejected",
+  "el-beit-beity-olive-oversized-tee": "not-on-these-models",
+  "el-giza-boxy-tee": "not-on-these-models",
+  "el-mamno3-marghob-oversized-tee": "not-on-these-models",
+  "emotional-hoodie": "not-on-these-models",
+  "emotionally-unavailable-oversized-tee": "not-on-these-models",
+  "everyday-black-denim-tote-bag": "flat-accessory",
+  "excuses-not-to-study-fluffy-pjoys": "fit-rejected",
+  "expression-printed-oversized-tee": "not-on-these-models",
+  "fallen-nights-printed-oversized-tee": "not-on-these-models",
+  "fantasy-leggings": "not-on-these-models",
+  "fawda-hoodie": "not-on-these-models",
+  "fearless-mind-boxy-washed-hoodie": "not-on-these-models",
+  "feels-like-magic-fluffy-pjoys": "fit-rejected",
+  "feels-like-xmas-fluffy-pjoys": "not-on-these-models",
+  "female-baby-blue-striped-boxer-pants": "not-on-these-models",
+  "female-beige-crinkled-shorts": "not-on-these-models",
+  "female-beige-cropped-balloon-pants": "not-on-these-models",
+  "female-beige-linen-wide-leg-pants": "not-on-these-models",
+  "female-beige-striped-regular-shirt": "not-on-these-models",
+  "female-black-leather-pants": "not-on-these-models",
+  "female-black-oversized-leather-coat": "not-on-these-models",
+  "female-black-raw-denim-flared-jeans": "not-on-these-models",
+  "female-black-striped-knit-set": "not-on-these-models",
+  "female-black-striped-long-sleeve-knit-top": "not-on-these-models",
+  "female-black-striped-oversized-knit-shorts": "not-on-these-models",
+  "female-black-washed-skater-jeans": "not-on-these-models",
+  "female-black-washed-wide-leg-jeans": "not-on-these-models",
+  "female-blue-barrel-fit-jeans": "not-on-these-models",
+  "female-blue-horizontal-striped-knit-dress": "not-on-these-models",
+  "female-blue-mid-rise-relaxed-jeans": "not-on-these-models",
+  "female-blue-striped-oversized-set": "not-on-these-models",
+  "female-blue-striped-oversized-short-sleeve-shirt": "not-on-these-models",
+  "female-blue-striped-oversized-shorts": "not-on-these-models",
+  "female-blue-washed-skater-jeans": "not-on-these-models",
+  "female-blue-washed-wide-leg-jeans": "not-on-these-models",
+  "female-blue-wide-leg-boxer-jorts": "not-on-these-models",
+  "female-brown-baggy-leather-pants": "not-on-these-models",
+  "female-brown-corduroy-pants-1": "not-on-these-models",
+  "female-brown-mid-rise-barrel-leg-jeans": "not-on-these-models",
+  "female-brown-oversized-jeans": "not-on-these-models",
+  "female-butter-yellow-linen-wide-leg-pants": "not-on-these-models",
+  "female-butter-yellow-oversized-linen-set": "not-on-these-models",
+  "female-butter-yellow-oversized-linen-shorts": "not-on-these-models",
+  "female-butter-yellow-oversized-linen-vest": "not-on-these-models",
+  "female-creamy-super-oversized-linen-pants": "not-on-these-models",
+  "female-dark-blue-striped-boxer-pants": "not-on-these-models",
+  "female-denim-blue-washed-wide-leg-jeans": "not-on-these-models",
+  "female-fuchsia-plaid-fitted-shirt": "not-on-these-models",
+  "female-fuchsia-plaid-oversized-shirt": "not-on-these-models",
+  "female-green-corduroy-pants-1": "not-on-these-models",
+  "female-green-oversized-linen-set": "not-on-these-models",
+  "female-green-oversized-linen-shorts": "not-on-these-models",
+  "female-green-oversized-linen-vest": "not-on-these-models",
+  "female-green-plaid-oversized-shirt": "not-on-these-models",
+  "female-green-straight-terry-pants": "not-on-these-models",
+  "female-greige-super-oversized-linen-pants": "not-on-these-models",
+  "female-grey-striped-oversized-set": "not-on-these-models",
+  "female-grey-striped-oversized-short-sleeve-shirt": "not-on-these-models",
+  "female-grey-striped-oversized-shorts": "not-on-these-models",
+  "female-light-blue-mid-rise-relaxed-jeans": "not-on-these-models",
+  "female-light-blue-oversized-jeans": "not-on-these-models",
+  "female-light-blue-wide-leg-jorts": "not-on-these-models",
+  "female-light-grey-oversized-jeans": "not-on-these-models",
+  "female-mint-striped-boxer-pants": "not-on-these-models",
+  "female-navy-aqua-mini-crochet-skirt": "not-on-these-models",
+  "female-navy-blue-barrel-fit-cropped-pants": "not-on-these-models",
+  "female-navy-washed-barrel-fit-jeans": "not-on-these-models",
+  "female-off-white-wide-leg-jorts": "not-on-these-models",
+  "female-pastel-green-mom-jeans": "not-on-these-models",
+  "female-pink-horizontal-striped-knit-dress": "not-on-these-models",
+  "female-pink-mom-jeans": "not-on-these-models",
+  "female-pink-oversized-linen-set": "not-on-these-models",
+  "female-pink-oversized-linen-shorts": "not-on-these-models",
+  "female-pink-oversized-linen-vest": "not-on-these-models",
+  "female-pink-striped-boxer-pants": "not-on-these-models",
+  "female-pink-striped-knit-set": "not-on-these-models",
+  "female-pink-striped-long-sleeve-knit-top": "not-on-these-models",
+  "female-pink-striped-oversized-knit-shorts": "not-on-these-models",
+  "female-pink-vertical-striped-knit-dress": "not-on-these-models",
+  "female-purple-straight-terry-pants": "not-on-these-models",
+  "female-red-off-white-mini-crochet-skirt": "not-on-these-models",
+  "female-red-striped-oversized-set": "not-on-these-models",
+  "female-red-striped-oversized-short-sleeve-shirt": "not-on-these-models",
+  "female-red-striped-oversized-shorts": "not-on-these-models",
+  "female-red-striped-regular-shirt": "not-on-these-models",
+  "female-reddish-brown-super-oversized-linen-pants": "not-on-these-models",
+  "female-sage-green-linen-wide-leg-pants": "not-on-these-models",
+  "female-sky-blue-striped-oversized-shirt": "not-on-these-models",
+  "female-white-green-striped-oversized-shirt": "not-on-these-models",
+  "female-white-vertical-striped-knit-dress": "not-on-these-models",
+  "female-wide-leg-grey-washed-cargo-jeans": "not-on-these-models",
+  "female-wide-leg-grey-washed-jeans": "not-on-these-models",
+  "female-wide-leg-light-blue-washed-cargo-jeans": "not-on-these-models",
+  "female-wide-leg-yellow-tint-washed-jeans": "not-on-these-models",
+  "female-yellow-crinkled-shorts": "not-on-these-models",
+  "female-yellow-plaid-fitted-shirt": "not-on-these-models",
+  "female-yellow-super-oversized-linen-pants": "not-on-these-models",
+  "female-yellow-wide-leg-boxer-jorts": "not-on-these-models",
   "festive-cocoa-thick-socks": "not-in-frame",
   "fiery-mini-crochet-bandana": "flat-accessory",
+  "fight-me-like-a-man-hoodie": "not-on-these-models",
   "fish-fluffy-socks": "not-in-frame",
-  "fishies-pjoys": "no-packshot",
-  "fishies-pshorts": "no-packshot",
-  "flash-tatt-pjoys": "no-packshot",
-  "flash-tatt-pshorts": "no-packshot",
-  "floral-hawaiian-shirt": "no-packshot",
-  "floral-swim-shorts": "no-packshot",
-  "flower-chiffon-flowy-wrap": "no-packshot",
-  "flower-patches-leggings": "no-packshot",
-  "flower-power-leggings": "no-packshot",
-  "flower-satin-flowy-wrap": "no-packshot",
-  "flower-vase-chiffon-flowy-wrap": "no-packshot",
-  "flowery-leggings": "no-packshot",
+  "fishies-pjoys": "not-on-these-models",
+  "fishies-pshorts": "not-on-these-models",
+  "flash-tatt-pjoys": "not-on-these-models",
+  "flash-tatt-pshorts": "not-on-these-models",
+  "floral-hawaiian-shirt": "not-on-these-models",
+  "floral-swim-shorts": "not-on-these-models",
+  "flower-chiffon-flowy-wrap": "not-on-these-models",
+  "flower-patches-leggings": "not-on-these-models",
+  "flower-power-leggings": "not-on-these-models",
+  "flower-satin-flowy-wrap": "not-on-these-models",
+  "flower-vase-chiffon-flowy-wrap": "not-on-these-models",
+  "flowers-grow-hoodie": "not-on-these-models",
+  "flowery-leggings": "not-on-these-models",
   "flying-birds-satin-bandana": "flat-accessory",
-  "fml-washed-cap": "no-packshot",
-  "free-the-melon-pshorts": "no-packshot",
-  "free-your-thoughts-boxy-fit-hoodie": "no-packshot",
-  "frogs-boxy-shirt": "no-packshot",
-  "frosty-fluffy-pjoys": "no-packshot",
-  "frosty-mint-iys-bucket-hat": "no-packshot",
-  "fuchisa-linen-pants": "no-packshot",
-  "fuchsia-basic-long-sleeve-tee": "no-packshot",
-  "game-night-pjoys": "no-packshot",
-  "game-night-pshorts": "no-packshot",
+  "fml-washed-cap": "flat-accessory",
+  "free-the-melon-pshorts": "not-on-these-models",
+  "free-your-thoughts-boxy-fit-hoodie": "not-on-these-models",
+  "frog-pond-swim-shorts": "not-on-these-models",
+  "frogs-boxy-shirt": "not-on-these-models",
+  "frosty-fluffy-pjoys": "not-on-these-models",
+  "frosty-mint-iys-bucket-hat": "flat-accessory",
+  "fuchisa-linen-pants": "not-on-these-models",
+  "fuchsia-basic-long-sleeve-tee": "not-on-these-models",
+  "game-night-pjoys": "not-on-these-models",
+  "game-night-pshorts": "not-on-these-models",
   "garden-neck-socks": "not-in-frame",
-  "gift-wrapped-fluffy-pjoys": "no-packshot",
-  "gingerbread-fluffy-pjoys": "no-packshot",
-  "gingham-fluffy-pjoys": "no-packshot",
-  "giza-killer-innocent-crewneck": "no-packshot",
+  "ghost-me-please-boxy-hoodie": "not-on-these-models",
+  "gift-wrapped-fluffy-pjoys": "fit-rejected",
+  "gingerbread-fluffy-pjoys": "fit-rejected",
+  "gingham-fluffy-pjoys": "fit-rejected",
+  "give-me-a-raise-oversized-hoodie": "not-on-these-models",
+  "give-me-a-raise-oversized-tee": "fit-rejected",
+  "giza-killer-innocent-crewneck": "not-on-these-models",
   "glitch-neck-socks-1": "not-in-frame",
-  "gold-digger-swim-shorts": "no-packshot",
-  "good-old-days-crewneck": "no-packshot",
-  "gorilla-onesie": "no-packshot",
-  "graphite-drop-shoulder-cardigan": "no-packshot",
-  "graphite-wide-leg-swants": "no-packshot",
+  "glitch-on-the-beach-oversized-tee": "not-on-these-models",
+  "go-outdoors-hoodie": "not-on-these-models",
+  "gold-digger-swim-shorts": "not-on-these-models",
+  "good-old-days-crewneck": "not-on-these-models",
+  "good-things-happen-oversized-tee": "not-on-these-models",
+  "gorilla-onesie": "not-on-these-models",
+  "grand-cairo-oversized-tee": "not-on-these-models",
+  "graphite-drop-shoulder-cardigan": "not-on-these-models",
+  "graphite-wide-leg-swants": "not-on-these-models",
   "green-argyle-fluffy-socks": "not-in-frame",
-  "green-basic-boxy-zip-up-hoodie": "no-packshot",
-  "green-blue-striped-daydreamer-boxy-long-sleeves": "no-packshot",
-  "green-cable-knit-sweater": "no-packshot",
-  "green-cropped-oversized-zip-up-hoodie": "no-packshot",
+  "green-blue-striped-daydreamer-boxy-long-sleeves": "not-on-these-models",
+  "green-cable-knit-sweater": "not-on-these-models",
+  "green-cropped-oversized-zip-up-hoodie": "not-on-these-models",
   "green-granny-crochet-bandana": "flat-accessory",
-  "green-grid-boxy-linen-shirt": "no-packshot",
+  "green-grid-boxy-linen-shirt": "not-on-these-models",
   "green-headband": "flat-accessory",
   "green-holly-jolly-fluffy-socks": "not-in-frame",
-  "green-knit-flowy-wrap": "no-packshot",
-  "green-narrow-striped-boxy-polo": "no-packshot",
+  "green-knit-flowy-wrap": "not-on-these-models",
+  "green-narrow-striped-boxy-polo": "not-on-these-models",
   "green-neck-socks": "not-in-frame",
-  "green-off-shoulder-double-layered-top": "no-packshot",
-  "green-oversized-oxford-shirt": "no-packshot",
-  "green-pink-striped-tank-top": "no-packshot",
+  "green-off-shoulder-double-layered-top": "not-on-these-models",
+  "green-oversized-oxford-shirt": "not-on-these-models",
+  "green-pink-striped-tank-top": "not-on-these-models",
   "green-pink-stripes-neck-socks": "not-in-frame",
-  "green-plaid-fluffy-pjoys": "no-packshot",
-  "green-ribbed-tank-top": "no-packshot",
-  "green-striped-oversized-tee": "no-packshot",
+  "green-plaid-fluffy-pjoys": "fit-rejected",
+  "green-ribbed-tank-top": "not-on-these-models",
+  "green-striped-oversized-tee": "not-on-these-models",
   "green-striped-pantoufle": "not-in-frame",
-  "green-stripes-maxi-flowy-wrap": "no-packshot",
-  "green-thread-boxy-sweater": "no-packshot",
-  "green-tinted-shorts": "no-packshot",
-  "green-zed-stars-sworts": "no-packshot",
-  "greige-oversized-quarter-zipper": "no-packshot",
-  "grey-acid-washed-hoodie": "no-packshot",
-  "grey-basic-long-sleeve-tee": "no-packshot",
-  "grey-clouds-fluffy-pjoys": "no-packshot",
-  "grey-clouds-pjoys": "no-packshot",
+  "green-stripes-maxi-flowy-wrap": "not-on-these-models",
+  "green-thread-boxy-sweater": "not-on-these-models",
+  "green-tinted-shorts": "not-on-these-models",
+  "green-washed-cap": "flat-accessory",
+  "green-washed-striped-boxy-tee": "not-on-these-models",
+  "green-zed-stars-sworts": "fit-rejected",
+  "greige-oversized-quarter-zipper": "not-on-these-models",
+  "greige-washed-cap": "flat-accessory",
+  "grey-acid-washed-hoodie": "not-on-these-models",
+  "grey-basic-long-sleeve-tee": "not-on-these-models",
+  "grey-clouds-fluffy-pjoys": "not-on-these-models",
+  "grey-clouds-pjoys": "not-on-these-models",
   "grey-core-short-socks": "not-in-frame",
-  "grey-cropped-oversized-zip-up-hoodie": "no-packshot",
-  "grey-english-knit-cardigan": "no-packshot",
+  "grey-cropped-oversized-zip-up-hoodie": "not-on-these-models",
+  "grey-english-knit-cardigan": "not-on-these-models",
   "grey-fluffy-socks": "not-in-frame",
-  "grey-half-sleeve-cropped-top": "no-packshot",
-  "grey-ribbed-knit-pants": "no-packshot",
-  "grey-ribbed-knit-pullover": "no-packshot",
-  "grey-ribbed-tank-top": "no-packshot",
-  "grey-sleeveless-cropped-top": "no-packshot",
-  "grey-sleeveless-top": "no-packshot",
-  "grey-spaghetti-strap-top": "no-packshot",
+  "grey-half-sleeve-cropped-top": "not-on-these-models",
+  "grey-ribbed-knit-pants": "not-on-these-models",
+  "grey-ribbed-knit-pullover": "not-on-these-models",
+  "grey-ribbed-tank-top": "not-on-these-models",
+  "grey-sleeveless-cropped-top": "not-on-these-models",
+  "grey-sleeveless-tee": "not-on-these-models",
+  "grey-sleeveless-top": "not-on-these-models",
+  "grey-spaghetti-strap-top": "not-on-these-models",
   "grey-squares-crochet-bandana": "flat-accessory",
-  "grey-washed-balloon-fit-hoodie": "no-packshot",
-  "grey-washed-boxy-crewneck": "no-packshot",
-  "grey-washed-multi-pocket-cargo-jeans": "no-packshot",
-  "grey-wide-leg-sworts": "no-packshot",
-  "guilty-pleasure-boxy-hoodie": "no-packshot",
-  "habibo-hoodie": "no-packshot",
-  "hakuna-macoffee-pjoys": "no-packshot",
-  "hakuna-macoffee-pshorts": "no-packshot",
-  "happy-day-swim-shorts": "no-packshot",
-  "happy-face-hoodie": "no-packshot",
-  "hated-planet-washed-hoodie": "no-packshot",
-  "havan-corduroy-puffer-jacket": "no-packshot",
-  "havane-ribbed-knit-pants": "no-packshot",
-  "havane-ribbed-knit-pullover": "no-packshot",
-  "havane-ribbed-knit-set": "no-packshot",
-  "heather-grey-basic-boxy-zip-up-hoodie": "no-packshot",
-  "heather-grey-off-shoulder-double-layered-top": "no-packshot",
-  "heather-grey-oversized-sweat-jorts": "no-packshot",
-  "heather-grey-ribbed-tank-top": "no-packshot",
-  "heather-grey-wide-leg-swants": "no-packshot",
-  "heather-grey-worldwide-oversized-mock-neck": "no-packshot",
-  "hot-af-pshorts": "no-packshot",
-  "hot-choco-fluffy-pjoys": "no-packshot",
+  "grey-washed-balloon-fit-hoodie": "not-on-these-models",
+  "grey-washed-boxy-crewneck": "not-on-these-models",
+  "grey-washed-boxy-zip-up-hoodie": "not-on-these-models",
+  "grey-washed-multi-pocket-cargo-jeans": "not-on-these-models",
+  "grey-wide-leg-sworts": "not-on-these-models",
+  "guilty-pleasure-boxy-hoodie": "fit-rejected",
+  "habibo-hoodie": "not-on-these-models",
+  "habibo-printed-oversized-tee": "not-on-these-models",
+  "hakuna-macoffee-pjoys": "not-on-these-models",
+  "hakuna-macoffee-pshorts": "not-on-these-models",
+  "hangduck-boxy-washed-hoodie": "not-on-these-models",
+  "happy-day-swim-shorts": "not-on-these-models",
+  "happy-face-hoodie": "not-on-these-models",
+  "hated-planet-washed-hoodie": "not-on-these-models",
+  "havan-corduroy-puffer-jacket": "not-on-these-models",
+  "havane-ribbed-knit-pants": "not-on-these-models",
+  "havane-ribbed-knit-pullover": "not-on-these-models",
+  "havane-ribbed-knit-set": "not-on-these-models",
+  "heather-grey-basic-boxy-zip-up-hoodie": "fit-rejected",
+  "heather-grey-basic-heavy-boxy-hoodie": "fit-rejected",
+  "heather-grey-off-shoulder-double-layered-top": "not-on-these-models",
+  "heather-grey-oversized-sweat-jorts": "not-on-these-models",
+  "heather-grey-ribbed-tank-top": "not-on-these-models",
+  "heather-grey-wide-leg-swants": "not-on-these-models",
+  "heather-grey-worldwide-oversized-mock-neck": "not-on-these-models",
+  "heliopolis-regular-tee": "not-on-these-models",
+  "heritage-culture-oversized-hoodie": "not-on-these-models",
+  "home-town-hoodie": "not-on-these-models",
+  "hot-af-pshorts": "not-on-these-models",
+  "hot-choco-fluffy-pjoys": "not-on-these-models",
+  "hot-pink-basic-oversized-tee": "not-on-these-models",
+  "hot-tatts-swim-shorts": "not-on-these-models",
   "houndstooth-fluffy-socks": "not-in-frame",
-  "i-cringe-a-lot-washed-cap": "no-packshot",
-  "i-dont-hit-the-gym-pshorts": "no-packshot",
+  "how-long-regular-tee": "not-on-these-models",
+  "i-cringe-a-lot-washed-cap": "flat-accessory",
+  "i-dont-hit-the-gym-pshorts": "not-on-these-models",
+  "i-hate-people-oversized-tee": "not-on-these-models",
   "i-love-cairo-neck-socks": "not-in-frame",
-  "illusion-of-chaos-hoodie": "no-packshot",
-  "im-kind-cropped-tee": "no-packshot",
-  "indigo-crochet-cropped-top": "no-packshot",
-  "indigo-ribbed-knit-pullover": "no-packshot",
-  "indigo-washed-boxy-crewneck": "no-packshot",
-  "indigo-washed-tank-top": "no-packshot",
-  "intertwined-hoodie": "no-packshot",
-  "isolated-nation-jersey": "no-packshot",
-  "iys-al-qahira-washed-cap": "no-packshot",
-  "iys-international-club-oversized-long-sleeves": "no-packshot",
-  "jean-blue-cable-knit-sweater": "no-packshot",
-  "just-sleepy-fluffy-pjoys": "no-packshot",
+  "i-love-my-job-hoodie": "not-on-these-models",
+  "illusion-of-chaos-hoodie": "not-on-these-models",
+  "im-kind-cropped-tee": "not-on-these-models",
+  "indigo-crochet-cropped-top": "not-on-these-models",
+  "indigo-oversized-tee": "not-on-these-models",
+  "indigo-ribbed-knit-pullover": "not-on-these-models",
+  "indigo-washed-boxy-crewneck": "not-on-these-models",
+  "indigo-washed-tank-top": "not-on-these-models",
+  "international-council-oversized-hoodie": "not-on-these-models",
+  "intertwined-hoodie": "not-on-these-models",
+  "isolated-nation-jersey": "not-on-these-models",
+  "iys-al-qahira-washed-cap": "flat-accessory",
+  "iys-international-club-oversized-long-sleeves": "not-on-these-models",
+  "jean-blue-cable-knit-sweater": "not-on-these-models",
+  "just-sleepy-fluffy-pjoys": "not-on-these-models",
   "kairo-neck-socks": "not-in-frame",
-  "kairo-pop-jersey": "no-packshot",
-  "khaki-gabardine-shorts": "no-packshot",
-  "khamsa-fitted-baby-tee": "no-packshot",
-  "labubu-onesie": "no-packshot",
-  "land-of-olives-washed-cap": "no-packshot",
-  "lemon-gabardine-tote-bag": "no-packshot",
-  "life-essentials-long-sleeves": "no-packshot",
-  "light-blue-cargo-denim-shorts": "no-packshot",
-  "light-blue-long-sleeve-oversized-shirt": "no-packshot",
-  "light-blue-super-heavy-oversized-zip-up-hoodie": "no-packshot",
-  "light-grey-stripped-square-neck-top": "no-packshot",
-  "light-grey-super-loose-swants": "no-packshot",
-  "light-grey-washed-oversized-crewneck": "no-packshot",
-  "like-rabbits-oversized-long-sleeves": "no-packshot",
-  "lilac-and-orange-striped-fluffy-pjoys": "no-packshot",
-  "lilac-corduroy-bow-bag": "no-packshot",
-  "lilac-cropped-square-neck-top": "no-packshot",
+  "kairo-pop-jersey": "not-on-these-models",
+  "khaki-gabardine-shorts": "not-on-these-models",
+  "khamsa-fitted-baby-tee": "not-on-these-models",
+  "kherha-fe-gherha-boxy-tee": "not-on-these-models",
+  "labubu-onesie": "not-on-these-models",
+  "land-of-olives-washed-cap": "flat-accessory",
+  "lemon-gabardine-tote-bag": "flat-accessory",
+  "life-essentials-long-sleeves": "not-on-these-models",
+  "light-blue-cargo-denim-shorts": "not-on-these-models",
+  "light-blue-long-sleeve-oversized-shirt": "not-on-these-models",
+  "light-blue-super-heavy-oversized-zip-up-hoodie": "not-on-these-models",
+  "light-grey-stripped-square-neck-top": "not-on-these-models",
+  "light-grey-super-loose-swants": "not-on-these-models",
+  "light-grey-washed-cap": "flat-accessory",
+  "light-grey-washed-oversized-crewneck": "not-on-these-models",
+  "like-rabbits-oversized-long-sleeves": "fit-rejected",
+  "lilac-and-orange-striped-fluffy-pjoys": "not-on-these-models",
+  "lilac-corduroy-bow-bag": "flat-accessory",
+  "lilac-cropped-square-neck-top": "not-on-these-models",
   "lilac-striped-bandana": "flat-accessory",
-  "lilac-super-oversized-swants": "no-packshot",
-  "limbo-fluffy-pjoys": "no-packshot",
-  "lime-green-oversized-shirt": "no-packshot",
-  "lime-green-plaid-mini-wrap": "no-packshot",
-  "lime-green-set": "no-packshot",
-  "lime-green-sleeveless-top": "no-packshot",
-  "lime-green-stitched-cropped-t-shirts": "no-packshot",
-  "lime-green-tube-skirt": "no-packshot",
+  "lilac-super-oversized-swants": "not-on-these-models",
+  "limbo-fluffy-pjoys": "not-on-these-models",
+  "lime-green-oversized-shirt": "not-on-these-models",
+  "lime-green-plaid-mini-wrap": "not-on-these-models",
+  "lime-green-set": "not-on-these-models",
+  "lime-green-sleeveless-top": "not-on-these-models",
+  "lime-green-stitched-cropped-t-shirts": "not-on-these-models",
+  "lime-green-tube-skirt": "not-on-these-models",
   "lime-party-neck-socks": "not-in-frame",
   "lime-purple-neck-socks": "not-in-frame",
-  "linen-shorts": "no-packshot",
-  "lobster-swim-shorts": "no-packshot",
-  "local-dealer-hoodie": "no-packshot",
-  "lost-in-the-darkness-hoodie": "no-packshot",
+  "linen-shorts": "not-on-these-models",
+  "lobster-swim-shorts": "not-on-these-models",
+  "local-dealer-hoodie": "not-on-these-models",
+  "local-dealer-pt-2-oversized-tee": "not-on-these-models",
+  "local-dealer-pt-2-washed-hoodie": "not-on-these-models",
+  "lost-in-the-darkness-hoodie": "not-on-these-models",
+  "love-and-peace-boxy-hoodie": "not-on-these-models",
   "love-struck-neck-socks": "not-in-frame",
-  "love-you-so-matcha-fluffy-pjoys": "no-packshot",
-  "love-you-so-matcha-pjoys": "no-packshot",
-  "main-character-pjoys": "no-packshot",
-  "main-character-pshorts": "no-packshot",
-  "make-a-move-fluffy-pjoys": "no-packshot",
-  "male-baby-blue-crinkled-shorts": "no-packshot",
-  "male-beige-linen-wide-leg-pants": "no-packshot",
-  "male-beige-washed-baggy-jeans": "no-packshot",
-  "male-black-corduroy-washed-wide-leg-jorts": "no-packshot",
-  "male-black-loose-parachute-pants": "no-packshot",
-  "male-black-tank-top": "no-packshot",
-  "male-black-waffle-shirt": "no-packshot",
-  "male-black-waffle-short": "no-packshot",
-  "male-black-washed-baggy-jeans-1": "no-packshot",
-  "male-blue-boxer-pants": "no-packshot",
-  "male-blue-corduroy-washed-pants": "no-packshot",
-  "male-blue-corduroy-washed-wide-leg-jorts": "no-packshot",
-  "male-blue-straight-leg-jeans": "no-packshot",
-  "male-brown-corduroy-washed-wide-leg-jorts": "no-packshot",
-  "male-coffee-waffle-short": "no-packshot",
-  "male-coffee-waffled-set": "no-packshot",
-  "male-dark-blue-straight-leg-jeans": "no-packshot",
-  "male-dark-blue-striped-loose-fit-jeans": "no-packshot",
-  "male-dark-grey-loose-office-pants": "no-packshot",
-  "male-dark-grey-loose-parachute-pants": "no-packshot",
-  "male-green-washed-baggy-jeans": "no-packshot",
-  "male-greige-linen-wide-leg-pants": "no-packshot",
-  "male-grey-loose-office-pants": "no-packshot",
-  "male-medium-blue-contrast-badge-straight-jeans": "no-packshot",
-  "male-olive-loose-parachute-pants": "no-packshot",
-  "male-pure-black-straight-leg-jeans": "no-packshot",
-  "male-sage-green-linen-wide-leg-pants": "no-packshot",
-  "male-striped-gabardine-pants": "no-packshot",
-  "male-white-tank-top": "no-packshot",
-  "male-wide-leg-light-blue-washed-cargo-jeans": "no-packshot",
-  "masr-washed-cap": "no-packshot",
-  "meow-pjoys": "no-packshot",
-  "midnight-blue-oversized-corduroy-puffer-jacket": "no-packshot",
-  "mint-and-poudre-balloon-knitwear-pullover": "no-packshot",
+  "love-you-so-matcha-fluffy-pjoys": "not-on-these-models",
+  "love-you-so-matcha-pjoys": "not-on-these-models",
+  "main-character-pjoys": "not-on-these-models",
+  "main-character-pshorts": "not-on-these-models",
+  "make-a-move-fluffy-pjoys": "not-on-these-models",
+  "make-mistakes-printed-oversized-tee": "not-on-these-models",
+  "male-baby-blue-crinkled-shorts": "not-on-these-models",
+  "male-beige-linen-wide-leg-pants": "not-on-these-models",
+  "male-beige-washed-baggy-jeans": "not-on-these-models",
+  "male-black-corduroy-washed-wide-leg-jorts": "not-on-these-models",
+  "male-black-tank-top": "not-on-these-models",
+  "male-black-waffle-shirt": "not-on-these-models",
+  "male-black-waffle-short": "not-on-these-models",
+  "male-black-washed-baggy-jeans-1": "not-on-these-models",
+  "male-blue-boxer-pants": "not-on-these-models",
+  "male-blue-corduroy-washed-pants": "not-on-these-models",
+  "male-blue-corduroy-washed-wide-leg-jorts": "not-on-these-models",
+  "male-blue-straight-leg-jeans": "not-on-these-models",
+  "male-brown-corduroy-washed-wide-leg-jorts": "not-on-these-models",
+  "male-coffee-waffle-short": "not-on-these-models",
+  "male-coffee-waffled-set": "not-on-these-models",
+  "male-dark-blue-straight-leg-jeans": "not-on-these-models",
+  "male-dark-blue-striped-loose-fit-jeans": "fit-rejected",
+  "male-dark-grey-loose-office-pants": "not-on-these-models",
+  "male-dark-grey-loose-parachute-pants": "not-on-these-models",
+  "male-green-washed-baggy-jeans": "not-on-these-models",
+  "male-greige-linen-wide-leg-pants": "not-on-these-models",
+  "male-grey-loose-office-pants": "not-on-these-models",
+  "male-medium-blue-contrast-badge-straight-jeans": "not-on-these-models",
+  "male-olive-loose-parachute-pants": "not-on-these-models",
+  "male-pure-black-straight-leg-jeans": "not-on-these-models",
+  "male-sage-green-linen-wide-leg-pants": "not-on-these-models",
+  "male-striped-gabardine-pants": "not-on-these-models",
+  "male-white-tank-top": "not-on-these-models",
+  "male-wide-leg-light-blue-washed-cargo-jeans": "not-on-these-models",
+  "manifest-oversized-tee": "not-on-these-models",
+  "manifest-washed-hoodie": "not-on-these-models",
+  "masr-washed-cap": "flat-accessory",
+  "meow-pjoys": "not-on-these-models",
+  "mesh-mohtam-hoodie": "not-on-these-models",
+  "midnight-blue-oversized-corduroy-puffer-jacket": "not-on-these-models",
+  "mint-and-poudre-balloon-knitwear-pullover": "not-on-these-models",
   "mint-core-short-socks": "not-in-frame",
-  "mint-cropped-shirt": "no-packshot",
-  "mint-green-loose-fit-baby-tee": "no-packshot",
-  "mint-green-stripes-swim-shorts": "no-packshot",
-  "mint-iys-washed-hoodie": "no-packshot",
-  "mint-stripes-fluffy-pjoys": "no-packshot",
+  "mint-cropped-shirt": "not-on-these-models",
+  "mint-green-loose-fit-baby-tee": "not-on-these-models",
+  "mint-green-stripes-swim-shorts": "not-on-these-models",
+  "mint-iys-washed-hoodie": "not-on-these-models",
+  "mint-stripes-fluffy-pjoys": "not-on-these-models",
   "mint-thin-scarf": "flat-accessory",
-  "monkey-onesie": "no-packshot",
-  "monochrome-cross-sling-bag": "no-packshot",
+  "mint-washed-cap": "flat-accessory",
+  "modern-art-oversized-tee": "not-on-these-models",
+  "monkey-onesie": "not-on-these-models",
+  "monochrome-cross-sling-bag": "flat-accessory",
   "monochrome-scarf": "flat-accessory",
-  "monochrome-stripes-pjoys": "no-packshot",
-  "mood-swings-fluffy-pjoys": "no-packshot",
-  "mosaic-tiles-hawaiian-shirt": "no-packshot",
-  "movie-night-pshorts": "no-packshot",
-  "multi-chromatic-off-shoulder-sweater": "no-packshot",
-  "multi-color-leggings": "no-packshot",
-  "multi-color-raffia-tote-bag": "no-packshot",
+  "monochrome-stripes-pjoys": "not-on-these-models",
+  "mood-swings-fluffy-pjoys": "fit-rejected",
+  "mosaic-tiles-hawaiian-shirt": "not-on-these-models",
+  "movie-night-pshorts": "not-on-these-models",
+  "multi-chromatic-off-shoulder-sweater": "not-on-these-models",
+  "multi-color-leggings": "not-on-these-models",
+  "multi-color-raffia-tote-bag": "flat-accessory",
   "multi-stripes-neck-socks": "not-in-frame",
-  "multicolor-plaid-fluffy-pjoys": "no-packshot",
-  "multicolor-striped-collar-knitted-cardigan": "no-packshot",
-  "multicolor-striped-fluffy-pjoys": "no-packshot",
-  "munchies-pjoys": "no-packshot",
-  "mustard-corduroy-jacket": "no-packshot",
-  "mustard-guarded-boxy-zip-up-hoodie": "no-packshot",
+  "multicolor-plaid-fluffy-pjoys": "not-on-these-models",
+  "multicolor-striped-collar-knitted-cardigan": "not-on-these-models",
+  "multicolor-striped-fluffy-pjoys": "not-on-these-models",
+  "munchies-pjoys": "not-on-these-models",
+  "mustard-corduroy-jacket": "not-on-these-models",
   "mustard-teal-double-layered-neck-socks": "not-in-frame",
-  "mustard-yellow-linen-skirt": "no-packshot",
-  "nature-lover-pjoys": "no-packshot",
-  "navy-blue-and-yellow-polka-fluffy-pjoys": "no-packshot",
-  "navy-blue-half-sleeve-cropped-top": "no-packshot",
-  "navy-blue-long-sleeve-top": "no-packshot",
-  "navy-blue-slouchy-sling-bag": "no-packshot",
-  "navy-blue-washed-crewneck": "no-packshot",
-  "navy-double-layer-strap-top": "no-packshot",
-  "navy-heavy-boxy-hoodie": "no-packshot",
-  "navy-plaid-balloon-pants": "no-packshot",
+  "mustard-washed-cap": "flat-accessory",
+  "mustard-yellow-linen-skirt": "not-on-these-models",
+  "nature-lover-pjoys": "not-on-these-models",
+  "nature-oversized-tee": "not-on-these-models",
+  "navy-blue-and-yellow-polka-fluffy-pjoys": "not-on-these-models",
+  "navy-blue-half-sleeve-cropped-top": "not-on-these-models",
+  "navy-blue-long-sleeve-top": "not-on-these-models",
+  "navy-blue-slouchy-sling-bag": "flat-accessory",
+  "navy-blue-washed-crewneck": "not-on-these-models",
+  "navy-double-layer-strap-top": "not-on-these-models",
+  "navy-heavy-boxy-hoodie": "not-on-these-models",
+  "navy-plaid-balloon-pants": "not-on-these-models",
   "navy-playground-neck-socks-1": "not-in-frame",
-  "navy-ribbed-tank-top": "no-packshot",
-  "navy-spaghetti-strap-top": "no-packshot",
-  "navy-stripes-pjoys": "no-packshot",
+  "navy-ribbed-tank-top": "not-on-these-models",
+  "navy-spaghetti-strap-top": "not-on-these-models",
+  "navy-stripes-pjoys": "not-on-these-models",
   "nice-neck-socks": "not-in-frame",
-  "no-cap-washed-cap": "no-packshot",
-  "not-my-type-washed-crewneck": "no-packshot",
-  "not-your-habibi-pjoys": "no-packshot",
-  "not-your-habibi-pshorts": "no-packshot",
-  "oak-wide-leg-washed-sworts": "no-packshot",
-  "occasionally-nice-cropped-tee": "no-packshot",
-  "off-white-double-layer-strap-top": "no-packshot",
-  "off-white-fleece-jacket": "no-packshot",
+  "nine-to-five-oversized-tee": "not-on-these-models",
+  "no-cap-washed-cap": "flat-accessory",
+  "no-heroes-hoodie": "not-on-these-models",
+  "no-sense-makes-sense-hoodie": "not-on-these-models",
+  "not-my-type-washed-crewneck": "not-on-these-models",
+  "not-your-habibi-pjoys": "not-on-these-models",
+  "not-your-habibi-pshorts": "not-on-these-models",
+  "oak-wide-leg-washed-sworts": "not-on-these-models",
+  "occasionally-nice-cropped-tee": "not-on-these-models",
+  "off-white-double-layer-strap-top": "not-on-these-models",
+  "off-white-fleece-jacket": "not-on-these-models",
   "off-white-floral-crochet-bandana": "flat-accessory",
   "off-white-fluffy-socks": "not-in-frame",
-  "off-white-knot-vest": "no-packshot",
-  "off-white-maxi-skirt": "no-packshot",
-  "off-white-raglan-oversized-pullover": "no-packshot",
-  "off-white-wrinkled-top": "no-packshot",
-  "old-school-stripes-fluffy-pjoys": "no-packshot",
-  "olive-basic-long-sleeve-tee": "no-packshot",
-  "olive-cargo-swants": "no-packshot",
-  "olive-checks-maxi-flowy-wrap": "no-packshot",
-  "olive-double-layer-strap-top": "no-packshot",
+  "off-white-knot-vest": "not-on-these-models",
+  "off-white-maxi-skirt": "not-on-these-models",
+  "off-white-raglan-oversized-pullover": "fit-rejected",
+  "off-white-wrinkled-top": "not-on-these-models",
+  "old-school-stripes-fluffy-pjoys": "fit-rejected",
+  "olive-basic-long-sleeve-tee": "not-on-these-models",
+  "olive-cargo-swants": "not-on-these-models",
+  "olive-checks-maxi-flowy-wrap": "not-on-these-models",
+  "olive-double-layer-strap-top": "not-on-these-models",
   "olive-fence-neck-socks": "not-in-frame",
-  "olive-green-acid-washed-hoodie": "no-packshot",
-  "olive-green-cargo-pants": "no-packshot",
-  "olive-green-cargo-short": "no-packshot",
+  "olive-green-acid-washed-hoodie": "not-on-these-models",
+  "olive-green-cargo-pants": "not-on-these-models",
+  "olive-green-cargo-short": "not-on-these-models",
   "olive-lavender-color-block-neck-socks": "not-in-frame",
   "olive-lollipop-neck-socks": "not-in-frame",
-  "olive-long-sleeve-top": "no-packshot",
-  "olive-mini-skort": "no-packshot",
-  "olive-onesie": "no-packshot",
-  "olive-oversized-corduroy-puffer-jacket": "no-packshot",
-  "olive-oversized-denim-jacket": "no-packshot",
-  "olive-oversized-textured-windbreaker": "no-packshot",
-  "olive-regular-windbreaker": "no-packshot",
-  "olive-sleeveless-cropped-top": "no-packshot",
-  "olive-stitched-tank-top": "no-packshot",
-  "olive-washed-cowboy-bucket-hat": "no-packshot",
-  "olive-washed-crewneck": "no-packshot",
-  "olive-washed-halter-tank-top": "no-packshot",
-  "olive-washed-long-sleeve-top": "no-packshot",
-  "olive-wide-leg-swants": "no-packshot",
+  "olive-long-sleeve-top": "not-on-these-models",
+  "olive-mini-skort": "not-on-these-models",
+  "olive-onesie": "not-on-these-models",
+  "olive-oversized-corduroy-puffer-jacket": "not-on-these-models",
+  "olive-oversized-denim-jacket": "not-on-these-models",
+  "olive-oversized-textured-windbreaker": "not-on-these-models",
+  "olive-regular-windbreaker": "not-on-these-models",
+  "olive-sleeveless-cropped-top": "not-on-these-models",
+  "olive-stitched-tank-top": "not-on-these-models",
+  "olive-washed-cap": "flat-accessory",
+  "olive-washed-cowboy-bucket-hat": "flat-accessory",
+  "olive-washed-crewneck": "not-on-these-models",
+  "olive-washed-halter-tank-top": "not-on-these-models",
+  "olive-washed-long-sleeve-top": "not-on-these-models",
+  "olive-wide-leg-swants": "not-on-these-models",
   "orange-blue-flowers-crochet-bandana": "flat-accessory",
-  "orange-boyfriend-linen-shirt": "no-packshot",
-  "orange-cairo-jersey": "no-packshot",
-  "orange-denim-jacket": "no-packshot",
-  "orange-pink-crochet-bucket-hat": "no-packshot",
-  "orange-pixels-floppy-robe": "no-packshot",
-  "orange-ribbed-tank-top": "no-packshot",
-  "orange-ribbed-tank-top-1": "no-packshot",
-  "orange-striped-colorful-short-sleeve-shirt": "no-packshot",
-  "orange-striped-linen-shirt": "no-packshot",
-  "orange-yellow-regular-fleece-vest": "no-packshot",
+  "orange-boyfriend-linen-shirt": "not-on-these-models",
+  "orange-cairo-jersey": "not-on-these-models",
+  "orange-denim-jacket": "not-on-these-models",
+  "orange-pink-crochet-bucket-hat": "flat-accessory",
+  "orange-pixels-floppy-robe": "not-on-these-models",
+  "orange-ribbed-tank-top": "not-on-these-models",
+  "orange-ribbed-tank-top-1": "not-on-these-models",
+  "orange-striped-colorful-short-sleeve-shirt": "not-on-these-models",
+  "orange-striped-linen-shirt": "not-on-these-models",
+  "orange-yellow-regular-fleece-vest": "not-on-these-models",
   "orange-zigzag-crochet-bandana-1": "flat-accessory",
-  "original-human-hoodie": "no-packshot",
-  "out-of-service-oversized-tee": "no-packshot",
+  "original-human-hoodie": "not-on-these-models",
+  "out-of-service-oversized-tee": "fit-rejected",
   "pack-of-3-headbands": "flat-accessory",
   "pack-of-6-fluffy-socks-1": "not-in-frame",
   "pack-of-6-neck-socks": "not-in-frame",
-  "panda-funsie-onesie": "no-packshot",
-  "papasito-washed-cap": "no-packshot",
+  "panda-funsie-onesie": "not-on-these-models",
+  "papasito-washed-cap": "flat-accessory",
+  "paranoid-regular-tee": "not-on-these-models",
   "party-blues-neck-socks": "not-in-frame",
-  "pass-me-the-snacks-robe": "no-packshot",
-  "pastel-beach-set": "no-packshot",
-  "pastel-orange-cropped-camp-shirt": "no-packshot",
-  "pastel-rose-raglan-oversized-top": "no-packshot",
-  "pastel-sleeveless-top": "no-packshot",
-  "pastel-striped-pshorts": "no-packshot",
-  "pastel-tube-skirt": "no-packshot",
-  "pastel-yellow-corduroy-hand-bag": "no-packshot",
-  "pastel-yellow-crochet-cropped-top": "no-packshot",
-  "peach-green-multicolor-plaid-boxer-pants": "no-packshot",
-  "peach-green-multicolor-plaid-boxer-shorts": "no-packshot",
-  "personalities-long-sleeves": "no-packshot",
-  "petrol-yellow-striped-boxy-rugby-polo": "no-packshot",
-  "petrol-yellow-striped-cropped-rugby-polo": "no-packshot",
-  "petroleum-blue-corduroy-hand-bag": "no-packshot",
-  "pickles-fluffy-pjoys": "no-packshot",
+  "pass-me-the-snacks-robe": "not-on-these-models",
+  "pastel-beach-set": "not-on-these-models",
+  "pastel-orange-cropped-camp-shirt": "not-on-these-models",
+  "pastel-rose-raglan-oversized-top": "not-on-these-models",
+  "pastel-sleeveless-top": "not-on-these-models",
+  "pastel-striped-pshorts": "not-on-these-models",
+  "pastel-tube-skirt": "not-on-these-models",
+  "pastel-yellow-corduroy-hand-bag": "flat-accessory",
+  "pastel-yellow-crochet-cropped-top": "not-on-these-models",
+  "peace-dreams-boxy-washed-hoodie": "not-on-these-models",
+  "peace-is-punk-hoodie": "not-on-these-models",
+  "peach-green-multicolor-plaid-boxer-pants": "not-on-these-models",
+  "peach-green-multicolor-plaid-boxer-shorts": "not-on-these-models",
+  "personalities-long-sleeves": "not-on-these-models",
+  "petrol-yellow-striped-boxy-rugby-polo": "not-on-these-models",
+  "petrol-yellow-striped-cropped-rugby-polo": "not-on-these-models",
+  "petroleum-blue-corduroy-hand-bag": "flat-accessory",
+  "pickles-fluffy-pjoys": "fit-rejected",
+  "picnic-regular-tee": "not-on-these-models",
   "pink-and-green-striped-headband": "flat-accessory",
-  "pink-bear-onesie": "no-packshot",
-  "pink-black-multicolor-plaid-boxer-pants": "no-packshot",
-  "pink-black-multicolor-plaid-boxer-shorts": "no-packshot",
+  "pink-basic-regular-tee": "not-on-these-models",
+  "pink-bear-onesie": "not-on-these-models",
+  "pink-black-multicolor-plaid-boxer-pants": "not-on-these-models",
+  "pink-black-multicolor-plaid-boxer-shorts": "not-on-these-models",
   "pink-bomb-neck-socks": "not-in-frame",
-  "pink-bubble-gum-tank-top": "no-packshot",
+  "pink-bubble-gum-tank-top": "not-on-these-models",
   "pink-checks-crochet-bandana": "flat-accessory",
-  "pink-crochet-hat": "no-packshot",
-  "pink-cropped-square-neck-top": "no-packshot",
-  "pink-green-multicolor-plaid-boxer-pants": "no-packshot",
-  "pink-green-multicolor-plaid-boxer-shorts": "no-packshot",
-  "pink-knit-flowy-wrap": "no-packshot",
-  "pink-long-sleeve-oversized-shirt": "no-packshot",
-  "pink-maxi-flowy-wrap": "no-packshot",
-  "pink-multicolor-striped-cropped-rugby-polo": "no-packshot",
+  "pink-crochet-hat": "flat-accessory",
+  "pink-cropped-square-neck-top": "not-on-these-models",
+  "pink-green-multicolor-plaid-boxer-pants": "not-on-these-models",
+  "pink-green-multicolor-plaid-boxer-shorts": "not-on-these-models",
+  "pink-iys-printed-regular-tee": "not-on-these-models",
+  "pink-knit-flowy-wrap": "not-on-these-models",
+  "pink-long-sleeve-oversized-shirt": "not-on-these-models",
+  "pink-maxi-flowy-wrap": "not-on-these-models",
+  "pink-multicolor-striped-cropped-rugby-polo": "not-on-these-models",
   "pink-orange-color-block-neck-socks": "not-in-frame",
-  "pink-polka-fluffy-pjoys": "no-packshot",
-  "pink-raglan-oversized-pullover": "no-packshot",
-  "pink-ribbed-tank-top": "no-packshot",
-  "pink-striped-fluffy-pjoys": "no-packshot",
-  "pink-striped-loose-fit-baby-tee": "no-packshot",
-  "pink-striped-pshorts": "no-packshot",
-  "pink-stripped-square-neck-top": "no-packshot",
-  "pink-washed-cowboy-bucket-hat": "no-packshot",
-  "pink-wide-leg-washed-sworts": "no-packshot",
-  "pink-yellow-plaid-mini-wrap": "no-packshot",
-  "politically-correct-cropped-tee": "no-packshot",
+  "pink-polka-fluffy-pjoys": "not-on-these-models",
+  "pink-raglan-oversized-pullover": "fit-rejected",
+  "pink-ribbed-tank-top": "not-on-these-models",
+  "pink-striped-fluffy-pjoys": "not-on-these-models",
+  "pink-striped-loose-fit-baby-tee": "not-on-these-models",
+  "pink-striped-pshorts": "not-on-these-models",
+  "pink-stripped-square-neck-top": "not-on-these-models",
+  "pink-washed-cap": "flat-accessory",
+  "pink-washed-cowboy-bucket-hat": "flat-accessory",
+  "pink-wide-leg-washed-sworts": "not-on-these-models",
+  "pink-yellow-plaid-mini-wrap": "not-on-these-models",
+  "politically-correct-cropped-tee": "not-on-these-models",
   "polka-satin-bandana": "flat-accessory",
-  "powder-pink-washed-halter-tank-top": "no-packshot",
-  "powder-pink-washed-short-sleeve-top": "no-packshot",
-  "powder-pink-washed-wide-leg-swants": "no-packshot",
+  "powder-pink-washed-halter-tank-top": "not-on-these-models",
+  "powder-pink-washed-short-sleeve-top": "not-on-these-models",
+  "powder-pink-washed-wide-leg-swants": "not-on-these-models",
   "purple-crochet-flower-bandana": "flat-accessory",
-  "purple-flared-leggings": "no-packshot",
-  "purple-flowy-pants": "no-packshot",
-  "purple-flowy-short": "no-packshot",
-  "purple-haze-wide-leg-washed-sworts": "no-packshot",
-  "purple-oversized-oxford-shirt": "no-packshot",
-  "purple-printed-regular-windbreaker": "no-packshot",
-  "purple-ribbed-mock-neck-top": "no-packshot",
+  "purple-flared-leggings": "not-on-these-models",
+  "purple-flowy-pants": "not-on-these-models",
+  "purple-flowy-short": "not-on-these-models",
+  "purple-haze-wide-leg-washed-sworts": "not-on-these-models",
+  "purple-oversized-oxford-shirt": "not-on-these-models",
+  "purple-printed-regular-windbreaker": "not-on-these-models",
+  "purple-ribbed-mock-neck-top": "not-on-these-models",
   "purple-squares-crochet-bandana": "flat-accessory",
-  "purple-thread-boxy-sweater": "no-packshot",
+  "purple-thread-boxy-sweater": "not-on-these-models",
+  "purple-washed-cap": "flat-accessory",
   "purple-wave-crochet-bandana": "flat-accessory",
-  "purple-wild-clay-satin-flowy-wrap": "no-packshot",
+  "purple-wild-clay-satin-flowy-wrap": "not-on-these-models",
   "purple-zigzag-crochet-bandana": "flat-accessory",
-  "ratatouille-onesie": "no-packshot",
-  "rebel-minds-hoodie": "no-packshot",
+  "qasr-el-nile-regular-tee": "not-on-these-models",
+  "ratatouille-onesie": "not-on-these-models",
+  "reality-sh-t-regular-tee": "not-on-these-models",
+  "rebel-minds-hoodie": "not-on-these-models",
+  "rebel-minds-oversized-tee": "not-on-these-models",
   "red-and-white-striped-headband": "flat-accessory",
   "red-checks-bandana": "flat-accessory",
-  "red-double-layer-strap-top": "no-packshot",
-  "red-double-sleeve-boxy-tee": "no-packshot",
+  "red-double-layer-strap-top": "not-on-these-models",
+  "red-double-sleeve-boxy-tee": "not-on-these-models",
   "red-fence-neck-socks": "not-in-frame",
   "red-granny-neck-socks": "not-in-frame",
-  "red-grid-boxy-linen-shirt": "no-packshot",
-  "red-navy-striped-short-sleeve-top": "no-packshot",
+  "red-grid-boxy-linen-shirt": "not-on-these-models",
+  "red-navy-striped-short-sleeve-top": "not-on-these-models",
   "red-neck-socks": "not-in-frame",
-  "red-pink-striped-tank-top": "no-packshot",
-  "red-plaid-fluffy-pjoys": "no-packshot",
+  "red-pink-striped-tank-top": "not-on-these-models",
+  "red-plaid-fluffy-pjoys": "fit-rejected",
   "red-playground-neck-socks": "not-in-frame",
   "red-striped-pantoufle": "not-in-frame",
-  "reindeer-fluffy-pjoys": "no-packshot",
-  "retro-berry-striped-boxy-rugby-polo": "no-packshot",
-  "road-trippin-oversized-tee": "no-packshot",
-  "roman-w-zatoun-chiffon-flowy-wrap": "no-packshot",
-  "rose-pink-loose-fit-baby-tee": "no-packshot",
-  "rose-taupe-square-neck-top": "no-packshot",
-  "royal-blue-cropped-camp-shirt": "no-packshot",
-  "sage-green-crinkled-set": "no-packshot",
-  "sage-green-crinkled-top-1": "no-packshot",
-  "sage-green-fitted-long-sleeve-top": "no-packshot",
-  "sage-green-flared-leggings": "no-packshot",
-  "sage-green-oversized-short-sleeve-shirt": "no-packshot",
-  "sage-green-ribbed-tank-top": "no-packshot",
-  "sage-green-washed-wide-leg-swants": "no-packshot",
-  "santa-fluffy-pjoys": "no-packshot",
-  "seamless-baby-blue-leggings": "no-packshot",
-  "seamless-black-leggings": "no-packshot",
-  "seashell-satin-flowy-wrap": "no-packshot",
-  "seashore-boxy-shirt": "no-packshot",
-  "shams-pshorts": "no-packshot",
-  "silver-sands-summer-swim-shorts": "no-packshot",
+  "red-washed-cap": "flat-accessory",
+  "reindeer-fluffy-pjoys": "not-on-these-models",
+  "responsibility-regular-tee": "not-on-these-models",
+  "retro-berry-striped-boxy-rugby-polo": "not-on-these-models",
+  "rich-baked-oversized-tee": "not-on-these-models",
+  "rise-high-boxy-hoodie": "not-on-these-models",
+  "road-trippin-oversized-tee": "not-on-these-models",
+  "roman-w-zatoun-chiffon-flowy-wrap": "not-on-these-models",
+  "rose-pink-loose-fit-baby-tee": "not-on-these-models",
+  "rose-taupe-square-neck-top": "not-on-these-models",
+  "royal-blue-cropped-camp-shirt": "not-on-these-models",
+  "rvng-washed-hoodie": "not-on-these-models",
+  "sage-green-crinkled-set": "not-on-these-models",
+  "sage-green-crinkled-top-1": "not-on-these-models",
+  "sage-green-fitted-long-sleeve-top": "not-on-these-models",
+  "sage-green-flared-leggings": "not-on-these-models",
+  "sage-green-oversized-short-sleeve-shirt": "not-on-these-models",
+  "sage-green-ribbed-tank-top": "not-on-these-models",
+  "sage-green-washed-wide-leg-swants": "not-on-these-models",
+  "santa-fluffy-pjoys": "fit-rejected",
+  "save-the-turtles-boxy-tee": "not-on-these-models",
+  "save-the-turtles-oversized-hoodie": "not-on-these-models",
+  "scientific-experiment-oversized-tee": "not-on-these-models",
+  "seamless-baby-blue-leggings": "not-on-these-models",
+  "seamless-black-leggings": "not-on-these-models",
+  "seashell-satin-flowy-wrap": "not-on-these-models",
+  "seashells-regular-tee": "not-on-these-models",
+  "seashore-boxy-shirt": "not-on-these-models",
+  "serial-griller-oversized-hoodie": "not-on-these-models",
+  "serial-griller-oversized-tee": "not-on-these-models",
+  "shabab-el-mostakbal-hoodie": "not-on-these-models",
+  "shams-pshorts": "not-on-these-models",
+  "sharing-is-caring-hoodie": "not-on-these-models",
+  "sharing-is-caring-pt-2-oversized-tee": "not-on-these-models",
+  "shwareena-oversized-tee": "not-on-these-models",
+  "silver-sands-summer-swim-shorts": "fit-rejected",
   "silver-sands-sun-neck-socks": "not-in-frame",
-  "silver-sands-under-the-sea-swim-shorts": "no-packshot",
-  "sky-blue-fleece-jacket": "no-packshot",
-  "sky-blue-tank-top": "no-packshot",
+  "silver-sands-under-the-sea-swim-shorts": "not-on-these-models",
+  "sky-blue-fleece-jacket": "not-on-these-models",
+  "sky-blue-tank-top": "not-on-these-models",
+  "sleepscape-oversized-tee": "not-on-these-models",
   "smiley-neck-socks-1": "not-in-frame",
-  "snooze-alarm-fluffy-pjoys": "no-packshot",
-  "snow-dates-fluffy-pjoys": "no-packshot",
-  "snowman-fluffy-pjoys-1": "no-packshot",
-  "snowy-day-fluffy-pjoys": "no-packshot",
-  "sounds-wrong-washed-cap": "no-packshot",
-  "spill-the-tea-fluffy-pjoys": "no-packshot",
-  "stamps-pjoys": "no-packshot",
-  "stamps-pshorts": "no-packshot",
+  "snakes-swim-shorts": "not-on-these-models",
+  "snooze-alarm-fluffy-pjoys": "fit-rejected",
+  "snow-dates-fluffy-pjoys": "fit-rejected",
+  "snowman-fluffy-pjoys-1": "not-on-these-models",
+  "snowy-day-fluffy-pjoys": "not-on-these-models",
+  "social-on-social-media-boxy-hoodie": "not-on-these-models",
+  "solid-butter-yellow-swim-shorts": "not-on-these-models",
+  "solid-lilac-swim-shorts": "not-on-these-models",
+  "solid-olive-swim-shorts": "not-on-these-models",
+  "solid-yellow-swim-shorts": "not-on-these-models",
+  "soot-el-shabab-oversized-tee": "not-on-these-models",
+  "soot-elshare3-oversized-tee": "not-on-these-models",
+  "sounds-wrong-washed-cap": "flat-accessory",
+  "spill-the-tea-fluffy-pjoys": "fit-rejected",
+  "stamps-pjoys": "not-on-these-models",
+  "stamps-pshorts": "not-on-these-models",
   "star-neck-socks": "not-in-frame",
+  "stargaze-swim-shorts": "not-on-these-models",
   "starry-mess-fluffy-socks": "not-in-frame",
   "stars-zed-neck-socks": "not-in-frame",
-  "stay-highdrated-hoodie": "no-packshot",
-  "stimulated-consciousness-washed-hoodie": "no-packshot",
-  "stoned-pizza-regular-tee": "no-packshot",
-  "stories-never-end-hoodie": "no-packshot",
+  "stay-highdrated-hoodie": "not-on-these-models",
+  "stimulated-consciousness-washed-hoodie": "not-on-these-models",
+  "stoned-pizza-regular-tee": "not-on-these-models",
+  "stop-meditating-sleeveless-tee": "not-on-these-models",
+  "stories-never-end-hoodie": "not-on-these-models",
   "streets-attitude-neck-socks": "not-in-frame",
-  "stretching-cat-loose-fit-baby-tee": "no-packshot",
-  "striped-youth-dept-jersey": "no-packshot",
+  "streets-culture-boxy-hoodie": "not-on-these-models",
+  "stretching-cat-loose-fit-baby-tee": "not-on-these-models",
+  "striped-youth-dept-jersey": "not-on-these-models",
   "stripes-party-neck-socks": "not-in-frame",
-  "stuck-on-loop-fluffy-pjoys": "no-packshot",
-  "summer-sorbet-chiffon-flowy-wrap": "no-packshot",
-  "sunny-pjoys": "no-packshot",
-  "sunny-side-up-pjoys": "no-packshot",
+  "stuck-on-loop-fluffy-pjoys": "not-on-these-models",
+  "sugar-spikes-oversized-tee": "not-on-these-models",
+  "summer-sorbet-chiffon-flowy-wrap": "not-on-these-models",
+  "sunny-pjoys": "not-on-these-models",
+  "sunny-side-up-pjoys": "not-on-these-models",
   "sunset-crochet-bandana": "flat-accessory",
-  "sunset-pjoys": "no-packshot",
-  "sunset-stripes-fluffy-pjoys": "no-packshot",
-  "sunshine-yellow-tank-top": "no-packshot",
-  "supremacy-washed-crewneck": "no-packshot",
-  "sweet-outside-dead-inside-pjoys": "no-packshot",
-  "sweet-tooth-fluffy-pjoys": "no-packshot",
-  "sweet-tooth-pjoys": "no-packshot",
-  "sweet-tooth-pshorts": "no-packshot",
-  "system-is-down-washed-hoodie-1": "no-packshot",
-  "teal-cropped-v-neck-sweatshirt": "no-packshot",
+  "sunset-pjoys": "not-on-these-models",
+  "sunset-stripes-fluffy-pjoys": "fit-rejected",
+  "sunshine-yellow-tank-top": "not-on-these-models",
+  "supremacy-washed-crewneck": "not-on-these-models",
+  "sweet-outside-dead-inside-pjoys": "not-on-these-models",
+  "sweet-tooth-fluffy-pjoys": "fit-rejected",
+  "sweet-tooth-pjoys": "not-on-these-models",
+  "sweet-tooth-pshorts": "not-on-these-models",
+  "system-is-down-washed-hoodie-1": "not-on-these-models",
+  "taught-by-mistake-oversized-tee": "not-on-these-models",
+  "teal-basic-heavy-boxy-hoodie": "not-on-these-models",
+  "teal-cropped-v-neck-sweatshirt": "not-on-these-models",
+  "teal-embroidered-oversized-leather-jacket": "not-on-these-models",
   "teal-granny-neck-socks": "not-in-frame",
-  "teal-linen-pants": "no-packshot",
-  "teal-linen-shorts": "no-packshot",
-  "teal-linen-vest": "no-packshot",
-  "teal-washed-short-sleeve-top": "no-packshot",
-  "team-stars-jersey": "no-packshot",
+  "teal-linen-pants": "not-on-these-models",
+  "teal-linen-shorts": "not-on-these-models",
+  "teal-linen-vest": "not-on-these-models",
+  "teal-washed-short-sleeve-top": "not-on-these-models",
+  "team-stars-jersey": "fit-rejected",
   "techni-color-stripes-neck-socks": "not-in-frame",
-  "the-archives-boxy-shirt": "no-packshot",
-  "the-cringe-fluffy-pjoys": "no-packshot",
-  "the-cringe-onesie": "no-packshot",
-  "the-moon-boxy-fit-hoodie": "no-packshot",
+  "the-archives-boxy-shirt": "not-on-these-models",
+  "the-archives-sphinx-sleeveless-tee": "not-on-these-models",
+  "the-city-that-never-sleeps-oversized-tee": "not-on-these-models",
+  "the-cringe-fluffy-pjoys": "not-on-these-models",
+  "the-cringe-onesie": "not-on-these-models",
+  "the-moon-boxy-fit-hoodie": "not-on-these-models",
+  "the-rolling-stoner-hoodie": "not-on-these-models",
   "tiles-neck-socks": "not-in-frame",
+  "tired-oversized-tee": "not-on-these-models",
   "to-do-list-neck-socks": "not-in-frame",
-  "touch-grass-pjoys": "no-packshot",
-  "touch-grass-pshorts": "no-packshot",
-  "trippin-tie-dye-hoodie": "no-packshot",
-  "tropical-bucket-hat": "no-packshot",
-  "tropical-hawaiian-shirt": "no-packshot",
-  "tropical-nights-swim-shorts": "no-packshot",
-  "try-again-bucket-hat": "no-packshot",
-  "turquoise-blue-balloon-sleeves-oversized-crewneck": "no-packshot",
-  "turquoise-boyfriend-linen-shirt": "no-packshot",
-  "turquoise-iys-printed-boxy-fit-tee": "no-packshot",
-  "unbothered-oversized-hoodie": "no-packshot",
-  "unfinished-black-denim-shorts": "no-packshot",
-  "unfinished-dark-blue-denim-shorts": "no-packshot",
-  "unfinished-light-blue-denim-shorts": "no-packshot",
-  "universal-cairo-club-double-sleeve-tee": "no-packshot",
-  "unknown-washed-oversized-tee": "no-packshot",
-  "untitled-jersey": "no-packshot",
-  "used-to-be-worse-washed-cap": "no-packshot",
+  "touch-grass-pjoys": "not-on-these-models",
+  "touch-grass-pshorts": "not-on-these-models",
+  "trippin-tie-dye-hoodie": "not-on-these-models",
+  "trippy-floral-swim-shorts": "not-on-these-models",
+  "tropical-bucket-hat": "flat-accessory",
+  "tropical-hawaiian-shirt": "not-on-these-models",
+  "tropical-nights-swim-shorts": "not-on-these-models",
+  "try-again-bucket-hat": "flat-accessory",
+  "turquoise-blue-balloon-sleeves-oversized-crewneck": "not-on-these-models",
+  "turquoise-boyfriend-linen-shirt": "not-on-these-models",
+  "turquoise-iys-printed-boxy-fit-tee": "not-on-these-models",
+  "unbothered-oversized-hoodie": "not-on-these-models",
+  "unfinished-black-denim-shorts": "not-on-these-models",
+  "unfinished-dark-blue-denim-shorts": "not-on-these-models",
+  "unfinished-light-blue-denim-shorts": "not-on-these-models",
+  "universal-cairo-club-double-sleeve-tee": "not-on-these-models",
+  "universal-peace-hoodie": "not-on-these-models",
+  "unknown-washed-oversized-tee": "not-on-these-models",
+  "untitled-jersey": "not-on-these-models",
+  "used-to-be-worse-washed-cap": "flat-accessory",
   "veggie-satin-bandana": "flat-accessory",
-  "veggies-pjoys": "no-packshot",
-  "veggies-pshorts": "no-packshot",
-  "violet-crochet-pants": "no-packshot",
-  "violet-crochet-set": "no-packshot",
-  "violet-crochet-top": "no-packshot",
-  "washed-khaki-wide-leg-cargo-pants": "no-packshot",
-  "watermelon-red-corduroy-hand-bag": "no-packshot",
-  "watermelon-red-oversized-oxford-shirt": "no-packshot",
-  "white-cargo-short": "no-packshot",
+  "veggies-pjoys": "not-on-these-models",
+  "veggies-pshorts": "not-on-these-models",
+  "view-the-world-oversized-tee": "not-on-these-models",
+  "violet-crochet-pants": "not-on-these-models",
+  "violet-crochet-set": "not-on-these-models",
+  "violet-crochet-top": "not-on-these-models",
+  "virtual-escape-hoodie": "not-on-these-models",
+  "washed-khaki-wide-leg-cargo-pants": "not-on-these-models",
+  "watermelon-red-corduroy-hand-bag": "flat-accessory",
+  "watermelon-red-oversized-oxford-shirt": "not-on-these-models",
+  "what-do-you-want-computer-hoodie": "not-on-these-models",
+  "white-basic-oversized-hoodie": "not-on-these-models",
+  "white-basic-oversized-tee": "not-on-these-models",
+  "white-cargo-short": "not-on-these-models",
   "white-core-short-socks": "not-in-frame",
   "white-crochet-flower-bandana": "flat-accessory",
-  "white-flowy-short": "no-packshot",
-  "white-knitted-fishnet-dress": "no-packshot",
+  "white-flowy-short": "not-on-these-models",
+  "white-knitted-fishnet-dress": "not-on-these-models",
   "white-lollipop-neck-socks": "not-in-frame",
-  "white-long-sleeve-oversized-shirt": "no-packshot",
-  "white-mini-balloon-skirt": "no-packshot",
-  "white-net-tote-bag": "no-packshot",
-  "white-oversized-short-sleeve-shirt": "no-packshot",
-  "white-short-sleeve-shirt": "no-packshot",
-  "white-zed-stars-wide-leg-swants": "no-packshot",
-  "wild-caught-hoodie": "no-packshot",
-  "wild-garden-maxi-flowy-wrap": "no-packshot",
-  "willows-chiffon-flowy-wrap": "no-packshot",
-  "wine-multicolor-striped-boxy-rugby-polo": "no-packshot",
-  "world-cup-jersey": "no-packshot",
-  "worldwide-intellect-hoodie": "no-packshot",
-  "wrong-decisions-regular-tee": "no-packshot",
-  "xmas-burnout-fluffy-pjoys": "no-packshot",
+  "white-long-sleeve-oversized-shirt": "not-on-these-models",
+  "white-mini-balloon-skirt": "not-on-these-models",
+  "white-net-tote-bag": "flat-accessory",
+  "white-oversized-short-sleeve-shirt": "not-on-these-models",
+  "white-serial-griller-swim-shorts": "not-on-these-models",
+  "white-short-sleeve-shirt": "not-on-these-models",
+  "white-zed-stars-wide-leg-swants": "fit-rejected",
+  "wild-caught-hoodie": "not-on-these-models",
+  "wild-garden-maxi-flowy-wrap": "not-on-these-models",
+  "willows-chiffon-flowy-wrap": "not-on-these-models",
+  "wine-multicolor-striped-boxy-rugby-polo": "not-on-these-models",
+  "world-cup-jersey": "not-on-these-models",
+  "world-wide-tour-oversized-hoodie": "fit-rejected",
+  "worldwide-intellect-hoodie": "not-on-these-models",
+  "wrong-decisions-regular-tee": "not-on-these-models",
+  "wrong-neighbourhood-hoodie": "not-on-these-models",
+  "xmas-burnout-fluffy-pjoys": "not-on-these-models",
   "xmas-eve-fluffy-socks": "not-in-frame",
-  "xmas-joy-fluffy-pjoys": "no-packshot",
-  "xmas-nostalgia-fluffy-pjoys": "no-packshot",
-  "xmas-ornaments-fluffy-pjoys": "no-packshot",
-  "xmas-party-fluffy-pjoys": "no-packshot",
-  "yellow-blue-striped-tank-top": "no-packshot",
+  "xmas-joy-fluffy-pjoys": "not-on-these-models",
+  "xmas-nostalgia-fluffy-pjoys": "fit-rejected",
+  "xmas-ornaments-fluffy-pjoys": "fit-rejected",
+  "xmas-party-fluffy-pjoys": "not-on-these-models",
+  "yellow-blue-striped-tank-top": "not-on-these-models",
   "yellow-derby-neck-socks": "not-in-frame",
   "yellow-heart-feetbuns": "not-in-frame",
-  "yellow-iys-printed-regular-tee": "no-packshot",
-  "yellow-navy-striped-short-sleeve-top": "no-packshot",
+  "yellow-iys-printed-regular-tee": "not-on-these-models",
+  "yellow-navy-striped-short-sleeve-top": "not-on-these-models",
   "yellow-orange-neck-socks": "not-in-frame",
   "yellow-party-stripes-neck-socks": "not-in-frame",
-  "yellow-pink-multicolor-plaid-boxer-pants": "no-packshot",
-  "yellow-pink-multicolor-plaid-boxer-shorts": "no-packshot",
-  "yellow-plaid-tote-bag": "no-packshot",
-  "yellow-printed-regular-windbreaker": "no-packshot",
-  "yellow-ribbed-tank-top": "no-packshot",
-  "yellow-striped-colorful-short-sleeve-shirt": "no-packshot",
-  "yellow-stripped-square-neck-top": "no-packshot",
-  "yellow-wrinkled-top": "no-packshot",
-  "youth-culture-cropped-jersey": "no-packshot",
-  "youth-nation-oversized-polo": "no-packshot",
-  "youth-world-jersey": "no-packshot",
-  "zebra-bucket-hat-1": "no-packshot",
-  "zed-green-striped-swim-shorts": "no-packshot",
-  "zed-stars-jersey": "no-packshot"
+  "yellow-pink-multicolor-plaid-boxer-pants": "not-on-these-models",
+  "yellow-pink-multicolor-plaid-boxer-shorts": "not-on-these-models",
+  "yellow-plaid-tote-bag": "flat-accessory",
+  "yellow-printed-regular-windbreaker": "not-on-these-models",
+  "yellow-ribbed-tank-top": "not-on-these-models",
+  "yellow-striped-colorful-short-sleeve-shirt": "not-on-these-models",
+  "yellow-stripped-square-neck-top": "not-on-these-models",
+  "yellow-wrinkled-top": "not-on-these-models",
+  "youth-culture-cropped-jersey": "not-on-these-models",
+  "youth-nation-oversized-polo": "not-on-these-models",
+  "youth-world-jersey": "not-on-these-models",
+  "zebra-bucket-hat-1": "flat-accessory",
+  "zed-green-striped-swim-shorts": "fit-rejected",
+  "zed-stars-jersey": "not-on-these-models"
  }
 }

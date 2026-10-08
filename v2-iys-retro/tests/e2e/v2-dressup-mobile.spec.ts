@@ -26,7 +26,7 @@ async function tapPiece(page: Page, p: Piece) {
 test.describe('DRESSUP.EXE (IYS MOBILE)', () => {
   test('MENU → one big model, MEN | WOMEN switch, pieces sheet, independent looks, BACK steps out (20 steps)', async ({ page }) => {
     const [hoodie] = wearable('men', 'outer');
-    const womenPiece = wearable('women', 'top')[1] ?? wearable('women', 'top')[0]!;
+    const womenPiece = wearable('women', 'outer').find((p) => p.handle !== hoodie!.handle)!;
     await boot(page);
     const path0 = new URL(page.url()).pathname;
     // 1–2. its own MENU entry and screen (no route change)

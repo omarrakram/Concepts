@@ -92,17 +92,28 @@ non-generative, rebuildable; no AI, no runtime image processing.
   `scripts/stylist/reference-women.webp`. Crop + resize only to
   `public/iys/stylist/models/{men,women}.webp` (600 × 900), plus a head + hair
   layer cut from the same photo (`*-head.webp`, studio wall removed inside a
-  hand-measured outline) so hoods can sit behind the head. No generated,
+  hand-measured outline), drawn over every piece. No generated,
   replaced or stock people.
-- **Garments**: `public/iys/stylist/g/<handle>.webp`, each cut from one
-  official product photo of that product in the public catalogue snapshot
-  (the white-backdrop garment-only packshot; front of the back/front pair):
-  flood-fill of the backdrop from the borders, specks dropped, 1 px edge
-  softening, trimmed, resized to at most 360 px. Colours, prints and logos are
-  untouched. Each record in `src/data/stylist.generated.json` names its source
-  image index and CDN filename.
-- Products with only on-model photos stay **view-only** (listed, never drawn
-  as worn). Source thumbnails are cached in `.cache/stylist/` (not committed).
+- **Pieces (on-model only)**: `public/iys/stylist/look/{men,women}/<handle>.webp`,
+  each made from one official product photo of that product in the public
+  catalogue snapshot in which the same canonical model wears it (reviewed list:
+  `src/features/dressup/looks.ts`). The canonical head is found in the photo by
+  masked normalised cross-correlation; the photo is scaled + translated (no
+  rotation, no warping) so the heads coincide; the plain studio backdrop is
+  flood-filled away and the model's body below the chin is kept, its edge
+  unmixed against the studio wall. Where the canonical outfit would show past
+  the new silhouette, the canonical room behind it is filled in along the row.
+  The canonical head layer is drawn back on top at runtime, so the face never
+  changes. Colours, prints and logos are untouched. Each record in
+  `src/data/stylist.generated.json` names its source image index, CDN filename
+  and head-match score. The piece each model wears in the supplied photo
+  itself is wearable too, and draws nothing (the photo already shows it).
+- **Refused, so view-only**: photos of other models, shots from the furnished
+  room set or a coloured studio, pair shots where the two models touch with
+  nothing to tell them apart, photos that don't cover the frame, and anything
+  that still looked pasted on full-size review. Flat packshots never dress a
+  model (headwear, bags and neckwear included): they can't look worn. Source
+  photos are cached in `.cache/stylist/` (not committed).
 
 ## Local assets
 

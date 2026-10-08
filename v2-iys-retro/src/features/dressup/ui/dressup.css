@@ -95,24 +95,24 @@
   object-fit: cover;
   user-select: none;
 }
-/* A paper-doll piece: a white sticker edge + a soft drop, so a cut-out reads as pinned on. */
+/*
+ * A worn piece (--look) is the model's own body from an official photo,
+ * aligned to this frame: no outline, no shadow, it is the photo.
+ */
 .dz-layer {
   position: absolute;
   height: auto;
   max-width: none;
   pointer-events: none;
   user-select: none;
-  filter: drop-shadow(1px 0 0 #fff) drop-shadow(-1px 0 0 #fff) drop-shadow(0 1px 0 #fff) drop-shadow(0 -1px 0 #fff) drop-shadow(1px 3px 2px rgba(0, 0, 0, 0.28));
   animation: dz-pin 0.18s ease-out;
 }
 .dz-layer--head {
-  filter: none;
   animation: none;
 }
 @keyframes dz-pin {
   from {
-    transform: translateY(-4%) scale(0.97);
-    opacity: 0.4;
+    opacity: 0;
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -219,6 +219,11 @@
   font: bold 13px var(--system-font);
   color: #7a1515;
   cursor: var(--cursor-pointer);
+}
+.dz-look__note {
+  margin: 3px 0 0;
+  color: var(--muted);
+  font-size: 10px;
 }
 .dz-look__empty {
   margin: 0;

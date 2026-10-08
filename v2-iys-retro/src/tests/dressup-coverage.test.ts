@@ -17,13 +17,16 @@ describe('DRESSUP.EXE coverage (real catalogue)', () => {
       menCompatible: styled.filter((e) => e.audience !== 'women').length,
       womenCompatible: styled.filter((e) => e.audience !== 'men').length,
       wearableBySlot: by(styled.filter((e) => e.kind === 'wearable').map((e) => e.slot)),
+      wearableByKind: by(styled.flatMap((e) => (e.kind === 'wearable' ? [e.item.kind] : []))),
       viewOnlyReasons: by(styled.flatMap((e) => (e.kind === 'view-only' ? [e.reason] : []))),
       nonStylistReasons: by(s.entries.flatMap((e) => (e.kind === 'non-stylist' ? [e.reason] : []))),
     };
     console.log('[dressup coverage]', JSON.stringify(report));
-    expect(s.counts.wearable).toBeGreaterThan(50);
     expect(s.counts.wearableMen).toBeGreaterThan(0);
     expect(s.counts.wearableWomen).toBeGreaterThan(0);
+    // wearable means worn: every wearable piece is an official photo of that model in it
+    for (const e of styled) if (e.kind === 'wearable') expect(e.item.kind, e.product.handle).toBe('on-model');
+    for (const e of styled) if (e.kind === 'wearable') expect(['top', 'outer', 'bottom', 'onepiece'], e.product.handle).toContain(e.slot);
     // every mapping in the registry resolves (no orphans left after a build)
     expect(Object.keys((registryJson as unknown as Registry).items).length).toBe(s.counts.wearable);
   });

@@ -1,6 +1,6 @@
 import type { Locator, Page } from '@playwright/test';
 import { axe, desktop, expect, test } from './fixtures';
-import { chooseAll, regexEscape, registry, viewOnly, wearable, type Piece } from './dressup-helpers';
+import { chooseAll, layerFile, regexEscape, registry, shootPiece, viewOnly, wearable, type Piece } from './dressup-helpers';
 
 const dz = (page: Page) => page.locator('[data-window="dressup"]');
 const frame = (page: Page, model: 'men' | 'women') => dz(page).locator(`.dz-model[data-model="${model}"]`);
@@ -93,8 +93,8 @@ test.describe('DRESSUP.EXE (desktop)', () => {
   test('selecting real IYS pieces visibly changes what each model wears (24 steps)', async ({ page }) => {
     const [hoodie, hoodie2] = wearable('men', 'outer');
     const [tee] = wearable('men', 'top');
-    const [cap] = wearable('men', 'head');
-    const womenTop = wearable('women', 'top').find((p) => p.handle !== tee!.handle)!;
+    const [pants] = wearable('men', 'bottom');
+    const womenPiece = wearable('women', 'outer').find((p) => p.handle !== hoodie!.handle && p.handle !== hoodie2!.handle)!;
     const bag0 = await (async () => {
       await desktop(page, '/');
       return bagCount(page);
@@ -113,14 +113,15 @@ test.describe('DRESSUP.EXE (desktop)', () => {
     await expect(dz(page).locator('.dz-layer')).toHaveCount(0);
     // 5. WEARABLE pieces are listed with real counts
     await expect(dz(page).getByRole('radio', { name: /^WEARABLE \(\d/ })).toBeChecked();
-    // 6–8. wear a hoodie: its official cut-out appears on MEN, loaded, card shows it
+    // 6–8. wear a hoodie: the official photo of him wearing it appears on MEN, loaded, card shows it
     const c1 = await card(page, hoodie!);
     await c1.click();
     await expect(layer(page, 'men', hoodie!.handle)).toBeVisible();
     expect(await loaded(layer(page, 'men', hoodie!.handle))).toBe(true);
-    await expect(layer(page, 'men', hoodie!.handle)).toHaveAttribute('src', registry.items[hoodie!.handle]!.file);
+    await expect(layer(page, 'men', hoodie!.handle)).toHaveAttribute('src', layerFile(hoodie!.handle, 'men')!);
+    await expect(layer(page, 'men', hoodie!.handle)).toHaveClass(/dz-layer--look/);
     await expect(c1).toHaveAttribute('aria-pressed', 'true');
-    // 9. the hood sits behind the model's own head layer
+    // 9. his own head goes back on top: the face never changes, the hood sits behind it
     await expect(frame(page, 'men').locator('.dz-layer--head')).toHaveCount(1);
     const order = await frame(page, 'men').locator('img').evaluateAll((els) => els.map((e) => e.getAttribute('data-slot')));
     expect(order.indexOf('outer')).toBeLessThan(order.indexOf('@head'));
@@ -131,51 +132,56 @@ test.describe('DRESSUP.EXE (desktop)', () => {
     await (await card(page, hoodie2!)).click();
     await expect(layer(page, 'men', hoodie2!.handle)).toBeVisible();
     await expect(layer(page, 'men', hoodie!.handle)).toHaveCount(0);
-    // 12. a cap goes on top of everything (headwear above the head layer)
-    await (await card(page, cap!)).click();
-    await expect(layer(page, 'men', cap!.handle)).toBeVisible();
-    const order2 = await frame(page, 'men').locator('img').evaluateAll((els) => els.map((e) => e.getAttribute('data-slot')));
-    expect(order2.indexOf('@head')).toBeLessThan(order2.indexOf('head'));
-    // 13. picking a top while a layer is on shows the top (the piece you pick is the one you see)
+    // 12. a top is another official photo: it replaces the layer (one body photo at a time)
     await (await card(page, tee!)).click();
     await expect(layer(page, 'men', tee!.handle)).toBeVisible();
     await expect(layer(page, 'men', hoodie2!.handle)).toHaveCount(0);
-    // 14. putting the layer back keeps the top on underneath (listed, not drawn)
+    await expect(look).not.toContainText(hoodie2!.title);
+    // 13. so is a bottom: the trousers come with the rest of their photo's outfit
+    await (await card(page, pants!)).click();
+    await expect(layer(page, 'men', pants!.handle)).toBeVisible();
+    await expect(layer(page, 'men', tee!.handle)).toHaveCount(0);
+    await expect(look).toContainText(/rest of that outfit comes with it/);
+    // 14. and the layer replaces the bottom again
     await (await card(page, hoodie2!)).click();
     await expect(layer(page, 'men', hoodie2!.handle)).toBeVisible();
-    await expect(layer(page, 'men', tee!.handle)).toHaveCount(0);
-    await expect(look).toContainText(`${tee!.title} (under the layer)`);
+    await expect(layer(page, 'men', pants!.handle)).toHaveCount(0);
+    await expect(look).not.toContainText(pants!.title);
     // 15. WOMEN is independent
     await dressing(page, 'WOMEN');
-    await (await card(page, womenTop)).click();
-    await expect(layer(page, 'women', womenTop.handle)).toBeVisible();
-    await expect(layer(page, 'men', womenTop.handle)).toHaveCount(0);
+    await (await card(page, womenPiece)).click();
+    await expect(layer(page, 'women', womenPiece.handle)).toBeVisible();
+    await expect(layer(page, 'men', womenPiece.handle)).toHaveCount(0);
     await expect(layer(page, 'men', hoodie2!.handle)).toBeVisible();
     // 16. clicking a model frame picks who is being dressed
     await frame(page, 'men').locator('.dz-frame').click();
     await expect(dz(page).getByRole('group', { name: 'Dressing' }).getByRole('button', { name: 'MEN', exact: true })).toHaveAttribute('aria-pressed', 'true');
-    // 17. take a piece off from CURRENT LOOK
-    await look.getByRole('button', { name: `Take off ${cap!.title}` }).click();
-    await expect(layer(page, 'men', cap!.handle)).toHaveCount(0);
-    // 18. the same card again takes it off (toggle)
-    await (await card(page, hoodie2!)).click();
+    // 17. take a piece off from CURRENT LOOK: back to the shoot photo, no layers at all
+    await look.getByRole('button', { name: `Take off ${hoodie2!.title}` }).click();
     await expect(layer(page, 'men', hoodie2!.handle)).toHaveCount(0);
-    await expect(layer(page, 'men', tee!.handle)).toBeVisible();
+    await expect(frame(page, 'men').locator('.dz-layer')).toHaveCount(0);
+    // 18. the same card again takes it off (toggle)
+    await (await card(page, hoodie!)).click();
+    await expect(layer(page, 'men', hoodie!.handle)).toBeVisible();
+    await (await card(page, hoodie!)).click();
+    await expect(layer(page, 'men', hoodie!.handle)).toHaveCount(0);
     // 19. CLEAR LOOK clears MEN only
+    await (await card(page, tee!)).click();
+    await expect(layer(page, 'men', tee!.handle)).toBeVisible();
     await look.getByRole('button', { name: 'CLEAR LOOK' }).click();
     await expect(frame(page, 'men').locator('.dz-layer')).toHaveCount(0);
-    await expect(layer(page, 'women', womenTop.handle)).toBeVisible();
-    // 20. RANDOM LOOK dresses MEN from wearable pieces and never touches the bag
+    await expect(layer(page, 'women', womenPiece.handle)).toBeVisible();
+    // 20. RANDOM LOOK dresses MEN in one wearable piece and never touches the bag
     await dz(page).getByRole('toolbar', { name: 'DRESSUP.EXE controls' }).getByRole('button', { name: 'RANDOM LOOK' }).click();
-    await expect(frame(page, 'men').locator('.dz-layer:not(.dz-layer--head)').first()).toBeVisible();
+    await expect(frame(page, 'men').locator('.dz-layer:not(.dz-layer--head)')).toHaveCount(1);
     for (const h of await frame(page, 'men').locator('.dz-layer[data-handle]').evaluateAll((els) => els.map((e) => e.getAttribute('data-handle')!))) expect(registry.items[h], h).toBeTruthy();
     expect(await bagCount(page)).toBe(bag0);
     // 21. category filter narrows to real categories
     await dz(page).getByRole('searchbox', { name: 'Search pieces' }).fill('');
-    await dz(page).getByRole('combobox', { name: 'Category' }).selectOption('headwear');
+    await dz(page).getByRole('combobox', { name: 'Category' }).selectOption('layers');
     const handles = await dz(page).locator('.dz-card__main').evaluateAll((els) => els.map((e) => e.getAttribute('data-handle')!));
     expect(handles.length).toBeGreaterThan(0);
-    for (const h of handles) expect(registry.items[h]!.slot).toBe('head');
+    for (const h of handles) expect(registry.items[h]!.slot).toBe('outer');
     // 22. search finds by real title
     await dz(page).getByRole('combobox', { name: 'Category' }).selectOption('all');
     await dz(page).getByRole('searchbox', { name: 'Search pieces' }).fill(tee!.title);
@@ -185,13 +191,13 @@ test.describe('DRESSUP.EXE (desktop)', () => {
     const v = await card(page, vo, 'VIEW-ONLY');
     await expect(v).toContainText('VIEW-ONLY');
     await v.click();
-    await expect(dz(page).getByRole('region', { name: `${vo.title} details` })).toContainText(/VIEW-ONLY\. Only on-model photos/);
+    await expect(dz(page).getByRole('region', { name: `${vo.title} details` })).toContainText(/VIEW-ONLY\. Not photographed on these two models/);
     await dz(page).getByRole('button', { name: '◀ BACK TO PIECES' }).click();
     // 24. the stage is drawn in normalised percentages (scales with the window)
     const w0 = (await frame(page, 'women').boundingBox())!.width;
     await dz(page).getByRole('button', { name: 'Maximize DRESSUP.EXE' }).click();
     await expect.poll(async () => (await frame(page, 'women').boundingBox())!.width).toBeGreaterThan(w0);
-    await expect(layer(page, 'women', womenTop.handle)).toBeVisible();
+    await expect(layer(page, 'women', womenPiece.handle)).toBeVisible();
     const style = await frame(page, 'women').locator('.dz-layer').first().getAttribute('style');
     expect(style).toMatch(/left: -?[\d.]+%; top: -?[\d.]+%; width: [\d.]+%/);
   });
@@ -233,6 +239,22 @@ test.describe('DRESSUP.EXE (desktop)', () => {
     await expect(page).toHaveURL(new RegExp(`/product/${regexEscape(piece.handle)}$`));
     await expect(page.locator('[data-window="internet"]').getByRole('heading', { name: piece.title, level: 1 })).toBeVisible();
     await expect(dz(page)).toBeVisible();
+  });
+
+  test('the piece worn at the shoot is the shoot photo itself: listed as worn, nothing drawn over it', async ({ page }) => {
+    const piece = shootPiece('men');
+    const [hoodie] = wearable('men', 'outer');
+    await desktop(page, '/');
+    await openFromStart(page);
+    await (await card(page, hoodie!)).click();
+    await expect(layer(page, 'men', hoodie!.handle)).toBeVisible();
+    const c = await card(page, piece);
+    await c.click();
+    await expect(c).toHaveAttribute('aria-pressed', 'true');
+    await expect(dz(page).getByRole('region', { name: 'Current look, MEN' })).toContainText(piece.title);
+    // the canonical photo already shows it: no body layer, no head layer
+    await expect(frame(page, 'men').locator('.dz-layer')).toHaveCount(0);
+    await expect(frame(page, 'men').locator('.dz-frame')).toHaveAttribute('aria-label', new RegExp(regexEscape(piece.title)));
   });
 
   test('looks live in memory only: kept while the page lives, gone after reload, never in storage', async ({ page }) => {

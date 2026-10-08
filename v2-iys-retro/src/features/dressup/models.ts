@@ -7,8 +7,9 @@ import type { ModelId } from './classify';
  *
  * All anchors are normalised to the model image (0…1 of its width / height),
  * measured once on the 600 × 900 crops with the dev alignment grid
- * (DRESSUP.EXE › View › Alignment grid, dev builds only). Garments are placed
- * from these numbers alone (see stage.ts), so a re-crop only needs new anchors.
+ * (DRESSUP.EXE › View › Alignment grid, dev builds only). The on-model
+ * compositor (scripts/lib/stylist-look.mjs) reads the body centre, hip width
+ * and leg corridor; a re-crop only needs new anchors.
  */
 export interface Anchors {
   /** Body centre line. */
@@ -19,14 +20,11 @@ export interface Anchors {
   shoulderW: number;
   /** Natural waist / top of the bottoms. */
   waistY: number;
-  /** Hip width (bottoms are sized from it). */
+  /** Hip width (the body corridor below the hands). */
   hipW: number;
-  /** Top of the hair / head width / brow line: headwear sits here. */
-  headTop: number;
-  headW: number;
-  browY: number;
-  /** Where a carried bag hangs (the model's left hand, viewer's right). */
-  hand: { x: number; y: number };
+  /** Below this line only the legs are body (half-width around cx, growing from [0] to [1] at the frame bottom). */
+  legsFrom: number;
+  legsHalf: [number, number];
 }
 
 export interface ModelDef {
@@ -34,12 +32,12 @@ export interface ModelDef {
   label: 'MEN' | 'WOMEN';
   /** Public URL of the 600 × 900 crop. */
   file: string;
-  /** The same photo's head + hair only (transparent), drawn above garments so hoods sit behind the head. */
+  /** The same photo's head + hair only (transparent), drawn above every piece so the face never changes and hoods sit behind the head. */
   headFile: string;
   width: number;
   height: number;
   alt: string;
-  /** What the model wore at the shoot (stays visible under / around the paper-doll pieces). */
+  /** What the model wore at the shoot (what the canonical photo shows when nothing else is on). */
   shootLook: string;
   /** Source + crop used by scripts/build-stylist.mjs (pixels of the original). */
   source: { file: string; crop: { left: number; top: number; width: number; height: number } };
@@ -47,7 +45,7 @@ export interface ModelDef {
   headOutline: [number, number][];
   /**
    * Below the chin only the neck column and dark hair are kept, so the shoot
-   * hoodie's hood (under the hair) never covers a garment.
+   * hoodie's hood (under the hair) never covers a piece.
    */
   headCut: { chinY: number; neck: [number, number]; hairLum: number };
   anchors: Anchors;
@@ -70,7 +68,7 @@ export const MODELS: Record<ModelId, ModelDef> = {
       [0.443, 0.176], [0.437, 0.152], [0.418, 0.135],
     ],
     headCut: { chinY: 0.19, neck: [0.458, 0.55], hairLum: 70 },
-    anchors: { cx: 0.512, shoulderY: 0.225, shoulderW: 0.36, waistY: 0.565, hipW: 0.3, headTop: 0.058, headW: 0.18, browY: 0.112, hand: { x: 0.675, y: 0.62 } },
+    anchors: { cx: 0.512, shoulderY: 0.225, shoulderW: 0.36, waistY: 0.565, hipW: 0.3, legsFrom: 0.64, legsHalf: [0.17, 0.185] },
   },
   women: {
     id: 'women',
@@ -88,7 +86,7 @@ export const MODELS: Record<ModelId, ModelDef> = {
       [0.455, 0.205], [0.43, 0.222], [0.385, 0.245], [0.355, 0.24], [0.37, 0.2],
     ],
     headCut: { chinY: 0.2, neck: [0.452, 0.54], hairLum: 62 },
-    anchors: { cx: 0.497, shoulderY: 0.25, shoulderW: 0.38, waistY: 0.575, hipW: 0.33, headTop: 0.06, headW: 0.2, browY: 0.112, hand: { x: 0.69, y: 0.6 } },
+    anchors: { cx: 0.497, shoulderY: 0.25, shoulderW: 0.38, waistY: 0.575, hipW: 0.33, legsFrom: 0.665, legsHalf: [0.17, 0.235] },
   },
 };
 

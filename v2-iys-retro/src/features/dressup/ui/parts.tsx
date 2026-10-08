@@ -10,10 +10,10 @@ import { paginate } from '../../../lib/catalogue/query';
 import { CATEGORIES, CATEGORY_LABEL, fitsModel, type Category, type ModelId, type Slot } from '../classify';
 import { missingOption, useStylistProduct } from '../commerce';
 import { MODELS, MODEL_IDS } from '../models';
-import { isCovered, LAYER_ORDER, paintOrder, SLOT_LABEL, type Outfit } from '../outfit';
+import { BODY, LAYER_ORDER, paintOrder, SLOT_LABEL, type Outfit } from '../outfit';
 import { VIEW_ONLY_COPY } from '../overrides';
-import type { StylistCatalogue, StylistEntry } from '../registry';
-import { place, placementStyle } from '../stage';
+import { layerFor, wearableOn, type StylistCatalogue, type StylistEntry } from '../registry';
+import { lookPlacement, placementStyle } from '../stage';
 import { useLooks } from '../store';
 import { REGISTRY } from '../useStylist';
 
@@ -28,29 +28,46 @@ export function lookSummary(s: StylistCatalogue, outfit: Outfit): string {
 
 // ── Stage ────────────────────────────────────────────────────────────────
 /**
- * One model: the official photo, then every worn piece as a paper-doll
- * cut-out at its placement, back to front in LAYER_ORDER, with the model's
- * own head layer between layers and headwear.
+ * One model: the canonical photo, then what they wear. A piece is the
+ * model's body from an official photo of them wearing it (aligned to this
+ * frame); the canonical head always goes back on top, so the face never changes.
  */
 export function ModelFrame({ s, model, active, onSelect, grid }: { s: StylistCatalogue; model: ModelId; active: boolean; onSelect?: () => void; grid?: boolean }) {
   const m = MODELS[model];
   const outfit = useLooks((st) => st.looks[model]);
   const head = REGISTRY.models?.[model]?.head;
-  const covered = Boolean(outfit.top || outfit.outer || outfit.onepiece);
   const drawn = new Set(paintOrder(outfit));
+  // the canonical head goes back on top of another photo's body (the shoot piece is the canonical photo itself)
+  const dressed = BODY.some((b) => {
+    const l = drawn.has(b) ? layerFor(s.byHandle.get(outfit[b]!), model) : null;
+    return l && !('shoot' in l);
+  });
   const layers = LAYER_ORDER.flatMap((l) => {
-    if (l === '@head') return head && covered ? [{ key: '@head', src: m.headFile, style: placementStyle({ left: head.x, top: head.y, width: head.w, height: head.h }), slot: '@head', handle: '' }] : [];
+    if (l === '@head') return head && dressed ? [{ key: '@head', src: m.headFile, style: placementStyle(lookPlacement(head)), slot: '@head', handle: '', kind: 'head' }] : [];
     if (!drawn.has(l)) return [];
-    const handle = outfit[l];
-    const e = handle ? s.byHandle.get(handle) : undefined;
-    if (!handle || !e || e.kind !== 'wearable') return [];
-    return [{ key: `${l}:${handle}`, src: e.item.file, style: placementStyle(place(m, e.item)), slot: l, handle }];
+    const handle = outfit[l]!;
+    const look = layerFor(s.byHandle.get(handle), model);
+    return look && !('shoot' in look) ? [{ key: `${l}:${handle}`, src: look.file, style: placementStyle(lookPlacement(look.box)), slot: l, handle, kind: 'look' }] : [];
   });
   const body = (
     <>
       <img className="dz-photo" src={m.file} width={m.width} height={m.height} alt="" draggable={false} decoding="async" />
       {layers.map((x) => (
-        <img key={x.key} className={`dz-layer dz-layer--${x.slot.replace('@', '')}`} src={x.src} alt="" draggable={false} decoding="async" style={x.style as CSSProperties} data-slot={x.slot} data-handle={x.handle || undefined} />
+        <img
+          key={x.key}
+          className={`dz-layer dz-layer--${x.kind}`}
+          src={x.src}
+          alt=""
+          draggable={false}
+          decoding="async"
+          style={x.style as CSSProperties}
+          data-slot={x.slot}
+          data-handle={x.handle || undefined}
+          // a fitting photo that fails to load is hidden, never a broken-image box on the model
+          onError={(ev) => {
+            ev.currentTarget.hidden = true;
+          }}
+        />
       ))}
       {grid && <AlignmentGrid model={model} />}
       <span className="dz-tag" aria-hidden="true">
@@ -84,7 +101,6 @@ function AlignmentGrid({ model }: { model: ModelId }) {
     <span className="dz-grid" aria-hidden="true">
       {line(a.shoulderY, '#ff00ff')}
       {line(a.waistY, '#00c8ff')}
-      {line(a.browY, '#ffc800')}
       <span className="dz-grid__v" style={{ left: `${a.cx * 100}%` }} />
       <span className="dz-grid__box" style={{ left: `${(a.cx - a.shoulderW / 2) * 100}%`, width: `${a.shoulderW * 100}%`, top: `${a.shoulderY * 100}%`, height: `${(a.waistY - a.shoulderY) * 100}%` }} />
     </span>
@@ -116,7 +132,6 @@ export function CurrentLook({ s, model, onOpen, compact }: { s: StylistCatalogue
               <li key={slot}>
                 <button type="button" className="dz-look__item" onClick={() => onOpen(e.product.handle)} title="Details, size + ADD TO BAG">
                   <small>{SLOT_LABEL[slot]}</small> {e.product.title}
-                  {isCovered(outfit, slot) && <small> (under the layer)</small>}
                 </button>
                 <button type="button" className="dz-look__x" aria-label={`Take off ${e.product.title}`} onClick={() => dispatch({ type: 'remove', model, slot })}>
                   ×
@@ -125,7 +140,9 @@ export function CurrentLook({ s, model, onOpen, compact }: { s: StylistCatalogue
             );
           })}
         </ul>
-      ) : (
+      ) : null}
+      {worn.some((sl) => BODY.includes(sl)) && <p className="dz-look__note">As in its official photo: the rest of that outfit comes with it.</p>}
+      {!worn.length && (
         <p className="dz-look__empty">{m.shootLook}. Pick a piece to dress {m.label === 'MEN' ? 'him' : 'her'} xo</p>
       )}
     </section>
@@ -146,7 +163,7 @@ export function useWear(s: StylistCatalogue) {
   const dispatch = useLooks((st) => st.dispatch);
   return (model: ModelId, handle: string) => {
     const e = s.byHandle.get(handle);
-    if (e?.kind === 'wearable' && fitsModel(e.audience, model)) dispatch({ type: 'wear', model, slot: e.slot, handle });
+    if (wearableOn(e, model)) dispatch({ type: 'wear', model, slot: e.slot, handle });
   };
 }
 
@@ -154,11 +171,13 @@ export function PieceBrowser({ s, state, setState, onOpen, perPage = 24, compact
   const active = useLooks((st) => st.active);
   const outfit = useLooks((st) => st.looks[active]);
   const wear = useWear(s);
+  // Wearable means wearable on THIS model (a piece photographed on the other model only is view-only here).
+  const kindOf = (e: Styled): Show => (wearableOn(e, active) ? 'wearable' : 'view-only');
   const forModel = useMemo(() => s.entries.filter(isStyled).filter((e) => fitsModel(e.audience, active)), [s, active]);
-  const counts = useMemo(() => ({ wearable: forModel.filter((e) => e.kind === 'wearable').length, 'view-only': forModel.filter((e) => e.kind === 'view-only').length, all: forModel.length }), [forModel]);
+  const counts = useMemo(() => ({ wearable: forModel.filter((e) => wearableOn(e, active)).length, 'view-only': forModel.filter((e) => !wearableOn(e, active)).length, all: forModel.length }), [forModel, active]);
   const q = state.q.trim().toLowerCase();
-  const shown = forModel.filter((e) => (state.show === 'all' || e.kind === state.show) && (state.category === 'all' || e.category === state.category) && (!q || e.product.title.toLowerCase().includes(q)));
-  const cats = CATEGORIES.filter((c) => forModel.some((e) => e.category === c && (state.show === 'all' || e.kind === state.show)));
+  const shown = forModel.filter((e) => (state.show === 'all' || kindOf(e) === state.show) && (state.category === 'all' || e.category === state.category) && (!q || e.product.title.toLowerCase().includes(q)));
+  const cats = CATEGORIES.filter((c) => forModel.some((e) => e.category === c && (state.show === 'all' || kindOf(e) === state.show)));
   const pg = paginate(shown, state.page, perPage);
   const set = (patch: Partial<BrowserState>) => setState((b) => ({ ...b, ...patch, page: patch.page ?? 1 }));
   const label = MODELS[active].label;
@@ -202,15 +221,16 @@ export function PieceBrowser({ s, state, setState, onOpen, perPage = 24, compact
         <ul className="dz-cards" ref={listRef} aria-label={`Pieces for ${label}`}>
           {pg.items.map((e) => {
             const p = e.product;
-            const worn = e.kind === 'wearable' && outfit[e.slot] === p.handle;
+            const can = wearableOn(e, active);
+            const worn = can && outfit[e.slot] === p.handle;
             return (
-              <li key={p.handle} className={`dz-card${worn ? ' is-worn' : ''}${e.kind === 'view-only' ? ' is-viewonly' : ''}`}>
+              <li key={p.handle} className={`dz-card${worn ? ' is-worn' : ''}${can ? '' : ' is-viewonly'}`}>
                 <button
                   type="button"
                   className="dz-card__main"
-                  aria-pressed={e.kind === 'wearable' ? worn : undefined}
-                  onClick={() => (e.kind === 'wearable' ? wear(active, p.handle) : onOpen(p.handle))}
-                  aria-label={e.kind === 'wearable' ? `${worn ? 'Take off' : `Wear on ${label}`}: ${p.title}` : `${p.title} (view-only): details`}
+                  aria-pressed={can ? worn : undefined}
+                  onClick={() => (can ? wear(active, p.handle) : onOpen(p.handle))}
+                  aria-label={can ? `${worn ? 'Take off' : `Wear on ${label}`}: ${p.title}` : `${p.title} (view-only): details`}
                   data-handle={p.handle}
                 >
                   <span className="dz-card__thumb">
@@ -221,7 +241,7 @@ export function PieceBrowser({ s, state, setState, onOpen, perPage = 24, compact
                   <Price price={p.price} compareAt={p.compareAtPrice} from={p.priceMax !== null && p.price !== null && p.priceMax > p.price} />
                   {p.available === false && <span className="stock stock--out">SOLD OUT</span>}
                   <span className="dz-card__cta" aria-hidden="true">
-                    {e.kind === 'wearable' ? (worn ? `ON ${label} ✓ · TAKE OFF` : `WEAR ON ${label}`) : 'VIEW-ONLY'}
+                    {can ? (worn ? `ON ${label} ✓ · TAKE OFF` : `WEAR ON ${label}`) : 'VIEW-ONLY'}
                   </span>
                 </button>
                 <button type="button" className="dz-card__info" aria-label={`Details for ${p.title}`} onClick={() => onOpen(p.handle)}>
@@ -282,7 +302,7 @@ export function PieceDetail({ s, handle, onBack, onView, autoFocus }: { s: Styli
       </div>
       {e.kind === 'wearable' ? (
         <div className="dz-detail__wear" role="group" aria-label="Try it on">
-          {MODEL_IDS.filter((m) => fitsModel(e.audience, m)).map((m) => {
+          {e.models.map((m) => {
             const on = looks[m][e.slot] === handle;
             return (
               <button key={m} type="button" className={`btn${on ? '' : ' btn--sky'}`} aria-pressed={on} onClick={() => wear(m, handle)}>
@@ -290,6 +310,9 @@ export function PieceDetail({ s, handle, onBack, onView, autoFocus }: { s: Styli
               </button>
             );
           })}
+          {e.models.length === 1 && fitsModel(e.audience, e.models[0] === 'men' ? 'women' : 'men') && (
+            <p className="dz-meta">Only the {MODELS[e.models[0]!].label} model can be shown wearing it.</p>
+          )}
         </div>
       ) : (
         <p className="dz-detail__note">

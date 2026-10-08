@@ -1,10 +1,13 @@
 import { describe, expect, it } from 'vitest';
+import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import index from '../data/catalogue-index.json';
 import registryJson from '../data/stylist.generated.json';
 import { hydrate } from '../lib/catalogue/hydrate';
 import type { IndexFile, Product } from '../lib/catalogue/types';
 import { audienceOf, CATEGORY_SLOT, classify, fitsModel, isKids, type ClassifyInput } from '../features/dressup/classify';
-import { buildStylist, resolveEntry, type Registry } from '../features/dressup/registry';
+import { buildStylist, layerFor, resolveEntry, type MappedItem, type Registry } from '../features/dressup/registry';
+import { LOOK_SOURCES, SHOOT_LOOKS } from '../features/dressup/looks';
+import { MODELS } from '../features/dressup/models';
 
 const cat = hydrate(index as unknown as IndexFile);
 const registry = registryJson as unknown as Registry;
@@ -67,14 +70,27 @@ describe('DRESSUP.EXE classification', () => {
   });
 
   it('a mapping is only used while it still matches the live catalogue (stale-safe)', () => {
-    const hoodie = cat.products.find((x) => classify(x).relevant && (classify(x) as { slot: string }).slot === 'outer')!;
-    const item = { slot: 'outer' as const, file: '/iys/stylist/g/x.webp', w: 300, h: 320, image: 0, src: 'x.jpg', packshots: [0], fit: { hemW: 0.6, cx: 0.5, shoulderY: 0.2, waistW: 0.5 } };
-    expect(resolveEntry(hoodie, { items: { [hoodie.handle]: item }, skip: {} }).kind).toBe('wearable');
+    const hoodie = cat.products.find((x) => {
+      const c = classify(x);
+      return c.relevant && c.slot === 'outer' && c.audience === 'shared';
+    })!;
+    const look = { file: '/iys/stylist/look/men/x.webp', box: { x: 0.1, y: 0.2, w: 0.8, h: 0.8 }, image: 0, src: 'x.jpg', score: 0.8 };
+    const item: MappedItem = { kind: 'on-model', slot: 'outer', looks: { men: look } };
+    const one = (it: unknown) => resolveEntry(hoodie, { items: { [hoodie.handle]: it as MappedItem }, skip: {} });
+    expect(one(item)).toMatchObject({ kind: 'wearable', models: ['men'] });
+    // photographed on him only: wearable on him, never drawn on her
+    expect(layerFor(one(item), 'men')).toEqual(look);
+    expect(layerFor(one(item), 'women')).toBeNull();
     // the catalogue now files it under another slot → view-only, not a broken stage
-    expect(resolveEntry(hoodie, { items: { [hoodie.handle]: { ...item, slot: 'bottom' } }, skip: {} })).toMatchObject({ kind: 'view-only', reason: 'not-mapped-yet' });
+    expect(one({ ...item, slot: 'bottom' })).toMatchObject({ kind: 'view-only', reason: 'not-mapped-yet' });
     // a malformed record is never drawn
-    expect(resolveEntry(hoodie, { items: { [hoodie.handle]: { ...item, file: 'https://evil.example/x.png' } }, skip: {} }).kind).toBe('view-only');
-    expect(resolveEntry(hoodie, { items: { [hoodie.handle]: { ...item, fit: { ...item.fit, hemW: Number.NaN } } }, skip: {} }).kind).toBe('view-only');
+    expect(one({ ...item, looks: { men: { ...look, file: 'https://evil.example/x.png' } } }).kind).toBe('view-only');
+    expect(one({ ...item, looks: { men: { ...look, box: { ...look.box, w: Number.NaN } } } }).kind).toBe('view-only');
+    expect(one({ ...item, looks: {} }).kind).toBe('view-only');
+    // the piece worn at the shoot: wearable, and nothing is drawn (the canonical photo already shows it)
+    expect(layerFor(one({ ...item, looks: { men: { shoot: true, src: 'reference-men.webp' } } }), 'men')).toEqual({ shoot: true, src: 'reference-men.webp' });
+    // a flat packshot (the retired kind of layer) never dresses a model: it would look pasted on
+    expect(one({ kind: 'packshot', slot: 'outer', file: '/iys/stylist/g/x.webp', w: 300, h: 320 }).kind).toBe('view-only');
     // a product newer than the stylist build
     expect(resolveEntry(hoodie, { items: {}, skip: {} })).toMatchObject({ kind: 'view-only', reason: 'not-mapped-yet' });
     // mappings for products that left the catalogue are simply never listed
@@ -90,8 +106,36 @@ describe('DRESSUP.EXE classification', () => {
       const c = classify(prod!);
       expect(c.relevant && c.slot, h).toBe(it.slot);
       for (const k of forbidden) expect(k in it, `${h}.${k}`).toBe(false);
-      expect(it.file).toMatch(/^\/iys\/stylist\/g\/[a-z0-9-]+\.webp$/);
+      // every layer is an official photo of the model wearing it, on a body slot
+      expect(it.kind, h).toBe('on-model');
+      expect(['top', 'outer', 'bottom', 'onepiece'], h).toContain(it.slot);
+      for (const [m, l] of Object.entries(it.looks)) {
+        // the piece worn at the shoot draws nothing: the canonical photo already shows it
+        if ('shoot' in l) expect(SHOOT_LOOKS[m as keyof typeof SHOOT_LOOKS], h).toBe(h);
+        else {
+          expect(l.file, h).toBe(`/iys/stylist/look/${m}/${h}.webp`);
+          expect(existsSync(`public${l.file}`), l.file).toBe(true);
+        }
+      }
     }
     for (const h of Object.keys(registry.skip)) expect(cat.byHandle.has(h), h).toBe(true);
+  });
+
+  it('every on-model layer comes from a reviewed official photo of that same product (or the shoot photo itself)', () => {
+    const details: Record<string, { images: { src: string }[] }> = Object.assign({}, ...readdirSync('public/catalogue').map((f) => JSON.parse(readFileSync(`public/catalogue/${f}`, 'utf8'))));
+    let n = 0;
+    for (const [h, it] of Object.entries(registry.items)) {
+      for (const [m, l] of Object.entries(it.looks) as [keyof typeof LOOK_SOURCES, NonNullable<(typeof it.looks)['men']>][]) {
+        n++;
+        if ('shoot' in l) {
+          expect(SHOOT_LOOKS[m], h).toBe(h);
+          expect(l.src, h).toBe(MODELS[m].source.file.split('/').pop());
+          continue;
+        }
+        expect(LOOK_SOURCES[m].some((x) => x.handle === h && x.image === l.image), `${m} ${h}#${l.image} reviewed`).toBe(true);
+        expect(details[h]!.images[l.image]!.src.split('?')[0]!.endsWith(`/${l.src}`), `${h} provenance`).toBe(true);
+      }
+    }
+    expect(n).toBeGreaterThan(0);
   });
 });

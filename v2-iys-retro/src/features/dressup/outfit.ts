@@ -13,8 +13,7 @@ export type Looks = Record<ModelId, Outfit>;
 
 /**
  * Paint order, back to front. '@head' is the model's own head + hair layer
- * (cut from the same photo): drawn above tops and layers so hoods sit behind
- * the head, below headwear.
+ * (the canonical photo): drawn above the body photo so the face never changes.
  */
 export const LAYER_ORDER = ['socks', 'feet', 'bottom', 'onepiece', 'top', 'outer', '@head', 'neck', 'head', 'bag'] as const;
 export type Layer = (typeof LAYER_ORDER)[number];
@@ -34,30 +33,25 @@ export const SLOT_LABEL: Record<Slot, string> = {
 };
 
 /**
- * Wearing a slot takes these slots off: a set / dress covers both top and
- * bottom, and a top or bottom replaces a set.
+ * The body pieces. Each is shown as the model actually wearing it, from an
+ * official photo of that model in that piece, so only one body photo can be on
+ * at a time: wearing a top, layer, bottom or set takes the other body piece
+ * off. (Mixing the bodies of two photos would mean inventing the join.)
  */
+export const BODY: Slot[] = ['top', 'outer', 'bottom', 'onepiece'];
+
+/** Wearing a slot takes these slots off. */
 export const CONFLICTS: Record<Slot, Slot[]> = {
-  top: ['onepiece'],
-  bottom: ['onepiece'],
-  onepiece: ['top', 'bottom'],
-  outer: [],
+  top: BODY.filter((s) => s !== 'top'),
+  outer: BODY.filter((s) => s !== 'outer'),
+  bottom: BODY.filter((s) => s !== 'bottom'),
+  onepiece: BODY.filter((s) => s !== 'onepiece'),
   head: [],
   neck: [],
   socks: [],
   feet: [],
   bag: [],
 };
-
-/**
- * A worn slot can hide another one: a top under a hoodie / jacket is still
- * part of the look (CURRENT LOOK lists it, it can go in the bag) but is not
- * drawn, since a flat tee's sleeves would poke out from under a layer.
- */
-export const COVERED_BY: Partial<Record<Slot, Slot[]>> = { top: ['outer'] };
-
-/** Is this worn slot hidden under another worn piece? */
-export const isCovered = (o: Outfit, slot: Slot) => (COVERED_BY[slot] ?? []).some((c) => c in o);
 
 export const emptyLooks = (): Looks => ({ men: {}, women: {} });
 
@@ -67,15 +61,11 @@ export type OutfitAction =
   | { type: 'clear'; model: ModelId }
   | { type: 'set'; model: ModelId; outfit: Outfit };
 
-/**
- * Put a piece on (same piece again = take it off, like a toggle). The piece
- * you pick is always the one you see: picking a top while a layer is worn
- * takes the layer off; picking a layer keeps the top on underneath.
- */
+/** Put a piece on (same piece again = take it off, like a toggle). */
 export function wear(o: Outfit, slot: Slot, handle: string): Outfit {
   if (o[slot] === handle) return remove(o, slot);
   const next: Outfit = { ...o };
-  for (const c of [...CONFLICTS[slot], ...(COVERED_BY[slot] ?? [])]) delete next[c];
+  for (const c of CONFLICTS[slot]) delete next[c];
   next[slot] = handle;
   return next;
 }
@@ -104,36 +94,21 @@ export function looksReducer(state: Looks, a: OutfitAction): Looks {
   }
 }
 
-/** The slots the stage draws, back to front (covered ones are skipped). */
+/** The slots the stage draws, back to front. */
 export function paintOrder(o: Outfit): Slot[] {
-  return LAYER_ORDER.filter((l): l is Slot => l !== '@head' && l in o && !isCovered(o, l));
+  return LAYER_ORDER.filter((l): l is Slot => l !== '@head' && l in o);
 }
 
 /**
- * RANDOM LOOK: one pick per slot from wearable pieces only. `rand` is
- * injected (Math.random in the app, a seeded PRNG in tests). A set is only
- * drawn when no top + bottom pair is drawn; bags are never drawn, and nothing
- * is ever added to MY BAG.
+ * RANDOM LOOK: one wearable body piece (each is a whole official photo).
+ * `rand` is injected (Math.random in the app, a seeded PRNG in tests).
+ * Nothing is ever added to MY BAG.
  */
 export function randomLook(pool: Partial<Record<Slot, string[]>>, rand: () => number): Outfit {
-  const pick = (s: Slot) => {
-    const list = pool[s] ?? [];
-    return list.length ? list[Math.floor(rand() * list.length) % list.length] : undefined;
-  };
-  const o: Outfit = {};
-  const top = pick('top');
-  const outer = pick('outer');
-  const bottom = pick('bottom');
-  if (top) o.top = top;
-  if (outer && (rand() < 0.6 || !top)) o.outer = outer;
-  if (bottom) o.bottom = bottom;
-  if (!top && !bottom) {
-    const set = pick('onepiece');
-    if (set) o.onepiece = set;
-  }
-  const head = pick('head');
-  if (head && rand() < 0.35) o.head = head;
-  return o;
+  const body = BODY.flatMap((s) => (pool[s] ?? []).map((h) => [s, h] as const));
+  if (!body.length) return {};
+  const [s, h] = body[Math.floor(rand() * body.length) % body.length]!;
+  return { [s]: h };
 }
 
 /** A tiny seeded PRNG (mulberry32) for reproducible tests and QA. */

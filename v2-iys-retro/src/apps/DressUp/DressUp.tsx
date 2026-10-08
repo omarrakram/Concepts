@@ -15,8 +15,8 @@ import '../../features/dressup/ui/dressup.css';
 
 /**
  * DRESSUP.EXE: its own app and window (separate from MY WARDROBE). The two
- * IYS models stand side by side; every wearable real IYS piece can be put
- * on either one as a paper-doll cut-out of its official product photo.
+ * IYS models stand side by side; a real IYS piece is shown on a model only
+ * from an official photo of that same model wearing it.
  */
 export default function DressUp({ win }: { win: Win }) {
   const s = useStylist();

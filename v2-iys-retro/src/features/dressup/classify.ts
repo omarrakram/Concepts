@@ -8,9 +8,10 @@ import type { Product } from '../../lib/catalogue/types';
  * title, tags and collections are read.
  *
  * Three outcomes, decided together with the mapping registry (registry.ts):
- *  - wearable:    stylist-relevant AND has a valid cut-out → shown on the model
- *  - view-only:   stylist-relevant, but no usable garment-only photo (or the
- *                 slot is not visible in the models' framing) → still listed
+ *  - wearable:    stylist-relevant AND an official photo of that model in it
+ *                 passed the fitting check → shown on the model
+ *  - view-only:   stylist-relevant, but no such photo (or the slot is not
+ *                 visible in the models' framing) → still listed, with why
  *  - non-stylist: not something the adult models can wear (kids sizing,
  *                 home goods, stationery…) → left to MY WARDROBE / the shop
  */
