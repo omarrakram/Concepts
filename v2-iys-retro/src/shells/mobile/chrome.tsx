@@ -42,6 +42,30 @@ export function useClaimCenter(action: SoftAction | null) {
 }
 
 /**
+ * A screen can claim ◀ BACK for an inner step (e.g. close a sheet before
+ * leaving the screen). Same most-recent-wins stack as the centre key.
+ */
+interface BackState {
+  stack: { id: string; run: () => void }[];
+  put: (id: string, run: (() => void) | null) => void;
+}
+export const useBackKey = create<BackState>()((set) => ({
+  stack: [],
+  put: (id, run) => set((st) => ({ stack: run ? [...st.stack.filter((x) => x.id !== id), { id, run }] : st.stack.filter((x) => x.id !== id) })),
+}));
+export function useClaimBack(run: (() => void) | null) {
+  const id = useId();
+  const put = useBackKey((s) => s.put);
+  const ref = useRef(run);
+  ref.current = run;
+  const has = Boolean(run);
+  useEffect(() => {
+    put(id, has ? () => ref.current?.() : null);
+    return () => put(id, null);
+  }, [id, has, put]);
+}
+
+/**
  * Network glyph, same 22×14 footprint in every mode. Cellular and the
  * unknown/unsupported fallback are the designed 5 bars (a mode icon, never a
  * measured signal strength); Wi-Fi is the fan; offline leaves the bars unlit.

@@ -16,7 +16,8 @@ export type AppId =
   | 'exchange'
   | 'essentials'
   | 'games'
-  | 'game';
+  | 'game'
+  | 'dressup';
 
 export interface Rect {
   x: number;
@@ -72,6 +73,7 @@ export function defaultRect(app: AppId, desk: { w: number; h: number }, stack: n
     essentials: [380, Math.min(470, desk.h * 0.8)],
     games: [Math.min(700, desk.w * 0.6), Math.min(520, desk.h * 0.8)],
     game: [Math.min(640, desk.w * 0.6), Math.min(700, desk.h * 0.94)],
+    dressup: [Math.min(1240, desk.w * 0.88), Math.min(820, desk.h * 0.94)],
   };
   const [w0, h0] = sizes[app];
   const w = Math.round(Math.min(w0, desk.w - 16));
@@ -141,6 +143,7 @@ export const TITLES: Record<AppId, string> = {
   essentials: 'IYS ESSENTIALS',
   games: 'IYS GAMES',
   game: 'IYS GAME',
+  dressup: 'DRESSUP.EXE',
 };
 
 const topActive = (windows: Win[]) =>
@@ -183,7 +186,7 @@ export const useOS = create<OSState>()((set, get) => ({
       title: opts.title ?? TITLES[app],
       props: opts.props ?? {},
       minimized: false,
-      maximized: opts.maximized ?? (narrow && (app === 'internet' || app === 'wardrobe' || app === 'camera')),
+      maximized: opts.maximized ?? (narrow && (app === 'internet' || app === 'wardrobe' || app === 'camera' || app === 'dressup')),
       z,
       rect: defaultRect(app, s.desk, s.windows.length),
       opened: Date.now(),

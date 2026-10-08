@@ -82,6 +82,28 @@ Panel wallpaper preset) is artwork supplied by the project owner for this
 concept and is committed byte-for-byte unchanged (no crop, recolour or
 re-encode).
 
+## DRESSUP.EXE stylist assets
+
+Built by `npm run build-stylist` (`scripts/build-stylist.mjs`). Deterministic,
+non-generative, rebuildable; no AI, no runtime image processing.
+
+- **Models**: the two IYS studio photos supplied by the project owner, kept
+  byte-for-byte in `scripts/stylist/reference-men.webp` and
+  `scripts/stylist/reference-women.webp`. Crop + resize only to
+  `public/iys/stylist/models/{men,women}.webp` (600 × 900), plus a head + hair
+  layer cut from the same photo (`*-head.webp`, studio wall removed inside a
+  hand-measured outline) so hoods can sit behind the head. No generated,
+  replaced or stock people.
+- **Garments**: `public/iys/stylist/g/<handle>.webp`, each cut from one
+  official product photo of that product in the public catalogue snapshot
+  (the white-backdrop garment-only packshot; front of the back/front pair):
+  flood-fill of the backdrop from the borders, specks dropped, 1 px edge
+  softening, trimmed, resized to at most 360 px. Colours, prints and logos are
+  untouched. Each record in `src/data/stylist.generated.json` names its source
+  image index and CDN filename.
+- Products with only on-model photos stay **view-only** (listed, never drawn
+  as worn). Source thumbnails are cached in `.cache/stylist/` (not committed).
+
 ## Local assets
 
 <!-- assets:start -->

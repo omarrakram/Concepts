@@ -131,6 +131,9 @@ export function react(b: Brain, e: CatchyEvent | { type: 'poke' } | { type: 'dra
     case 'wallpaper:change':
       setMood(b, 'curious', ctx.now);
       return apply(b, { state: 'look', holdMs: 2_400, say: ctx.rng() < 0.4 ? speak(b, ctx, 'wallpaper') : undefined });
+    case 'look:wear':
+      setMood(b, 'curious', ctx.now);
+      return apply(b, { state: 'happy', holdMs: 1_600, symbol: '<3', say: ctx.rng() < 0.5 ? speak(b, ctx, 'look') : undefined });
     case 'real-iys:leave':
       return apply(b, { state: 'wave', holdMs: 1_200, say: speak(b, ctx, 'leave', { force: true }) });
   }

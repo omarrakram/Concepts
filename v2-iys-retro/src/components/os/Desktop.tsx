@@ -93,6 +93,7 @@ export function DesktopIcons() {
   right.push(
     { id: 'newsletter', label: 'IYS NEWSLETTER', icon: 'newsletter', aria: 'Open IYS Newsletter', act: () => open('newsletter') },
     { id: 'exchange', label: concept.exchange.icon, icon: 'exchange', aria: 'Open XCHANGE.EXE, the exchanges and refunds form', act: () => open('exchange') },
+    { id: 'dressup', label: 'DRESSUP.EXE', icon: 'dressup', aria: 'Open DRESSUP.EXE, dress the IYS models in real pieces', act: () => open('dressup') },
   );
 
   // ── Movable icons: offsets from each icon's default grid slot. ──
