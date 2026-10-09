@@ -41,8 +41,6 @@ export type CatchyEvent =
   | { type: 'games:open' }
   | { type: 'game:start' }
   | { type: 'wallpaper:change' }
-  /** DRESSUP.EXE: a piece was put on one of the models. */
-  | { type: 'look:wear' }
   | { type: 'real-iys:leave' };
 
 /** What the behaviour layer asks the view to do next. */

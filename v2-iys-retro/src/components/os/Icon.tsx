@@ -370,19 +370,6 @@ const shapes: Record<string, JSX.Element> = {
       <path d="M11 6.5c.7 1.6 2.6 2.5 5 2.5s4.3-.9 5-2.5" fill="none" stroke={C} strokeWidth="1.4" />
     </g>
   ),
-  /** DRESSUP.EXE: a dress form on its stand, with a paper-doll tee (fold tabs, cut line) pinned on. */
-  dressup: (
-    <g>
-      <path d="M16 21.5v5" stroke={O} strokeWidth="1.8" />
-      <path d="M10 28.5h12" stroke={O} strokeWidth="2.2" strokeLinecap="round" />
-      <path d="M14.2 3.6h3.6v2.6h-3.6z" fill="#f1e2c6" stroke={O} strokeWidth=".9" />
-      <path d="M11.5 6.5h9l1.6 3-1.3 5 1.6 7h-12.8l1.6-7-1.3-5z" fill="#f1e2c6" stroke={O} strokeLinejoin="round" />
-      <path d="M12 19.5h8" stroke="#d5c19c" />
-      <path d="M11.2 7.2l-5 2.8 2 3.6 2.2-1v4.6h11.2v-4.6l2.2 1 2-3.6-5-2.8c-.6 1.4-2.2 2.2-4.8 2.2s-4.2-.8-4.8-2.2z" fill={C} stroke={O} strokeLinejoin="round" />
-      <path d="M13.4 12h5.2M13.4 14.2h3.4" stroke="#fff" strokeWidth="1.1" />
-      <path d="M7.4 9.2 6.6 5.8l2.6-.5.9 2.4zM24.6 9.2l.8-3.4-2.6-.5-.9 2.4z" fill="#fff" stroke={O} strokeWidth=".8" strokeLinejoin="round" />
-    </g>
-  ),
 };
 
 export type IconName = keyof typeof shapes;

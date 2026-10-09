@@ -13,7 +13,3 @@ blob-report/
 .qa-screens/
 dev-dist/
 .DS_Store
-
-# DRESSUP.EXE try-on inbox (returned candidates are reviewed, never committed)
-scripts/stylist/candidates/*
-!scripts/stylist/candidates/README.md

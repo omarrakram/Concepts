@@ -29,7 +29,7 @@ import { useCatchyEnabled } from '../../features/catchy/storage';
 
 const CatchyPet = lazy(() => import('../../features/catchy/CatchyPet'));
 
-export type Overlay = 'bag' | 'camera' | 'chat' | 'menu' | 'filters' | 'games' | 'dressup' | null;
+export type Overlay = 'bag' | 'camera' | 'chat' | 'menu' | 'filters' | 'games' | null;
 const PER = 24;
 
 function useTitle(t: string) {

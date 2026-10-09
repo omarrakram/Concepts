@@ -14,7 +14,6 @@ const MIN: Record<string, [number, number]> = {
   viewer: [320, 280],
   games: [360, 300],
   game: [340, 420],
-  dressup: [600, 440],
 };
 
 /** Remember what had focus when each window opened, to restore it on close. */

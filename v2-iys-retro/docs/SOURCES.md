@@ -82,50 +82,6 @@ Panel wallpaper preset) is artwork supplied by the project owner for this
 concept and is committed byte-for-byte unchanged (no crop, recolour or
 re-encode).
 
-## DRESSUP.EXE stylist assets
-
-Built by `npm run build-stylist` (`scripts/build-stylist.mjs`). Deterministic,
-non-generative, rebuildable; no AI, no runtime image processing.
-
-- **Models**: the two IYS studio photos supplied by the project owner, kept
-  byte-for-byte in `scripts/stylist/reference-men.webp` and
-  `scripts/stylist/reference-women.webp`. Crop + resize only to
-  `public/iys/stylist/models/{men,women}.webp` (600 × 900), plus a head + hair
-  layer cut from the same photo (`*-head.webp`, studio wall removed inside a
-  hand-measured outline), drawn over every piece. No generated,
-  replaced or stock people.
-- **Whole looks (on-model only)**: `public/iys/stylist/look/{men,women}/<handle>.webp`,
-  each made from one official product photo of that product in the public
-  catalogue snapshot in which the same canonical model wears it (reviewed list:
-  `src/features/dressup/looks.ts`). The canonical head is found in the photo by
-  masked normalised cross-correlation; the photo is scaled + translated (no
-  rotation, no warping) so the heads coincide; the plain studio backdrop is
-  flood-filled away and the model's body below the chin is kept, its edge
-  unmixed against the studio wall. Where the canonical outfit would show past
-  the new silhouette, the canonical room behind it is filled in along the row.
-  The canonical head layer is drawn back on top at runtime, so the face never
-  changes. Colours, prints and logos are untouched. Each record in
-  `src/data/stylist.generated.json` names its source image index, CDN filename
-  and head-match score. The piece each model wears in the supplied photo
-  itself is wearable too, and draws nothing (the photo already shows it).
-- **Refused, so view-only**: photos of other models, shots from the furnished
-  room set or a coloured studio, pair shots where the two models touch with
-  nothing to tell them apart, photos that don't cover the frame, and anything
-  that still looked pasted on full-size review. Flat packshots never dress a
-  model (headwear, bags and neckwear included): they can't look worn. Source
-  photos are cached in `.cache/stylist/` (not committed).
-- **Slot layers (approval-gated)**: `public/iys/stylist/slot/{men,women}/<handle>.webp`
-  (+ `.inner.webp`, an open layer's front), and the canonical photo split into
-  `models/{men,women}-{room,upper,lower,inner}.webp`, are written only for
-  candidates approved in `scripts/stylist/tryon/approvals.json` (none yet).
-  A candidate is either an official photo of the same canonical model aligned
-  as above and cut to one slot, or an offline image edit of the canonical
-  photo made outside this repo from the job's official product photos and
-  strict prompt (`scripts/stylist/tryon/jobs.json`). Each record names its
-  job and the reviewed candidate's sha256; `scripts/stylist/tryon/built.json`
-  pairs that hash with the layer file built from it. Candidates, packs and
-  review sheets stay in `.cache/stylist/tryon/` (not committed).
-
 ## Local assets
 
 <!-- assets:start -->

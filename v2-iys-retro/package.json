@@ -15,8 +15,6 @@
     "sync-stores": "node scripts/sync-stores.mjs",
     "audit-data": "node scripts/audit-data.mjs",
     "fetch-showcase-assets": "node scripts/fetch-showcase-assets.mjs",
-    "build-stylist": "node scripts/build-stylist.mjs",
-    "stylist-tryon": "node scripts/stylist-tryon.mjs",
     "record": "node scripts/record.mjs",
     "frames": "node scripts/frames.mjs",
     "qa:screens": "node scripts/qa-screens.mjs",

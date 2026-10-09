@@ -28,10 +28,9 @@ export default defineConfig({
       },
       workbox: {
         // App shell + critical local assets only. The 1,000+ remote CDN product
-        // photos and the catalogue detail shards are never precached, nor is
-        // DRESSUP.EXE (code, registry, models, cut-outs load only when opened).
+        // photos and the catalogue detail shards are never precached.
         globPatterns: ['**/*.{js,css,html}', 'favicon.svg', 'icons/*.png', 'iys/brand/*', 'iys/os/*', 'iys/campaign/fw27-2.webp', 'iys/campaign/fw27-m1.webp'],
-        globIgnores: ['**/catalogue/**', 'assets/Showcase-*', 'assets/DressUp-*', 'assets/MobileDressUp-*', 'assets/dressup-*'],
+        globIgnores: ['**/catalogue/**', 'assets/Showcase-*'],
         maximumFileSizeToCacheInBytes: 1_500_000,
         navigateFallback: '/index.html',
         navigateFallbackDenylist: [/^\/iys\//, /^\/catalogue\//, /^\/assets\//, /^\/_vercel\//, /^\/api\//],

@@ -13,7 +13,6 @@ export const LINES = {
   bagOpen: ['ooh whats in there', 'peek :P'],
   games: ['game time XD', 'lemme play', ':P'],
   wallpaper: ['ooh new view', 'pretty!!'],
-  look: ['cute!! <3', 'fit check :P', 'ok wait i like this', 'serving xd'],
   wake: ['...huh?', 'im up im up', 'yawn'],
   leave: ['bye xx', 'cya <3'],
 } as const;

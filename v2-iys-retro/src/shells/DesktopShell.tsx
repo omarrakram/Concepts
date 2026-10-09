@@ -40,19 +40,13 @@ const LOADERS: Record<AppId, () => Promise<{ default: ComponentType<AppProps> }>
   essentials: () => import('../apps/Small/Essentials'),
   games: () => import('../apps/Games/GamesFolder'),
   game: () => import('../apps/Games/GameWindow'),
-  dressup: () => import('../apps/DressUp/DressUp'),
 };
 const CatchyPet = lazy(() => import('../features/catchy/CatchyPet'));
 const APPS = Object.fromEntries(Object.entries(LOADERS).map(([k, load]) => [k, lazy(load)])) as unknown as Record<AppId, ComponentType<AppProps>>;
 
-/**
- * Warm every app chunk once the desktop is idle, so windows open without a
- * loading frame. DRESSUP.EXE stays fully on demand: it carries the stylist
- * registry, and its photos only load once it is opened.
- */
-const ON_DEMAND: AppId[] = ['dressup'];
+/** Warm every app chunk once the desktop is idle, so windows open without a loading frame. */
 function preloadApps() {
-  const run = () => (Object.keys(LOADERS) as AppId[]).filter((id) => !ON_DEMAND.includes(id)).forEach((id) => void LOADERS[id]());
+  const run = () => Object.values(LOADERS).forEach((load) => void load());
   if ('requestIdleCallback' in window) window.requestIdleCallback(run, { timeout: 3000 });
   else setTimeout(run, 1500);
 }

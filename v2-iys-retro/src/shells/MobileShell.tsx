@@ -12,8 +12,7 @@ import { itemCount, useCart } from '../state/cart';
 import { useOS } from '../state/os';
 import { useSession } from '../state/preferences';
 import { gameMeta, type GameId } from '../games/registry';
-import { StatusBar, useBackKey, useCenterKey } from './mobile/chrome';
-import { MDressUp } from './mobile/dressup';
+import { StatusBar, useCenterKey } from './mobile/chrome';
 import { MGames } from './mobile/games';
 import { MBag, MCamera, MChat, MFilters, MMenu } from './mobile/overlays';
 import { MFavorites, MHome, MList, MNotFound, MProduct, MSearch, MStores, type Overlay } from './mobile/screens';
@@ -21,7 +20,7 @@ import '../styles/os.css';
 import '../styles/apps.css';
 import '../styles/mobile.css';
 
-const OVERLAY_TITLES: Record<Exclude<Overlay, null>, string> = { bag: 'MY BAG', camera: 'CAMERA', chat: 'MESSAGES', menu: 'MENU', filters: 'OPTIONS', games: 'GAMES', dressup: 'DRESSUP.EXE' };
+const OVERLAY_TITLES: Record<Exclude<Overlay, null>, string> = { bag: 'MY BAG', camera: 'CAMERA', chat: 'MESSAGES', menu: 'MENU', filters: 'OPTIONS', games: 'GAMES' };
 
 /**
  * IYS MOBILE — an original 2005–07 mobile-internet shell (status bar, path
@@ -99,8 +98,6 @@ export default function MobileShell() {
 
   const back = () => {
     play('click');
-    const inner = useBackKey.getState().stack.at(-1);
-    if (inner) return inner.run();
     if (overlay === 'games' && game) return setGame(null);
     if (overlay) return setOverlay(null);
     if ((window.history.state?.idx ?? 0) > 0) navigate(-1);
@@ -155,7 +152,6 @@ export default function MobileShell() {
         {overlay === 'menu' && <MMenu close={() => setOverlay(null)} openOverlay={open} />}
         {overlay === 'filters' && <MFilters close={() => setOverlay(null)} />}
         {overlay === 'games' && <MGames game={game} setGame={setGame} close={() => setOverlay(null)} />}
-        {overlay === 'dressup' && <MDressUp close={() => setOverlay(null)} />}
         <div className="m-routes" hidden={Boolean(overlay)}>
           <Routes>
             <Route path="/" element={<MHome open={open} pjoysPing={ping} active={!overlay} />} />
