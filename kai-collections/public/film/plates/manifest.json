@@ -1,0 +1,65 @@
+{
+  "w": 432,
+  "h": 768,
+  "dpr": 2.5,
+  "capturedAt": "2026-10-15T01:25:32.743Z",
+  "plates": {
+    "home": [
+      "/film/plates/home-0.jpg",
+      "/film/plates/home-1.jpg",
+      "/film/plates/home-2.jpg"
+    ],
+    "homeHeight": 1878,
+    "deptsWomen": 607,
+    "depts": [
+      "/film/plates/depts-0.jpg",
+      "/film/plates/depts-1.jpg",
+      "/film/plates/depts-2.jpg"
+    ],
+    "deptsHeight": 1820,
+    "atlas": "/film/plates/atlas.jpg",
+    "build": "/film/plates/build.jpg",
+    "journal": "/film/plates/journal.jpg",
+    "shop": [
+      "/film/plates/shop-0.jpg",
+      "/film/plates/shop-1.jpg",
+      "/film/plates/shop-2.jpg"
+    ],
+    "pdp": "/film/plates/pdp-0.jpg",
+    "pdpDetail": "/film/plates/pdp-1.jpg",
+    "pdpMaterial": "/film/plates/pdp-2.jpg",
+    "pdpStrip": [
+      "/film/plates/pdp-2.jpg",
+      "/film/plates/pdp-strip-1.jpg"
+    ],
+    "pdpInfoScroll": 670,
+    "pdpSize": "/film/plates/pdp-size.jpg",
+    "pdpBag": "/film/plates/pdp-bag.jpg"
+  },
+  "taps": {
+    "card": {
+      "x": 17.265625,
+      "y": 614.421875,
+      "w": 193.734375,
+      "h": 242.15625
+    },
+    "next": {
+      "x": 370.734375,
+      "y": 638.328125,
+      "w": 44,
+      "h": 44
+    },
+    "size": {
+      "x": 84.9375,
+      "y": 974.765625,
+      "w": 62.6875,
+      "h": 44
+    },
+    "add": {
+      "x": 17.265625,
+      "y": 1064.90625,
+      "w": 335.46875,
+      "h": 52
+    }
+  }
+}

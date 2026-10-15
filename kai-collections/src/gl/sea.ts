@@ -128,6 +128,8 @@ export interface SeaParams {
   grain?: number;
   /** extra sun offset (e.g. pointer-driven glint) */
   sunShift?: number;
+  /** strength of the sun's halo (1 = default) */
+  glow?: number;
   /** letters reflected in the water */
   textOn?: number;
   /** how far the letters sit below their final baseline (frame heights): 0 = standing on the horizon */
@@ -139,7 +141,7 @@ const VERT = `attribute vec2 p;varying vec2 vUv;void main(){vUv=p*.5+.5;gl_Posit
 const FRAG = `precision highp float;
 varying vec2 vUv;
 uniform vec2 uRes;
-uniform float uTime,uHorizon,uSand,uCalm,uGrain,uTextOn,uSunShift,uLift;
+uniform float uTime,uHorizon,uSand,uCalm,uGrain,uTextOn,uSunShift,uLift,uGlow;
 uniform vec2 uSun,uPointer;
 uniform vec3 uSkyTop,uSkyHz,uSeaDeep,uSeaFar,uSunCol,uHaze,uSandA,uSandB,uLetter;
 uniform sampler2D uText;
@@ -164,7 +166,7 @@ vec3 sky(float e,float x,vec2 sunP,float aspect){
   vec3 c=mix(uSkyHz,uSkyTop,pow(smoothstep(0.,.75,e),.75));
   vec2 d=vec2((x-sunP.x)*aspect,e-sunP.y);
   float r=length(d);
-  c+=uSunCol*(exp(-r*5.5)*.32+exp(-r*22.)*.35);
+  c+=uSunCol*(exp(-r*5.5)*.32+exp(-r*22.)*.35)*uGlow;
   c=mix(c,uSunCol,smoothstep(.034,.027,r));
   c=mix(c,uHaze,exp(-e*24.)*.55);
   return c;
@@ -190,13 +192,23 @@ void main(){
     vec2 grad=vec2(aR-aL,aD-aU);
     vec2 toSun=normalize(vec2((sunP.x-uv.x)*aspect,(hz+sunP.y)-uv.y)+1e-4);
     float relief=dot(grad,-toSun);
-    float ao=mix(.8,1.,smoothstep(0.,.42,e));
+    float ao=mix(.72,1.,smoothstep(0.,.42,e));
     float side=.92+.08*clamp(toSun.x*(uv.x-sunP.x)*-4.,-1.,1.);
     vec3 warm=uLetter*vec3(.9,.85,.77);
     vec3 lc=mix(warm,uLetter,ao*side*1.08-.08);
     lc=mix(lc,uSkyHz*.78,.12*(1.-smoothstep(0.,.3,e)));
     lc+=uSunCol*clamp(relief,0.,1.)*.35;
     lc-=vec3(.16,.14,.12)*clamp(-relief,0.,1.);
+    /* a soft, even halo of shade around the letters lifts them off bright haze */
+    if(uTextOn>0.&&letterA<1.){
+      float halo=0.;
+      for(int i=0;i<8;i++){
+        float a=float(i)*.7854+.39;
+        vec2 o=vec2(cos(a),sin(a))/uRes;
+        halo+=texture2D(uText,tuv+o*7.).a+texture2D(uText,tuv+o*16.).a*.7+texture2D(uText,tuv+o*28.).a*.4;
+      }
+      col*=1.-(halo/16.8)*uTextOn*.14*(1.-letterA);
+    }
     col=mix(col,lc,letterA);
   }else{
     float d=-e;
@@ -287,6 +299,7 @@ export function createSea(canvas: HTMLCanvasElement): SeaRenderer | null {
     textOn: U('uTextOn'),
     sunShift: U('uSunShift'),
     lift: U('uLift'),
+    glow: U('uGlow'),
     sun: U('uSun'),
     pointer: U('uPointer'),
     skyTop: U('uSkyTop'),
@@ -334,6 +347,7 @@ export function createSea(canvas: HTMLCanvasElement): SeaRenderer | null {
       gl.uniform1f(u.textOn, p.textOn ?? 0);
       gl.uniform1f(u.sunShift, p.sunShift ?? 0);
       gl.uniform1f(u.lift, p.textLift ?? 0);
+      gl.uniform1f(u.glow, p.glow ?? 1);
       gl.uniform2f(u.sun, L.sunX, L.sunY);
       gl.uniform2f(u.pointer, p.pointer?.[0] ?? 0, p.pointer?.[1] ?? 0);
       gl.uniform3fv(u.skyTop, L.skyTop);

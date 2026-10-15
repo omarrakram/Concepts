@@ -2,7 +2,7 @@
   "name": "kai-collections-concept",
   "version": "1.0.0",
   "private": true,
-  "description": "KAI COLLECTIONS — The Art of Escape. Unofficial speculative digital concept by Omar Akram. Not affiliated with KAI Collections.",
+  "description": "KAI COLLECTIONS \u2014 The Art of Escape. Unofficial speculative digital concept by Omar Akram. Not affiliated with KAI Collections.",
   "type": "module",
   "scripts": {
     "dev": "vite --host 127.0.0.1 --port 5173",
@@ -17,7 +17,9 @@
     "audio": "node scripts/make-audio.mjs",
     "render": "node scripts/render.mjs",
     "verify:video": "node scripts/verify-video.mjs",
-    "shots": "node scripts/site-shots.mjs"
+    "shots": "node scripts/site-shots.mjs",
+    "frames": "node scripts/frames.mjs",
+    "manifests": "node scripts/export-manifests.mjs"
   },
   "dependencies": {
     "@fontsource-variable/fraunces": "^5.3.0",
@@ -27,6 +29,7 @@
     "react-router": "^7.18.4"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
     "@playwright/test": "1.56.1",
     "@types/node": "^26.6.5",
     "@types/react": "^19.3.0",

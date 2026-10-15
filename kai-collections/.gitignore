@@ -13,3 +13,6 @@ public/film/before/*
 
 # The root .gitignore ignores *.mp4; the finished film is a deliverable of this project.
 !output/kai-before-after-16s.mp4
+
+# Direct storefront snapshot from `npm run sync` (KAI's data + hotlinked photo URLs): local unless KAI permits publishing
+src/data/live/

@@ -8,6 +8,8 @@
   --deep: #173843;
   --gold: #e7ba78;
   --coral: #d98770;
+  /* coral deep enough for ivory text (AA) — badges and sale chips */
+  --coral-ink: #b0503a;
   --ink: #202827;
   --muted: #5c6866;
   --line: rgba(32, 40, 39, 0.14);
@@ -240,7 +242,7 @@ select {
   height: 17px;
   padding: 0 4px;
   border-radius: 99px;
-  background: var(--coral);
+  background: var(--coral-ink);
   color: var(--ivory);
   font-size: 10px;
   font-weight: 600;

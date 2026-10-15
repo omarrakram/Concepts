@@ -1,0 +1,2445 @@
+{
+  "brand": "KAI COLLECTIONS",
+  "storefront": "https://kaicollections.com",
+  "snapshot": {
+    "checkedAt": "2026-10-14",
+    "method": "search-index",
+    "note": "kaicollections.com could not be reached from the build environment (egress policy). Every field below was read from search-engine snapshots of KAI's own pages (kaicollections.com product, collection and home pages). Prices are dated snapshots in EGP, not live prices. Stock reflects the snapshot, not live inventory. Run `npm run sync` with network access to replace this with a direct storefront snapshot."
+  },
+  "totals": {
+    "products": 56,
+    "byDepartment": {
+      "men": 26,
+      "women": 24,
+      "kids": 5,
+      "unisex": 1
+    },
+    "withVerifiedUrl": 43,
+    "withPrice": 52,
+    "withSizes": 19,
+    "withMaterial": 22,
+    "withPhotography": 0
+  },
+  "products": [
+    {
+      "slug": "festival-del-mare-swim-shorts",
+      "name": "Festival del Mare Swim Shorts",
+      "department": "men",
+      "garment": "swim-short",
+      "categories": [
+        "swimwear"
+      ],
+      "collections": [
+        "ss26"
+      ],
+      "officialUrl": "https://kaicollections.com/products/festival-del-mare-swim-shorts",
+      "outboundLink": "https://kaicollections.com/products/festival-del-mare-swim-shorts",
+      "currency": "EGP",
+      "price": 1699,
+      "compareAtPrice": null,
+      "sizes": [
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "XXL",
+        "3XL"
+      ],
+      "material": "100% polyester",
+      "details": [
+        "Fine mesh underwear lining",
+        "Elastic drawstring waistband with nickel-free engraved drawcord",
+        "Mid-length, slim fit",
+        "Fabric treated against chlorine, salt water and UV",
+        "Made in Egypt"
+      ],
+      "fit": null,
+      "care": null,
+      "stockAsIndexed": "sold-out",
+      "colourFromName": null,
+      "print": "Festival del Mare",
+      "verification": {
+        "method": "search-index snapshot of KAI’s own pages",
+        "checkedAt": "2026-10-14",
+        "name": "verified (indexed product/collection/home page)",
+        "url": "verified (product URL indexed)",
+        "price": "verified (dated snapshot, not live)",
+        "sizes": "range endpoints verified; intermediate labels follow KAI’s order",
+        "material": "verified (indexed product copy)",
+        "stock": "as indexed — not live inventory",
+        "photography": "none — kaicollections.com unreachable; illustrative flat shown and labelled"
+      },
+      "sources": [
+        "https://kaicollections.com/products/festival-del-mare-swim-shorts",
+        "https://jay-stores.com/products/ss26swm-213"
+      ],
+      "notes": "Also sold by JAY stores as 'JAY X KAI - Men's Festival del Mare Swim Shorts' (S-XL). Snapshot marked all sizes unavailable.",
+      "usageRestrictions": "Factual product data cited for an unofficial concept. Product photography is not included; when synced it is hotlinked from KAI’s CDN and not committed."
+    },
+    {
+      "slug": "yellow-zebra-swim-shorts",
+      "name": "Yellow Zebra Swim Shorts",
+      "department": "men",
+      "garment": "swim-short",
+      "categories": [
+        "swimwear"
+      ],
+      "collections": [
+        "ss26"
+      ],
+      "officialUrl": null,
+      "outboundLink": "https://kaicollections.com/search?q=Yellow%20Zebra%20Swim%20Shorts&type=product",
+      "currency": "EGP",
+      "price": 999,
+      "compareAtPrice": 1699,
+      "sizes": [],
+      "material": null,
+      "details": [],
+      "fit": null,
+      "care": null,
+      "stockAsIndexed": "unknown",
+      "colourFromName": "yellow",
+      "print": "Yellow Zebra",
+      "verification": {
+        "method": "search-index snapshot of KAI’s own pages",
+        "checkedAt": "2026-10-14",
+        "name": "verified (indexed product/collection/home page)",
+        "url": "not indexed — outbound link uses KAI’s own search",
+        "price": "verified (dated snapshot, not live)",
+        "sizes": "not captured",
+        "material": "not captured",
+        "stock": "not captured",
+        "photography": "none — kaicollections.com unreachable; illustrative flat shown and labelled"
+      },
+      "sources": [
+        "https://kaicollections.com/",
+        "https://kaicollections.com/collections/ss26-mens-swimwear"
+      ],
+      "notes": "Homepage snapshot: EGP 1,699.00 → EGP 999.00. SS26 Men's Swimwear listing showed EGP 1,699. Product URL not indexed; outbound link uses KAI's own search.",
+      "usageRestrictions": "Factual product data cited for an unofficial concept. Product photography is not included; when synced it is hotlinked from KAI’s CDN and not committed."
+    },
+    {
+      "slug": "blue-maze-swim-shorts",
+      "name": "Blue Maze Swim Shorts",
+      "department": "men",
+      "garment": "swim-short",
+      "categories": [
+        "swimwear"
+      ],
+      "collections": [
+        "ss26"
+      ],
+      "officialUrl": null,
+      "outboundLink": "https://kaicollections.com/search?q=Blue%20Maze%20Swim%20Shorts&type=product",
+      "currency": "EGP",
+      "price": 1699,
+      "compareAtPrice": null,
+      "sizes": [],
+      "material": null,
+      "details": [],
+      "fit": null,
+      "care": null,
+      "stockAsIndexed": "unknown",
+      "colourFromName": "blue",
+      "print": "Blue Maze",
+      "verification": {
+        "method": "search-index snapshot of KAI’s own pages",
+        "checkedAt": "2026-10-14",
+        "name": "verified (indexed product/collection/home page)",
+        "url": "not indexed — outbound link uses KAI’s own search",
+        "price": "verified (dated snapshot, not live)",
+        "sizes": "not captured",
+        "material": "not captured",
+        "stock": "not captured",
+        "photography": "none — kaicollections.com unreachable; illustrative flat shown and labelled"
+      },
+      "sources": [
+        "https://kaicollections.com/collections/ss26-mens-swimwear"
+      ],
+      "notes": "Listed on SS26 Men's Swimwear at EGP 1,699. Product URL not indexed.",
+      "usageRestrictions": "Factual product data cited for an unofficial concept. Product photography is not included; when synced it is hotlinked from KAI’s CDN and not committed."
+    },
+    {
+      "slug": "pink-starfish-swim-shorts",
+      "name": "Pink Starfish Swim Shorts",
+      "department": "men",
+      "garment": "swim-short",
+      "categories": [
+        "swimwear"
+      ],
+      "collections": [
+        "ss26"
+      ],
+      "officialUrl": null,
+      "outboundLink": "https://kaicollections.com/search?q=Pink%20Starfish%20Swim%20Shorts&type=product",
+      "currency": "EGP",
+      "price": 1699,
+      "compareAtPrice": null,
+      "sizes": [],
+      "material": null,
+      "details": [],
+      "fit": null,
+      "care": null,
+      "stockAsIndexed": "unknown",
+      "colourFromName": "pink",
+      "print": "Pink Starfish",
+      "verification": {
+        "method": "search-index snapshot of KAI’s own pages",
+        "checkedAt": "2026-10-14",
+        "name": "verified (indexed product/collection/home page)",
+        "url": "not indexed — outbound link uses KAI’s own search",
+        "price": "verified (dated snapshot, not live)",
+        "sizes": "not captured",
+        "material": "not captured",
+        "stock": "not captured",
+        "photography": "none — kaicollections.com unreachable; illustrative flat shown and labelled"
+      },
+      "sources": [
+        "https://kaicollections.com/collections/ss26-mens-swimwear"
+      ],
+      "notes": "Listed on SS26 Men's Swimwear at EGP 1,699. Product URL not indexed.",
+      "usageRestrictions": "Factual product data cited for an unofficial concept. Product photography is not included; when synced it is hotlinked from KAI’s CDN and not committed."
+    },
+    {
+      "slug": "tropic-noir-swim-shorts",
+      "name": "Tropic Noir Swim Shorts",
+      "department": "men",
+      "garment": "swim-short",
+      "categories": [
+        "swimwear"
+      ],
+      "collections": [
+        "ss26"
+      ],
+      "officialUrl": null,
+      "outboundLink": "https://kaicollections.com/search?q=Tropic%20Noir%20Swim%20Shorts&type=product",
+      "currency": "EGP",
+      "price": 1699,
+      "compareAtPrice": null,
+      "sizes": [],
+      "material": null,
+      "details": [],
+      "fit": null,
+      "care": null,
+      "stockAsIndexed": "unknown",
+      "colourFromName": "noir",
+      "print": "Tropic Noir",
+      "verification": {
+        "method": "search-index snapshot of KAI’s own pages",
+        "checkedAt": "2026-10-14",
+        "name": "verified (indexed product/collection/home page)",
+        "url": "not indexed — outbound link uses KAI’s own search",
+        "price": "verified (dated snapshot, not live)",
+        "sizes": "not captured",
+        "material": "not captured",
+        "stock": "not captured",
+        "photography": "none — kaicollections.com unreachable; illustrative flat shown and labelled"
+      },
+      "sources": [
+        "https://kaicollections.com/collections/ss26-mens-swimwear"
+      ],
+      "notes": "Listed on SS26 Men's Swimwear; the listing text placed it beside EGP 1,699 (price-to-item mapping in the snippet was not certain).",
+      "usageRestrictions": "Factual product data cited for an unofficial concept. Product photography is not included; when synced it is hotlinked from KAI’s CDN and not committed."
+    },
+    {
+      "slug": "blue-bandana-swim-shorts",
+      "name": "Blue Bandana Swim Shorts",
+      "department": "men",
+      "garment": "swim-short",
+      "categories": [
+        "swimwear"
+      ],
+      "collections": [
+        "ss26"
+      ],
+      "officialUrl": "https://kaicollections.com/products/blue-bandana-swim-shorts",
+      "outboundLink": "https://kaicollections.com/products/blue-bandana-swim-shorts",
+      "currency": "EGP",
+      "price": 999,
+      "compareAtPrice": 1499,
+      "sizes": [
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "XXL",
+        "3XL"
+      ],
+      "material": null,
+      "details": [
+        "Product page carries KAI's SS26 collection banner"
+      ],
+      "fit": null,
+      "care": null,
+      "stockAsIndexed": "unknown",
+      "colourFromName": "blue",
+      "print": "Blue Bandana",
+      "verification": {
+        "method": "search-index snapshot of KAI’s own pages",
+        "checkedAt": "2026-10-14",
+        "name": "verified (indexed product/collection/home page)",
+        "url": "verified (product URL indexed)",
+        "price": "verified (dated snapshot, not live)",
+        "sizes": "range endpoints verified; intermediate labels follow KAI’s order",
+        "material": "not captured",
+        "stock": "not captured",
+        "photography": "none — kaicollections.com unreachable; illustrative flat shown and labelled"
+      },
+      "sources": [
+        "https://kaicollections.com/products/blue-bandana-swim-shorts"
+      ],
+      "notes": null,
+      "usageRestrictions": "Factual product data cited for an unofficial concept. Product photography is not included; when synced it is hotlinked from KAI’s CDN and not committed."
+    },
+    {
+      "slug": "purple-octopus-swim-shorts",
+      "name": "Purple Octopus Swim Shorts",
+      "department": "men",
+      "garment": "swim-short",
+      "categories": [
+        "swimwear"
+      ],
+      "collections": [],
+      "officialUrl": "https://kaicollections.com/products/purple-octopus-swim-shorts",
+      "outboundLink": "https://kaicollections.com/products/purple-octopus-swim-shorts",
+      "currency": "EGP",
+      "price": 1499,
+      "compareAtPrice": 1699,
+      "sizes": [],
+      "material": null,
+      "details": [],
+      "fit": null,
+      "care": null,
+      "stockAsIndexed": "unknown",
+      "colourFromName": "purple",
+      "print": "Purple Octopus",
+      "verification": {
+        "method": "search-index snapshot of KAI’s own pages",
+        "checkedAt": "2026-10-14",
+        "name": "verified (indexed product/collection/home page)",
+        "url": "verified (product URL indexed)",
+        "price": "verified (dated snapshot, not live)",
+        "sizes": "not captured",
+        "material": "not captured",
+        "stock": "not captured",
+        "photography": "none — kaicollections.com unreachable; illustrative flat shown and labelled"
+      },
+      "sources": [
+        "https://kaicollections.com/products/purple-octopus-swim-shorts"
+      ],
+      "notes": "A 'Mini Purple Octopus' appears in KAI's Like Father, Like Son (SS25) kids listing.",
+      "usageRestrictions": "Factual product data cited for an unofficial concept. Product photography is not included; when synced it is hotlinked from KAI’s CDN and not committed."
+    },
+    {
+      "slug": "orange-tangle-swim-shorts",
+      "name": "Orange Tangle Swim Shorts",
+      "department": "men",
+      "garment": "swim-short",
+      "categories": [
+        "swimwear"
+      ],
+      "collections": [],
+      "officialUrl": "https://kaicollections.com/products/orange-tangle-swim-shorts",
+      "outboundLink": "https://kaicollections.com/products/orange-tangle-swim-shorts",
+      "currency": "EGP",
+      "price": 999,
+      "compareAtPrice": 1499,
+      "sizes": [],
+      "material": null,
+      "details": [],
+      "fit": null,
+      "care": null,
+      "stockAsIndexed": "in-stock",
+      "colourFromName": "orange",
+      "print": "Orange Tangle",
+      "verification": {
+        "method": "search-index snapshot of KAI’s own pages",
+        "checkedAt": "2026-10-14",
+        "name": "verified (indexed product/collection/home page)",
+        "url": "verified (product URL indexed)",
+        "price": "verified (dated snapshot, not live)",
+        "sizes": "not captured",
+        "material": "not captured",
+        "stock": "as indexed — not live inventory",
+        "photography": "none — kaicollections.com unreachable; illustrative flat shown and labelled"
+      },
+      "sources": [
+        "https://kaicollections.com/products/orange-tangle-swim-shorts"
+      ],
+      "notes": "Snapshot showed an active add-to-cart.",
+      "usageRestrictions": "Factual product data cited for an unofficial concept. Product photography is not included; when synced it is hotlinked from KAI’s CDN and not committed."
+    },
+    {
+      "slug": "green-labyrinth-swim-shorts",
+      "name": "Green Labyrinth Swim Shorts",
+      "department": "men",
+      "garment": "swim-short",
+      "categories": [
+        "swimwear"
+      ],
+      "collections": [],
+      "officialUrl": "https://kaicollections.com/products/green-labyrinth-swim-shorts",
+      "outboundLink": "https://kaicollections.com/products/green-labyrinth-swim-shorts",
+      "currency": "EGP",
+      "price": 1499,
+      "compareAtPrice": null,
+      "sizes": [],
+      "material": null,
+      "details": [],
+      "fit": null,
+      "care": null,
+      "stockAsIndexed": "unknown",
+      "colourFromName": "green",
+      "print": "Green Labyrinth",
+      "verification": {
+        "method": "search-index snapshot of KAI’s own pages",
+        "checkedAt": "2026-10-14",
+        "name": "verified (indexed product/collection/home page)",
+        "url": "verified (product URL indexed)",
+        "price": "verified (dated snapshot, not live)",
+        "sizes": "not captured",
+        "material": "not captured",
+        "stock": "not captured",
+        "photography": "none — kaicollections.com unreachable; illustrative flat shown and labelled"
+      },
+      "sources": [
+        "https://kaicollections.com/products/green-labyrinth-swim-shorts"
+      ],
+      "notes": "Snapshot marked it on sale at EGP 1,499; the original price was not captured.",
+      "usageRestrictions": "Factual product data cited for an unofficial concept. Product photography is not included; when synced it is hotlinked from KAI’s CDN and not committed."
+    },
+    {
+      "slug": "sky-penguins-swim-shorts",
+      "name": "Sky Penguins Swim Shorts",
+      "department": "men",
+      "garment": "swim-short",
+      "categories": [
+        "swimwear"
+      ],
+      "collections": [],
+      "officialUrl": "https://kaicollections.com/products/sky-penguins-swim-shorts",
+      "outboundLink": "https://kaicollections.com/products/sky-penguins-swim-shorts",
+      "currency": "EGP",
+      "price": 999,
+      "compareAtPrice": null,
+      "sizes": [
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "XXL",
+        "3XL"
+      ],
+      "material": "100% polyester",
+      "details": [
+        "Made in Egypt"
+      ],
+      "fit": null,
+      "care": null,
+      "stockAsIndexed": "sold-out",
+      "colourFromName": "sky",
+      "print": "Sky Penguins",
+      "verification": {
+        "method": "search-index snapshot of KAI’s own pages",
+        "checkedAt": "2026-10-14",
+        "name": "verified (indexed product/collection/home page)",
+        "url": "verified (product URL indexed)",
+        "price": "verified (dated snapshot, not live)",
+        "sizes": "range endpoints verified; intermediate labels follow KAI’s order",
+        "material": "verified (indexed product copy)",
+        "stock": "as indexed — not live inventory",
+        "photography": "none — kaicollections.com unreachable; illustrative flat shown and labelled"
+      },
+      "sources": [
+        "https://kaicollections.com/products/sky-penguins-swim-shorts"
+      ],
+      "notes": null,
+      "usageRestrictions": "Factual product data cited for an unofficial concept. Product photography is not included; when synced it is hotlinked from KAI’s CDN and not committed."
+    },
+    {
+      "slug": "funky-fish-swim-shorts",
+      "name": "Funky Fish Swim Shorts",
+      "department": "men",
+      "garment": "swim-short",
+      "categories": [
+        "swimwear"
+      ],
+      "collections": [],
+      "officialUrl": "https://kaicollections.com/products/funky-fish-swim-shorts",
+      "outboundLink": "https://kaicollections.com/products/funky-fish-swim-shorts",
+      "currency": "EGP",
+      "price": 1699,
+      "compareAtPrice": null,
+      "sizes": [],
+      "material": "100% polyester",
+      "details": [],
+      "fit": null,
+      "care": null,
+      "stockAsIndexed": "sold-out",
+      "colourFromName": null,
+      "print": "Funky Fish",
+      "verification": {
+        "method": "search-index snapshot of KAI’s own pages",
+        "checkedAt": "2026-10-14",
+        "name": "verified (indexed product/collection/home page)",
+        "url": "verified (product URL indexed)",
+        "price": "verified (dated snapshot, not live)",
+        "sizes": "not captured",
+        "material": "verified (indexed product copy)",
+        "stock": "as indexed — not live inventory",
+        "photography": "none — kaicollections.com unreachable; illustrative flat shown and labelled"
+      },
+      "sources": [
+        "https://kaicollections.com/products/funky-fish-swim-shorts"
+      ],
+      "notes": null,
+      "usageRestrictions": "Factual product data cited for an unofficial concept. Product photography is not included; when synced it is hotlinked from KAI’s CDN and not committed."
+    },
+    {
+      "slug": "fruit-salad-swim-shorts",
+      "name": "Fruit Salad Swim Shorts",
+      "department": "men",
+      "garment": "swim-short",
+      "categories": [
+        "swimwear"
+      ],
+      "collections": [],
+      "officialUrl": "https://kaicollections.com/products/fruit-salad-swim-shorts",
+      "outboundLink": "https://kaicollections.com/products/fruit-salad-swim-shorts",
+      "currency": "EGP",
+      "price": 999,
+      "compareAtPrice": null,
+      "sizes": [],
+      "material": null,
+      "details": [],
+      "fit": null,
+      "care": null,
+      "stockAsIndexed": "in-stock",
+      "colourFromName": null,
+      "print": "Fruit Salad",
+      "verification": {
+        "method": "search-index snapshot of KAI’s own pages",
+        "checkedAt": "2026-10-14",
+        "name": "verified (indexed product/collection/home page)",
+        "url": "verified (product URL indexed)",
+        "price": "verified (dated snapshot, not live)",
+        "sizes": "not captured",
+        "material": "not captured",
+        "stock": "as indexed — not live inventory",
+        "photography": "none — kaicollections.com unreachable; illustrative flat shown and labelled"
+      },
+      "sources": [
+        "https://kaicollections.com/products/fruit-salad-swim-shorts"
+      ],
+      "notes": null,
+      "usageRestrictions": "Factual product data cited for an unofficial concept. Product photography is not included; when synced it is hotlinked from KAI’s CDN and not committed."
+    },
+    {
+      "slug": "by-the-sea-swim-shorts",
+      "name": "By The Sea Swim Shorts",
+      "department": "men",
+      "garment": "swim-short",
+      "categories": [
+        "swimwear"
+      ],
+      "collections": [],
+      "officialUrl": "https://kaicollections.com/products/by-the-sea-swim-shorts",
+      "outboundLink": "https://kaicollections.com/products/by-the-sea-swim-shorts",
+      "currency": "EGP",
+      "price": 999,
+      "compareAtPrice": null,
+      "sizes": [],
+      "material": "100% polyester",
+      "details": [
+        "Mid-length, slim fit"
+      ],
+      "fit": null,
+      "care": null,
+      "stockAsIndexed": "unknown",
+      "colourFromName": null,
+      "print": "By The Sea",
+      "verification": {
+        "method": "search-index snapshot of KAI’s own pages",
+        "checkedAt": "2026-10-14",
+        "name": "verified (indexed product/collection/home page)",
+        "url": "verified (product URL indexed)",
+        "price": "verified (dated snapshot, not live)",
+        "sizes": "not captured",
+        "material": "verified (indexed product copy)",
+        "stock": "not captured",
+        "photography": "none — kaicollections.com unreachable; illustrative flat shown and labelled"
+      },
+      "sources": [
+        "https://kaicollections.com/products/by-the-sea-swim-shorts"
+      ],
+      "notes": "Snapshot marked it on sale at EGP 999; the original price was not captured.",
+      "usageRestrictions": "Factual product data cited for an unofficial concept. Product photography is not included; when synced it is hotlinked from KAI’s CDN and not committed."
+    },
+    {
+      "slug": "pink-zebras",
+      "name": "Pink Zebras",
+      "department": "men",
+      "garment": "swim-short",
+      "categories": [
+        "swimwear"
+      ],
+      "collections": [],
+      "officialUrl": "https://kaicollections.com/products/pink-zebras",
+      "outboundLink": "https://kaicollections.com/products/pink-zebras",
+      "currency": "EGP",
+      "price": 399,
+      "compareAtPrice": 999,
+      "sizes": [
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "XXL",
+        "3XL"
+      ],
+      "material": null,
+      "details": [],
+      "fit": null,
+      "care": null,
+      "stockAsIndexed": "sold-out",
+      "colourFromName": "pink",
+      "print": "Pink Zebras",
+      "verification": {
+        "method": "search-index snapshot of KAI’s own pages",
+        "checkedAt": "2026-10-14",
+        "name": "verified (indexed product/collection/home page)",
+        "url": "verified (product URL indexed)",
+        "price": "verified (dated snapshot, not live)",
+        "sizes": "range endpoints verified; intermediate labels follow KAI’s order",
+        "material": "not captured",
+        "stock": "as indexed — not live inventory",
+        "photography": "none — kaicollections.com unreachable; illustrative flat shown and labelled"
+      },
+      "sources": [
+        "https://kaicollections.com/products/pink-zebras"
+      ],
+      "notes": null,
+      "usageRestrictions": "Factual product data cited for an unofficial concept. Product photography is not included; when synced it is hotlinked from KAI’s CDN and not committed."
+    },
+    {
+      "slug": "navy-macaroons",
+      "name": "Navy Macaroons",
+      "department": "men",
+      "garment": "swim-short",
+      "categories": [
+        "swimwear"
+      ],
+      "collections": [],
+      "officialUrl": "https://kaicollections.com/products/navy-macaroons",
+      "outboundLink": "https://kaicollections.com/products/navy-macaroons",
+      "currency": "EGP",
+      "price": 499,
+      "compareAtPrice": 850,
+      "sizes": [
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "XXL"
+      ],
+      "material": null,
+      "details": [],
+      "fit": null,
+      "care": null,
+      "stockAsIndexed": "sold-out",
+      "colourFromName": "navy",
+      "print": "Navy Macaroons",
+      "verification": {
+        "method": "search-index snapshot of KAI’s own pages",
+        "checkedAt": "2026-10-14",
+        "name": "verified (indexed product/collection/home page)",
+        "url": "verified (product URL indexed)",
+        "price": "verified (dated snapshot, not live)",
+        "sizes": "range endpoints verified; intermediate labels follow KAI’s order",
+        "material": "not captured",
+        "stock": "as indexed — not live inventory",
+        "photography": "none — kaicollections.com unreachable; illustrative flat shown and labelled"
+      },
+      "sources": [
+        "https://kaicollections.com/products/navy-macaroons"
+      ],
+      "notes": null,
+      "usageRestrictions": "Factual product data cited for an unofficial concept. Product photography is not included; when synced it is hotlinked from KAI’s CDN and not committed."
+    },
+    {
+      "slug": "black-playa-one-piece",
+      "name": "Black Playa One Piece",
+      "department": "women",
+      "garment": "one-piece",
+      "categories": [
+        "swimwear"
+      ],
+      "collections": [],
+      "officialUrl": "https://kaicollections.com/products/black-playa-one-piece",
+      "outboundLink": "https://kaicollections.com/products/black-playa-one-piece",
+      "currency": "EGP",
+      "price": 1099,
+      "compareAtPrice": 2199,
+      "sizes": [
+        "S (36)",
+        "M (38)",
+        "L (40)",
+        "XL (42)"
+      ],
+      "material": "82% nylon, 18% elastane",
+      "details": [],
+      "fit": null,
+      "care": null,
+      "stockAsIndexed": "sold-out",
+      "colourFromName": "black",
+      "print": null,
+      "verification": {
+        "method": "search-index snapshot of KAI’s own pages",
+        "checkedAt": "2026-10-14",
+        "name": "verified (indexed product/collection/home page)",
+        "url": "verified (product URL indexed)",
+        "price": "verified (dated snapshot, not live)",
+        "sizes": "verified on this product page",
+        "material": "verified (indexed product copy)",
+        "stock": "as indexed — not live inventory",
+        "photography": "none — kaicollections.com unreachable; illustrative flat shown and labelled"
+      },
+      "sources": [
+        "https://kaicollections.com/products/black-playa-one-piece"
+      ],
+      "notes": null,
+      "usageRestrictions": "Factual product data cited for an unofficial concept. Product photography is not included; when synced it is hotlinked from KAI’s CDN and not committed."
+    },
+    {
+      "slug": "fuchsia-playa-one-piece",
+      "name": "Fuchsia Playa One Piece",
+      "department": "women",
+      "garment": "one-piece",
+      "categories": [
+        "swimwear"
+      ],
+      "collections": [],
+      "officialUrl": "https://kaicollections.com/products/fuchsia-playa-one-piece",
+      "outboundLink": "https://kaicollections.com/products/fuchsia-playa-one-piece",
+      "currency": "EGP",
+      "price": 1099,
+      "compareAtPrice": null,
+      "sizes": [],
+      "material": "82% nylon, 18% elastane",
+      "details": [],
+      "fit": null,
+      "care": null,
+      "stockAsIndexed": "unknown",
+      "colourFromName": "fuchsia",
+      "print": null,
+      "verification": {
+        "method": "search-index snapshot of KAI’s own pages",
+        "checkedAt": "2026-10-14",
+        "name": "verified (indexed product/collection/home page)",
+        "url": "verified (product URL indexed)",
+        "price": "verified (dated snapshot, not live)",
+        "sizes": "not captured",
+        "material": "verified (indexed product copy)",
+        "stock": "not captured",
+        "photography": "none — kaicollections.com unreachable; illustrative flat shown and labelled"
+      },
+      "sources": [
+        "https://kaicollections.com/products/fuchsia-playa-one-piece"
+      ],
+      "notes": null,
+      "usageRestrictions": "Factual product data cited for an unofficial concept. Product photography is not included; when synced it is hotlinked from KAI’s CDN and not committed."
+    },
+    {
+      "slug": "cobalt-blue-playa-one-piece",
+      "name": "Cobalt Blue Playa One Piece",
+      "department": "women",
+      "garment": "one-piece",
+      "categories": [
+        "swimwear"
+      ],
+      "collections": [],
+      "officialUrl": "https://kaicollections.com/products/cobalt-blue-playa-one-piece",
+      "outboundLink": "https://kaicollections.com/products/cobalt-blue-playa-one-piece",
+      "currency": "EGP",
+      "price": 1099,
+      "compareAtPrice": null,
+      "sizes": [],
+      "material": "82% nylon, 18% elastane",
+      "details": [],
+      "fit": null,
+      "care": null,
+      "stockAsIndexed": "sold-out",
+      "colourFromName": "cobalt",
+      "print": null,
+      "verification": {
+        "method": "search-index snapshot of KAI’s own pages",
+        "checkedAt": "2026-10-14",
+        "name": "verified (indexed product/collection/home page)",
+        "url": "verified (product URL indexed)",
+        "price": "verified (dated snapshot, not live)",
+        "sizes": "not captured",
+        "material": "verified (indexed product copy)",
+        "stock": "as indexed — not live inventory",
+        "photography": "none — kaicollections.com unreachable; illustrative flat shown and labelled"
+      },
+      "sources": [
+        "https://kaicollections.com/products/cobalt-blue-playa-one-piece"
+      ],
+      "notes": null,
+      "usageRestrictions": "Factual product data cited for an unofficial concept. Product photography is not included; when synced it is hotlinked from KAI’s CDN and not committed."
+    },
+    {
+      "slug": "pear-isola-one-piece",
+      "name": "Pear Isola One Piece",
+      "department": "women",
+      "garment": "one-piece",
+      "categories": [
+        "swimwear"
+      ],
+      "collections": [],
+      "officialUrl": "https://kaicollections.com/products/pear-isola-one-piece",
+      "outboundLink": "https://kaicollections.com/products/pear-isola-one-piece",
+      "currency": "EGP",
+      "price": 1399,
+      "compareAtPrice": 2099,
+      "sizes": [
+        "S (36)",
+        "M (38)",
+        "L (40)",
+        "XL (42)"
+      ],
+      "material": "82% nylon, 18% elastane",
+      "details": [
+        "Removable padded cups"
+      ],
+      "fit": null,
+      "care": null,
+      "stockAsIndexed": "sold-out",
+      "colourFromName": "pear",
+      "print": null,
+      "verification": {
+        "method": "search-index snapshot of KAI’s own pages",
+        "checkedAt": "2026-10-14",
+        "name": "verified (indexed product/collection/home page)",
+        "url": "verified (product URL indexed)",
+        "price": "verified (dated snapshot, not live)",
+        "sizes": "verified on this product page",
+        "material": "verified (indexed product copy)",
+        "stock": "as indexed — not live inventory",
+        "photography": "none — kaicollections.com unreachable; illustrative flat shown and labelled"
+      },
+      "sources": [
+        "https://kaicollections.com/products/pear-isola-one-piece"
+      ],
+      "notes": null,
+      "usageRestrictions": "Factual product data cited for an unofficial concept. Product photography is not included; when synced it is hotlinked from KAI’s CDN and not committed."
+    },
+    {
+      "slug": "ivory-palma-one-piece",
+      "name": "Ivory Palma One Piece",
+      "department": "women",
+      "garment": "one-piece",
+      "categories": [
+        "swimwear"
+      ],
+      "collections": [],
+      "officialUrl": "https://kaicollections.com/products/ivory-palma-one-piece",
+      "outboundLink": "https://kaicollections.com/products/ivory-palma-one-piece",
+      "currency": "EGP",
+      "price": 999,
+      "compareAtPrice": 2299,
+      "sizes": [
+        "XS (34)",
+        "S (36)",
+        "M (38)",
+        "L (40)",
+        "XL (42)"
+      ],
+      "material": null,
+      "details": [],
+      "fit": null,
+      "care": null,
+      "stockAsIndexed": "sold-out",
+      "colourFromName": "ivory",
+      "print": null,
+      "verification": {
+        "method": "search-index snapshot of KAI’s own pages",
+        "checkedAt": "2026-10-14",
+        "name": "verified (indexed product/collection/home page)",
+        "url": "verified (product URL indexed)",
+        "price": "verified (dated snapshot, not live)",
+        "sizes": "range endpoints verified; intermediate labels follow KAI’s order",
+        "material": "not captured",
+        "stock": "as indexed — not live inventory",
+        "photography": "none — kaicollections.com unreachable; illustrative flat shown and labelled"
+      },
+      "sources": [
+        "https://kaicollections.com/products/ivory-palma-one-piece"
+      ],
+      "notes": null,
+      "usageRestrictions": "Factual product data cited for an unofficial concept. Product photography is not included; when synced it is hotlinked from KAI’s CDN and not committed."
+    },
+    {
+      "slug": "black-palma-one-piece",
+      "name": "Black Palma One Piece",
+      "department": "women",
+      "garment": "one-piece",
+      "categories": [
+        "swimwear"
+      ],
+      "collections": [],
+      "officialUrl": "https://kaicollections.com/products/black-palma-one-piece",
+      "outboundLink": "https://kaicollections.com/products/black-palma-one-piece",
+      "currency": "EGP",
+      "price": 2299,
+      "compareAtPrice": null,
+      "sizes": [],
+      "material": null,
+      "details": [],
+      "fit": null,
+      "care": null,
+      "stockAsIndexed": "unknown",
+      "colourFromName": "black",
+      "print": null,
+      "verification": {
+        "method": "search-index snapshot of KAI’s own pages",
+        "checkedAt": "2026-10-14",
+        "name": "verified (indexed product/collection/home page)",
+        "url": "verified (product URL indexed)",
+        "price": "verified (dated snapshot, not live)",
+        "sizes": "not captured",
+        "material": "not captured",
+        "stock": "not captured",
+        "photography": "none — kaicollections.com unreachable; illustrative flat shown and labelled"
+      },
+      "sources": [
+        "https://kaicollections.com/products/black-palma-one-piece"
+      ],
+      "notes": null,
+      "usageRestrictions": "Factual product data cited for an unofficial concept. Product photography is not included; when synced it is hotlinked from KAI’s CDN and not committed."
+    },
+    {
+      "slug": "black-cut-out-one-piece",
+      "name": "Black Cut Out One Piece",
+      "department": "women",
+      "garment": "one-piece-cutout",
+      "categories": [
+        "swimwear"
+      ],
+      "collections": [],
+      "officialUrl": "https://kaicollections.com/products/black-cut-out-one-piece",
+      "outboundLink": "https://kaicollections.com/products/black-cut-out-one-piece",
+      "currency": "EGP",
+      "price": 1099,
+      "compareAtPrice": 2199,
+      "sizes": [
+        "S (36)"
+      ],
+      "material": null,
+      "details": [],
+      "fit": null,
+      "care": null,
+      "stockAsIndexed": "sold-out",
+      "colourFromName": "black",
+      "print": null,
+      "verification": {
+        "method": "search-index snapshot of KAI’s own pages",
+        "checkedAt": "2026-10-14",
+        "name": "verified (indexed product/collection/home page)",
+        "url": "verified (product URL indexed)",
+        "price": "verified (dated snapshot, not live)",
+        "sizes": "verified on this product page",
+        "material": "not captured",
+        "stock": "as indexed — not live inventory",
+        "photography": "none — kaicollections.com unreachable; illustrative flat shown and labelled"
+      },
+      "sources": [
+        "https://kaicollections.com/products/black-cut-out-one-piece"
+      ],
+      "notes": null,
+      "usageRestrictions": "Factual product data cited for an unofficial concept. Product photography is not included; when synced it is hotlinked from KAI’s CDN and not committed."
+    },
+    {
+      "slug": "black-kaia-one-piece",
+      "name": "Black Kaia One Piece",
+      "department": "women",
+      "garment": "one-piece",
+      "categories": [
+        "swimwear"
+      ],
+      "collections": [],
+      "officialUrl": "https://kaicollections.com/products/black-kaia-one-piece",
+      "outboundLink": "https://kaicollections.com/products/black-kaia-one-piece",
+      "currency": "EGP",
+      "price": 2399,
+      "compareAtPrice": null,
+      "sizes": [],
+      "material": null,
+      "details": [],
+      "fit": null,
+      "care": null,
+      "stockAsIndexed": "unknown",
+      "colourFromName": "black",
+      "print": null,
+      "verification": {
+        "method": "search-index snapshot of KAI’s own pages",
+        "checkedAt": "2026-10-14",
+        "name": "verified (indexed product/collection/home page)",
+        "url": "verified (product URL indexed)",
+        "price": "verified (dated snapshot, not live)",
+        "sizes": "not captured",
+        "material": "not captured",
+        "stock": "not captured",
+        "photography": "none — kaicollections.com unreachable; illustrative flat shown and labelled"
+      },
+      "sources": [
+        "https://kaicollections.com/products/black-kaia-one-piece"
+      ],
+      "notes": null,
+      "usageRestrictions": "Factual product data cited for an unofficial concept. Product photography is not included; when synced it is hotlinked from KAI’s CDN and not committed."
+    },
+    {
+      "slug": "olive-kaia-one-piece",
+      "name": "Olive Kaia One Piece",
+      "department": "women",
+      "garment": "one-piece",
+      "categories": [
+        "swimwear"
+      ],
+      "collections": [
+        "new-arrivals"
+      ],
+      "officialUrl": null,
+      "outboundLink": "https://kaicollections.com/search?q=Olive%20Kaia%20One%20Piece&type=product",
+      "currency": "EGP",
+      "price": 1679,
+      "compareAtPrice": 2399,
+      "sizes": [],
+      "material": null,
+      "details": [],
+      "fit": null,
+      "care": null,
+      "stockAsIndexed": "unknown",
+      "colourFromName": "olive",
+      "print": null,
+      "verification": {
+        "method": "search-index snapshot of KAI’s own pages",
+        "checkedAt": "2026-10-14",
+        "name": "verified (indexed product/collection/home page)",
+        "url": "not indexed — outbound link uses KAI’s own search",
+        "price": "verified (dated snapshot, not live)",
+        "sizes": "not captured",
+        "material": "not captured",
+        "stock": "not captured",
+        "photography": "none — kaicollections.com unreachable; illustrative flat shown and labelled"
+      },
+      "sources": [
+        "https://kaicollections.com/"
+      ],
+      "notes": "Homepage New Arrivals snapshot: EGP 2,399.00 → EGP 1,679.00. Product URL not indexed.",
+      "usageRestrictions": "Factual product data cited for an unofficial concept. Product photography is not included; when synced it is hotlinked from KAI’s CDN and not committed."
+    },
+    {
+      "slug": "black-cala-one-piece",
+      "name": "Black Cala One Piece",
+      "department": "women",
+      "garment": "one-piece",
+      "categories": [
+        "swimwear"
+      ],
+      "collections": [
+        "new-arrivals"
+      ],
+      "officialUrl": null,
+      "outboundLink": "https://kaicollections.com/search?q=Black%20Cala%20One%20Piece&type=product",
+      "currency": "EGP",
+      "price": 1679,
+      "compareAtPrice": 2399,
+      "sizes": [],
+      "material": null,
+      "details": [],
+      "fit": null,
+      "care": null,
+      "stockAsIndexed": "unknown",
+      "colourFromName": "black",
+      "print": null,
+      "verification": {
+        "method": "search-index snapshot of KAI’s own pages",
+        "checkedAt": "2026-10-14",
+        "name": "verified (indexed product/collection/home page)",
+        "url": "not indexed — outbound link uses KAI’s own search",
+        "price": "verified (dated snapshot, not live)",
+        "sizes": "not captured",
+        "material": "not captured",
+        "stock": "not captured",
+        "photography": "none — kaicollections.com unreachable; illustrative flat shown and labelled"
+      },
+      "sources": [
+        "https://kaicollections.com/"
+      ],
+      "notes": "Homepage New Arrivals snapshot: EGP 2,399.00 → EGP 1,679.00. Product URL not indexed.",
+      "usageRestrictions": "Factual product data cited for an unofficial concept. Product photography is not included; when synced it is hotlinked from KAI’s CDN and not committed."
+    },
+    {
+      "slug": "matcha-perla-one-piece",
+      "name": "Matcha Perla One Piece",
+      "department": "women",
+      "garment": "one-piece",
+      "categories": [
+        "swimwear"
+      ],
+      "collections": [
+        "new-arrivals"
+      ],
+      "officialUrl": null,
+      "outboundLink": "https://kaicollections.com/search?q=Matcha%20Perla%20One%20Piece&type=product",
+      "currency": "EGP",
+      "price": null,
+      "compareAtPrice": null,
+      "sizes": [],
+      "material": null,
+      "details": [],
+      "fit": null,
+      "care": null,
+      "stockAsIndexed": "unknown",
+      "colourFromName": "matcha",
+      "print": null,
+      "verification": {
+        "method": "search-index snapshot of KAI’s own pages",
+        "checkedAt": "2026-10-14",
+        "name": "verified (indexed product/collection/home page)",
+        "url": "not indexed — outbound link uses KAI’s own search",
+        "price": "not captured — no price shown",
+        "sizes": "not captured",
+        "material": "not captured",
+        "stock": "not captured",
+        "photography": "none — kaicollections.com unreachable; illustrative flat shown and labelled"
+      },
+      "sources": [
+        "https://kaicollections.com/"
+      ],
+      "notes": "Named in the homepage New Arrivals swim row; its price could not be attributed with certainty, so none is shown.",
+      "usageRestrictions": "Factual product data cited for an unofficial concept. Product photography is not included; when synced it is hotlinked from KAI’s CDN and not committed."
+    },
+    {
+      "slug": "black-zaria-bikini-top",
+      "name": "Black Zaria Bikini Top",
+      "department": "women",
+      "garment": "bikini-top",
+      "categories": [
+        "swimwear"
+      ],
+      "collections": [
+        "new-arrivals"
+      ],
+      "officialUrl": null,
+      "outboundLink": "https://kaicollections.com/search?q=Black%20Zaria%20Bikini%20Top&type=product",
+      "currency": "EGP",
+      "price": 850,
+      "compareAtPrice": 1200,
+      "sizes": [],
+      "material": null,
+      "details": [],
+      "fit": null,
+      "care": null,
+      "stockAsIndexed": "unknown",
+      "colourFromName": "black",
+      "print": null,
+      "verification": {
+        "method": "search-index snapshot of KAI’s own pages",
+        "checkedAt": "2026-10-14",
+        "name": "verified (indexed product/collection/home page)",
+        "url": "not indexed — outbound link uses KAI’s own search",
+        "price": "verified (dated snapshot, not live)",
+        "sizes": "not captured",
+        "material": "not captured",
+        "stock": "not captured",
+        "photography": "none — kaicollections.com unreachable; illustrative flat shown and labelled"
+      },
+      "sources": [
+        "https://kaicollections.com/"
+      ],
+      "notes": "Homepage snapshot: EGP 1,200.00 → EGP 850.00. Product URL not indexed.",
+      "usageRestrictions": "Factual product data cited for an unofficial concept. Product photography is not included; when synced it is hotlinked from KAI’s CDN and not committed."
+    },
+    {
+      "slug": "sapphire-maui-bikini-bottom",
+      "name": "Sapphire Maui Bikini Bottom",
+      "department": "women",
+      "garment": "bikini-bottom",
+      "categories": [
+        "swimwear"
+      ],
+      "collections": [],
+      "officialUrl": "https://kaicollections.com/products/sapphire-maui-bikini-bottom",
+      "outboundLink": "https://kaicollections.com/products/sapphire-maui-bikini-bottom",
+      "currency": "EGP",
+      "price": null,
+      "compareAtPrice": null,
+      "sizes": [],
+      "material": null,
+      "details": [
+        "High-waisted fit",
+        "Fuller coverage"
+      ],
+      "fit": null,
+      "care": null,
+      "stockAsIndexed": "unknown",
+      "colourFromName": "sapphire",
+      "print": null,
+      "verification": {
+        "method": "search-index snapshot of KAI’s own pages",
+        "checkedAt": "2026-10-14",
+        "name": "verified (indexed product/collection/home page)",
+        "url": "verified (product URL indexed)",
+        "price": "not captured — no price shown",
+        "sizes": "not captured",
+        "material": "not captured",
+        "stock": "not captured",
+        "photography": "none — kaicollections.com unreachable; illustrative flat shown and labelled"
+      },
+      "sources": [
+        "https://kaicollections.com/products/sapphire-maui-bikini-bottom",
+        "https://kaicollections.com/collections/bikinis"
+      ],
+      "notes": "KAI's copy: a flattering high-waisted fit with ample coverage. Price not captured in the snapshot.",
+      "usageRestrictions": "Factual product data cited for an unofficial concept. Product photography is not included; when synced it is hotlinked from KAI’s CDN and not committed."
+    },
+    {
+      "slug": "festival-del-mare-sarong",
+      "name": "Festival del Mare Sarong",
+      "department": "women",
+      "garment": "sarong",
+      "categories": [
+        "resort",
+        "swimwear"
+      ],
+      "collections": [
+        "new-arrivals"
+      ],
+      "officialUrl": null,
+      "outboundLink": "https://kaicollections.com/search?q=Festival%20del%20Mare%20Sarong&type=product",
+      "currency": "EGP",
+      "price": 399,
+      "compareAtPrice": 599,
+      "sizes": [],
+      "material": null,
+      "details": [],
+      "fit": null,
+      "care": null,
+      "stockAsIndexed": "unknown",
+      "colourFromName": null,
+      "print": "Festival del Mare",
+      "verification": {
+        "method": "search-index snapshot of KAI’s own pages",
+        "checkedAt": "2026-10-14",
+        "name": "verified (indexed product/collection/home page)",
+        "url": "not indexed — outbound link uses KAI’s own search",
+        "price": "verified (dated snapshot, not live)",
+        "sizes": "not captured",
+        "material": "not captured",
+        "stock": "not captured",
+        "photography": "none — kaicollections.com unreachable; illustrative flat shown and labelled"
+      },
+      "sources": [
+        "https://kaicollections.com/"
+      ],
+      "notes": "Homepage snapshot ('Festival del mare sarong'): EGP 599.00 → EGP 399.00.",
+      "usageRestrictions": "Factual product data cited for an unofficial concept. Product photography is not included; when synced it is hotlinked from KAI’s CDN and not committed."
+    },
+    {
+      "slug": "funky-fish-beaded-tank-top",
+      "name": "Funky Fish Beaded Tank Top",
+      "department": "women",
+      "garment": "tank",
+      "categories": [
+        "resort"
+      ],
+      "collections": [
+        "new-arrivals"
+      ],
+      "officialUrl": null,
+      "outboundLink": "https://kaicollections.com/search?q=Funky%20Fish%20Beaded%20Tank%20Top&type=product",
+      "currency": "EGP",
+      "price": 699,
+      "compareAtPrice": null,
+      "sizes": [],
+      "material": null,
+      "details": [
+        "Beaded"
+      ],
+      "fit": null,
+      "care": null,
+      "stockAsIndexed": "unknown",
+      "colourFromName": null,
+      "print": "Funky Fish",
+      "verification": {
+        "method": "search-index snapshot of KAI’s own pages",
+        "checkedAt": "2026-10-14",
+        "name": "verified (indexed product/collection/home page)",
+        "url": "not indexed — outbound link uses KAI’s own search",
+        "price": "verified (dated snapshot, not live)",
+        "sizes": "not captured",
+        "material": "not captured",
+        "stock": "not captured",
+        "photography": "none — kaicollections.com unreachable; illustrative flat shown and labelled"
+      },
+      "sources": [
+        "https://kaicollections.com/"
+      ],
+      "notes": "Homepage snapshot: EGP 699.00.",
+      "usageRestrictions": "Factual product data cited for an unofficial concept. Product photography is not included; when synced it is hotlinked from KAI’s CDN and not committed."
+    },
+    {
+      "slug": "brown-ruffle-tencel-dress",
+      "name": "Brown Ruffle Tencel Dress",
+      "department": "women",
+      "garment": "dress",
+      "categories": [
+        "resort"
+      ],
+      "collections": [
+        "new-arrivals"
+      ],
+      "officialUrl": null,
+      "outboundLink": "https://kaicollections.com/search?q=Brown%20Ruffle%20Tencel%20Dress&type=product",
+      "currency": "EGP",
+      "price": 750,
+      "compareAtPrice": 1499,
+      "sizes": [],
+      "material": "Tencel (as named)",
+      "details": [
+        "Ruffle detail (as named)"
+      ],
+      "fit": null,
+      "care": null,
+      "stockAsIndexed": "unknown",
+      "colourFromName": "brown",
+      "print": null,
+      "verification": {
+        "method": "search-index snapshot of KAI’s own pages",
+        "checkedAt": "2026-10-14",
+        "name": "verified (indexed product/collection/home page)",
+        "url": "not indexed — outbound link uses KAI’s own search",
+        "price": "verified (dated snapshot, not live)",
+        "sizes": "not captured",
+        "material": "verified (indexed product copy)",
+        "stock": "not captured",
+        "photography": "none — kaicollections.com unreachable; illustrative flat shown and labelled"
+      },
+      "sources": [
+        "https://kaicollections.com/"
+      ],
+      "notes": "Homepage New Arrivals snapshot: EGP 1,499.00 → EGP 750.00. Fabric composition not captured beyond the product name.",
+      "usageRestrictions": "Factual product data cited for an unofficial concept. Product photography is not included; when synced it is hotlinked from KAI’s CDN and not committed."
+    },
+    {
+      "slug": "women-s-white-linen-v-neck-top",
+      "name": "Women's White Linen V-Neck Top",
+      "department": "women",
+      "garment": "v-top",
+      "categories": [
+        "linen",
+        "resort"
+      ],
+      "collections": [],
+      "officialUrl": "https://kaicollections.com/products/women-s-white-linen-v-neck-top",
+      "outboundLink": "https://kaicollections.com/products/women-s-white-linen-v-neck-top",
+      "currency": "EGP",
+      "price": 2499,
+      "compareAtPrice": null,
+      "sizes": [
+        "XS",
+        "S",
+        "M",
+        "L"
+      ],
+      "material": "100% washed pure linen",
+      "details": [
+        "Relaxed fit"
+      ],
+      "fit": null,
+      "care": null,
+      "stockAsIndexed": "unknown",
+      "colourFromName": "white",
+      "print": null,
+      "verification": {
+        "method": "search-index snapshot of KAI’s own pages",
+        "checkedAt": "2026-10-14",
+        "name": "verified (indexed product/collection/home page)",
+        "url": "verified (product URL indexed)",
+        "price": "verified (dated snapshot, not live)",
+        "sizes": "verified on this product page",
+        "material": "verified (indexed product copy)",
+        "stock": "not captured",
+        "photography": "none — kaicollections.com unreachable; illustrative flat shown and labelled"
+      },
+      "sources": [
+        "https://kaicollections.com/products/women-s-white-linen-v-neck-top"
+      ],
+      "notes": null,
+      "usageRestrictions": "Factual product data cited for an unofficial concept. Product photography is not included; when synced it is hotlinked from KAI’s CDN and not committed."
+    },
+    {
+      "slug": "women-s-beige-linen-v-neck-top",
+      "name": "Women's Beige Linen V-Neck Top",
+      "department": "women",
+      "garment": "v-top",
+      "categories": [
+        "linen",
+        "resort"
+      ],
+      "collections": [],
+      "officialUrl": "https://kaicollections.com/products/women-s-beige-linen-v-neck-top",
+      "outboundLink": "https://kaicollections.com/products/women-s-beige-linen-v-neck-top",
+      "currency": "EGP",
+      "price": 2499,
+      "compareAtPrice": null,
+      "sizes": [
+        "XS",
+        "S",
+        "M",
+        "L"
+      ],
+      "material": "100% washed pure linen",
+      "details": [
+        "Relaxed fit"
+      ],
+      "fit": null,
+      "care": null,
+      "stockAsIndexed": "unknown",
+      "colourFromName": "beige",
+      "print": null,
+      "verification": {
+        "method": "search-index snapshot of KAI’s own pages",
+        "checkedAt": "2026-10-14",
+        "name": "verified (indexed product/collection/home page)",
+        "url": "verified (product URL indexed)",
+        "price": "verified (dated snapshot, not live)",
+        "sizes": "verified on this product page",
+        "material": "verified (indexed product copy)",
+        "stock": "not captured",
+        "photography": "none — kaicollections.com unreachable; illustrative flat shown and labelled"
+      },
+      "sources": [
+        "https://kaicollections.com/products/women-s-beige-linen-v-neck-top"
+      ],
+      "notes": null,
+      "usageRestrictions": "Factual product data cited for an unofficial concept. Product photography is not included; when synced it is hotlinked from KAI’s CDN and not committed."
+    },
+    {
+      "slug": "women-s-black-linen-v-neck-top",
+      "name": "Women's Black Linen V-Neck Top",
+      "department": "women",
+      "garment": "v-top",
+      "categories": [
+        "linen"
+      ],
+      "collections": [],
+      "officialUrl": "https://kaicollections.com/products/women-s-black-linen-v-neck-top",
+      "outboundLink": "https://kaicollections.com/products/women-s-black-linen-v-neck-top",
+      "currency": "EGP",
+      "price": 2499,
+      "compareAtPrice": null,
+      "sizes": [
+        "XS",
+        "S",
+        "M",
+        "L"
+      ],
+      "material": "100% washed pure linen",
+      "details": [
+        "Relaxed fit"
+      ],
+      "fit": null,
+      "care": null,
+      "stockAsIndexed": "unknown",
+      "colourFromName": "black",
+      "print": null,
+      "verification": {
+        "method": "search-index snapshot of KAI’s own pages",
+        "checkedAt": "2026-10-14",
+        "name": "verified (indexed product/collection/home page)",
+        "url": "verified (product URL indexed)",
+        "price": "verified (dated snapshot, not live)",
+        "sizes": "verified on this product page",
+        "material": "verified (indexed product copy)",
+        "stock": "not captured",
+        "photography": "none — kaicollections.com unreachable; illustrative flat shown and labelled"
+      },
+      "sources": [
+        "https://kaicollections.com/products/women-s-black-linen-v-neck-top"
+      ],
+      "notes": null,
+      "usageRestrictions": "Factual product data cited for an unofficial concept. Product photography is not included; when synced it is hotlinked from KAI’s CDN and not committed."
+    },
+    {
+      "slug": "womens-beige-linen-pants",
+      "name": "Women's Beige Linen Pants",
+      "department": "women",
+      "garment": "pants",
+      "categories": [
+        "linen"
+      ],
+      "collections": [],
+      "officialUrl": "https://kaicollections.com/products/womens-beige-linen-pants",
+      "outboundLink": "https://kaicollections.com/products/womens-beige-linen-pants",
+      "currency": "EGP",
+      "price": 1999,
+      "compareAtPrice": null,
+      "sizes": [],
+      "material": "100% washed pure linen",
+      "details": [
+        "Relaxed fit"
+      ],
+      "fit": null,
+      "care": null,
+      "stockAsIndexed": "unknown",
+      "colourFromName": "beige",
+      "print": null,
+      "verification": {
+        "method": "search-index snapshot of KAI’s own pages",
+        "checkedAt": "2026-10-14",
+        "name": "verified (indexed product/collection/home page)",
+        "url": "verified (product URL indexed)",
+        "price": "verified (dated snapshot, not live)",
+        "sizes": "not captured",
+        "material": "verified (indexed product copy)",
+        "stock": "not captured",
+        "photography": "none — kaicollections.com unreachable; illustrative flat shown and labelled"
+      },
+      "sources": [
+        "https://kaicollections.com/products/womens-beige-linen-pants"
+      ],
+      "notes": null,
+      "usageRestrictions": "Factual product data cited for an unofficial concept. Product photography is not included; when synced it is hotlinked from KAI’s CDN and not committed."
+    },
+    {
+      "slug": "womens-beige-linen-shorts",
+      "name": "Women's Beige Linen Shorts",
+      "department": "women",
+      "garment": "shorts",
+      "categories": [
+        "linen",
+        "resort"
+      ],
+      "collections": [],
+      "officialUrl": "https://kaicollections.com/products/womens-beige-linen-shorts",
+      "outboundLink": "https://kaicollections.com/products/womens-beige-linen-shorts",
+      "currency": "EGP",
+      "price": 899,
+      "compareAtPrice": 1299,
+      "sizes": [],
+      "material": "100% washed linen",
+      "details": [
+        "Relaxed lounge fit"
+      ],
+      "fit": "A customer review on KAI's page notes the sizing runs a little small.",
+      "care": null,
+      "stockAsIndexed": "unknown",
+      "colourFromName": "beige",
+      "print": null,
+      "verification": {
+        "method": "search-index snapshot of KAI’s own pages",
+        "checkedAt": "2026-10-14",
+        "name": "verified (indexed product/collection/home page)",
+        "url": "verified (product URL indexed)",
+        "price": "verified (dated snapshot, not live)",
+        "sizes": "not captured",
+        "material": "verified (indexed product copy)",
+        "stock": "not captured",
+        "photography": "none — kaicollections.com unreachable; illustrative flat shown and labelled"
+      },
+      "sources": [
+        "https://kaicollections.com/products/womens-beige-linen-shorts"
+      ],
+      "notes": null,
+      "usageRestrictions": "Factual product data cited for an unofficial concept. Product photography is not included; when synced it is hotlinked from KAI’s CDN and not committed."
+    },
+    {
+      "slug": "womens-white-linen-shorts",
+      "name": "Women's White Linen Shorts",
+      "department": "women",
+      "garment": "shorts",
+      "categories": [
+        "linen",
+        "resort"
+      ],
+      "collections": [],
+      "officialUrl": "https://kaicollections.com/products/womens-white-linen-shorts",
+      "outboundLink": "https://kaicollections.com/products/womens-white-linen-shorts",
+      "currency": "EGP",
+      "price": null,
+      "compareAtPrice": null,
+      "sizes": [],
+      "material": null,
+      "details": [],
+      "fit": null,
+      "care": null,
+      "stockAsIndexed": "unknown",
+      "colourFromName": "white",
+      "print": null,
+      "verification": {
+        "method": "search-index snapshot of KAI’s own pages",
+        "checkedAt": "2026-10-14",
+        "name": "verified (indexed product/collection/home page)",
+        "url": "verified (product URL indexed)",
+        "price": "not captured — no price shown",
+        "sizes": "not captured",
+        "material": "not captured",
+        "stock": "not captured",
+        "photography": "none — kaicollections.com unreachable; illustrative flat shown and labelled"
+      },
+      "sources": [
+        "https://kaicollections.com/products/womens-white-linen-shorts"
+      ],
+      "notes": "Product page indexed; price not captured.",
+      "usageRestrictions": "Factual product data cited for an unofficial concept. Product photography is not included; when synced it is hotlinked from KAI’s CDN and not committed."
+    },
+    {
+      "slug": "womens-beige-linen-shirt-1",
+      "name": "Women's Beige Linen Shirt",
+      "department": "women",
+      "garment": "shirt",
+      "categories": [
+        "linen",
+        "resort"
+      ],
+      "collections": [],
+      "officialUrl": "https://kaicollections.com/products/womens-beige-linen-shirt-1",
+      "outboundLink": "https://kaicollections.com/products/womens-beige-linen-shirt-1",
+      "currency": "EGP",
+      "price": 2199,
+      "compareAtPrice": null,
+      "sizes": [],
+      "material": null,
+      "details": [],
+      "fit": null,
+      "care": null,
+      "stockAsIndexed": "sold-out",
+      "colourFromName": "beige",
+      "print": null,
+      "verification": {
+        "method": "search-index snapshot of KAI’s own pages",
+        "checkedAt": "2026-10-14",
+        "name": "verified (indexed product/collection/home page)",
+        "url": "verified (product URL indexed)",
+        "price": "verified (dated snapshot, not live)",
+        "sizes": "not captured",
+        "material": "not captured",
+        "stock": "as indexed — not live inventory",
+        "photography": "none — kaicollections.com unreachable; illustrative flat shown and labelled"
+      },
+      "sources": [
+        "https://kaicollections.com/products/womens-beige-linen-shirt-1",
+        "https://kaicollections.com/collections/womens-linen-shirts"
+      ],
+      "notes": "Product page: EGP 2,199. A collection listing showed EGP 2,250.00 → EGP 1,799.00 on a different date. Collection page marked it sold out.",
+      "usageRestrictions": "Factual product data cited for an unofficial concept. Product photography is not included; when synced it is hotlinked from KAI’s CDN and not committed."
+    },
+    {
+      "slug": "women-beige-linen-skirt",
+      "name": "Women Beige Linen Skirt",
+      "department": "women",
+      "garment": "skirt",
+      "categories": [
+        "linen",
+        "resort"
+      ],
+      "collections": [
+        "new-arrivals"
+      ],
+      "officialUrl": null,
+      "outboundLink": "https://kaicollections.com/search?q=Women%20Beige%20Linen%20Skirt&type=product",
+      "currency": "EGP",
+      "price": 1099,
+      "compareAtPrice": 1799,
+      "sizes": [],
+      "material": null,
+      "details": [],
+      "fit": null,
+      "care": null,
+      "stockAsIndexed": "unknown",
+      "colourFromName": "beige",
+      "print": null,
+      "verification": {
+        "method": "search-index snapshot of KAI’s own pages",
+        "checkedAt": "2026-10-14",
+        "name": "verified (indexed product/collection/home page)",
+        "url": "not indexed — outbound link uses KAI’s own search",
+        "price": "verified (dated snapshot, not live)",
+        "sizes": "not captured",
+        "material": "not captured",
+        "stock": "not captured",
+        "photography": "none — kaicollections.com unreachable; illustrative flat shown and labelled"
+      },
+      "sources": [
+        "https://kaicollections.com/"
+      ],
+      "notes": "Homepage New Arrivals snapshot: EGP 1,799.00 → EGP 1,099.00. Product URL not indexed.",
+      "usageRestrictions": "Factual product data cited for an unofficial concept. Product photography is not included; when synced it is hotlinked from KAI’s CDN and not committed."
+    },
+    {
+      "slug": "white-semi-collar-shirt",
+      "name": "White Semi Collar Linen Shirt",
+      "department": "men",
+      "garment": "shirt",
+      "categories": [
+        "linen",
+        "resort"
+      ],
+      "collections": [],
+      "officialUrl": "https://kaicollections.com/products/white-semi-collar-shirt",
+      "outboundLink": "https://kaicollections.com/products/white-semi-collar-shirt",
+      "currency": "EGP",
+      "price": 1750,
+      "compareAtPrice": 2599,
+      "sizes": [],
+      "material": "Pure linen",
+      "details": [
+        "Soft and breathable"
+      ],
+      "fit": null,
+      "care": null,
+      "stockAsIndexed": "unknown",
+      "colourFromName": "white",
+      "print": null,
+      "verification": {
+        "method": "search-index snapshot of KAI’s own pages",
+        "checkedAt": "2026-10-14",
+        "name": "verified (indexed product/collection/home page)",
+        "url": "verified (product URL indexed)",
+        "price": "verified (dated snapshot, not live)",
+        "sizes": "not captured",
+        "material": "verified (indexed product copy)",
+        "stock": "not captured",
+        "photography": "none — kaicollections.com unreachable; illustrative flat shown and labelled"
+      },
+      "sources": [
+        "https://kaicollections.com/products/white-semi-collar-shirt"
+      ],
+      "notes": null,
+      "usageRestrictions": "Factual product data cited for an unofficial concept. Product photography is not included; when synced it is hotlinked from KAI’s CDN and not committed."
+    },
+    {
+      "slug": "white-linen-shirt",
+      "name": "Men's White Linen Shirt",
+      "department": "men",
+      "garment": "shirt",
+      "categories": [
+        "linen"
+      ],
+      "collections": [],
+      "officialUrl": "https://kaicollections.com/products/white-linen-shirt",
+      "outboundLink": "https://kaicollections.com/products/white-linen-shirt",
+      "currency": "EGP",
+      "price": 1250,
+      "compareAtPrice": 2499,
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "material": null,
+      "details": [],
+      "fit": null,
+      "care": null,
+      "stockAsIndexed": "sold-out",
+      "colourFromName": "white",
+      "print": null,
+      "verification": {
+        "method": "search-index snapshot of KAI’s own pages",
+        "checkedAt": "2026-10-14",
+        "name": "verified (indexed product/collection/home page)",
+        "url": "verified (product URL indexed)",
+        "price": "verified (dated snapshot, not live)",
+        "sizes": "verified on this product page",
+        "material": "not captured",
+        "stock": "as indexed — not live inventory",
+        "photography": "none — kaicollections.com unreachable; illustrative flat shown and labelled"
+      },
+      "sources": [
+        "https://kaicollections.com/products/white-linen-shirt"
+      ],
+      "notes": "Product page: EGP 2,499.00 → EGP 1,250.00; the collection listing showed EGP 2,499 without a sale price. Snapshot marked sizes unavailable.",
+      "usageRestrictions": "Factual product data cited for an unofficial concept. Product photography is not included; when synced it is hotlinked from KAI’s CDN and not committed."
+    },
+    {
+      "slug": "navy-linen-shirt-1",
+      "name": "Men's Navy Linen Shirt",
+      "department": "men",
+      "garment": "shirt",
+      "categories": [
+        "linen"
+      ],
+      "collections": [],
+      "officialUrl": "https://kaicollections.com/products/navy-linen-shirt-1",
+      "outboundLink": "https://kaicollections.com/products/navy-linen-shirt-1",
+      "currency": "EGP",
+      "price": 2499,
+      "compareAtPrice": null,
+      "sizes": [],
+      "material": null,
+      "details": [],
+      "fit": null,
+      "care": null,
+      "stockAsIndexed": "unknown",
+      "colourFromName": "navy",
+      "print": null,
+      "verification": {
+        "method": "search-index snapshot of KAI’s own pages",
+        "checkedAt": "2026-10-14",
+        "name": "verified (indexed product/collection/home page)",
+        "url": "verified (product URL indexed)",
+        "price": "verified (dated snapshot, not live)",
+        "sizes": "not captured",
+        "material": "not captured",
+        "stock": "not captured",
+        "photography": "none — kaicollections.com unreachable; illustrative flat shown and labelled"
+      },
+      "sources": [
+        "https://kaicollections.com/products/navy-linen-shirt-1"
+      ],
+      "notes": null,
+      "usageRestrictions": "Factual product data cited for an unofficial concept. Product photography is not included; when synced it is hotlinked from KAI’s CDN and not committed."
+    },
+    {
+      "slug": "beige-linen-shirt",
+      "name": "Men's Beige Linen Shirt",
+      "department": "men",
+      "garment": "shirt",
+      "categories": [
+        "linen"
+      ],
+      "collections": [],
+      "officialUrl": "https://kaicollections.com/products/beige-linen-shirt",
+      "outboundLink": "https://kaicollections.com/products/beige-linen-shirt",
+      "currency": "EGP",
+      "price": 2499,
+      "compareAtPrice": null,
+      "sizes": [],
+      "material": null,
+      "details": [],
+      "fit": null,
+      "care": null,
+      "stockAsIndexed": "unknown",
+      "colourFromName": "beige",
+      "print": null,
+      "verification": {
+        "method": "search-index snapshot of KAI’s own pages",
+        "checkedAt": "2026-10-14",
+        "name": "verified (indexed product/collection/home page)",
+        "url": "verified (product URL indexed)",
+        "price": "verified (dated snapshot, not live)",
+        "sizes": "not captured",
+        "material": "not captured",
+        "stock": "not captured",
+        "photography": "none — kaicollections.com unreachable; illustrative flat shown and labelled"
+      },
+      "sources": [
+        "https://kaicollections.com/products/beige-linen-shirt"
+      ],
+      "notes": null,
+      "usageRestrictions": "Factual product data cited for an unofficial concept. Product photography is not included; when synced it is hotlinked from KAI’s CDN and not committed."
+    },
+    {
+      "slug": "olive-linen-over-shirt",
+      "name": "Olive Linen Overshirt Jacket",
+      "department": "men",
+      "garment": "overshirt",
+      "categories": [
+        "linen",
+        "resort"
+      ],
+      "collections": [],
+      "officialUrl": "https://kaicollections.com/products/olive-linen-over-shirt",
+      "outboundLink": "https://kaicollections.com/products/olive-linen-over-shirt",
+      "currency": "EGP",
+      "price": 2250,
+      "compareAtPrice": 2999,
+      "sizes": [],
+      "material": null,
+      "details": [],
+      "fit": null,
+      "care": null,
+      "stockAsIndexed": "unknown",
+      "colourFromName": "olive",
+      "print": null,
+      "verification": {
+        "method": "search-index snapshot of KAI’s own pages",
+        "checkedAt": "2026-10-14",
+        "name": "verified (indexed product/collection/home page)",
+        "url": "verified (product URL indexed)",
+        "price": "verified (dated snapshot, not live)",
+        "sizes": "not captured",
+        "material": "not captured",
+        "stock": "not captured",
+        "photography": "none — kaicollections.com unreachable; illustrative flat shown and labelled"
+      },
+      "sources": [
+        "https://kaicollections.com/products/olive-linen-over-shirt"
+      ],
+      "notes": null,
+      "usageRestrictions": "Factual product data cited for an unofficial concept. Product photography is not included; when synced it is hotlinked from KAI’s CDN and not committed."
+    },
+    {
+      "slug": "black-linen-over-shirt",
+      "name": "Black Linen Overshirt Jacket",
+      "department": "men",
+      "garment": "overshirt",
+      "categories": [
+        "linen",
+        "resort"
+      ],
+      "collections": [],
+      "officialUrl": "https://kaicollections.com/products/black-linen-over-shirt",
+      "outboundLink": "https://kaicollections.com/products/black-linen-over-shirt",
+      "currency": "EGP",
+      "price": 2250,
+      "compareAtPrice": 2999,
+      "sizes": [],
+      "material": null,
+      "details": [],
+      "fit": null,
+      "care": null,
+      "stockAsIndexed": "unknown",
+      "colourFromName": "black",
+      "print": null,
+      "verification": {
+        "method": "search-index snapshot of KAI’s own pages",
+        "checkedAt": "2026-10-14",
+        "name": "verified (indexed product/collection/home page)",
+        "url": "verified (product URL indexed)",
+        "price": "verified (dated snapshot, not live)",
+        "sizes": "not captured",
+        "material": "not captured",
+        "stock": "not captured",
+        "photography": "none — kaicollections.com unreachable; illustrative flat shown and labelled"
+      },
+      "sources": [
+        "https://kaicollections.com/products/black-linen-over-shirt"
+      ],
+      "notes": "Structured data carried a sale priceValidUntil of 2026-02-12, so the sale price may have lapsed.",
+      "usageRestrictions": "Factual product data cited for an unofficial concept. Product photography is not included; when synced it is hotlinked from KAI’s CDN and not committed."
+    },
+    {
+      "slug": "navy-linen-pants",
+      "name": "Men's Navy Linen Pants",
+      "department": "men",
+      "garment": "pants",
+      "categories": [
+        "linen"
+      ],
+      "collections": [],
+      "officialUrl": "https://kaicollections.com/products/navy-linen-pants",
+      "outboundLink": "https://kaicollections.com/products/navy-linen-pants",
+      "currency": "EGP",
+      "price": 1399,
+      "compareAtPrice": null,
+      "sizes": [
+        "S (30)",
+        "M (32)",
+        "L (34)",
+        "XL (36)",
+        "2XL (38)"
+      ],
+      "material": "100% pure linen",
+      "details": [
+        "Relaxed fit",
+        "Zip-and-button closure with elastic waistband"
+      ],
+      "fit": "KAI: for a slimmer fit stay true to size; for a more relaxed fit go one size up. Model 182 cm / 78 kg wears M.",
+      "care": null,
+      "stockAsIndexed": "unknown",
+      "colourFromName": "navy",
+      "print": null,
+      "verification": {
+        "method": "search-index snapshot of KAI’s own pages",
+        "checkedAt": "2026-10-14",
+        "name": "verified (indexed product/collection/home page)",
+        "url": "verified (product URL indexed)",
+        "price": "verified (dated snapshot, not live)",
+        "sizes": "read from sibling products — flagged in UI",
+        "material": "verified (indexed product copy)",
+        "stock": "not captured",
+        "photography": "none — kaicollections.com unreachable; illustrative flat shown and labelled"
+      },
+      "sources": [
+        "https://kaicollections.com/products/navy-linen-pants",
+        "https://kaicollections.com/collections/linen-pants"
+      ],
+      "notes": null,
+      "usageRestrictions": "Factual product data cited for an unofficial concept. Product photography is not included; when synced it is hotlinked from KAI’s CDN and not committed."
+    },
+    {
+      "slug": "beige-linen-pants",
+      "name": "Men's Beige Linen Pants",
+      "department": "men",
+      "garment": "pants",
+      "categories": [
+        "linen"
+      ],
+      "collections": [],
+      "officialUrl": "https://kaicollections.com/products/beige-linen-pants",
+      "outboundLink": "https://kaicollections.com/products/beige-linen-pants",
+      "currency": "EGP",
+      "price": 1150,
+      "compareAtPrice": 2299,
+      "sizes": [
+        "S (30)",
+        "M (32)",
+        "L (34)",
+        "XL (36)",
+        "2XL (38)"
+      ],
+      "material": "100% pure linen",
+      "details": [
+        "Relaxed fit",
+        "Zip-and-button closure with elastic waistband"
+      ],
+      "fit": "KAI: for a slimmer fit stay true to size; for a more relaxed fit go one size up.",
+      "care": null,
+      "stockAsIndexed": "sold-out",
+      "colourFromName": "beige",
+      "print": null,
+      "verification": {
+        "method": "search-index snapshot of KAI’s own pages",
+        "checkedAt": "2026-10-14",
+        "name": "verified (indexed product/collection/home page)",
+        "url": "verified (product URL indexed)",
+        "price": "verified (dated snapshot, not live)",
+        "sizes": "verified on this product page",
+        "material": "verified (indexed product copy)",
+        "stock": "as indexed — not live inventory",
+        "photography": "none — kaicollections.com unreachable; illustrative flat shown and labelled"
+      },
+      "sources": [
+        "https://kaicollections.com/products/beige-linen-pants",
+        "https://kaicollections.com/collections/summer-sale"
+      ],
+      "notes": "Product page: EGP 2,299.00 → EGP 1,150.00; the summer sale page showed EGP 2,250.00 → EGP 1,450.00 on a different date. Snapshot marked sizes unavailable.",
+      "usageRestrictions": "Factual product data cited for an unofficial concept. Product photography is not included; when synced it is hotlinked from KAI’s CDN and not committed."
+    },
+    {
+      "slug": "cream-knitted-crew-neck-sweater",
+      "name": "Cream Knitted Crew Neck Sweater",
+      "department": "men",
+      "garment": "sweater",
+      "categories": [
+        "knitwear",
+        "everyday"
+      ],
+      "collections": [
+        "fw25"
+      ],
+      "officialUrl": "https://kaicollections.com/products/cream-knitted-crew-neck-sweater",
+      "outboundLink": "https://kaicollections.com/products/cream-knitted-crew-neck-sweater",
+      "currency": "EGP",
+      "price": 1199,
+      "compareAtPrice": 1699,
+      "sizes": [
+        "S",
+        "M",
+        "L",
+        "XL",
+        "2XL"
+      ],
+      "material": "100% cotton",
+      "details": [
+        "Crew neck",
+        "Cream white"
+      ],
+      "fit": "Model is 183 cm and wears size L.",
+      "care": null,
+      "stockAsIndexed": "sold-out",
+      "colourFromName": "cream",
+      "print": null,
+      "verification": {
+        "method": "search-index snapshot of KAI’s own pages",
+        "checkedAt": "2026-10-14",
+        "name": "verified (indexed product/collection/home page)",
+        "url": "verified (product URL indexed)",
+        "price": "verified (dated snapshot, not live)",
+        "sizes": "range endpoints verified; intermediate labels follow KAI’s order",
+        "material": "verified (indexed product copy)",
+        "stock": "as indexed — not live inventory",
+        "photography": "none — kaicollections.com unreachable; illustrative flat shown and labelled"
+      },
+      "sources": [
+        "https://kaicollections.com/products/cream-knitted-crew-neck-sweater",
+        "https://kaicollections.com/collections/winter-collection"
+      ],
+      "notes": null,
+      "usageRestrictions": "Factual product data cited for an unofficial concept. Product photography is not included; when synced it is hotlinked from KAI’s CDN and not committed."
+    },
+    {
+      "slug": "olive-acid-wash-oversized-t-shirt",
+      "name": "Olive Acid Wash Oversized T-Shirt",
+      "department": "men",
+      "garment": "tee",
+      "categories": [
+        "everyday"
+      ],
+      "collections": [],
+      "officialUrl": "https://kaicollections.com/products/olive-acid-wash-oversized-t-shirt",
+      "outboundLink": "https://kaicollections.com/products/olive-acid-wash-oversized-t-shirt",
+      "currency": "EGP",
+      "price": 499,
+      "compareAtPrice": 999,
+      "sizes": [],
+      "material": "260 GSM heavyweight cotton",
+      "details": [
+        "Distressed acid-wash finish",
+        "Oversized fit",
+        "Crew neck"
+      ],
+      "fit": null,
+      "care": null,
+      "stockAsIndexed": "unknown",
+      "colourFromName": "olive",
+      "print": null,
+      "verification": {
+        "method": "search-index snapshot of KAI’s own pages",
+        "checkedAt": "2026-10-14",
+        "name": "verified (indexed product/collection/home page)",
+        "url": "verified (product URL indexed)",
+        "price": "verified (dated snapshot, not live)",
+        "sizes": "not captured",
+        "material": "verified (indexed product copy)",
+        "stock": "not captured",
+        "photography": "none — kaicollections.com unreachable; illustrative flat shown and labelled"
+      },
+      "sources": [
+        "https://kaicollections.com/products/olive-acid-wash-oversized-t-shirt"
+      ],
+      "notes": null,
+      "usageRestrictions": "Factual product data cited for an unofficial concept. Product photography is not included; when synced it is hotlinked from KAI’s CDN and not committed."
+    },
+    {
+      "slug": "unisex-beige-cargo-sweatpants",
+      "name": "Unisex Beige Cargo Sweatpants",
+      "department": "unisex",
+      "garment": "sweatpants",
+      "categories": [
+        "everyday"
+      ],
+      "collections": [],
+      "officialUrl": "https://kaicollections.com/products/unisex-beige-cargo-sweatpants",
+      "outboundLink": "https://kaicollections.com/products/unisex-beige-cargo-sweatpants",
+      "currency": "EGP",
+      "price": 750,
+      "compareAtPrice": 1299,
+      "sizes": [],
+      "material": "100% cotton French terry",
+      "details": [
+        "Nylon pockets",
+        "Elastic drawstring waistband"
+      ],
+      "fit": null,
+      "care": null,
+      "stockAsIndexed": "unknown",
+      "colourFromName": "beige",
+      "print": null,
+      "verification": {
+        "method": "search-index snapshot of KAI’s own pages",
+        "checkedAt": "2026-10-14",
+        "name": "verified (indexed product/collection/home page)",
+        "url": "verified (product URL indexed)",
+        "price": "verified (dated snapshot, not live)",
+        "sizes": "not captured",
+        "material": "verified (indexed product copy)",
+        "stock": "not captured",
+        "photography": "none — kaicollections.com unreachable; illustrative flat shown and labelled"
+      },
+      "sources": [
+        "https://kaicollections.com/products/unisex-beige-cargo-sweatpants"
+      ],
+      "notes": null,
+      "usageRestrictions": "Factual product data cited for an unofficial concept. Product photography is not included; when synced it is hotlinked from KAI’s CDN and not committed."
+    },
+    {
+      "slug": "grey-long-sleeve-t-shirt",
+      "name": "Grey Long Sleeve T-Shirt",
+      "department": "men",
+      "garment": "tee-long",
+      "categories": [
+        "everyday"
+      ],
+      "collections": [],
+      "officialUrl": "https://kaicollections.com/products/grey-long-sleeve-t-shirt",
+      "outboundLink": "https://kaicollections.com/products/grey-long-sleeve-t-shirt",
+      "currency": "EGP",
+      "price": 699,
+      "compareAtPrice": null,
+      "sizes": [],
+      "material": null,
+      "details": [],
+      "fit": null,
+      "care": null,
+      "stockAsIndexed": "sold-out",
+      "colourFromName": "grey",
+      "print": null,
+      "verification": {
+        "method": "search-index snapshot of KAI’s own pages",
+        "checkedAt": "2026-10-14",
+        "name": "verified (indexed product/collection/home page)",
+        "url": "verified (product URL indexed)",
+        "price": "verified (dated snapshot, not live)",
+        "sizes": "not captured",
+        "material": "not captured",
+        "stock": "as indexed — not live inventory",
+        "photography": "none — kaicollections.com unreachable; illustrative flat shown and labelled"
+      },
+      "sources": [
+        "https://kaicollections.com/products/grey-long-sleeve-t-shirt"
+      ],
+      "notes": null,
+      "usageRestrictions": "Factual product data cited for an unofficial concept. Product photography is not included; when synced it is hotlinked from KAI’s CDN and not committed."
+    },
+    {
+      "slug": "mini-sky-penguins",
+      "name": "Mini Sky Penguins",
+      "department": "kids",
+      "garment": "kids-swim-short",
+      "categories": [
+        "swimwear"
+      ],
+      "collections": [
+        "like-father-like-son"
+      ],
+      "officialUrl": "https://kaicollections.com/products/mini-sky-penguins",
+      "outboundLink": "https://kaicollections.com/products/mini-sky-penguins",
+      "currency": "EGP",
+      "price": 799,
+      "compareAtPrice": 899,
+      "sizes": [
+        "2Y",
+        "4Y",
+        "6Y",
+        "8Y",
+        "10Y",
+        "12Y"
+      ],
+      "material": null,
+      "details": [
+        "Part of KAI's Like Father, Like Son matching line"
+      ],
+      "fit": null,
+      "care": null,
+      "stockAsIndexed": "sold-out",
+      "colourFromName": "sky",
+      "print": "Sky Penguins",
+      "verification": {
+        "method": "search-index snapshot of KAI’s own pages",
+        "checkedAt": "2026-10-14",
+        "name": "verified (indexed product/collection/home page)",
+        "url": "verified (product URL indexed)",
+        "price": "verified (dated snapshot, not live)",
+        "sizes": "range endpoints verified; intermediate labels follow KAI’s order",
+        "material": "not captured",
+        "stock": "as indexed — not live inventory",
+        "photography": "none — kaicollections.com unreachable; illustrative flat shown and labelled"
+      },
+      "sources": [
+        "https://kaicollections.com/products/mini-sky-penguins",
+        "https://kaicollections.com/collections/kids-swimwear"
+      ],
+      "notes": null,
+      "usageRestrictions": "Factual product data cited for an unofficial concept. Product photography is not included; when synced it is hotlinked from KAI’s CDN and not committed."
+    },
+    {
+      "slug": "mini-funky-fish",
+      "name": "Mini Funky Fish",
+      "department": "kids",
+      "garment": "kids-swim-short",
+      "categories": [
+        "swimwear"
+      ],
+      "collections": [
+        "like-father-like-son"
+      ],
+      "officialUrl": "https://kaicollections.com/products/mini-funky-fish",
+      "outboundLink": "https://kaicollections.com/products/mini-funky-fish",
+      "currency": "EGP",
+      "price": 559,
+      "compareAtPrice": null,
+      "sizes": [
+        "2Y",
+        "4Y",
+        "6Y",
+        "8Y",
+        "10Y",
+        "12Y"
+      ],
+      "material": null,
+      "details": [
+        "Part of KAI's Like Father, Like Son matching line"
+      ],
+      "fit": null,
+      "care": null,
+      "stockAsIndexed": "sold-out",
+      "colourFromName": null,
+      "print": "Funky Fish",
+      "verification": {
+        "method": "search-index snapshot of KAI’s own pages",
+        "checkedAt": "2026-10-14",
+        "name": "verified (indexed product/collection/home page)",
+        "url": "verified (product URL indexed)",
+        "price": "verified (dated snapshot, not live)",
+        "sizes": "range endpoints verified; intermediate labels follow KAI’s order",
+        "material": "not captured",
+        "stock": "as indexed — not live inventory",
+        "photography": "none — kaicollections.com unreachable; illustrative flat shown and labelled"
+      },
+      "sources": [
+        "https://kaicollections.com/products/mini-funky-fish"
+      ],
+      "notes": null,
+      "usageRestrictions": "Factual product data cited for an unofficial concept. Product photography is not included; when synced it is hotlinked from KAI’s CDN and not committed."
+    },
+    {
+      "slug": "mini-origami-elephants",
+      "name": "Mini Origami Elephants",
+      "department": "kids",
+      "garment": "kids-swim-short",
+      "categories": [
+        "swimwear"
+      ],
+      "collections": [
+        "like-father-like-son"
+      ],
+      "officialUrl": "https://kaicollections.com/products/mini-origami-elephants",
+      "outboundLink": "https://kaicollections.com/products/mini-origami-elephants",
+      "currency": "EGP",
+      "price": 299,
+      "compareAtPrice": null,
+      "sizes": [
+        "2Y",
+        "4Y",
+        "6Y",
+        "8Y",
+        "10Y",
+        "12Y"
+      ],
+      "material": "100% polyester",
+      "details": [
+        "Mesh underwear lining",
+        "Elastic drawstring waistband",
+        "Two front pockets and a Velcro back pocket",
+        "Fabric treated against chlorine, salt water and UV",
+        "Soft touch, lightweight, quick drying"
+      ],
+      "fit": null,
+      "care": null,
+      "stockAsIndexed": "sold-out",
+      "colourFromName": null,
+      "print": "Origami Elephants",
+      "verification": {
+        "method": "search-index snapshot of KAI’s own pages",
+        "checkedAt": "2026-10-14",
+        "name": "verified (indexed product/collection/home page)",
+        "url": "verified (product URL indexed)",
+        "price": "verified (dated snapshot, not live)",
+        "sizes": "range endpoints verified; intermediate labels follow KAI’s order",
+        "material": "verified (indexed product copy)",
+        "stock": "as indexed — not live inventory",
+        "photography": "none — kaicollections.com unreachable; illustrative flat shown and labelled"
+      },
+      "sources": [
+        "https://kaicollections.com/products/mini-origami-elephants"
+      ],
+      "notes": null,
+      "usageRestrictions": "Factual product data cited for an unofficial concept. Product photography is not included; when synced it is hotlinked from KAI’s CDN and not committed."
+    },
+    {
+      "slug": "mini-olive-camels-swim-shorts",
+      "name": "Mini Olive Camels Swim Shorts",
+      "department": "kids",
+      "garment": "kids-swim-short",
+      "categories": [
+        "swimwear"
+      ],
+      "collections": [],
+      "officialUrl": "https://kaicollections.com/products/mini-olive-camels-swim-shorts",
+      "outboundLink": "https://kaicollections.com/products/mini-olive-camels-swim-shorts",
+      "currency": "EGP",
+      "price": 899,
+      "compareAtPrice": null,
+      "sizes": [],
+      "material": "100% polyester",
+      "details": [
+        "Mesh liner",
+        "Drawstring waist",
+        "Velcro back pocket",
+        "Fabric treated against chlorine, salt water and UV"
+      ],
+      "fit": null,
+      "care": "Rinse after use. Do not tumble dry.",
+      "stockAsIndexed": "unknown",
+      "colourFromName": "olive",
+      "print": "Olive Camels",
+      "verification": {
+        "method": "search-index snapshot of KAI’s own pages",
+        "checkedAt": "2026-10-14",
+        "name": "verified (indexed product/collection/home page)",
+        "url": "verified (product URL indexed)",
+        "price": "verified (dated snapshot, not live)",
+        "sizes": "not captured",
+        "material": "verified (indexed product copy)",
+        "stock": "not captured",
+        "photography": "none — kaicollections.com unreachable; illustrative flat shown and labelled"
+      },
+      "sources": [
+        "https://kaicollections.com/products/mini-olive-camels-swim-shorts"
+      ],
+      "notes": null,
+      "usageRestrictions": "Factual product data cited for an unofficial concept. Product photography is not included; when synced it is hotlinked from KAI’s CDN and not committed."
+    },
+    {
+      "slug": "mini-yellow-zebra-swim-shorts",
+      "name": "Mini Yellow Zebra Swim Shorts",
+      "department": "kids",
+      "garment": "kids-swim-short",
+      "categories": [
+        "swimwear"
+      ],
+      "collections": [],
+      "officialUrl": null,
+      "outboundLink": "https://kaicollections.com/search?q=Mini%20Yellow%20Zebra%20Swim%20Shorts&type=product",
+      "currency": "EGP",
+      "price": null,
+      "compareAtPrice": null,
+      "sizes": [],
+      "material": null,
+      "details": [],
+      "fit": null,
+      "care": null,
+      "stockAsIndexed": "unknown",
+      "colourFromName": "yellow",
+      "print": "Yellow Zebra",
+      "verification": {
+        "method": "search-index snapshot of KAI’s own pages",
+        "checkedAt": "2026-10-14",
+        "name": "verified (indexed product/collection/home page)",
+        "url": "not indexed — outbound link uses KAI’s own search",
+        "price": "not captured — no price shown",
+        "sizes": "not captured",
+        "material": "not captured",
+        "stock": "not captured",
+        "photography": "none — kaicollections.com unreachable; illustrative flat shown and labelled"
+      },
+      "sources": [
+        "https://kaicollections.com/collections/kids-collection-bs"
+      ],
+      "notes": "Listed on a KAI kids collection page; the snippet showed both EGP 630 and EGP 899 beside it, so no price is shown here.",
+      "usageRestrictions": "Factual product data cited for an unofficial concept. Product photography is not included; when synced it is hotlinked from KAI’s CDN and not committed."
+    }
+  ]
+}

@@ -1,0 +1,105 @@
+{
+  "generatedAt": "2026-10-15",
+  "summary": "No KAI photography, logo files or third-party stock imagery are in this repository. Every visual is either rendered in code, typeset, or a screenshot of this concept itself.",
+  "kaiAssets": [
+    {
+      "slot": "Product photography (all products)",
+      "status": "missing",
+      "reason": "kaicollections.com and its CDN paths were unreachable from the build environment",
+      "resolution": "`npm run sync` hotlinks KAI’s own images from cdn.shopify.com into every product card, gallery and quick view; files are not downloaded into the repo."
+    },
+    {
+      "slot": "Campaign photography (hero, editorial, journal, film closing scene)",
+      "status": "missing",
+      "reason": "Instagram and KAI campaign pages unreachable",
+      "resolution": "Requires KAI-supplied files with usage permission; until then rendered light studies are used and labelled."
+    },
+    {
+      "slot": "Official KAI logo",
+      "status": "missing",
+      "reason": "not visible to the build",
+      "resolution": "Wordmark is typeset in Fraunces and labelled as not the official logo; swap the `Wordmark` component for KAI’s SVG."
+    },
+    {
+      "slot": "Screenshots of the current kaicollections.com (film BEFORE)",
+      "status": "missing",
+      "reason": "site unreachable",
+      "resolution": "`npm run capture:before` then `npm run render`. Captures are git-ignored (third-party UI)."
+    }
+  ],
+  "projectAssets": [
+    {
+      "asset": "Seascape (sky, sun, sea, sand, wordmark reflection)",
+      "kind": "WebGL shader",
+      "file": "src/gl/sea.ts",
+      "origin": "original code",
+      "depicts": "abstract light and water — no real location",
+      "rights": "project"
+    },
+    {
+      "asset": "Material studies (linen, swim tricot, mesh, nylon–elastane, knit, jersey, French terry)",
+      "kind": "procedural canvas",
+      "file": "src/gl/materials.ts",
+      "origin": "original code",
+      "depicts": "generic textile structures, not specific KAI garments",
+      "rights": "project"
+    },
+    {
+      "asset": "Illustrative garment flats (19 garment types)",
+      "kind": "SVG",
+      "file": "src/components/GarmentFlat.tsx",
+      "origin": "original drawings",
+      "depicts": "garment type, coloured only by the colour in the product name; prints never drawn",
+      "rights": "project"
+    },
+    {
+      "asset": "Whitewashed arches",
+      "kind": "SVG",
+      "file": "src/home/Horizon.tsx",
+      "origin": "original drawing",
+      "depicts": "generic architecture, no real place",
+      "rights": "project"
+    },
+    {
+      "asset": "Fraunces Variable",
+      "kind": "font",
+      "file": "@fontsource-variable/fraunces",
+      "origin": "Undercase Type",
+      "depicts": "—",
+      "rights": "SIL Open Font License 1.1"
+    },
+    {
+      "asset": "Jost Variable",
+      "kind": "font",
+      "file": "@fontsource-variable/jost",
+      "origin": "indestructible type*",
+      "depicts": "—",
+      "rights": "SIL Open Font License 1.1"
+    },
+    {
+      "asset": "Favicon",
+      "kind": "SVG",
+      "file": "public/favicon.svg",
+      "origin": "original",
+      "depicts": "sun on a horizon",
+      "rights": "project"
+    },
+    {
+      "asset": "Film plates",
+      "kind": "JPEG screenshots",
+      "file": "public/film/plates/",
+      "count": 18,
+      "bytes": 2776102,
+      "origin": "`npm run capture:plates` — screenshots of this concept",
+      "rights": "project"
+    },
+    {
+      "asset": "Film soundtrack",
+      "kind": "synthesised audio",
+      "file": "scripts/make-audio.mjs",
+      "origin": "original code, no samples",
+      "depicts": "—",
+      "rights": "project"
+    }
+  ]
+}

@@ -45,6 +45,7 @@ export function Nav() {
   const [mega, setMega] = useState(false);
   const home = loc.pathname === '/';
   const timer = useRef<number>(0);
+  const hoverOpenedAt = useRef(0);
   useEffect(() => {
     const on = () => setScrolled(window.scrollY > 24);
     on();
@@ -56,7 +57,10 @@ export function Nav() {
   const qty = bag.reduce((a, l) => a + l.qty, 0);
   const open = () => {
     window.clearTimeout(timer.current);
-    setMega(true);
+    setMega((m) => {
+      if (!m) hoverOpenedAt.current = Date.now();
+      return true;
+    });
   };
   const close = () => {
     timer.current = window.setTimeout(() => setMega(false), 160);
@@ -76,7 +80,8 @@ export function Nav() {
               className="nav__link label"
               aria-expanded={mega}
               aria-controls="mega"
-              onClick={() => setMega((m) => !m)}
+              // a click straight after hover-open keeps the menu open instead of toggling it shut
+              onClick={() => setMega((m) => (m && Date.now() - hoverOpenedAt.current < 600 ? true : !m))}
               data-testid="shop-menu"
             >
               Shop

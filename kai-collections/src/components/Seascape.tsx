@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { createSea, cssFallback, wordmarkCanvas, type Light, type SeaRenderer } from '../gl/sea';
 import { usePrefersReducedMotion } from '../lib/hooks';
 
@@ -14,8 +14,11 @@ export interface SeascapeProps {
   textSize?: number;
   textOn?: number;
   textLift?: number;
+  /** Generate the wordmark for this horizon and follow the live horizon by offset (no texture rebuilds). */
+  textHorizon?: number;
   interactive?: boolean;
   sunShift?: number;
+  glow?: number;
   grain?: number;
   maxDpr?: number;
   className?: string;
@@ -33,8 +36,10 @@ export function Seascape({
   textSize = 0.42,
   textOn = 1,
   textLift = 0,
+  textHorizon,
   interactive = false,
   sunShift = 0,
+  glow = 1,
   grain = 0.022,
   maxDpr = 1.5,
   className,
@@ -48,8 +53,8 @@ export function Seascape({
   const visible = useRef(true);
   const pointer = useRef<[number, number]>([0, 0]);
   const target = useRef<[number, number]>([0, 0]);
-  const props = useRef({ light, horizon, sand, calm, time, textOn, textLift, sunShift, grain });
-  props.current = { light, horizon, sand, calm, time, textOn, textLift, sunShift, grain };
+  const props = useRef({ light, horizon, sand, calm, time, textOn, textLift, sunShift, glow, grain });
+  props.current = { light, horizon, sand, calm, time, textOn, textLift, sunShift, glow, grain };
   const t0 = useRef(performance.now());
   const draw = useRef<() => void>(() => {});
 
@@ -92,8 +97,9 @@ export function Seascape({
       calm: P.calm,
       pointer: pointer.current,
       textOn: text ? P.textOn : 0,
-      textLift: P.textLift,
+      textLift: P.textLift + (textHorizon !== undefined ? textHorizon - P.horizon : 0),
       sunShift: P.sunShift,
+      glow: P.glow,
       grain: P.grain,
     });
     ref.current!.dataset.ready = '1';
@@ -108,7 +114,7 @@ export function Seascape({
     if (text) {
       const make = () => {
         if (cancelled) return;
-        s.setText(wordmarkCanvas(size[0], size[1], props.current.horizon, text, textSize));
+        s.setText(wordmarkCanvas(size[0], size[1], textHorizon ?? props.current.horizon, text, textSize));
         draw.current();
       };
       if (document.fonts?.load) document.fonts.load(`300 64px "Fraunces Variable"`).then(make, make);
@@ -118,10 +124,11 @@ export function Seascape({
     return () => {
       cancelled = true;
     };
-  }, [size, text, textSize, horizon]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [size, text, textSize, textHorizon === undefined ? horizon : textHorizon]);
 
-  // controlled or reduced: redraw on change
-  useEffect(() => {
+  // controlled (film) or reduced motion: draw synchronously on every change
+  useLayoutEffect(() => {
     if (time !== undefined || reduced) draw.current();
   });
 

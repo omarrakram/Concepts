@@ -4,8 +4,8 @@ import { Seascape } from '../components/Seascape';
 import { FlatStage } from '../components/ProductMedia';
 import { ConceptTag, Icon, Kicker, Price } from '../components/ui';
 import { BY_SLUG } from '../data/catalog';
-import { lightAlong, type LightKey } from '../gl/sea';
-import { useIsMobile, usePrefersReducedMotion, useScrollProgress } from '../lib/hooks';
+import { cssFallback, lightAlong, seaStill, type LightKey } from '../gl/sea';
+import { useIdleValue, useIsMobile, usePrefersReducedMotion, useReveal, useScrollProgress } from '../lib/hooks';
 
 export interface Chapter {
   id: string;
@@ -115,8 +115,8 @@ export function Arches({ rise, horizon }: { rise: number; horizon: number }) {
 }
 
 /** d: signed distance (in chapters) from this chapter's centre. */
-function ChapterView({ c, d, mobile }: { c: Chapter; d: number; mobile: boolean }) {
-  const op = Math.max(0, Math.min(1, (0.5 - Math.abs(d)) * 4));
+function ChapterView({ c, d, mobile, sharp = false }: { c: Chapter; d: number; mobile: boolean; sharp?: boolean }) {
+  const op = Math.max(0, Math.min(1, (0.5 - Math.abs(d)) * (sharp ? 9 : 4)));
   const p = c.product ? BY_SLUG.get(c.product) : undefined;
   const q = c.second ? BY_SLUG.get(c.second) : undefined;
   const drift = -d * (mobile ? 34 : 48);
@@ -161,12 +161,29 @@ function ChapterView({ c, d, mobile }: { c: Chapter; d: number; mobile: boolean 
   );
 }
 
-export function HorizonStage({ p, time, mobile, interactive = true }: { p: number; time?: number; mobile: boolean; interactive?: boolean }) {
+export function HorizonStage({
+  p,
+  time,
+  mobile,
+  interactive = true,
+  sea = true,
+  sharp = false,
+}: {
+  p: number;
+  time?: number;
+  mobile: boolean;
+  interactive?: boolean;
+  /** false when a shared sea is drawn behind the stage (the film) */
+  sea?: boolean;
+  /** quicker chapter swaps (the film) */
+  sharp?: boolean;
+}) {
   const st = horizonState(p);
-  const horizon = mobile ? 0.34 : 0.3;
+  const horizon = 0.3;
   const n = CHAPTERS.length;
   return (
     <div className={`hz-stage hz-stage--${CHAPTERS[st.idx].tone}`} style={{ ['--hz' as string]: `${horizon * 100}%` }}>
+      {sea && (
       <Seascape
         className="hz-sea"
         light={st.light}
@@ -177,10 +194,11 @@ export function HorizonStage({ p, time, mobile, interactive = true }: { p: numbe
         maxDpr={mobile ? 1.1 : 1.35}
         label="Rendered horizon: light moving from morning to blue hour"
       />
+      )}
       <Arches rise={st.arches} horizon={horizon} />
       <div className="hz-chapters wrap">
         {CHAPTERS.map((c, i) => (
-          <ChapterView key={c.id} c={c} d={p * (n - 1) - i} mobile={mobile} />
+          <ChapterView key={c.id} c={c} d={p * (n - 1) - i} mobile={mobile} sharp={sharp} />
         ))}
       </div>
       <div className="hz-rail wrap" aria-hidden="true">
@@ -199,6 +217,27 @@ export function HorizonStage({ p, time, mobile, interactive = true }: { p: numbe
   );
 }
 
+/** Reduced motion: each moment of the day as a still (one shared WebGL context renders all five). */
+function StaticChapter({ i, mobile }: { i: number; mobile: boolean }) {
+  const p = i / (CHAPTERS.length - 1);
+  const st = horizonState(p);
+  const [ref, inView] = useReveal<HTMLDivElement>();
+  const still = useIdleValue(
+    () => seaStill(`hz-${i}-${mobile ? 'm' : 'd'}`, mobile ? 780 : 1600, mobile ? 1500 : 960, { light: st.light, time: 3 + i, horizon: 0.3, sand: st.sand }),
+    [i, mobile],
+    inView,
+  );
+  return (
+    <div
+      ref={ref}
+      className="horizon__static"
+      style={still ? { backgroundImage: `url(${still})`, backgroundSize: 'cover', backgroundPosition: 'center' } : { background: cssFallback(st.light, 0.3) }}
+    >
+      <HorizonStage p={p} mobile={mobile} interactive={false} sea={false} />
+    </div>
+  );
+}
+
 /** 02 — The Horizon. */
 export function Horizon() {
   const ref = useRef<HTMLElement>(null);
@@ -213,9 +252,7 @@ export function Horizon() {
           <h2 id="hz-title" className="display">One day on the water</h2>
         </div>
         {CHAPTERS.map((c, i) => (
-          <div key={c.id} className="horizon__static">
-            <HorizonStage p={i / (CHAPTERS.length - 1)} mobile={mobile} interactive={false} />
-          </div>
+          <StaticChapter key={c.id} i={i} mobile={mobile} />
         ))}
       </section>
     );

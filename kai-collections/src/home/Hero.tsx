@@ -36,6 +36,7 @@ export function Hero() {
         textSize={mobile ? 0.6 : 0.44}
         textOn={Math.min(1, k * 1.6)}
         textLift={(1 - k) * 0.32}
+        glow={mobile ? 0.55 : 0.85}
         interactive
         maxDpr={mobile ? 1.25 : 1.5}
         label="KAI wordmark standing on a rendered horizon, reflected in moving water"

@@ -1,0 +1,384 @@
+/* ---------- player (letterboxed) ---------- */
+.player {
+  position: fixed;
+  inset: 0;
+  background: #0d1f26;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 18px;
+  color: #f5f1e9;
+}
+.player__frame {
+  position: relative;
+  overflow: hidden;
+  border-radius: 6px;
+  box-shadow: 0 40px 120px -30px rgba(0, 0, 0, 0.7);
+}
+.player__frame iframe {
+  position: absolute;
+  left: 0;
+  top: 0;
+  border: 0;
+  transform-origin: 0 0;
+  background: #000;
+}
+.player__bar {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  opacity: 0.8;
+}
+.player__bar a,
+.player__bar button {
+  color: inherit;
+}
+
+/* ---------- stage ---------- */
+/* every frame is a pure function of t: no CSS transitions or keyframes inside the film */
+.film *,
+.film *::before,
+.film *::after {
+  transition: none !important;
+  animation: none !important;
+}
+html.film-doc,
+html.film-doc body {
+  overflow: hidden;
+  background: #000;
+}
+.film {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--salt);
+  isolation: isolate;
+}
+.film--msg {
+  display: grid;
+  place-items: center;
+  font-family: var(--sans);
+  font-size: 13px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 40px;
+  text-align: center;
+}
+.film-sea {
+  position: absolute;
+  inset: 0;
+  will-change: transform;
+}
+.film-sea .seascape {
+  position: absolute;
+  inset: 0;
+}
+.strip,
+.scene,
+.devices,
+.lockup {
+  position: absolute;
+  inset: 0;
+}
+.strip img,
+.before__cap img {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 768px;
+  display: block;
+}
+.plate {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: var(--salt);
+}
+.plate img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.plate__dim {
+  position: absolute;
+  inset: 0;
+  background: #173843;
+}
+
+/* hero + horizon overlays reuse the site's own classes */
+.film .film-hero.hero {
+  position: absolute;
+  inset: 0;
+  height: 768px;
+  min-height: 0;
+  background: none;
+  overflow: visible;
+}
+.film .film-hz.horizon {
+  position: absolute;
+  inset: 0;
+  height: 768px;
+  background: none;
+}
+.film .film-hz .horizon__head {
+  top: calc(var(--nav-h) + 14px);
+}
+.film .film-hz .horizon__head .kicker {
+  color: inherit;
+}
+.film .film-hz[data-tone='light'] .horizon__head {
+  color: var(--ivory);
+}
+.film-nav {
+  pointer-events: none;
+}
+.film .film-bar {
+  position: absolute;
+  display: flex;
+}
+.lockup::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 48%;
+  background: linear-gradient(0deg, rgba(12, 26, 34, 0.55), rgba(12, 26, 34, 0));
+}
+
+/* ---------- BEFORE ---------- */
+.before {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+}
+.before__in {
+  position: absolute;
+  inset: 0;
+  background: #fff;
+  transform-origin: 50% 0;
+}
+.before__cap {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+.before__flash {
+  position: absolute;
+  inset: 0;
+  background: #fff;
+}
+.before__meta {
+  position: absolute;
+  left: 24px;
+  bottom: 196px;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  padding: 4px 9px;
+  border-radius: 99px;
+  font-size: 8.5px;
+}
+.before__text {
+  position: absolute;
+  inset: 0;
+  background: #fbfbfa;
+  color: #222;
+  font-family: -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  padding: 116px 26px 0;
+  overflow: hidden;
+}
+.before__url {
+  font-size: 12px;
+  color: #777;
+  border-bottom: 1px solid #e4e4e4;
+  padding-bottom: 10px;
+  margin-bottom: 14px;
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+}
+.before__view {
+  position: absolute;
+  left: 26px;
+  right: 26px;
+  top: 146px;
+  height: 352px;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 14px, #000 calc(100% - 24px), transparent 100%);
+  mask-image: linear-gradient(180deg, transparent 0, #000 14px, #000 calc(100% - 24px), transparent 100%);
+}
+.before__lines {
+  display: grid;
+  gap: 0;
+}
+.before__line {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 14px;
+  line-height: 1.35;
+  padding: 9px 0;
+  border-bottom: 1px solid #eee;
+}
+.before__line.is-h {
+  font-size: 20px;
+  font-weight: 600;
+}
+.before__price {
+  color: #555;
+  white-space: nowrap;
+  font-size: 12.5px;
+}
+.before__note {
+  position: absolute;
+  left: 26px;
+  right: 26px;
+  top: 520px;
+  font-size: 10.5px;
+  line-height: 1.45;
+  color: #8a8a8a;
+}
+.before__note code {
+  font-size: 10px;
+}
+.before__step {
+  position: absolute;
+  right: 26px;
+  top: 78px;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #999;
+}
+.tideline {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  margin-top: -1px;
+  z-index: 4;
+  background: linear-gradient(90deg, rgba(255, 246, 224, 0), #fff6e0 20%, #fff 50%, #fff6e0 80%, rgba(255, 246, 224, 0));
+  box-shadow: 0 0 18px 4px rgba(255, 240, 210, 0.75), 0 0 60px 10px rgba(231, 186, 120, 0.35);
+}
+
+/* ---------- chips ---------- */
+.chip-film {
+  position: absolute;
+  left: 24px;
+  top: 76px;
+  z-index: 6;
+  background: rgba(23, 56, 67, 0.82);
+  color: var(--ivory);
+  padding: 6px 11px;
+  border-radius: 99px;
+  font-size: 8.5px;
+  letter-spacing: 0.2em;
+  backdrop-filter: blur(6px);
+}
+.chip-film--before {
+  background: #222;
+}
+
+/* ---------- taps ---------- */
+.tap {
+  position: absolute;
+  width: 0;
+  height: 0;
+  z-index: 8;
+}
+.tap__dot,
+.tap__ring {
+  position: absolute;
+  left: 0;
+  top: 0;
+  border-radius: 50%;
+}
+.tap__dot {
+  width: 30px;
+  height: 30px;
+  background: rgba(255, 253, 247, 0.55);
+  box-shadow: 0 0 0 1px rgba(23, 56, 67, 0.25);
+}
+.tap__ring {
+  width: 64px;
+  height: 64px;
+  border: 2px solid rgba(255, 253, 247, 0.95);
+  box-shadow: 0 0 20px rgba(231, 186, 120, 0.6);
+}
+
+/* ---------- devices ---------- */
+.phone {
+  position: absolute;
+  overflow: hidden;
+  border-radius: 22px;
+  border: 6px solid #0f1d22;
+  background: #0f1d22;
+  box-shadow: 0 40px 70px -24px rgba(5, 15, 20, 0.7);
+}
+.phone img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.phone--main {
+  z-index: 3;
+  border-style: solid;
+  border-color: #0f1d22;
+}
+.devices__title {
+  position: absolute;
+  left: 24px;
+  right: 24px;
+  top: 82px;
+  color: var(--ivory);
+  text-align: center;
+  display: grid;
+  gap: 8px;
+  text-shadow: 0 2px 24px rgba(10, 25, 32, 0.4);
+}
+.devices__title .display {
+  font-size: 40px;
+}
+
+/* ---------- lockup ---------- */
+.lockup {
+  color: var(--ivory);
+  pointer-events: none;
+}
+.lockup__sub {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(100% - var(--hz) + 18px);
+  text-align: center;
+  font-size: 12px;
+  text-indent: 0.6em;
+}
+.lockup__line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(100% - var(--hz) + 46px);
+  text-align: center;
+  font-size: 42px;
+  text-shadow: 0 2px 30px rgba(5, 15, 20, 0.45);
+}
+.lockup__credit {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 566px;
+  display: grid;
+  gap: 5px;
+  text-align: center;
+  font-size: 9px;
+}
+.lockup__fine {
+  opacity: 0.7;
+  font-size: 8px;
+}

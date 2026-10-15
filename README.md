@@ -44,6 +44,14 @@ Today's In Your Shoe running inside an original 2006-era computer (IYS OS): the 
 
 Folder: `IYS-2006/` — routes `/`, `/shop`, `/collections/:handle`, `/search`, `/product/:handle`, `/favorites`, `/stores` and `/showcase`
 
+## KAI COLLECTIONS — The Art of Escape
+
+Unofficial digital redesign concept for KAI Collections (Cairo swimwear and resort wear).
+
+Mediterranean editorial / WebGL seascape / shoppable coastal wardrobe, with a 16-second before/after film.
+
+Folder: `kai-collections/` — routes `/`, `/shop/*`, `/product/:slug`, `/lookbook`, `/about`, `/stores` and `/showcase`
+
 ---
 
 These are unofficial speculative concepts and are not affiliated with the respective brands.
