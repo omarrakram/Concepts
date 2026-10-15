@@ -1,0 +1,42 @@
+{
+  "name": "kai-collections-concept",
+  "version": "1.0.0",
+  "private": true,
+  "description": "KAI COLLECTIONS — The Art of Escape. Unofficial speculative digital concept by Omar Akram. Not affiliated with KAI Collections.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --port 5173",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview --host 127.0.0.1 --port 4173",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:e2e": "playwright test",
+    "sync": "node scripts/sync-catalog.mjs",
+    "capture:before": "node scripts/capture-before.mjs",
+    "capture:plates": "node scripts/capture-plates.mjs",
+    "audio": "node scripts/make-audio.mjs",
+    "render": "node scripts/render.mjs",
+    "verify:video": "node scripts/verify-video.mjs",
+    "shots": "node scripts/site-shots.mjs"
+  },
+  "dependencies": {
+    "@fontsource-variable/fraunces": "^5.3.0",
+    "@fontsource-variable/jost": "^5.3.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "react-router": "^7.18.4"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.56.1",
+    "@types/node": "^26.6.5",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.1.2",
+    "typescript": "~6.0.3",
+    "vite": "^8.3.4",
+    "vitest": "^5.0.4"
+  },
+  "engines": {
+    "node": ">=20.19"
+  }
+}

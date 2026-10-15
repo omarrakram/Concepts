@@ -1,0 +1,15 @@
+node_modules/
+dist/
+.cache/
+.frames/
+test-results/
+playwright-report/
+*.log
+.DS_Store
+
+# Live captures of kaicollections.com are third-party UI: kept local, never published.
+public/film/before/*
+!public/film/before/.gitkeep
+
+# The root .gitignore ignores *.mp4; the finished film is a deliverable of this project.
+!output/kai-before-after-16s.mp4
