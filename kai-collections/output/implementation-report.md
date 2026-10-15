@@ -94,9 +94,21 @@ Engine: the stage is a phone viewport (432 × 768 CSS × 2.5); live parts are th
 - WebGL in headless/software renderers is slow (seconds per first frame); real GPUs render it in milliseconds. A CSS-gradient fallback covers browsers without WebGL.
 - The BEFORE in the delivered MP4 is the labelled text view, not the live site.
 
-## 13. Git
+## 13. Git delivery (verified)
 
-See the delivery section appended below after the push.
+| | |
+| --- | --- |
+| Repository | `omarrakram/Concepts` |
+| Branch | `KAI` (created from `main` @ `b7a6039`; never force-pushed; not merged) |
+| Delivery commit | `298ea3c44e6478b6c50a2a3276a47f93328bab76` — feat(kai): build The Art of Escape digital concept and showcase |
+| Earlier commit on the branch | `5e44053` — site foundation |
+| Push | `git push -u origin KAI` → `* [new branch] KAI -> KAI`; `git ls-remote` and the GitHub API both return `298ea3c` for `refs/heads/KAI` |
+| Pushed tree | 118 files under `kai-collections/` incl. `output/kai-before-after-16s.mp4` (18,368,295 bytes) |
+| Outside `kai-collections/` | only `README.md` (+8 lines: the KAI entry in the project index). No other project touched. |
+| Not committed (by design) | `node_modules/`, `dist/`, `.cache/` (soundtrack WAV), `.frames/`, `test-results/`, `src/data/live/` (KAI storefront data), `public/film/before/*` (third-party UI captures) |
+| Branch link | https://github.com/omarrakram/Concepts/tree/KAI |
+
+This section was added in a follow-up commit on the same branch.
 
 ## 14. Run locally
 
