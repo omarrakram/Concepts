@@ -97,11 +97,14 @@ function Stage() {
   useEffect(() => {
     document.documentElement.classList.add('film-doc');
     (async () => {
-      const pm = await fetch('/film/plates/manifest.json').then((r) => (r.ok ? r.json() : null));
+      // SPA fallbacks (vite preview, most static hosts) answer a missing manifest with index.html and a 200
+      const json = (url: string) =>
+        fetch(url)
+          .then((r) => (r.ok && r.headers.get('content-type')?.includes('json') ? r.json() : null))
+          .catch(() => null);
+      const pm = await json('/film/plates/manifest.json');
       if (!pm) throw new Error('film plates missing — run npm run capture:plates');
-      const bm = await fetch('/film/before/manifest.json')
-        .then((r) => (r.ok && r.headers.get('content-type')?.includes('json') ? r.json() : null))
-        .catch(() => null);
+      const bm = await json('/film/before/manifest.json');
       const urls: string[] = [];
       const walk = (v: unknown) => {
         if (typeof v === 'string' && v.endsWith('.jpg')) urls.push(v);

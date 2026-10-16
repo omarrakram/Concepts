@@ -2,6 +2,7 @@
 
 Part of an **unofficial, speculative redesign concept**. It has no affiliation with KAI Collections and KAI has not endorsed it.
 Research date: **15 October 2026**. This version replaces the 14–15 October draft, which was written from search-engine snapshots before the build container could reach kaicollections.com.
+Fact-checked: **16 October 2026**. Every number, quote, URL, store name and HTTP status below was re-checked against the live site, the repository data (`src/data/catalog.live.json`, final sync of 2026-10-15) or the concept's code. Corrections from that pass carry the date 2026-10-16.
 
 ## Provenance key
 
@@ -9,22 +10,24 @@ Every factual line below carries one of these labels.
 
 | Label | Meaning |
 | --- | --- |
-| **Direct (live site, 2026-10-15)** | Read today from kaicollections.com (pages, `products.json`, `/products/<handle>.js`, `/collections/<handle>.json`) or from a press page that loaded today. "Computed" means a count or price statistic worked out from that live data, mostly from `src/data/catalog.live.json` (the concept's sync of 2026-10-15). |
-| **Indexed (search engines, ≤2026-10-14)** | From the earlier draft, which used search-engine snapshots. These could **not** be re-checked today. They stay in only where they are still useful. |
-| **Press (year)** | Third-party press. When the article loaded today, the label says "re-read directly 2026-10-15". |
+| **Direct (live site, 2026-10-15)** | Read on 15 October from kaicollections.com (pages, `products.json`, `/products/<handle>.js`, `/collections/<handle>.json`). "Computed" means a count or price statistic worked out from that live data, mostly from `src/data/catalog.live.json` (the concept's final sync of 2026-10-15: 374 products, 308 in stock, 66 sold out). Re-checked on 16 October unless a row says otherwise. |
+| **Direct (live site, 2026-10-16)** | Read or recomputed from the live site on 16 October, during the fact-check. Used where the 15 October text was wrong or incomplete. |
+| **Indexed (search engines, ≤2026-10-14)** | From the earlier draft, which used search-engine snapshots. These could **not** be re-checked on 15 or 16 October. They stay in only where they are still useful. |
+| **Press (year)** | Third-party press. When the article loaded, the label says "re-read directly" with the date. |
+| **Repository (2026-10-16)** | A statement about this concept's own code or data, checked in `src/` on 16 October. Not a fact about KAI. |
 
 Interpretation and concept copy are labelled **Interpretation**. They are not facts about KAI.
 
 ## How this was checked, and what could not be
 
-- Pages were fetched with `curl` through the container's proxy. Working copies are in the session scratchpad (`/tmp/claude-0/-home-user/7d32d549-f4a7-5155-9428-e971ba5a40a6/scratchpad/research-agents/brand/`). None of them was saved into the repository.
+- Pages were fetched with `curl` through the container's proxy. Working copies are in the session scratchpad (`/tmp/claude-0/-home-user/7d32d549-f4a7-5155-9428-e971ba5a40a6/scratchpad/research-agents/brand/`, and `…/research-agents/factcheck/live16/` for the 16 October re-check). None of them was saved into the repository.
 - Pages read directly: `/`, `/pages/about-us`, `/pages/store-list`, `/pages/contact-us`, `/products/mini-pink-polar-swim-shorts` (HTML and `.js`), the `.js` endpoints for Tipsy Sardine, Butter Isla, Festival del Mare, Yellow Zebra and Mini Yellow Zebra, every page of `/products.json` (5 pages of up to 250 products), `/collections/{ss26-mens,ss26-womens,ss26-kids-swim}/products.json`, and `/collections/like-father-like-son(.json)`. Six spot-checked products (the five above plus Mini Pink Polar) matched `catalog.live.json` exactly on price and compare-at price.
 - **Could not be reached from this container:**
-  - `kaicollections.ae`: the proxy refused the connection (`403` to `CONNECT`, curl code `000`).
+  - `kaicollections.ae` (home page and `/pages/stores`): the connection fails. curl reports HTTP status `000` because the proxy answers `403` to `CONNECT` (curl error 56). Same result on 15 and 16 October.
   - Facebook, TikTok and LinkedIn: refused the same way.
   - Press sites Egyptian Streets, Flair Magazine, Enterprise, Scoop Empire and Arab News: refused the same way. So was `jay-stores.com`.
-  - `instagram.com/kaicollections.eg`: redirects (`302`) to `/accounts/login/`, so no posts, follower counts or captions could be read.
-  - CairoScene **did** load and was re-read.
+  - `instagram.com/kaicollections.eg`: redirects (`301` to `www.instagram.com/kaicollections.eg`, then `302`) to Instagram's login page `/accounts/login/`. So no posts, follower counts or captions could be read.
+  - CairoScene **did** load (`200`) and was re-read on 15 and 16 October.
 - Not to be confused with KAI Collective (London, kaicollective.com) or other Hawaiian "Kai" labels. Results for those were discarded (Indexed (search engines, ≤2026-10-14)).
 
 ---
@@ -81,11 +84,11 @@ Direct (live site, 2026-10-15), https://kaicollections.com/pages/about-us:
 | Measure | Value | Provenance |
 | --- | --- | --- |
 | Published products in `/products.json` | **1,051**. Recounted page by page today: 1,051 unique handles, all with vendor "Kai Collections" | Direct (live site, 2026-10-15) |
-| …with at least one size available | 470 at the concept's sync, **467** at this recount later the same day (stock moves) | Direct (live site, 2026-10-15) |
-| SS26 department collections (the targets of KAI's "Shop all" links) | Men `ss26-mens` **181** · Women `ss26-womens` **175** · Kids `ss26-kids-swim` **18** = **374**. Recounted today via each collection's `products.json`: identical | Direct (live site, 2026-10-15) |
-| …the collections' own `products_count` field | 185 / 184 / 18. The difference from the public listing could not be explained from outside (possibly products not published to the online store). The concept uses the public listing | Direct (live site, 2026-10-15) |
-| SS26 with at least one size available / sold out | **311** / **63** | Direct (live site, 2026-10-15), computed from catalog.live.json |
-| SS26 photographs | **1,732**. All 374 lead images resolved on 2026-10-15 | Direct (live site, 2026-10-15), from catalog.live.json `imageCheck` |
+| …with at least one size available | 470 when first counted on 2026-10-15; **467** at a recount later that day and again on 2026-10-16 (stock moves) | Direct (live site, 2026-10-15 and 2026-10-16) |
+| SS26 department collections (the targets of KAI's Men › Summer › Shop all, Women › Summer › Shop all and Kids › Kids Swimwear links) | Men `ss26-mens` **181** · Women `ss26-womens` **175** · Kids `ss26-kids-swim` **18** = **374**. Recounted via each collection's `products.json`: identical, and the same 374 handles as catalog.live.json | Direct (live site, 2026-10-15; same on 2026-10-16) |
+| …the collections' own `products_count` field | 185 / 184 / 18. The difference from the public listing could not be explained from outside (possibly products not published to the online store). The concept uses the public listing | Direct (live site, 2026-10-15; same on 2026-10-16) |
+| SS26 with at least one size available / sold out | **308** / **66** at the final sync. An earlier sync the same day measured 311 / 63; stock moved between the two. The live count on 2026-10-16 was also 308 in stock | Direct (live site, 2026-10-15), computed from catalog.live.json `counts` |
+| SS26 photographs | The concept references **1,732** photographs: KAI's first eight per product (7 products have more than eight). On 2026-10-16 the 374 listings carried 1,743 images in all. All 374 lead images resolved on 2026-10-15 | Direct (live site, 2026-10-15), from catalog.live.json `counts` and `imageCheck`; the 1,743 total is Direct (live site, 2026-10-16) |
 | SS26 products also in KAI's "New Arrivals" collection | 270 of 374 | Direct (live site, 2026-10-15), computed |
 | SS26 publication dates | Mostly March–August 2026 (343 of 374). The oldest items still in SS26 collections were published in 2022–2025 | Direct (live site, 2026-10-15), computed |
 | Age of the wider catalogue | Still-published products were created from 2020-01-04 (e.g. "Egyptian Postcard", "Pool Party", "Soda Pop Funk", type "Swimwear") through 2026. Creation year: 2020 9 · 2021 50 · 2022 120 · 2023 146 · 2024 179 · 2025 231 · 2026 316 | Direct (live site, 2026-10-15), computed from products.json |
@@ -115,34 +118,38 @@ By KAI's own sub-collections (a product can sit in several, so the rows overlap)
 - Skirts & dresses: 16
 - Accessories: 6
 
-Swim is **28%** of SS26 (103 of 374). Linen collections hold another 103. Product titles name linen on 117 products, Tencel on 28, knit on 23, crochet on 15 and terry towel on 9. All of this is Direct (live site, 2026-10-15), computed.
+Swim is **28%** of SS26 (103 of 374). Linen collections hold another 103, with no overlap. All of this is Direct (live site, 2026-10-15), computed.
+
+Product titles name linen on 117 products, Tencel on 28, knit on 40 (30 say "knit", 10 say "knitted"), crochet on 15 and terry towel on 9. A title can name more than one, as in "Brown Crochet Knit T-Shirt". Direct (live site, 2026-10-16), computed from KAI's titles. The 15 October text gave 23 for knit. That was the concept's own `fabric` field, which keeps only one fabric per title, not a count of titles.
 
 KAI's own `product_type` field has **52 distinct values** across the 374 SS26 products and **95** across all 1,051 (11 are blank). Several differ only in spelling, for example "Oversized T-shirt" / "Oversized T-Shirt", "Linen Shorts" / "linen shorts", "Kids Swimwear" / "Kid's Swimwear" and "Women's Linen Shirt" / "womens linen shirt". 18 SS26 titles start with a lower-case letter. All of this is Direct (live site, 2026-10-15), computed.
 
 ### Prices by category (EGP)
 
-Direct (live site, 2026-10-15). Computed from catalog.live.json; five products were re-checked live.
+Direct (live site, 2026-10-15). Computed from catalog.live.json (final sync: 308 in stock, 66 sold out). Six products were re-checked live through their `.js` endpoints on 2026-10-16, and all six matched.
 - **Selling** is the price on the site today.
 - **Full** is the compare-at price where it is above the selling price, otherwise the selling price.
 - Each price cell gives min–max with the median in brackets.
 
 | Category (KAI sub-collections) | Products | Selling | Full | With a compare-at price | Sold out |
 | --- | --- | --- | --- | --- | --- |
-| **All SS26** | 374 | 175–2,299 (887) | 350–2,999 (1,689) | 313 (84%) | 63 |
+| **All SS26** | 374 | 175–2,299 (887) | 350–2,999 (1,689) | 313 (84%) | 66 |
 | Men | 181 | 450–2,299 (999) | 750–2,999 (1,699) | 143 (79%) | 17 |
-| Women | 175 | 175–1,679 (850) | 350–2,499 (1,299) | 152 (87%) | 43 |
+| Women | 175 | 175–1,679 (850) | 350–2,499 (1,299) | 152 (87%) | 46 |
 | Kids | 18 | 450–630 (450) | 799–899 (899) | 18 (100%) | 3 |
 | Swimwear | 103 | 450–1,699 (1,190) | 799–2,399 (1,699) | 99 (96%) | 5 |
 | Linen | 103 | 600–2,299 (1,099) | 1,199–2,999 (2,250) | 101 (98%) | 16 |
 | Shirts (men) | 39 | 650–1,750 (1,125) | 1,299–2,499 (2,250) | 37 (95%) | 3 |
-| T-shirts (men) | 40 | 450–999 (799) | 750–1,999 (999) | 23 (57%) | 5 |
+| T-shirts (men) | 40 | 450–999 (799) | 750–1,999 (999) | 23 (58%) | 5 |
 | Knitwear (men) | 29 | 680–850 (750) | 1,399–1,699 (1,699) | 29 (100%) | 5 |
-| Bottoms | 79 | 450–2,299 (999) | 450–2,299 (1,599) | 56 (71%) | 10 |
-| Tops (women) | 46 | 450–1,250 (720) | 599–2,499 (1,349) | 35 (76%) | 12 |
-| Skirts & dresses | 16 | 650–1,299 (750) | 1,299–1,799 (1,499) | 15 (94%) | 4 |
-| Cover ups | 41 | 250–1,299 (450) | 599–2,499 (599) | 33 (80%) | 20 |
+| Bottoms | 79 | 450–2,299 (999) | 450–2,299 (1,599) | 56 (71%) | 11 |
+| Tops (women) | 46 | 450–1,250 (720) | 599–2,499 (1,349) | 35 (76%) | 13 |
+| Skirts & dresses | 16 | 650–1,299 (750) | 1,299–1,799 (1,499) | 15 (94%) | 6 |
+| Cover ups | 41 | 250–1,299 (450) | 599–2,499 (599) | 33 (80%) | 22 |
 | Accessories | 6 | 175 | 350 | 6 (100%) | 5 |
-| Matching sets | 118 | 450–2,299 (999) | 450–2,999 (1,699) | 98 (83%) | 22 |
+| Matching sets | 118 | 450–2,299 (999) | 450–2,999 (1,699) | 98 (83%) | 23 |
+
+The "Sold out" column follows the final sync. The earlier same-day sync gave 63 in all (Women 43, Bottoms 10, Tops 12, Skirts & dresses 4, Cover ups 20, Matching sets 22). Recomputed from the final sync, every price range, median and compare-at count in both tables is the same as before. The T-shirt share is 23 of 40, which is 57.5%, now rounded to 58%.
 
 Key garments:
 
@@ -165,7 +172,8 @@ Direct (live site, 2026-10-15), computed:
 - **84% of SS26 products (313 of 374)** carry a compare-at price above the selling price. The implied discount runs from 25% to 76%, **median 50%**.
 - Swimwear is marked down less (median 30%) than linen, knitwear and shirts (median 50%).
 - Across the whole published catalogue the share is the same: **882 of 1,051 (84%)**. Lowest-variant prices across all 1,051 run from EGP 95 to 2,798 (median 840).
-- 87 SS26 products have every size available. **104 in-stock products that come in more than two sizes have two or fewer sizes left.**
+- 84 SS26 products have every size available. **106 in-stock products that come in more than two sizes have two or fewer sizes left.** These are final-sync figures; the earlier sync gave 87 and 104.
+- KAI's product page leaves sold-out sizes out of its size picker. On Tipsy Sardine Swim Shorts, XL (36-38) was sold out and the picker showed XS, S, M, L, 2XL and 3XL only. Direct (live site, 2026-10-16), rendered in Chromium.
 - Interpretation: the snapshot was taken in mid-October, after the Egyptian summer season, so the markdown level partly reflects timing. Indexed (search engines, ≤2026-10-14) snapshots from earlier in the season also showed frequent 30–60% markdowns.
 
 ### Prints and named styles
@@ -188,7 +196,7 @@ All Direct (live site, 2026-10-15), from catalog.live.json and KAI's titles, spe
   Mini Blue Elephants, Mini Navy Lobster and Mini Pink Monkeys have no SS26 adult counterpart.
 - **Women's one-pieces: 35 pieces in 13 style names**: Perla, Kaia, Sade, Cala, Ayla, Gigi, Glaze, Isla, Nahla, Rimal, Antibes, Alara, Talia.
   - Colourways: Mocha 10, Black 7, Stone 4, Matcha 3, Olive 3, Ivory 3, Rust 2, Teal 1, Pear 1, Butter 1.
-  - 33 list "85% Recycled Polyester, 15% Spandex".
+  - 33 give the composition 85% recycled polyester and 15% spandex. 19 write it as "85% Recycled Polyester, 15% Spandex" and 14 as "85% recycled polyester 15% Spandex". Direct (live site, 2026-10-16), from KAI's descriptions.
 - **Bikinis: 4 style names sold as separates**: Zaria, Iris, Maya, Jouri, in Black, Teal, Mocha, Matcha and Butter.
 - **Two names that the earlier draft could not find now exist:**
   - Tipsy Sardine Swim Shorts: EGP 999, compare-at 1,699.
@@ -198,7 +206,7 @@ All Direct (live site, 2026-10-15), from catalog.live.json and KAI's titles, spe
 - **Older prints are still published outside SS26:**
   - Available: Fruit Salad Swim Shorts, Purple Octopus Swim Shorts.
   - Sold out: Funky Fish, Blue Bandana and Sky Penguins swim shorts.
-  - Funky Fish also appears as "Funky Fish Beaded Tank Top" in the homepage New Arrivals carousel.
+  - The Funky Fish name also appears inside SS26, on the women's "Funky Fish Beaded Tank Top" in the homepage New Arrivals carousel.
 - Interpretation: "Teen Shouki" reads as Egyptian Arabic for prickly pear. That is our reading; KAI does not explain it anywhere we found.
 
 ### Product copy
@@ -214,9 +222,11 @@ All Direct (live site, 2026-10-15):
   - "Model is 192 cm and 88 kg wearing size Medium"
 - Men's swim sizes carry waist ranges, for example "XS (28-30)" to "3XL (40-42)" on Tipsy Sardine.
 - The narrative copy repeats:
-  - 28 of the 34 men's swim shorts open with the same paragraph ("Discover this seasons must-have swimwear for men with our premium mens swim shorts…").
+  - All 30 printed men's swim shorts open with the same paragraph ("Discover this seasons must-have swimwear for men with our premium mens swim shorts…"). The first paragraph's text is identical on all 30, both in the 15 October and the 16 October downloads. The earlier figure of 28 was wrong. Direct (live site, 2026-10-16).
+  - The four "(4 Way Stretch)" solids share a second paragraph ("Introducing our collection of 4-Way Stretch premium men's swim shorts…"). Direct (live site, 2026-10-16).
   - All 18 kids' shorts share one paragraph.
 - **"Made in Egypt" appears on all 34 men's swim shorts and on no other SS26 product.** No SS26 product description mentions Cairo.
+- Outside SS26, "Made in Egypt" appears on 141 more published products, all with KAI's product type "Swimwear". That makes 175 of 1,051 in the whole catalogue. Direct (live site, 2026-10-16), computed from products.json.
 
 ### The "Like Father, Like Son" line, verbatim
 
@@ -236,10 +246,10 @@ All 18 SS26 kids' products contain the same "Like Father, Like Son" paragraph. A
 | "premium swimwear and resort wear" | og:description says "Premium swim & ready-to-wear". The SS26 range is **28% swim**. The rest is ready-to-wear (linen, Tencel, knit, crochet, terry) plus sarongs, cover-ups and scarves. The homepage NEW ARRIVALS carousel opens with women's linen and Tencel pieces, not swim | Direct (live site, 2026-10-15) |
 | Premium positioning | 84% of SS26 products are shown against a higher compare-at price, with a median 50% off. "Sale" is a top-level menu item, and the homepage has "LAST CHANCE / Shop sale" and "FEW PIECES LEFT" modules. Mid-October timing is a factor (Interpretation) | Direct (live site, 2026-10-15) |
 | "for men, women, and children" | SS26 kids is 18 Mini swim shorts only, and their copy addresses "you and your little guy". The menu's Kids item has two entries: Kids Swimwear and Sale | Direct (live site, 2026-10-15) |
-| "local empowerment" / made in Cairo | Origin is stated only on men's swim shorts ("Made in Egypt") and not on linen, knitwear or women's pieces | Direct (live site, 2026-10-15) |
+| "local empowerment" / made in Cairo | In SS26, origin is stated only on the 34 men's swim shorts ("Made in Egypt"), not on linen, knitwear, women's or kids' pieces. Outside SS26 it appears on 141 older products of type "Swimwear" | Direct (live site, 2026-10-15); the outside-SS26 count is Direct (live site, 2026-10-16) |
 | "modern coastal lifestyle" | Homepage lines: "Effortless, elegant, worn all summer" (SWIMWEAR banner), "Lightweight, breathable, made for summer." (Linens banner), "Pass by a store to try on the latest arrivals in person." (VISIT US). The hero text "RETREAT / NEW ARRIVALS" is part of the banner image. The announcement bar reads "International Shipping Available" | Direct (live site, 2026-10-15) |
 | Named prints with character | The personality lives only in the names. Descriptions are shared boilerplate, and no print has a story or a print-level page | Direct (live site, 2026-10-15) |
-| — | Season codes and working names reach the shopper. Best sellers links to `/collections/ss26-mens-copy`, Sale to `/collections/black-friday-sale-ss25-copy`, Kids Sale to `/collections/kids-black-friday-sale-ss25`, and a collection is titled "Kids Like Father Like Son - SS25" | Direct (live site, 2026-10-15) |
+| — | Season codes and working names reach the shopper:<br>• Men › Best sellers links to `/collections/ss26-mens-copy` and Women › Bestsellers to `/collections/ss26-womens-copy`.<br>• The top-level Sale item links to `/collections/black-friday-sale-ss25`. Its Men and Women entries link to `/collections/black-friday-sale-ss25-copy` and `/collections/black-friday-sale-ss25-copy-1`.<br>• Kids › Sale links to `/collections/kids-black-friday-sale-ss25`.<br>• A collection is titled "Kids Like Father Like Son - SS25". | Direct (live site, 2026-10-16), header links |
 
 Interpretation: KAI's real differentiators are all present on the site but scattered:
 - local manufacture, the founding idea in 2018 press
@@ -287,7 +297,7 @@ The homepage closes with a VISIT US module: a store photograph, the line "Pass b
 | 5 Jun 2026 | Enterprise: "Your ultimate beach kit guide", https://enterpriseam.com/egypt/2026/06/05/your-ultimate-beach-kit-guide/ | "Locally manufactured"; swim price band ≈ EGP 900–2,400. That band is close to today's live full prices of EGP 799–2,399 for swim (§2) | Unreachable | Press (2026). Content Indexed (search engines, ≤2026-10-14) |
 | undated | Scoop Empire: "From Cairo to the coast: Egypt's trendiest swimwear brands", https://scoopempire.com/from-cairo-to-the-coast-discover-egypts-trendiest-swimwear-brands/ | Round-up mention | Unreachable | Press (year unknown). Content Indexed (search engines, ≤2026-10-14) |
 
-Stockist co-brand: a "JAY X KAI Festival del Mare Swim Shorts" sold by Jay stores (https://jay-stores.com/products/ss26swm-213). Indexed (search engines, ≤2026-10-14). jay-stores.com was unreachable today, and no "JAY" product appears in KAI's own products.json (Direct (live site, 2026-10-15)).
+Stockist co-brand: a product titled "JAY X KAI - Men's Festival del Mare Swim Shorts" sold by Jay stores (https://jay-stores.com/products/ss26swm-213), as recorded in `research/search-index-snapshot.json`. Indexed (search engines, ≤2026-10-14). jay-stores.com was unreachable today, and no "JAY" product appears in KAI's own products.json (Direct (live site, 2026-10-15)).
 
 ---
 
@@ -297,8 +307,8 @@ Stockist co-brand: a "JAY X KAI Festival del Mare Swim Shorts" sold by Jay store
 | --- | --- | --- |
 | kaicollections.com (Shopify, EGP) | Live. Announcement bar "International Shipping Available". Footer: "Join the community / Be the first to discover new drops and special offers" email sign-up; links About Us, Stores, Refund policy, Shipping, Size Guide, Contact Us, FAQ, Terms of Service; payment marks labelled "American express", "Apple pay", "Master", "Visa" | Direct (live site, 2026-10-15) |
 | Online and in-store returns | Product pages state: "*International Orders Are Not Applicable for Exchange/Refund", "*Orders placed online can be exchanged in stores, however refunds can only be processed through our online sales channel by contacting our support team." and "*Orders purchased in stores can be exchanged online or in stores, but can only be refunded from any of our stores." | Direct (live site, 2026-10-15), Mini Pink Polar page |
-| kaicollections.ae (UAE storefront) | **Unreachable from this container** (proxy refused, HTTP 000). Its existence and its `/pages/stores` page are known only from the earlier search snapshots | Indexed (search engines, ≤2026-10-14) |
-| Instagram @kaicollections.eg | The footer and contact page link it. From here it **redirects (302) to Instagram's login wall**, so posts, followers and captions were not checked | Direct (live site, 2026-10-15) |
+| kaicollections.ae (UAE storefront) | **Unreachable from this container** (proxy refused, HTTP 000, on 15 and 16 October). Its existence and its `/pages/stores` page are known only from the earlier search snapshots | Indexed (search engines, ≤2026-10-14) |
+| Instagram @kaicollections.eg | The footer and contact page link it. From here it **redirects (301, then 302) to Instagram's login page**, so posts, followers and captions were not checked | Direct (live site, 2026-10-16) for the link and the redirect |
 | TikTok @kaicollections.eg · Facebook @kaicollections.eg | Linked from the footer (TikTok, Facebook) and the contact page (Facebook). Both **unreachable** from here (proxy refused) | Direct (live site, 2026-10-15) for the links; content not checked |
 | LinkedIn (company page) | Unreachable today | Indexed (search engines, ≤2026-10-14) |
 | Email and form | info@kaicollections.com; contact form protected by hCaptcha | Direct (live site, 2026-10-15) |
@@ -311,22 +321,28 @@ Stockist co-brand: a "JAY X KAI Festival del Mare Swim Shorts" sold by Jay store
 These are interpretation, but each one rests on the measured facts above.
 
 1. **Bring the story forward and quote it exactly.** The live homepage's HTML text never says Cairo, 2018 or *kai* = ocean. The concept's chapter 01 should quote About Us verbatim ("KAI - Hawaiian for: {noun} Ocean, sea, beach, seaside, seawater"; "designed and locally produced in Cairo") with a link. Founder details (Karim Safadi, the devaluation origin) must be attributed to CairoScene 2018 and not presented as KAI's own words. The Cairo/K-of-Karim reading of the name stays labelled as Flair, unverified today.
-2. **Keep "Made in Egypt" at the right level.** KAI makes the claim at brand level (About Us) and at product level only on its 34 men's swim shorts. Product pages in the concept should show "Made in Egypt" only where KAI's own page says it. Anywhere else, the brand claim should be attributed to About Us.
-3. **Be truthful about departments.** SS26 kids means 18 Mini swim shorts, written for "your little guy". A "Three wardrobes" kids panel built on Mini/adult pairs (15 real SS26 pairs, e.g. Yellow Zebra) is accurate. Anything suggesting girls' swim or broader kidswear is not.
-4. **Treat swim and linen as equals.** Swim and linen are each about 28% of SS26, and KAI itself says "swim & ready-to-wear". The Swim / Linen / Resort / Knit doors match the real assortment better than a swim-only story would.
+   - Concept status, Repository (2026-10-16): chapter 01 (`src/home/Philosophy.tsx`) **paraphrases** About Us ("Kai is the Hawaiian word for ocean."). It does not yet quote it verbatim. It shows the Flair name reading (`FACTS.name`) as plain text. Its source line lists KAI About Us, CairoScene (2018) and Flair Magazine (2018) but does not mark the Flair reading as unverified.
+2. **Keep "Made in Egypt" at the right level.** KAI makes the claim at brand level (About Us). At product level it appears in SS26 only on the 34 men's swim shorts; across the whole catalogue it is on 175 published products, all swimwear. Product pages in the concept should show "Made in Egypt" only where KAI's own page says it. Anywhere else, the brand claim should be attributed to About Us.
+3. **Be truthful about departments.** SS26 kids means 18 Mini swim shorts, written for "your little guy". A "Three wardrobes" kids panel built on Mini/adult pairs (15 real SS26 pairs, e.g. Yellow Zebra) is accurate. Anything suggesting girls' swim or broader kidswear is not. The concept's chapter 04 kids panel pairs Mini Yellow Zebra with Yellow Zebra (Repository, 2026-10-16).
+4. **Treat swim and linen as equals.** Swim and linen are each about 28% of SS26 (103 of 374 each), and KAI itself says "swim & ready-to-wear". The concept's chapter 03 doors (Swim / Linen / Resort / Knit) match the real assortment better than a swim-only story would.
 5. **Use the naming systems KAI already has.**
    - 30 named men's prints, with Mini twins for the kids.
    - 13 one-piece style names and 4 bikini styles, in a consistent colour vocabulary (Mocha, Matcha, Butter, Stone, Ivory, Olive).
 
    The concept can give these names more presence (print-led browsing, style families). It must not invent print stories, because KAI publishes none.
 6. **Present prices honestly.**
-   - 84% of products are marked down, with a median of 50%, in an October snapshot.
+   - 84% of SS26 products are marked down, with a median of 50%, in an October snapshot.
    - Show compare-at prices exactly as KAI lists them, dated.
    - Let editorial chapters lead with product and material rather than "sale".
-   - "N sizes left" is backed by data: 104 multi-size in-stock items have two or fewer sizes left.
+   - "N sizes left" is backed by data: 106 in-stock items that come in more than two sizes have two or fewer left (final sync).
+   - Concept status, Repository (2026-10-16): product cards show "2 sizes left" or "Last size left" under exactly that rule (`scarcity` in `src/components/ProductCard.tsx`). The product page lists every size KAI lists and shows the sold-out ones as disabled (`src/components/SizePicker.tsx`). KAI's own picker leaves sold-out sizes out instead (§2).
 7. **Store locator.** Use the store-list page as the source of truth: 15 KAI entries and 7 stockists, with Cairo Festival City shown as temporarily closed and Matcha Caesar without a phone number. Show the Dubai stockists only as "named on KAI's About Us". Do not claim more UAE stores while kaicollections.ae cannot be checked.
-8. **Normalising the data is justified.** KAI uses 52 product-type spellings in SS26 and season-coded handles such as `ss26-mens-copy` and `black-friday-sale-ss25-copy`. Mapping these to clean categories is a real improvement. KAI's product handles should stay unchanged, so that every hand-off link opens the right page.
-9. **Rights stay as stated in the README.** KAI's photographs and logo are referenced by URL from KAI's CDN and never stored in the repository. Public hosting needs KAI's permission; `VITE_KAI_MEDIA=off` builds without them.
+8. **Normalising the data is justified.** KAI's `product_type` field has 52 distinct values in SS26, several of which differ only in spelling. Its collection handles carry season codes, such as `ss26-mens-copy` and `black-friday-sale-ss25-copy`. Mapping these to clean categories is a real improvement. KAI's product handles should stay unchanged, so that every hand-off link opens the right page.
+9. **Rights stay as stated in the README.** Repository (2026-10-16):
+   - KAI's photographs and logo are referenced by URL from KAI's CDN (`src/data/media.ts`). No KAI photograph, logo file, site capture or film is committed.
+   - Captures that show KAI's media are generated locally into git-ignored folders and delivered separately. These are the BEFORE captures, the film plates, the screenshots and the film.
+   - When media is on, KAI's logo letters are drawn into the WebGL wordmark texture of the hero sea (`src/components/Seascape.tsx`). Product photographs sit in 2:3 stages.
+   - Public hosting needs KAI's permission. A `VITE_KAI_MEDIA=off` build loads no KAI-hosted media: products fall back to labelled concept sketches, and the logo, including the one in the wordmark texture, falls back to a typeset stand-in.
 10. **Gaps resolved by today's checks:**
     - "Tipsy Sardine" and "Butter Isla" exist (SS26).
     - The store list was re-read.
