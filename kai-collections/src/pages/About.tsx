@@ -83,22 +83,23 @@ export function About() {
           <div>
             <h3 className="label">What is real</h3>
             <p>
-              {PRODUCTS.length} product names, prices, sizes, materials and stock notes, read on {SNAPSHOT.checkedAt} from {SNAPSHOT.method === 'storefront' ? 'KAI’s storefront' : 'search-engine snapshots of KAI’s own pages'}. Brand facts are
-              quoted from KAI’s About Us page and 2018 press. Store locations come from KAI’s store list.
+              All {PRODUCTS.length} products of KAI’s SS26 collections — names, prices, sizes, availability, composition and photographs — read directly from KAI’s
+              storefront on {SNAPSHOT.checkedAt}. Campaign photographs and the logo are KAI’s own, shown from KAI’s servers. Brand facts are quoted from KAI’s About Us
+              page and 2018 press; stores come from KAI’s store list.
             </p>
           </div>
           <div>
             <h3 className="label">What is not</h3>
             <p>
-              “The art of escape”, chapter names and journal text are concept copy. Seascapes and fabrics are rendered light and material studies. Garments are
-              illustrative flats coloured from their product names — KAI’s prints are not drawn. KAI is typeset; it is not KAI’s logo.
+              “The art of escape”, chapter names and journal text are concept copy. Seascapes are rendered light studies. Sets are grouped from KAI’s own Matching Sets
+              collections and shared print names. The garment sketches behind the “Sketch” toggle are concept drawings, labelled as such.
             </p>
           </div>
           <div>
-            <h3 className="label">Why no photography</h3>
+            <h3 className="label">Rights</h3>
             <p>
-              The build environment could not reach kaicollections.com, KAI’s Instagram or its CDN paths, and nothing was substituted from stock libraries. With access, one
-              command (<code>npm run sync</code>) pulls KAI’s own product photography into every slot.
+              KAI’s photographs and logo are not stored in this concept’s repository; the browser loads them from kaicollections.com’s CDN. Publishing this concept
+              publicly needs KAI’s permission — a build with <code>VITE_KAI_MEDIA=off</code> leaves every KAI-hosted image out.
             </p>
           </div>
         </div>

@@ -129,15 +129,7 @@
   padding: 18px 22px;
   border-radius: 4px;
 }
-.mega__flats {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
-  height: 150px;
-}
-.mega__flats svg {
-  height: 150px;
-}
+
 .mega__ft {
   font-size: 22px;
 }

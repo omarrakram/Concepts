@@ -11,7 +11,7 @@ test('mega menu opens by click and keyboard, and its links navigate', async ({ p
   await btn.focus();
   await page.keyboard.press('Enter');
   await expect(page.locator('#mega')).toBeVisible();
-  await page.locator('#mega').getByRole('link', { name: 'Linen & Resort' }).click();
+  await page.locator('#mega').getByRole('link', { name: 'Linen', exact: true }).click();
   await expect(page).toHaveURL(/\/shop\/linen$/);
   await expect(page.getByTestId('shop')).toHaveAttribute('data-view', 'linen');
 });
@@ -29,7 +29,7 @@ test('primary nav links reach every department and page', async ({ page }) => {
     await page.getByTestId('nav').getByRole('link', { name, exact: true }).click();
     await expect(page).toHaveURL(url);
   }
-  await page.getByRole('link', { name: 'KAI — home' }).click();
+  await page.getByRole('link', { name: 'KAI Collections — home' }).click();
   await expect(page.getByTestId('hero')).toBeVisible();
 });
 

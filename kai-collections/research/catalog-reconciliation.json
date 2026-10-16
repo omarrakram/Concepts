@@ -1,0 +1,572 @@
+{
+ "checkedAt": "2026-10-15",
+ "origin": "https://kaicollections.com",
+ "snapshotCheckedAt": "2026-10-14",
+ "tally": {
+  "current-ss26": 30,
+  "listed-outside-ss26": 25,
+  "not-listed": 1
+ },
+ "rows": [
+  {
+   "slug": "festival-del-mare-swim-shorts",
+   "name": "Festival del Mare Swim Shorts",
+   "indexedHandle": "festival-del-mare-swim-shorts",
+   "liveHandle": "festival-del-mare-swim-shorts",
+   "status": "current-ss26",
+   "indexedPrice": 1699,
+   "livePrice": 1189,
+   "liveStock": "in-stock"
+  },
+  {
+   "slug": "yellow-zebra-swim-shorts",
+   "name": "Yellow Zebra Swim Shorts",
+   "indexedHandle": null,
+   "liveHandle": "yellow-zebra-swim-shorts",
+   "status": "current-ss26",
+   "indexedPrice": 999,
+   "livePrice": 999,
+   "liveStock": "in-stock"
+  },
+  {
+   "slug": "blue-maze-swim-shorts",
+   "name": "Blue Maze Swim Shorts",
+   "indexedHandle": null,
+   "liveHandle": "blue-maze-swim-shorts-1",
+   "status": "current-ss26",
+   "indexedPrice": 1699,
+   "livePrice": 1190,
+   "liveStock": "in-stock"
+  },
+  {
+   "slug": "pink-starfish-swim-shorts",
+   "name": "Pink Starfish Swim Shorts",
+   "indexedHandle": null,
+   "liveHandle": "pink-starfish-swim-shorts",
+   "status": "current-ss26",
+   "indexedPrice": 1699,
+   "livePrice": 1190,
+   "liveStock": "in-stock"
+  },
+  {
+   "slug": "tropic-noir-swim-shorts",
+   "name": "Tropic Noir Swim Shorts",
+   "indexedHandle": null,
+   "liveHandle": "tropic-noir-swim-shorts",
+   "status": "current-ss26",
+   "indexedPrice": 1699,
+   "livePrice": 1190,
+   "liveStock": "in-stock"
+  },
+  {
+   "slug": "blue-bandana-swim-shorts",
+   "name": "Blue Bandana Swim Shorts",
+   "indexedHandle": "blue-bandana-swim-shorts",
+   "liveHandle": "blue-bandana-swim-shorts",
+   "status": "listed-outside-ss26",
+   "indexedPrice": 999,
+   "livePrice": 999,
+   "liveStock": "sold-out"
+  },
+  {
+   "slug": "purple-octopus-swim-shorts",
+   "name": "Purple Octopus Swim Shorts",
+   "indexedHandle": "purple-octopus-swim-shorts",
+   "liveHandle": "purple-octopus-swim-shorts",
+   "status": "listed-outside-ss26",
+   "indexedPrice": 1499,
+   "livePrice": 1699,
+   "liveStock": "in-stock"
+  },
+  {
+   "slug": "orange-tangle-swim-shorts",
+   "name": "Orange Tangle Swim Shorts",
+   "indexedHandle": "orange-tangle-swim-shorts",
+   "liveHandle": "orange-tangle-swim-shorts",
+   "status": "listed-outside-ss26",
+   "indexedPrice": 999,
+   "livePrice": 1699,
+   "liveStock": "sold-out"
+  },
+  {
+   "slug": "green-labyrinth-swim-shorts",
+   "name": "Green Labyrinth Swim Shorts",
+   "indexedHandle": "green-labyrinth-swim-shorts",
+   "liveHandle": null,
+   "status": "not-listed",
+   "indexedPrice": 1499,
+   "livePrice": null,
+   "liveStock": null
+  },
+  {
+   "slug": "sky-penguins-swim-shorts",
+   "name": "Sky Penguins Swim Shorts",
+   "indexedHandle": "sky-penguins-swim-shorts",
+   "liveHandle": "sky-penguins-swim-shorts",
+   "status": "listed-outside-ss26",
+   "indexedPrice": 999,
+   "livePrice": 999,
+   "liveStock": "sold-out"
+  },
+  {
+   "slug": "funky-fish-swim-shorts",
+   "name": "Funky Fish Swim Shorts",
+   "indexedHandle": "funky-fish-swim-shorts",
+   "liveHandle": "funky-fish-swim-shorts",
+   "status": "listed-outside-ss26",
+   "indexedPrice": 1699,
+   "livePrice": 1699,
+   "liveStock": "sold-out"
+  },
+  {
+   "slug": "fruit-salad-swim-shorts",
+   "name": "Fruit Salad Swim Shorts",
+   "indexedHandle": "fruit-salad-swim-shorts",
+   "liveHandle": "fruit-salad-swim-shorts",
+   "status": "listed-outside-ss26",
+   "indexedPrice": 999,
+   "livePrice": 1699,
+   "liveStock": "in-stock"
+  },
+  {
+   "slug": "by-the-sea-swim-shorts",
+   "name": "By The Sea Swim Shorts",
+   "indexedHandle": "by-the-sea-swim-shorts",
+   "liveHandle": "by-the-sea-swim-shorts",
+   "status": "listed-outside-ss26",
+   "indexedPrice": 999,
+   "livePrice": 999,
+   "liveStock": "sold-out"
+  },
+  {
+   "slug": "pink-zebras",
+   "name": "Pink Zebras",
+   "indexedHandle": "pink-zebras",
+   "liveHandle": "pink-zebras",
+   "status": "listed-outside-ss26",
+   "indexedPrice": 399,
+   "livePrice": 399,
+   "liveStock": "sold-out"
+  },
+  {
+   "slug": "navy-macaroons",
+   "name": "Navy Macaroons",
+   "indexedHandle": "navy-macaroons",
+   "liveHandle": "navy-macaroons",
+   "status": "listed-outside-ss26",
+   "indexedPrice": 499,
+   "livePrice": 499,
+   "liveStock": "sold-out"
+  },
+  {
+   "slug": "black-playa-one-piece",
+   "name": "Black Playa One Piece",
+   "indexedHandle": "black-playa-one-piece",
+   "liveHandle": "black-playa-one-piece",
+   "status": "listed-outside-ss26",
+   "indexedPrice": 1099,
+   "livePrice": 1099,
+   "liveStock": "sold-out"
+  },
+  {
+   "slug": "fuchsia-playa-one-piece",
+   "name": "Fuchsia Playa One Piece",
+   "indexedHandle": "fuchsia-playa-one-piece",
+   "liveHandle": "fuchsia-playa-one-piece",
+   "status": "listed-outside-ss26",
+   "indexedPrice": 1099,
+   "livePrice": 1099,
+   "liveStock": "sold-out"
+  },
+  {
+   "slug": "cobalt-blue-playa-one-piece",
+   "name": "Cobalt Blue Playa One Piece",
+   "indexedHandle": "cobalt-blue-playa-one-piece",
+   "liveHandle": "cobalt-blue-playa-one-piece",
+   "status": "listed-outside-ss26",
+   "indexedPrice": 1099,
+   "livePrice": 1099,
+   "liveStock": "sold-out"
+  },
+  {
+   "slug": "pear-isola-one-piece",
+   "name": "Pear Isola One Piece",
+   "indexedHandle": "pear-isola-one-piece",
+   "liveHandle": "pear-isola-one-piece",
+   "status": "listed-outside-ss26",
+   "indexedPrice": 1399,
+   "livePrice": 1399,
+   "liveStock": "sold-out"
+  },
+  {
+   "slug": "ivory-palma-one-piece",
+   "name": "Ivory Palma One Piece",
+   "indexedHandle": "ivory-palma-one-piece",
+   "liveHandle": "ivory-palma-one-piece",
+   "status": "listed-outside-ss26",
+   "indexedPrice": 999,
+   "livePrice": 999,
+   "liveStock": "in-stock"
+  },
+  {
+   "slug": "black-palma-one-piece",
+   "name": "Black Palma One Piece",
+   "indexedHandle": "black-palma-one-piece",
+   "liveHandle": "black-palma-one-piece",
+   "status": "listed-outside-ss26",
+   "indexedPrice": 2299,
+   "livePrice": 1199,
+   "liveStock": "sold-out"
+  },
+  {
+   "slug": "black-cut-out-one-piece",
+   "name": "Black Cut Out One Piece",
+   "indexedHandle": "black-cut-out-one-piece",
+   "liveHandle": "black-cut-out-one-piece",
+   "status": "listed-outside-ss26",
+   "indexedPrice": 1099,
+   "livePrice": 1099,
+   "liveStock": "sold-out"
+  },
+  {
+   "slug": "black-kaia-one-piece",
+   "name": "Black Kaia One Piece",
+   "indexedHandle": "black-kaia-one-piece",
+   "liveHandle": "black-kaia-one-piece",
+   "status": "current-ss26",
+   "indexedPrice": 2399,
+   "livePrice": 1679,
+   "liveStock": "in-stock"
+  },
+  {
+   "slug": "olive-kaia-one-piece",
+   "name": "Olive Kaia One Piece",
+   "indexedHandle": null,
+   "liveHandle": "olive-kaia-one-piece",
+   "status": "current-ss26",
+   "indexedPrice": 1679,
+   "livePrice": 1679,
+   "liveStock": "in-stock"
+  },
+  {
+   "slug": "black-cala-one-piece",
+   "name": "Black Cala One Piece",
+   "indexedHandle": null,
+   "liveHandle": "black-cala-one-piece",
+   "status": "current-ss26",
+   "indexedPrice": 1679,
+   "livePrice": 1679,
+   "liveStock": "in-stock"
+  },
+  {
+   "slug": "matcha-perla-one-piece",
+   "name": "Matcha Perla One Piece",
+   "indexedHandle": null,
+   "liveHandle": "matcha-perla-one-piece",
+   "status": "current-ss26",
+   "indexedPrice": null,
+   "livePrice": 1440,
+   "liveStock": "in-stock"
+  },
+  {
+   "slug": "black-zaria-bikini-top",
+   "name": "Black Zaria Bikini Top",
+   "indexedHandle": null,
+   "liveHandle": "black-zaria-bikini-top",
+   "status": "current-ss26",
+   "indexedPrice": 850,
+   "livePrice": 850,
+   "liveStock": "in-stock"
+  },
+  {
+   "slug": "sapphire-maui-bikini-bottom",
+   "name": "Sapphire Maui Bikini Bottom",
+   "indexedHandle": "sapphire-maui-bikini-bottom",
+   "liveHandle": "sapphire-maui-bikini-bottom",
+   "status": "listed-outside-ss26",
+   "indexedPrice": null,
+   "livePrice": 399,
+   "liveStock": "in-stock"
+  },
+  {
+   "slug": "festival-del-mare-sarong",
+   "name": "Festival del Mare Sarong",
+   "indexedHandle": null,
+   "liveHandle": "festival-del-mare-sarong",
+   "status": "current-ss26",
+   "indexedPrice": 399,
+   "livePrice": 399,
+   "liveStock": "in-stock"
+  },
+  {
+   "slug": "funky-fish-beaded-tank-top",
+   "name": "Funky Fish Beaded Tank Top",
+   "indexedHandle": null,
+   "liveHandle": "funky-fish-beaded-tank-top",
+   "status": "current-ss26",
+   "indexedPrice": 699,
+   "livePrice": 699,
+   "liveStock": "in-stock"
+  },
+  {
+   "slug": "brown-ruffle-tencel-dress",
+   "name": "Brown Ruffle Tencel Dress",
+   "indexedHandle": null,
+   "liveHandle": "brown-ruffle-tencel-dress",
+   "status": "current-ss26",
+   "indexedPrice": 750,
+   "livePrice": 750,
+   "liveStock": "sold-out"
+  },
+  {
+   "slug": "women-s-white-linen-v-neck-top",
+   "name": "Women's White Linen V-Neck Top",
+   "indexedHandle": "women-s-white-linen-v-neck-top",
+   "liveHandle": "women-s-white-linen-v-neck-top",
+   "status": "current-ss26",
+   "indexedPrice": 2499,
+   "livePrice": 1250,
+   "liveStock": "in-stock"
+  },
+  {
+   "slug": "women-s-beige-linen-v-neck-top",
+   "name": "Women's Beige Linen V-Neck Top",
+   "indexedHandle": "women-s-beige-linen-v-neck-top",
+   "liveHandle": "women-s-beige-linen-v-neck-top",
+   "status": "current-ss26",
+   "indexedPrice": 2499,
+   "livePrice": 1250,
+   "liveStock": "in-stock"
+  },
+  {
+   "slug": "women-s-black-linen-v-neck-top",
+   "name": "Women's Black Linen V-Neck Top",
+   "indexedHandle": "women-s-black-linen-v-neck-top",
+   "liveHandle": "women-s-black-linen-v-neck-top",
+   "status": "current-ss26",
+   "indexedPrice": 2499,
+   "livePrice": 1250,
+   "liveStock": "in-stock"
+  },
+  {
+   "slug": "womens-beige-linen-pants",
+   "name": "Women's Beige Linen Pants",
+   "indexedHandle": "womens-beige-linen-pants",
+   "liveHandle": "womens-beige-linen-pants",
+   "status": "current-ss26",
+   "indexedPrice": 1999,
+   "livePrice": 999,
+   "liveStock": "in-stock"
+  },
+  {
+   "slug": "womens-beige-linen-shorts",
+   "name": "Women's Beige Linen Shorts",
+   "indexedHandle": "womens-beige-linen-shorts",
+   "liveHandle": "womens-beige-linen-shorts",
+   "status": "current-ss26",
+   "indexedPrice": 899,
+   "livePrice": 899,
+   "liveStock": "in-stock"
+  },
+  {
+   "slug": "womens-white-linen-shorts",
+   "name": "Women's White Linen Shorts",
+   "indexedHandle": "womens-white-linen-shorts",
+   "liveHandle": "womens-white-linen-shorts",
+   "status": "current-ss26",
+   "indexedPrice": null,
+   "livePrice": 650,
+   "liveStock": "in-stock"
+  },
+  {
+   "slug": "womens-beige-linen-shirt-1",
+   "name": "Women's Beige Linen Shirt",
+   "indexedHandle": "womens-beige-linen-shirt-1",
+   "liveHandle": "womens-beige-linen-shirt-1",
+   "status": "current-ss26",
+   "indexedPrice": 2199,
+   "livePrice": 1099,
+   "liveStock": "in-stock"
+  },
+  {
+   "slug": "women-beige-linen-skirt",
+   "name": "Women Beige Linen Skirt",
+   "indexedHandle": null,
+   "liveHandle": "women-beige-linen-skirt",
+   "status": "current-ss26",
+   "indexedPrice": 1099,
+   "livePrice": 1099,
+   "liveStock": "in-stock"
+  },
+  {
+   "slug": "white-semi-collar-shirt",
+   "name": "White Semi Collar Linen Shirt",
+   "indexedHandle": "white-semi-collar-shirt",
+   "liveHandle": "white-semi-collar-shirt",
+   "status": "listed-outside-ss26",
+   "indexedPrice": 1750,
+   "livePrice": 999,
+   "liveStock": "in-stock"
+  },
+  {
+   "slug": "white-linen-shirt",
+   "name": "Men's White Linen Shirt",
+   "indexedHandle": "white-linen-shirt",
+   "liveHandle": "white-linen-shirt",
+   "status": "current-ss26",
+   "indexedPrice": 1250,
+   "livePrice": 1250,
+   "liveStock": "in-stock"
+  },
+  {
+   "slug": "navy-linen-shirt-1",
+   "name": "Men's Navy Linen Shirt",
+   "indexedHandle": "navy-linen-shirt-1",
+   "liveHandle": "navy-linen-shirt-1",
+   "status": "current-ss26",
+   "indexedPrice": 2499,
+   "livePrice": 1250,
+   "liveStock": "in-stock"
+  },
+  {
+   "slug": "beige-linen-shirt",
+   "name": "Men's Beige Linen Shirt",
+   "indexedHandle": "beige-linen-shirt",
+   "liveHandle": "beige-linen-shirt",
+   "status": "current-ss26",
+   "indexedPrice": 2499,
+   "livePrice": 1250,
+   "liveStock": "in-stock"
+  },
+  {
+   "slug": "olive-linen-over-shirt",
+   "name": "Olive Linen Overshirt Jacket",
+   "indexedHandle": "olive-linen-over-shirt",
+   "liveHandle": "olive-linen-over-shirt",
+   "status": "current-ss26",
+   "indexedPrice": 2250,
+   "livePrice": 2250,
+   "liveStock": "sold-out"
+  },
+  {
+   "slug": "black-linen-over-shirt",
+   "name": "Black Linen Overshirt Jacket",
+   "indexedHandle": "black-linen-over-shirt",
+   "liveHandle": "black-linen-over-shirt",
+   "status": "current-ss26",
+   "indexedPrice": 2250,
+   "livePrice": 2250,
+   "liveStock": "in-stock"
+  },
+  {
+   "slug": "navy-linen-pants",
+   "name": "Men's Navy Linen Pants",
+   "indexedHandle": "navy-linen-pants",
+   "liveHandle": "navy-linen-pants",
+   "status": "current-ss26",
+   "indexedPrice": 1399,
+   "livePrice": 1150,
+   "liveStock": "in-stock"
+  },
+  {
+   "slug": "beige-linen-pants",
+   "name": "Men's Beige Linen Pants",
+   "indexedHandle": "beige-linen-pants",
+   "liveHandle": "beige-linen-pants",
+   "status": "current-ss26",
+   "indexedPrice": 1150,
+   "livePrice": 1150,
+   "liveStock": "in-stock"
+  },
+  {
+   "slug": "cream-knitted-crew-neck-sweater",
+   "name": "Cream Knitted Crew Neck Sweater",
+   "indexedHandle": "cream-knitted-crew-neck-sweater",
+   "liveHandle": "cream-knitted-crew-neck-sweater",
+   "status": "listed-outside-ss26",
+   "indexedPrice": 1199,
+   "livePrice": 1199,
+   "liveStock": "sold-out"
+  },
+  {
+   "slug": "olive-acid-wash-oversized-t-shirt",
+   "name": "Olive Acid Wash Oversized T-Shirt",
+   "indexedHandle": "olive-acid-wash-oversized-t-shirt",
+   "liveHandle": "olive-acid-wash-oversized-t-shirt",
+   "status": "listed-outside-ss26",
+   "indexedPrice": 499,
+   "livePrice": 499,
+   "liveStock": "in-stock"
+  },
+  {
+   "slug": "unisex-beige-cargo-sweatpants",
+   "name": "Unisex Beige Cargo Sweatpants",
+   "indexedHandle": "unisex-beige-cargo-sweatpants",
+   "liveHandle": "unisex-beige-cargo-sweatpants",
+   "status": "listed-outside-ss26",
+   "indexedPrice": 750,
+   "livePrice": 750,
+   "liveStock": "in-stock"
+  },
+  {
+   "slug": "grey-long-sleeve-t-shirt",
+   "name": "Grey Long Sleeve T-Shirt",
+   "indexedHandle": "grey-long-sleeve-t-shirt",
+   "liveHandle": "grey-long-sleeve-t-shirt",
+   "status": "listed-outside-ss26",
+   "indexedPrice": 699,
+   "livePrice": 699,
+   "liveStock": "sold-out"
+  },
+  {
+   "slug": "mini-sky-penguins",
+   "name": "Mini Sky Penguins",
+   "indexedHandle": "mini-sky-penguins",
+   "liveHandle": "mini-sky-penguins",
+   "status": "listed-outside-ss26",
+   "indexedPrice": 799,
+   "livePrice": 899,
+   "liveStock": "sold-out"
+  },
+  {
+   "slug": "mini-funky-fish",
+   "name": "Mini Funky Fish",
+   "indexedHandle": "mini-funky-fish",
+   "liveHandle": "mini-funky-fish",
+   "status": "listed-outside-ss26",
+   "indexedPrice": 559,
+   "livePrice": 559,
+   "liveStock": "in-stock"
+  },
+  {
+   "slug": "mini-origami-elephants",
+   "name": "Mini Origami Elephants",
+   "indexedHandle": "mini-origami-elephants",
+   "liveHandle": "mini-origami-elephants",
+   "status": "listed-outside-ss26",
+   "indexedPrice": 299,
+   "livePrice": 559,
+   "liveStock": "sold-out"
+  },
+  {
+   "slug": "mini-olive-camels-swim-shorts",
+   "name": "Mini Olive Camels Swim Shorts",
+   "indexedHandle": "mini-olive-camels-swim-shorts",
+   "liveHandle": "mini-olive-camels-swim-shorts",
+   "status": "current-ss26",
+   "indexedPrice": 899,
+   "livePrice": 450,
+   "liveStock": "in-stock"
+  },
+  {
+   "slug": "mini-yellow-zebra-swim-shorts",
+   "name": "Mini Yellow Zebra Swim Shorts",
+   "indexedHandle": null,
+   "liveHandle": "mini-yellow-zebra-swim-shorts",
+   "status": "current-ss26",
+   "indexedPrice": null,
+   "livePrice": 450,
+   "liveStock": "in-stock"
+  }
+ ]
+}

@@ -1,11 +1,60 @@
 import { useId, type ReactNode } from 'react';
-import { COLOURS, type ColourKey, type Kind } from '../data/catalog';
+import type { Kind } from '../data/catalog';
 
 /**
- * Atelier flats: technical drawings of a garment TYPE, filled with the colour named
- * in the product title. They are deliberately not product photography and never
- * draw a print — KAI's prints are only shown in KAI's own photographs.
+ * Concept sketches: technical drawings of a garment TYPE, filled with the colour named
+ * in the product title. They are an optional, clearly labelled sketch view — never a
+ * substitute for KAI's photography, and they never draw a print.
  */
+
+export type FlatShape =
+  | 'swim-short'
+  | 'kids-swim-short'
+  | 'one-piece'
+  | 'one-piece-cutout'
+  | 'bikini-top'
+  | 'bikini-bottom'
+  | 'sarong'
+  | 'tank'
+  | 'dress'
+  | 'shirt'
+  | 'overshirt'
+  | 'pants'
+  | 'v-top'
+  | 'skirt'
+  | 'shorts'
+  | 'sweater'
+  | 'tee'
+  | 'tee-long'
+  | 'sweatpants';
+
+const SHAPE_FOR: Record<Kind, FlatShape> = {
+  'swim-short': 'swim-short',
+  'kids-swim-short': 'kids-swim-short',
+  'one-piece': 'one-piece',
+  'bikini-top': 'bikini-top',
+  'bikini-bottom': 'bikini-bottom',
+  sarong: 'sarong',
+  scarf: 'sarong',
+  'cover-up': 'sarong',
+  dress: 'dress',
+  skirt: 'skirt',
+  overshirt: 'overshirt',
+  'cuban-shirt': 'shirt',
+  shirt: 'shirt',
+  polo: 'tee',
+  'tee-long': 'tee-long',
+  tee: 'tee',
+  tank: 'tank',
+  sweatpants: 'sweatpants',
+  pants: 'pants',
+  shorts: 'shorts',
+  knit: 'sweater',
+  top: 'v-top',
+  hat: 'tee',
+  other: 'tee',
+};
+export const flatShapeFor = (k: Kind) => SHAPE_FOR[k];
 
 const lum = (hex: string) => {
   const n = parseInt(hex.slice(1), 16);
@@ -41,7 +90,7 @@ const scallop = (x0: number, x1: number, y: number, n: number, amp: number) => {
 const SWIM_BODY =
   'M108 140 L100 140 L78 334 C100 344 148 350 186 348 L196 214 C198 208 202 208 204 214 L214 348 C252 350 300 344 322 334 L300 140 Z';
 
-const SHAPES: Record<Kind, Shape> = {
+const SHAPES: Record<FlatShape, Shape> = {
   'swim-short': {
     body: SWIM_BODY,
     texture: 'swim',
@@ -338,21 +387,21 @@ const SHAPES: Record<Kind, Shape> = {
 };
 
 export function GarmentFlat({
-  kind,
-  colour,
+  kind: k,
+  hex,
   className,
   title,
   variant,
 }: {
   kind: Kind;
-  colour: ColourKey;
+  hex: string;
   className?: string;
   title?: string;
   variant?: 'semi-collar' | 'pocket' | 'plain';
 }) {
   const id = useId().replace(/:/g, '');
-  const c = COLOURS[colour];
-  const fill = c.hex;
+  const kind = SHAPE_FOR[k];
+  const fill = hex;
   const dark = lum(fill) < 0.33;
   const line = dark ? 'rgba(255,253,247,.62)' : shade(fill, 0.48);
   const stitch = dark ? 'rgba(255,253,247,.5)' : shade(fill, 0.6);
@@ -365,7 +414,7 @@ export function GarmentFlat({
       viewBox="0 0 400 480"
       className={`flat ${className ?? ''}`}
       role="img"
-      aria-label={title ? `Illustrative flat drawing: ${title}` : 'Illustrative flat drawing'}
+      aria-label={title ? `Concept sketch (not KAI photography): ${title}` : 'Concept sketch'}
     >
       <defs>
         <linearGradient id={`l${id}`} x1="0" y1="0" x2="1" y2="1">
@@ -429,4 +478,4 @@ export function GarmentFlat({
 }
 
 export const flatVariant = (slug: string, department: string) =>
-  slug.includes('semi-collar') ? ('semi-collar' as const) : department === 'men' ? ('pocket' as const) : ('plain' as const);
+  slug.includes('semi-collar') || slug.includes('cuban') ? ('semi-collar' as const) : department === 'men' ? ('pocket' as const) : ('plain' as const);

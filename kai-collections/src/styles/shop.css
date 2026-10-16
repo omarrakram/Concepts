@@ -33,12 +33,7 @@
   color: rgba(32, 40, 39, 0.5);
   letter-spacing: 0.16em;
 }
-.stage__cap--light {
-  color: var(--ivory);
-  background: rgba(23, 56, 67, 0.55);
-  padding: 4px 9px;
-  border-radius: 99px;
-}
+
 .stage--photo img {
   position: absolute;
   inset: 0;
@@ -49,31 +44,6 @@
 }
 .stage__alt {
   opacity: 0;
-}
-.stage--material {
-  background-size: cover;
-  background-position: center;
-}
-.stage--material::before,
-.stage--swatch::before {
-  display: none;
-}
-.stage--swatch {
-  display: grid;
-  align-items: end;
-}
-.swatch__body {
-  padding: 28px;
-  display: grid;
-  gap: 10px;
-}
-.swatch__name {
-  font-size: clamp(40px, 5vw, 76px);
-}
-.swatch__note {
-  font-size: 14px;
-  max-width: 40ch;
-  opacity: 0.85;
 }
 
 /* ---------- Cards ---------- */
@@ -168,13 +138,7 @@
   align-items: center;
   gap: 10px;
 }
-.card__chip {
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.15);
-  flex: none;
-}
+
 .card--lg .card__name {
   font-size: clamp(24px, 2.4vw, 34px);
 }
@@ -397,8 +361,7 @@
 .gallery__thumb .stage {
   aspect-ratio: 4/5;
 }
-.gallery__thumb .stage__cap,
-.gallery__thumb .swatch__body {
+.gallery__thumb .stage__cap{
   display: none;
 }
 .gallery__thumb.is-on {
@@ -889,18 +852,36 @@
   .shop-head {
     min-height: 50vh;
   }
+  /* three rows of controls are too much screen to pin on a phone: the toolbar scrolls with the page */
   .toolbar {
+    position: static;
     gap: 10px;
   }
+  /* the department or category row scrolls on its own line; size and the toggles sit beneath it */
   .toolbar__filters {
-    flex-wrap: nowrap;
-    overflow-x: auto;
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    justify-content: start;
+    align-items: center;
+    gap: 8px 12px;
     width: 100%;
-    scrollbar-width: none;
-    padding-bottom: 2px;
   }
-  .toolbar__filters::-webkit-scrollbar {
+  .toolbar__filters .seg {
+    grid-column: 1 / -1;
+    justify-self: start;
+    max-width: 100%;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .toolbar__filters .seg::-webkit-scrollbar {
     display: none;
+  }
+  .toolbar__filters .seg__b {
+    flex: none;
+    white-space: nowrap;
+  }
+  .toggle {
+    white-space: nowrap;
   }
   .seg__b {
     padding: 0 11px;

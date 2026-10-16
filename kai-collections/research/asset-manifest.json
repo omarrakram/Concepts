@@ -1,55 +1,193 @@
 {
   "generatedAt": "2026-10-15",
-  "summary": "No KAI photography, logo files or third-party stock imagery are in this repository. Every visual is either rendered in code, typeset, or a screenshot of this concept itself.",
+  "summary": "No KAI photograph, logo file, site capture or film is stored in this repository. KAI’s photographs and logo are referenced by URL from KAI’s own CDN; everything else is rendered in code or is this concept’s own work. Media that captures KAI’s photography is generated locally and delivered separately.",
+  "rights": "KAI’s logo and photographs belong to KAI Collections. They are shown for an unofficial proposal; public hosting needs KAI’s permission. `VITE_KAI_MEDIA=off npm run build` produces a build without any KAI-hosted media.",
   "kaiAssets": [
     {
-      "slot": "Product photography (all products)",
-      "status": "missing",
-      "reason": "kaicollections.com and its CDN paths were unreachable from the build environment",
-      "resolution": "`npm run sync` hotlinks KAI’s own images from cdn.shopify.com into every product card, gallery and quick view; files are not downloaded into the repo."
+      "slot": "Official logo",
+      "status": "referenced",
+      "url": "https://cdn.shopify.com/s/files/1/1868/5457/files/Untitled-2.png?v=1613517613",
+      "usedIn": "nav, mobile menu, footer, finale, film; WebGL horizon draws its KAI letters",
+      "fallback": "typeset stand-in, labelled as not KAI’s logo"
     },
     {
-      "slot": "Campaign photography (hero, editorial, journal, film closing scene)",
-      "status": "missing",
-      "reason": "Instagram and KAI campaign pages unreachable",
-      "resolution": "Requires KAI-supplied files with usage permission; until then rendered light studies are used and labelled."
+      "slot": "Product photography",
+      "status": "referenced",
+      "count": 1732,
+      "products": 374,
+      "usedIn": "cards, gallery + close-up, quick view, search, bag, saved, sets, related, builder, atlas, edit, horizon, journal"
     },
     {
-      "slot": "Official KAI logo",
-      "status": "missing",
-      "reason": "not visible to the build",
-      "resolution": "Wordmark is typeset in Fraunces and labelled as not the official logo; swap the `Wordmark` component for KAI’s SVG."
+      "slot": "Campaign photography (kaicollections.com homepage)",
+      "status": "referenced",
+      "count": 16,
+      "images": [
+        {
+          "id": "swim",
+          "url": "https://cdn.shopify.com/s/files/1/1868/5457/files/IMG_2951.png?v=1776630115",
+          "width": 1800,
+          "height": 3000,
+          "usedOnKai": "Homepage · Swimwear banner"
+        },
+        {
+          "id": "linen",
+          "url": "https://cdn.shopify.com/s/files/1/1868/5457/files/IMG_3666.jpg?v=1780610849",
+          "width": 3119,
+          "height": 4679,
+          "usedOnKai": "Homepage · Linens banner"
+        },
+        {
+          "id": "last-chance",
+          "url": "https://cdn.shopify.com/s/files/1/1868/5457/files/bdb7ea9a7117416b444a429ed1e5c9a2.jpg?v=1767456789",
+          "width": 1448,
+          "height": 1920,
+          "usedOnKai": "Homepage · Last Chance banner"
+        },
+        {
+          "id": "retreat",
+          "url": "https://cdn.shopify.com/s/files/1/1868/5457/files/KAI_WEBSITE_HEADER_DESIGNS_4acbd592-d175-4821-9ec6-6e1e294cee5b.jpg?v=1775677968",
+          "width": 2500,
+          "height": 1666,
+          "usedOnKai": "Homepage · hero, “Retreat — New Arrivals”"
+        },
+        {
+          "id": "men-linen",
+          "url": "https://cdn.shopify.com/s/files/1/1868/5457/files/DSC09277.jpg?v=1773890709",
+          "width": 1200,
+          "height": 1800,
+          "usedOnKai": "Homepage · Trending now · Linen"
+        },
+        {
+          "id": "women-sets",
+          "url": "https://cdn.shopify.com/s/files/1/1868/5457/files/DSC09085_b255652d-27f9-4e17-99d4-4d89911c9da9.jpg?v=1775760470",
+          "width": 1200,
+          "height": 1800,
+          "usedOnKai": "Homepage · Trending now · Sets"
+        },
+        {
+          "id": "men-knit",
+          "url": "https://cdn.shopify.com/s/files/1/1868/5457/files/IMG_3505.jpg?v=1780608631",
+          "width": 3120,
+          "height": 4680,
+          "usedOnKai": "Homepage · Trending now · Knitwear"
+        },
+        {
+          "id": "cover-ups",
+          "url": "https://cdn.shopify.com/s/files/1/1868/5457/files/DSC08488_22e6f6cf-db2f-446d-bead-90976faa9c49.jpg?v=1773865801",
+          "width": 1200,
+          "height": 1800,
+          "usedOnKai": "Homepage · Trending now · Cover ups"
+        },
+        {
+          "id": "women-linen",
+          "url": "https://cdn.shopify.com/s/files/1/1868/5457/files/DSC09379.jpg?v=1773886949",
+          "width": 1079,
+          "height": 1619,
+          "usedOnKai": "Homepage · Shop women · Bestsellers"
+        },
+        {
+          "id": "women-swim",
+          "url": "https://cdn.shopify.com/s/files/1/1868/5457/files/IMG_0552.jpg?v=1773868290",
+          "width": 1200,
+          "height": 1800,
+          "usedOnKai": "Homepage · Shop women · Swimwear"
+        },
+        {
+          "id": "women-tops",
+          "url": "https://cdn.shopify.com/s/files/1/1868/5457/files/DSC09533.jpg?v=1773884372",
+          "width": 1200,
+          "height": 1800,
+          "usedOnKai": "Homepage · Shop women · Tops"
+        },
+        {
+          "id": "women-bottoms",
+          "url": "https://cdn.shopify.com/s/files/1/1868/5457/files/DSC08753.jpg?v=1773866346",
+          "width": 1200,
+          "height": 1800,
+          "usedOnKai": "Homepage · Shop women · Bottoms"
+        },
+        {
+          "id": "men",
+          "url": "https://cdn.shopify.com/s/files/1/1868/5457/files/IMG_3731_82dc6b8d-7e40-4802-8358-027ee8c35b67.jpg?v=1780608894",
+          "width": 3648,
+          "height": 5472,
+          "usedOnKai": "Homepage · Shop men"
+        },
+        {
+          "id": "men-swim",
+          "url": "https://cdn.shopify.com/s/files/1/1868/5457/files/DSC07568.jpg?v=1781470994",
+          "width": 643,
+          "height": 965,
+          "usedOnKai": "Homepage · Shop men · Swimwear"
+        },
+        {
+          "id": "men-tops",
+          "url": "https://cdn.shopify.com/s/files/1/1868/5457/files/IMG_3521.jpg?v=1780609662",
+          "width": 2997,
+          "height": 4495,
+          "usedOnKai": "Homepage · Shop men · Shirts"
+        },
+        {
+          "id": "store",
+          "url": "https://cdn.shopify.com/s/files/1/1868/5457/files/Screenshot_2026-06-08_at_3.34.33_PM.png?v=1780922080",
+          "width": 1120,
+          "height": 1306,
+          "usedOnKai": "Homepage · Visit us"
+        }
+      ],
+      "usedIn": "escape doors, departments, mega menu, journal, lookbook, stores"
     },
     {
-      "slot": "Screenshots of the current kaicollections.com (film BEFORE)",
-      "status": "missing",
-      "reason": "site unreachable",
-      "resolution": "`npm run capture:before` then `npm run render`. Captures are git-ignored (third-party UI)."
+      "slot": "Live captures of kaicollections.com (film BEFORE)",
+      "status": "captured locally, git-ignored",
+      "capturedAt": "2026-10-15T23:53:56.623Z",
+      "pages": [
+        "https://kaicollections.com/",
+        "https://kaicollections.com/collections/ss26-mens-swimwear",
+        "https://kaicollections.com/products/festival-del-mare-swim-shorts"
+      ],
+      "record": "research/before-capture.json"
+    }
+  ],
+  "generatedLocally": [
+    {
+      "asset": "Film plates (screenshots of this concept, showing KAI photography)",
+      "path": "public/film/plates/",
+      "command": "npm run capture:plates",
+      "committed": false
+    },
+    {
+      "asset": "BEFORE captures (phone + desktop)",
+      "path": "public/film/before/, output/before/",
+      "command": "npm run capture:before",
+      "committed": false
+    },
+    {
+      "asset": "Film MP4 (1080×1920, 60 fps, 16 s)",
+      "path": "output/kai-before-after-16s.mp4",
+      "command": "npm run render",
+      "committed": false
+    },
+    {
+      "asset": "Site screenshots and contact sheet",
+      "path": "output/screenshots/, output/showcase-contact-sheet.png",
+      "command": "npm run shots, npm run verify:video",
+      "committed": false
     }
   ],
   "projectAssets": [
     {
-      "asset": "Seascape (sky, sun, sea, sand, wordmark reflection)",
+      "asset": "Seascape (sky, sun, sea, sand; KAI logo letters standing on the horizon)",
       "kind": "WebGL shader",
       "file": "src/gl/sea.ts",
       "origin": "original code",
-      "depicts": "abstract light and water — no real location",
-      "rights": "project"
+      "rights": "project (logo letters are KAI’s, loaded at runtime)"
     },
     {
-      "asset": "Material studies (linen, swim tricot, mesh, nylon–elastane, knit, jersey, French terry)",
-      "kind": "procedural canvas",
-      "file": "src/gl/materials.ts",
-      "origin": "original code",
-      "depicts": "generic textile structures, not specific KAI garments",
-      "rights": "project"
-    },
-    {
-      "asset": "Illustrative garment flats (19 garment types)",
+      "asset": "Concept sketches (optional “Sketch” view, 19 garment types)",
       "kind": "SVG",
       "file": "src/components/GarmentFlat.tsx",
       "origin": "original drawings",
-      "depicts": "garment type, coloured only by the colour in the product name; prints never drawn",
       "rights": "project"
     },
     {
@@ -57,7 +195,6 @@
       "kind": "SVG",
       "file": "src/home/Horizon.tsx",
       "origin": "original drawing",
-      "depicts": "generic architecture, no real place",
       "rights": "project"
     },
     {
@@ -65,7 +202,6 @@
       "kind": "font",
       "file": "@fontsource-variable/fraunces",
       "origin": "Undercase Type",
-      "depicts": "—",
       "rights": "SIL Open Font License 1.1"
     },
     {
@@ -73,7 +209,6 @@
       "kind": "font",
       "file": "@fontsource-variable/jost",
       "origin": "indestructible type*",
-      "depicts": "—",
       "rights": "SIL Open Font License 1.1"
     },
     {
@@ -81,16 +216,6 @@
       "kind": "SVG",
       "file": "public/favicon.svg",
       "origin": "original",
-      "depicts": "sun on a horizon",
-      "rights": "project"
-    },
-    {
-      "asset": "Film plates",
-      "kind": "JPEG screenshots",
-      "file": "public/film/plates/",
-      "count": 18,
-      "bytes": 2776102,
-      "origin": "`npm run capture:plates` — screenshots of this concept",
       "rights": "project"
     },
     {
@@ -98,7 +223,6 @@
       "kind": "synthesised audio",
       "file": "scripts/make-audio.mjs",
       "origin": "original code, no samples",
-      "depicts": "—",
       "rights": "project"
     }
   ]

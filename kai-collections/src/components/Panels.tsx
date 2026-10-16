@@ -4,15 +4,18 @@ import {
   BY_SLUG,
   DEPARTMENT_LABEL,
   formatEGP,
-  KIND_LABEL,
+  needsSize,
   officialUrl,
   search,
   SEARCH_SUGGESTIONS,
+  typeLine,
   type Product,
 } from '../data/catalog';
+import { fitStage } from '../data/media';
 import { shop, ui, usePanel, useShop } from '../state/store';
 import { useEscape, useFocusTrap, useLockScroll } from '../lib/hooks';
-import { FlatStage, ProductMedia, gallerySlides } from './ProductMedia';
+import { ProductThumb, SketchStage } from './ProductMedia';
+import { Photo } from './Photo';
 import { SizePicker } from './SizePicker';
 import { Icon, Price, StockNote } from './ui';
 import { SaveButton } from './ProductCard';
@@ -49,7 +52,7 @@ function Drawer({
 function Thumb({ p }: { p: Product }) {
   return (
     <Link to={`/product/${p.slug}`} className="thumb" onClick={ui.close} aria-label={p.name} tabIndex={-1}>
-      <ProductMedia p={p} />
+      <ProductThumb p={p} />
     </Link>
   );
 }
@@ -119,7 +122,7 @@ export function BagDrawer() {
                     {l.p.name}
                   </Link>
                   <div className="label-sm muted">
-                    {l.size ? `Size ${l.size}` : 'Size chosen on KAI'} · {KIND_LABEL[l.p.kind]}
+                    {l.size ? `Size ${l.size}` : 'One size'} · {typeLine(l.p)}
                   </div>
                   <div className="bag__row">
                     <div className="qty" role="group" aria-label={`Quantity for ${l.p.name}`}>
@@ -154,7 +157,7 @@ export function BagDrawer() {
                 Excludes {unpriced} {unpriced === 1 ? 'piece' : 'pieces'} priced on KAI.
               </p>
             )}
-            <p className="label-sm muted">Dated snapshot prices · shipping and payment are handled by KAI.</p>
+            <p className="label-sm muted">Prices as listed on KAI on the snapshot date · shipping, stock and payment are handled by KAI.</p>
             <button className="btn btn--block" onClick={() => setHandoff(true)} data-testid="checkout-handoff">
               Continue on kaicollections.com <Icon.arrow />
             </button>
@@ -196,7 +199,9 @@ export function SavedDrawer() {
                 </Link>
                 <Price p={p} size="sm" />
                 <div className="saved__acts">
-                  {p.sizes.length ? (
+                  {p.stock === 'sold-out' ? (
+                    <span className="label-sm muted">Sold out on KAI</span>
+                  ) : needsSize(p) ? (
                     <Link to={`/product/${p.slug}`} onClick={ui.close} className="link-u label-sm">
                       Choose size
                     </Link>
@@ -248,7 +253,7 @@ export function SearchOverlay() {
             type="search"
             value={q}
             onChange={(e) => setQ(e.target.value)}
-            placeholder="Search swim shorts, linen, one pieces…"
+            placeholder="Search swim shorts, linen, one pieces, a print…"
             aria-label="Search products"
             role="combobox"
             aria-expanded={results.length > 0}
@@ -301,12 +306,13 @@ export function SearchOverlay() {
                     onClick={() => go(p)}
                   >
                     <div className="sres__img">
-                      <FlatStage p={p} caption={false} />
+                      <ProductThumb p={p} />
                     </div>
                     <div>
                       <div className="sres__name">{highlight(p.name, q)}</div>
                       <div className="label-sm muted">
-                        {DEPARTMENT_LABEL[p.department]} · {KIND_LABEL[p.kind]}
+                        {DEPARTMENT_LABEL[p.department]} · {typeLine(p)}
+                        {p.stock === 'sold-out' ? ' · Sold out' : ''}
                       </div>
                     </div>
                     <Price p={p} size="sm" />
@@ -319,7 +325,7 @@ export function SearchOverlay() {
             </>
           ) : (
             <p className="muted search__none" data-testid="search-none">
-              No pieces match “{q}”. Try “swim”, “linen” or a colour.
+              No pieces match “{q}”. Try “swim”, “linen”, “Tencel” or a colour.
             </p>
           )}
         </div>
@@ -356,25 +362,34 @@ export function QuickView() {
     setSlide(0);
     setAdded(false);
   }, [slug]);
-  const slides = p ? gallerySlides(p) : [];
+  const photos = p?.images ?? [];
+  const sold = p?.stock === 'sold-out';
   return (
     <Drawer open={!!p} title={p ? `Quick view: ${p.name}` : 'Quick view'} side="center" testid="quick-view" wide>
       {p && (
         <div className="qv">
           <div className="qv__media">
-            {slides[slide]?.render()}
-            <div className="qv__dots" role="tablist" aria-label="Images">
-              {slides.map((s, i) => (
-                <button key={s.id} role="tab" aria-selected={i === slide} aria-label={s.label} className={i === slide ? 'is-on' : ''} onClick={() => setSlide(i)} />
-              ))}
-            </div>
+            {photos[slide] ? (
+              <div className={`stage stage--photo ${fitStage(photos[slide]).className}`} style={fitStage(photos[slide]).style} key={photos[slide].src}>
+                <Photo src={photos[slide].src} w={photos[slide].w} h={photos[slide].h} alt={photos[slide].alt} sizes="(max-width: 760px) 100vw, 40vw" priority max={1280} fallback={<SketchStage p={p} />} />
+              </div>
+            ) : (
+              <SketchStage p={p} />
+            )}
+            {photos.length > 1 && (
+              <div className="qv__dots" role="tablist" aria-label="Photographs">
+                {photos.map((im, i) => (
+                  <button key={im.src} role="tab" aria-selected={i === slide} aria-label={`Photograph ${i + 1}`} className={i === slide ? 'is-on' : ''} onClick={() => setSlide(i)} />
+                ))}
+              </div>
+            )}
           </div>
           <div className="qv__info">
             <button className="icon-btn qv__close" onClick={ui.close} aria-label="Close quick view" data-autofocus>
               <Icon.close />
             </button>
             <div className="label-sm muted">
-              {DEPARTMENT_LABEL[p.department]} · {KIND_LABEL[p.kind]}
+              {DEPARTMENT_LABEL[p.department]} · {typeLine(p)}
             </div>
             <h2 className="display qv__name">{p.name}</h2>
             <Price p={p} />
@@ -385,13 +400,15 @@ export function QuickView() {
               <button
                 className="btn"
                 data-testid="qv-add"
+                disabled={sold}
                 onClick={() => {
-                  if (p.sizes.length && !size) return setErr(true);
-                  shop.add(p.slug, size);
+                  if (sold) return;
+                  if (needsSize(p) && !size) return setErr(true);
+                  shop.add(p.slug, needsSize(p) ? size : null);
                   setAdded(true);
                 }}
               >
-                {added ? 'Added to bag' : 'Add to bag'}
+                {sold ? 'Sold out' : added ? 'Added to bag' : 'Add to bag'}
               </button>
               <SaveButton p={p} className="save--box" />
             </div>

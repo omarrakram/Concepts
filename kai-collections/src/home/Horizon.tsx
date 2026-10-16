@@ -1,7 +1,7 @@
 import { useRef, type CSSProperties } from 'react';
 import { Link } from 'react-router';
 import { Seascape } from '../components/Seascape';
-import { FlatStage } from '../components/ProductMedia';
+import { ProductMedia } from '../components/ProductMedia';
 import { ConceptTag, Icon, Kicker, Price } from '../components/ui';
 import { BY_SLUG } from '../data/catalog';
 import { cssFallback, lightAlong, seaStill, type LightKey } from '../gl/sea';
@@ -25,34 +25,36 @@ export const CHAPTERS: Chapter[] = [
     tone: 'dark',
     time: '06:40',
     title: 'Sunlit water',
-    line: 'Where KAI began — swim shorts made in Cairo, treated against chlorine, salt and sun.',
-    product: 'festival-del-mare-swim-shorts',
+    line: 'Where KAI began — swim shorts made in Cairo, treated against chlorine, salt water and UV.',
+    product: 'yellow-zebra-swim-shorts',
+    second: 'mini-yellow-zebra-swim-shorts',
   },
   {
     id: 'sand',
     tone: 'dark',
     time: '11:20',
     title: 'Warm sand',
-    line: 'Washed pure linen, cut relaxed for the heat of the day.',
-    product: 'women-s-beige-linen-v-neck-top',
-    second: 'womens-beige-linen-shorts',
+    line: 'Washed linen, cut relaxed for the heat of the day.',
+    product: 'women-beige-linen-skirt',
+    second: 'women-beige-linen-top',
   },
   {
     id: 'walls',
     tone: 'dark',
     time: '15:10',
     title: 'White walls',
-    line: 'A pure linen semi-collar shirt for the hours out of the water.',
-    product: 'white-semi-collar-shirt',
+    line: 'Tencel and linen for the hours out of the water.',
+    product: 'black-tencel-cuban-shirt',
+    second: 'white-short-sleeve-linen-shirt',
   },
   {
     id: 'gold',
     tone: 'light',
     time: '18:30',
     title: 'Golden hour',
-    line: 'One pieces in nylon–elastane, and a sarong in the same print as his shorts.',
-    product: 'fuchsia-playa-one-piece',
-    second: 'festival-del-mare-sarong',
+    line: 'One pieces in recycled polyester and spandex, double lined, for the last long swim.',
+    product: 'matcha-perla-one-piece',
+    second: 'rust-gigi-one-piece',
   },
   {
     id: 'blue',
@@ -140,7 +142,7 @@ function ChapterView({ c, d, mobile, sharp = false }: { c: Chapter; d: number; m
       {p && (
         <div className="hz-ch__cards" style={{ transform: `translate3d(${drift}vw,0,0)` }}>
           <Link to={`/product/${p.slug}`} className="hz-card" tabIndex={op < 0.5 ? -1 : 0}>
-            <FlatStage p={p} caption={false} />
+            <ProductMedia p={p} hover={false} priority sizes="(max-width: 760px) 42vw, 16vw" />
             <div className="hz-card__cap">
               <span>{p.name}</span>
               <Price p={p} size="sm" />
@@ -148,7 +150,7 @@ function ChapterView({ c, d, mobile, sharp = false }: { c: Chapter; d: number; m
           </Link>
           {q && !mobile && (
             <Link to={`/product/${q.slug}`} className="hz-card hz-card--b" tabIndex={op < 0.5 ? -1 : 0}>
-              <FlatStage p={q} caption={false} />
+              <ProductMedia p={q} hover={false} priority sizes="16vw" />
               <div className="hz-card__cap">
                 <span>{q.name}</span>
                 <Price p={q} size="sm" />

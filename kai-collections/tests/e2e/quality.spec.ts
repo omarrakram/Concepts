@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 import { ROUTES } from './helpers';
 
 test.describe('accessibility (axe: serious and critical)', () => {
-  for (const path of ['/', '/shop/women', '/product/black-playa-one-piece', '/shop/sets', '/lookbook', '/about', '/stores']) {
+  for (const path of ['/', '/shop/women', '/product/black-kaia-one-piece', '/shop/sets', '/lookbook', '/about', '/stores']) {
     test(path, async ({ page }) => {
       await page.goto(path);
       await page.waitForTimeout(600);
@@ -15,7 +15,7 @@ test.describe('accessibility (axe: serious and critical)', () => {
 });
 
 test('text contrast on the main shopping pages', async ({ page }) => {
-  for (const path of ['/shop/women', '/product/black-playa-one-piece']) {
+  for (const path of ['/shop/women', '/product/black-kaia-one-piece']) {
     await page.goto(path);
     const res = await new AxeBuilder({ page }).withRules(['color-contrast']).exclude('.shop-head').exclude('.stage__cap').analyze();
     const bad = res.violations.flatMap((v) => v.nodes).filter((n) => n.impact === 'serious');
@@ -69,19 +69,28 @@ test('internal links resolve and external links are safe', async ({ page, reques
   for (const u of external) expect(u.startsWith('https://'), u).toBe(true);
 });
 
-test('the film player and the deterministic capture stage', async ({ page }) => {
+test('the film player and the deterministic capture stage', async ({ page, request }) => {
   await page.goto('/showcase');
   await expect(page.getByTestId('showcase-player')).toBeVisible();
   await expect(page.locator('iframe')).toHaveAttribute('src', /\/showcase\?stage/);
 
   await page.setViewportSize({ width: 432, height: 768 });
   await page.goto('/showcase?capture');
+  const plates = await request.get('/film/plates/manifest.json');
+  const isJson = plates.ok() && (plates.headers()['content-type'] ?? '').includes('json');
+  if (!isJson) {
+    // plates show KAI's photography, so a clean checkout has none: the stage must say so plainly
+    await expect(page.getByTestId('film-missing')).toContainText('never published with the code');
+    test.info().annotations.push({ type: 'note', description: 'film plates not captured in this checkout — seek test ran against the fallback' });
+    return;
+  }
   await page.waitForFunction(() => document.body.dataset.ready === '1', null, { timeout: 90_000 });
   expect(await page.evaluate(() => window.__duration)).toBe(16);
   for (const t of [0.5, 3.1, 5.2, 7.9, 11.0, 15.5]) {
     await page.evaluate((x) => window.__seek!(x), t);
     await expect(page.locator('.film')).toHaveAttribute('data-t', t.toFixed(3));
   }
+  await expect(page.locator('.film-sea canvas')).toHaveAttribute('data-text', 'logo');
   await page.evaluate(() => window.__seek!(15.5));
   await expect(page.locator('.lockup')).toContainText('Unofficial concept');
 });

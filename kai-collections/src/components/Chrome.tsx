@@ -4,8 +4,9 @@ import { PRODUCTS, SHOP_VIEWS, SNAPSHOT } from '../data/catalog';
 import { SOURCES } from '../data/brand';
 import { ui, usePanel, useShop } from '../state/store';
 import { useFocusTrap, useLockScroll, useEscape } from '../lib/hooks';
-import { GarmentFlat } from './GarmentFlat';
-import { Icon, Wordmark } from './ui';
+import { campaign, MEDIA_ON } from '../data/media';
+import { Photo } from './Photo';
+import { Icon, Logo } from './ui';
 
 const count = (id: string) => PRODUCTS.filter(SHOP_VIEWS.find((v) => v.id === id)!.test).length;
 
@@ -22,9 +23,9 @@ const MEGA = [
     title: 'Categories',
     links: [
       ['Swim', '/shop/swimwear'],
-      ['Linen & Resort', '/shop/linen'],
+      ['Linen', '/shop/linen'],
       ['Resort', '/shop/resort'],
-      ['Everyday', '/shop/everyday'],
+      ['Knit & Jersey', '/shop/everyday'],
       ['Matching sets', '/shop/sets'],
     ],
   },
@@ -100,8 +101,8 @@ export function Nav() {
             Journal
           </NavLink>
         </nav>
-        <Link to="/" className="nav__brand" aria-label="KAI — home">
-          <Wordmark size={26} />
+        <Link to="/" className="nav__brand" aria-label="KAI Collections — home">
+          <Logo height={38} />
         </Link>
         <div className="nav__right">
           <NavLink className="nav__link label nav__hide-m" to="/about">
@@ -143,14 +144,13 @@ export function Nav() {
               </ul>
             </div>
           ))}
-          <Link to="/#build" className="mega__feature">
-            <div className="mega__flats" aria-hidden="true">
-              <GarmentFlat kind="shirt" colour="white" variant="semi-collar" />
-              <GarmentFlat kind="swim-short" colour="yellow" />
+          <Link to="/shop/new-arrivals" className="mega__feature">
+            <div className="mega__img" aria-hidden="true">
+              {MEDIA_ON && <Photo src={campaign('women-sets').src} w={campaign('women-sets').w} h={campaign('women-sets').h} alt="" decorative sizes="220px" max={540} />}
             </div>
             <div>
-              <div className="label-sm muted">On the homepage</div>
-              <div className="serif mega__ft">Build your escape</div>
+              <div className="label-sm muted">SS26</div>
+              <div className="serif mega__ft">New arrivals</div>
             </div>
           </Link>
         </div>
@@ -176,7 +176,8 @@ export function MobileMenu() {
     ['Women', '/shop/women', count('women')],
     ['Kids', '/shop/kids', count('kids')],
     ['Swim', '/shop/swimwear', count('swimwear')],
-    ['Linen & Resort', '/shop/linen', count('linen')],
+    ['Linen', '/shop/linen', count('linen')],
+    ['Resort', '/shop/resort', count('resort')],
     ['Matching sets', '/shop/sets', 0],
     ['New arrivals', '/shop/new-arrivals', count('new-arrivals')],
     ['Sale', '/shop/sale', count('sale')],
@@ -185,7 +186,7 @@ export function MobileMenu() {
     <div className={`sheet ${open ? 'is-open' : ''}`} aria-hidden={!open} inert={!open}>
       <div className="sheet__panel" role="dialog" aria-modal="true" aria-label="Menu" ref={ref} data-testid="mobile-menu">
         <div className="sheet__top wrap">
-          <Wordmark size={24} />
+          <Logo height={34} />
           <button className="icon-btn" onClick={ui.close} aria-label="Close menu" data-autofocus>
             <Icon.close />
           </button>
@@ -227,7 +228,7 @@ export function Footer() {
     <footer className="footer on-dark" data-testid="footer">
       <div className="footer__top wrap">
         <div className="footer__brand">
-          <Wordmark size={64} />
+          <Logo height={84} tone="light" />
           <p className="serif footer__line">The art of escape.</p>
           <p className="label-sm footer__concept">Concept line — not a KAI slogan</p>
         </div>
@@ -238,7 +239,8 @@ export function Footer() {
             <Link to="/shop/women">Women</Link>
             <Link to="/shop/kids">Kids</Link>
             <Link to="/shop/swimwear">Swim</Link>
-            <Link to="/shop/linen">Linen & Resort</Link>
+            <Link to="/shop/linen">Linen</Link>
+            <Link to="/shop/resort">Resort</Link>
             <Link to="/shop/sets">Matching sets</Link>
             <Link to="/shop/sale">Sale</Link>
           </div>
@@ -272,9 +274,9 @@ export function Footer() {
           is sold here: every purchase link opens the piece on KAI’s own store.
         </p>
         <p className="muted-l">
-          Catalog: {PRODUCTS.length} real KAI products from a {SNAPSHOT.method === 'storefront' ? 'storefront' : 'search-index'} snapshot dated{' '}
-          {SNAPSHOT.checkedAt}. Prices in EGP are dated, not live. Garment drawings are illustrative flats; seascapes and textiles are rendered
-          light and material studies — not KAI photography. Typeset wordmark, not KAI’s logo.
+          Catalog: KAI’s {PRODUCTS.length} SS26 products, read directly from kaicollections.com on {SNAPSHOT.checkedAt}. Prices in EGP and availability are
+          from that day, not live. {MEDIA_ON ? 'Logo and photographs © KAI Collections, shown from KAI’s own servers for this proposal; ' : ''}seascapes are
+          rendered light studies{MEDIA_ON ? '' : '; the wordmark is a typeset stand-in, not KAI’s logo'}.
         </p>
       </div>
     </footer>

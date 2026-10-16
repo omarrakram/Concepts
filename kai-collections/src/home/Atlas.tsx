@@ -6,7 +6,7 @@ import { BY_SLUG, type Product } from '../data/catalog';
 import { LIGHTS, mixLight, type LightKey } from '../gl/sea';
 import { useIsMobile, usePrefersReducedMotion, useReveal } from '../lib/hooks';
 
-/** Styling themes are fictional moods, not KAI campaigns or locations. Products are real. */
+/** Styling themes are fictional moods, not KAI campaigns or locations. Products and photographs are KAI's. */
 export const MOODS: { id: string; time: string; title: string; light: LightKey; copy: string; products: string[]; arc: number }[] = [
   {
     id: 'morning',
@@ -14,8 +14,8 @@ export const MOODS: { id: string; time: string; title: string; light: LightKey; 
     title: 'Morning by the water',
     light: 'morning',
     arc: 0.08,
-    copy: 'First swim before the beach fills. Light layers, quick-dry shorts, a linen top for the walk down.',
-    products: ['festival-del-mare-swim-shorts', 'ivory-palma-one-piece', 'women-s-white-linen-v-neck-top', 'white-linen-shirt'],
+    copy: 'First swim before the beach fills. Quick-dry shorts, a one piece, linen for the walk down.',
+    products: ['sky-clams-swim-shorts', 'stone-isla-one-piece', 'women-s-white-linen-v-neck-top', 'white-short-sleeve-linen-shirt'],
   },
   {
     id: 'pool',
@@ -23,8 +23,8 @@ export const MOODS: { id: string; time: string; title: string; light: LightKey; 
     title: 'Poolside afternoon',
     light: 'noon',
     arc: 0.5,
-    copy: 'Colour at full sun: bright one pieces, printed shorts, a sarong within reach.',
-    products: ['fuchsia-playa-one-piece', 'blue-bandana-swim-shorts', 'festival-del-mare-sarong', 'funky-fish-beaded-tank-top'],
+    copy: 'Colour at full sun: a bikini, printed shorts, a sarong within reach.',
+    products: ['butter-jouri-bikini-top', 'tipsy-sardine-swim-shorts', 'festival-del-mare-sarong', 'mocha-perla-one-piece'],
   },
   {
     id: 'weekend',
@@ -33,7 +33,7 @@ export const MOODS: { id: string; time: string; title: string; light: LightKey; 
     light: 'golden',
     arc: 0.72,
     copy: 'Everything for two days, in one small bag — matching shorts for father and son included.',
-    products: ['yellow-zebra-swim-shorts', 'navy-linen-pants', 'womens-beige-linen-shorts', 'mini-sky-penguins'],
+    products: ['pink-polar-swim-shorts', 'mini-pink-polar-swim-shorts', 'navy-tencel-cuban-shirt', 'womens-beige-linen-pants'],
   },
   {
     id: 'sunset',
@@ -41,8 +41,8 @@ export const MOODS: { id: string; time: string; title: string; light: LightKey; 
     title: 'Sunset dinner',
     light: 'dusk',
     arc: 0.92,
-    copy: 'Salt still in the hair. Washed linen and a ruffle dress for the table by the water.',
-    products: ['white-semi-collar-shirt', 'beige-linen-pants', 'brown-ruffle-tencel-dress', 'women-beige-linen-skirt'],
+    copy: 'Salt still in the hair. Crinkle linen and a Tencel dress for the table by the water.',
+    products: ['brown-linen-crinkle-cuban-shirt', 'women-brown-linen-top', 'women-brown-linen-skirt', 'navy-ruffle-tencel-dress'],
   },
   {
     id: 'city',
@@ -50,8 +50,8 @@ export const MOODS: { id: string; time: string; title: string; light: LightKey; 
     title: 'Coastal city',
     light: 'night',
     arc: 1,
-    copy: 'Back in town after dark: a linen overshirt, heavy cotton, French terry.',
-    products: ['black-linen-over-shirt', 'olive-acid-wash-oversized-t-shirt', 'unisex-beige-cargo-sweatpants', 'women-s-black-linen-v-neck-top'],
+    copy: 'Back in town after dark: Tencel, a knit tee, black linen.',
+    products: ['black-tencel-cuban-shirt', 'navy-capri-knit-t-shirt', 'womensblack-linen-shirt', 'women-tencel-top-black'],
   },
 ];
 

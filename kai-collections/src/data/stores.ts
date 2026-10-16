@@ -1,26 +1,39 @@
-/** From kaicollections.com/pages/store-list and the About Us page (search-index snapshot, 2026-10-14). */
+/**
+ * Read directly from kaicollections.com/pages/store-list and the About Us page on 2026-10-15.
+ * Phone numbers are the business numbers KAI publishes on that page.
+ */
 export interface Store {
   name: string;
   area: string;
   region: 'Cairo' | 'Alexandria' | 'North Coast' | 'Red Sea' | 'UAE';
-  type: 'Flagship' | 'Seasonal' | 'Stockist' | 'Store';
+  type: 'Flagship' | 'Store' | 'Seasonal' | 'Stockist';
+  phone?: string;
   note?: string;
 }
 
 export const STORES: Store[] = [
-  { name: 'Cairo Festival City Mall', area: 'New Cairo', region: 'Cairo', type: 'Flagship' },
-  { name: 'City Centre Almaza', area: 'Heliopolis', region: 'Cairo', type: 'Flagship' },
-  { name: 'District 5', area: 'New Cairo', region: 'Cairo', type: 'Flagship' },
-  { name: 'Mall of Egypt', area: '6th of October', region: 'Cairo', type: 'Flagship' },
-  { name: 'Mall of Arabia — Gate 3', area: '6th of October, Giza', region: 'Cairo', type: 'Flagship' },
-  { name: 'Alexandria', area: 'Alexandria', region: 'Alexandria', type: 'Store', note: 'Listed on the store page; address not captured in the snapshot.' },
-  { name: 'Marassi — The Hub', area: 'Sidi Abdel Rahman', region: 'North Coast', type: 'Seasonal' },
-  { name: 'Marassi Beach Club House', area: 'Sidi Abdel Rahman', region: 'North Coast', type: 'Seasonal' },
-  { name: 'Mountain View — Light House', area: 'Ras El Hekma', region: 'North Coast', type: 'Seasonal' },
-  { name: 'Lakeyard — Hacienda Bay', area: 'El Alamein', region: 'North Coast', type: 'Seasonal' },
-  { name: 'Telal Beach', area: 'El Alamein', region: 'North Coast', type: 'Seasonal' },
+  { name: 'Cairo Festival City', area: 'New Cairo', region: 'Cairo', type: 'Flagship', phone: '+201031942479', note: 'Listed by KAI as temporarily closed.' },
+  { name: 'City Centre Almaza', area: 'Heliopolis, Cairo', region: 'Cairo', type: 'Flagship', phone: '+201032055255' },
+  { name: 'Mall of Egypt', area: '6th of October, Giza', region: 'Cairo', type: 'Flagship', phone: '+201031940478' },
+  { name: 'District 5 Mall', area: 'New Cairo', region: 'Cairo', type: 'Flagship', phone: '+201031965057' },
+  { name: 'Mall of Arabia, Gate 3', area: '6th of October, Giza', region: 'Cairo', type: 'Flagship', phone: '+201115054041' },
+  { name: 'City Center Alex', area: 'Alexandria', region: 'Alexandria', type: 'Store', phone: '+201118993934' },
+  { name: 'Marassi — The Hub', area: 'North Coast', region: 'North Coast', type: 'Seasonal', phone: '+201119935185' },
+  { name: 'Marassi — Beach Club House', area: 'North Coast', region: 'North Coast', type: 'Seasonal', phone: '+201113400205' },
+  { name: 'Mountain View — Light House', area: 'Ras El Hekma', region: 'North Coast', type: 'Seasonal', phone: '+201119945387' },
+  { name: 'Lakeyard — Hacienda Bay', area: 'North Coast', region: 'North Coast', type: 'Seasonal', phone: '+201119945254' },
+  { name: 'Telal Beach', area: 'El Alamein', region: 'North Coast', type: 'Seasonal', phone: '+201119891933' },
+  { name: 'La Vista Bay East', area: 'El Dabaa', region: 'North Coast', type: 'Seasonal', phone: '+201119945024' },
+  { name: 'Kyma Beach — South Med', area: 'El Dabaa', region: 'North Coast', type: 'Seasonal', phone: '+201117781075' },
+  { name: 'Matcha Caesar — Sodic', area: 'Ras El Hekma', region: 'North Coast', type: 'Seasonal' },
+  { name: 'Habitat Destination', area: 'Soma Bay', region: 'Red Sea', type: 'Store', phone: '+201115450157' },
+  { name: 'Four Seasons Hotel', area: 'Sharm El Sheikh', region: 'Red Sea', type: 'Stockist' },
+  { name: 'Wavy Swimwear — Soho Square', area: 'Sharm El Sheikh', region: 'Red Sea', type: 'Stockist' },
+  { name: 'Surf Shop — Abu Tig Marina', area: 'El Gouna', region: 'Red Sea', type: 'Stockist' },
+  { name: 'Surf Shop — Senzo Mall', area: 'Hurghada', region: 'Red Sea', type: 'Stockist' },
+  { name: 'Jay Store — Garden 8', area: 'New Cairo', region: 'Cairo', type: 'Stockist' },
+  { name: 'Jay Store — Designa Mall', area: 'Alexandria', region: 'Alexandria', type: 'Stockist' },
   { name: 'Jay Store — Diplo 3', area: 'North Coast', region: 'North Coast', type: 'Stockist' },
-  { name: 'Four Seasons Sharm El Sheikh', area: 'Sharm El Sheikh', region: 'Red Sea', type: 'Stockist' },
-  { name: 'Surf Shop', area: 'El Gouna', region: 'Red Sea', type: 'Stockist' },
-  { name: 'kaicollections.ae', area: 'United Arab Emirates', region: 'UAE', type: 'Store', note: 'KAI runs a UAE storefront; see its own store page for current locations.' },
+  { name: 'Galeries Lafayette Dubai', area: 'Dubai', region: 'UAE', type: 'Stockist', note: 'Named on KAI’s About Us page.' },
+  { name: 'Jashanmal Dubai', area: 'Dubai', region: 'UAE', type: 'Stockist', note: 'Named on KAI’s About Us page.' },
 ];

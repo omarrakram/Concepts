@@ -1,5 +1,6 @@
-import type { ReactNode } from 'react';
-import { discount, formatEGP, onSale, type Product } from '../data/catalog';
+import { useState, type ReactNode } from 'react';
+import { SNAPSHOT, availableSizes, discount, formatEGP, needsSize, onSale, type Product } from '../data/catalog';
+import { LOGO, MEDIA_ON, imgUrl } from '../data/media';
 
 const P = { fill: 'none', stroke: 'currentColor', strokeWidth: 1.4, strokeLinecap: 'round' as const, strokeLinejoin: 'round' as const };
 
@@ -58,12 +59,35 @@ export const Icon = {
   ),
 };
 
-/** Typeset wordmark. NOT the official KAI logo (not available to this build); see README. */
+/**
+ * Typeset stand-in for the wordmark — used only when KAI-hosted media is switched off
+ * (VITE_KAI_MEDIA=off) or the logo fails to load. It is NOT KAI's logo.
+ */
 export function Wordmark({ className, size = 22 }: { className?: string; size?: number }) {
   return (
-    <span className={`wordmark ${className ?? ''}`} style={{ fontSize: size }} aria-label="KAI">
+    <span className={`wordmark ${className ?? ''}`} style={{ fontSize: size }} role="img" aria-label="KAI" title="Typeset stand-in — not KAI’s logo">
       KAI
     </span>
+  );
+}
+
+/** KAI's official logo, referenced from KAI's own CDN (never copied into this repository). */
+export function Logo({ className, height = 34, tone = 'ink' }: { className?: string; height?: number; tone?: 'ink' | 'light' }) {
+  const [failed, setFailed] = useState(false);
+  if (!MEDIA_ON || failed) return <Wordmark className={className} size={height * 0.62} />;
+  const w = Math.round((height * LOGO.w) / LOGO.h);
+  return (
+    <img
+      className={`logo logo--${tone} ${className ?? ''}`}
+      src={imgUrl(LOGO.src, w * 3)}
+      width={w}
+      height={height}
+      alt="KAI Collections"
+      decoding="async"
+      draggable={false}
+      onError={() => setFailed(true)}
+      data-testid="kai-logo"
+    />
   );
 }
 
@@ -84,9 +108,20 @@ export function Price({ p, size = 'md' }: { p: Product; size?: 'sm' | 'md' | 'lg
 }
 
 export function StockNote({ p }: { p: Product }) {
-  if (p.stock === 'sold-out') return <span className="stock stock--out">Sold out in snapshot</span>;
-  if (p.stock === 'in-stock') return <span className="stock stock--in">Available in snapshot</span>;
-  return null;
+  const when = `Availability read from KAI on ${SNAPSHOT.checkedAt}`;
+  if (p.stock === 'sold-out')
+    return (
+      <span className="stock stock--out" title={when}>
+        Sold out on KAI
+      </span>
+    );
+  if (p.stock !== 'in-stock') return null;
+  const n = availableSizes(p).length;
+  return (
+    <span className="stock stock--in" title={when}>
+      {needsSize(p) ? `${n} of ${p.sizes.length} sizes available` : 'Available'}
+    </span>
+  );
 }
 
 export function Kicker({ n, children, light }: { n?: string; children: ReactNode; light?: boolean }) {

@@ -1,4 +1,26 @@
+import { readFileSync } from 'node:fs';
 import { expect, type Page } from '@playwright/test';
+
+/** The committed storefront snapshot the site renders — tests pick their fixtures from it, so a re-sync can't silently break them. */
+export interface LiveProduct {
+  handle: string;
+  name: string;
+  dept: string;
+  kind: string;
+  price: number;
+  compareAt: number | null;
+  stock: string;
+  sizes: { label: string; available: boolean; price?: number }[];
+  images: { src: string }[];
+  material: string | null;
+}
+export const LIVE = JSON.parse(readFileSync(new URL('../../src/data/catalog.live.json', import.meta.url), 'utf8')) as { cdn: string; products: LiveProduct[] };
+export const live = (handle: string) => LIVE.products.find((p) => p.handle === handle)!;
+/** an in-stock piece with at least `n` sizes available, all at the product price */
+export const withSizes = (n: number, dept?: string) =>
+  LIVE.products.find((p) => p.stock === 'in-stock' && (!dept || p.dept === dept) && p.sizes.length > 1 && p.sizes.filter((s) => s.available).length >= n && p.sizes.every((s) => s.price == null))!;
+export const soldOut = () => LIVE.products.find((p) => p.stock === 'sold-out')!;
+export const egp = (n: number) => `EGP ${n.toLocaleString('en-US')}`;
 
 export const ROUTES: { path: string; testid: string }[] = [
   { path: '/', testid: 'hero' },
@@ -14,8 +36,9 @@ export const ROUTES: { path: string; testid: string }[] = [
   { path: '/shop/new-arrivals', testid: 'shop' },
   { path: '/shop/sale', testid: 'shop' },
   { path: '/product/festival-del-mare-swim-shorts', testid: 'pdp' },
-  { path: '/product/black-playa-one-piece', testid: 'pdp' },
+  { path: '/product/black-kaia-one-piece', testid: 'pdp' },
   { path: '/product/yellow-zebra-swim-shorts', testid: 'pdp' },
+  { path: '/product/mini-pink-polar-swim-shorts', testid: 'pdp' },
   { path: '/lookbook', testid: 'lookbook' },
   { path: '/about', testid: 'about' },
   { path: '/stores', testid: 'stores' },
@@ -40,11 +63,23 @@ export async function noHorizontalOverflow(page: Page) {
   expect(over, 'horizontal overflow (px)').toBeLessThanOrEqual(0);
 }
 
+/**
+ * Every image that has loaded (or is on screen and so must load) decoded successfully.
+ * Lazy photographs further down the page have not been requested yet and are skipped.
+ */
 export async function noBrokenImages(page: Page) {
   const broken = await page.evaluate(async () => {
-    const imgs = [...document.images];
-    await Promise.all(imgs.map((i) => (i.complete ? null : new Promise((r) => i.addEventListener('load', r, { once: true }) || i.addEventListener('error', r, { once: true })))));
-    return imgs.filter((i) => i.complete && i.naturalWidth === 0 && i.src).map((i) => i.src.slice(0, 80));
+    const onScreen = (i: HTMLImageElement) => {
+      const r = i.getBoundingClientRect();
+      return r.bottom > 0 && r.top < innerHeight && r.width > 0;
+    };
+    const imgs = [...document.images].filter((i) => i.complete || onScreen(i));
+    await Promise.all(
+      imgs.map((i) =>
+        i.complete ? null : new Promise((r) => (i.addEventListener('load', r, { once: true }), i.addEventListener('error', r, { once: true }), setTimeout(r, 20000))),
+      ),
+    );
+    return imgs.filter((i) => i.complete && i.naturalWidth === 0 && i.currentSrc).map((i) => i.currentSrc.slice(0, 100));
   });
   expect(broken).toEqual([]);
 }

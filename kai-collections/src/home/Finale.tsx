@@ -1,6 +1,6 @@
 import { Link } from 'react-router';
 import { Seascape } from '../components/Seascape';
-import { ConceptTag, Icon, Wordmark } from '../components/ui';
+import { ConceptTag, Icon, Logo } from '../components/ui';
 import { LIGHTS, mixLight } from '../gl/sea';
 import { useIsMobile, useReveal } from '../lib/hooks';
 
@@ -24,8 +24,7 @@ export function Finale() {
           The art of escape
         </h2>
         <div className="finale__lock rv">
-          <Wordmark size={mobile ? 44 : 64} />
-          <span className="label finale__sub">Collections</span>
+          <Logo height={mobile ? 64 : 92} tone="light" className="finale__logo" />
           <span className="label-sm finale__meta">Cairo · since 2018 · swim · linen · resort</span>
           <ConceptTag>“The art of escape” is concept copy</ConceptTag>
         </div>

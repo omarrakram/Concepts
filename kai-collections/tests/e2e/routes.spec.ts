@@ -42,5 +42,6 @@ test('the footer states that this is an unofficial concept', async ({ page }) =>
   const footer = page.getByTestId('footer');
   await expect(footer).toContainText('Unofficial speculative concept');
   await expect(footer).toContainText('Not affiliated');
-  await expect(footer).toContainText('illustrative flats');
+  await expect(footer).toContainText('read directly from kaicollections.com');
+  await expect(footer).toContainText('Logo and photographs © KAI Collections');
 });

@@ -1,123 +1,86 @@
 # KAI COLLECTIONS — The Art of Escape · implementation report
 
 Unofficial speculative concept by Omar Akram. Not affiliated with KAI Collections.
-Repository `omarrakram/Concepts` · branch **`KAI`** · folder `kai-collections/` · built 14–15 Oct 2026.
+Repository `omarrakram/Concepts` · branch **`KAI`** · folder `kai-collections/` · first build 14–15 Oct 2026 · **production completion 15–16 Oct 2026** (direct access to kaicollections.com).
 
 ---
 
-## 1. The constraint that shaped everything
+## 1. What changed in the production pass
 
-The build environment's network policy **denied** `kaicollections.com`, `kaicollections.ae`, `kai-collections.myshopify.com`, Instagram's media CDN, LinkedIn, Facebook and all press sites (proxy `403` on `CONNECT`; `WebFetch` DNS failure). Allowed: npm, GitHub and `cdn.shopify.com` (useless without KAI's file paths).
+The first build ran without access to kaicollections.com and was honest about it (search-index data, illustrative flats, a typeset wordmark, a text-view BEFORE). With access granted, every one of those stand-ins was replaced by the real thing — or retired:
 
-Consequences, handled honestly rather than papered over:
+| Before (first build) | Now |
+| --- | --- |
+| 56 products from search-engine snapshots, dated 2026-10-14 | **KAI's full SS26 assortment, 374 products**, read directly from KAI's Shopify storefront on 2026-10-15 (`npm run sync`); old snapshot kept as history and reconciled |
+| No photography; illustrative garment flats | **1,732 KAI photographs** on every product surface; flats survive only as an optional, labelled **Sketch** view and as the image-failure / media-off fallback |
+| Rendered material studies | **KAI's own close-up photographs** of seven cloths, with a ×3 loupe on the full-resolution file and that product's own composition |
+| Rendered light studies in the journal | **KAI's campaign and product photographs** (16 homepage images) in escape doors, departments, journal, lookbook, stores, mega menu |
+| Typeset "KAI" wordmark | **KAI's official logo** (nav, menu, footer, finale, film) — and its KAI letters now stand on the WebGL horizon |
+| Text-view BEFORE | **Genuine phone captures** of kaicollections.com (home, SS26 Mens Swimwear, Festival del Mare Swim Shorts) captured 2026-10-15 |
+| `npm run sync` never exercised | Run, found broken, fixed (§3) |
 
-| Brief asked for | What was possible | What was delivered |
-| --- | --- | --- |
-| Live research of KAI's site, catalogue, Instagram | Web-search tool quoting KAI's indexed pages and press | Full research from indexed KAI pages, every fact cited; nothing visual claimed |
-| Authentic KAI photography | None reachable | **No KAI or stock imagery anywhere.** Illustrative flats (labelled), rendered light studies, rendered material studies. `npm run sync` fills every photo slot from KAI's CDN (hotlinked, not committed) once reachable |
-| Official logo / colours | Not visible | Typeset wordmark, labelled "not KAI's logo"; proposed palette, labelled |
-| Genuine BEFORE capture of kaicollections.com | Impossible | Film's BEFORE is a labelled **text view of KAI's own indexed copy and prices** — never a fabricated screenshot. `npm run capture:before && npm run render` produces the genuine version (pipeline built and exercised) |
-| 30–40 verified products | Indexed product, collection and home pages | **56 real products**, each with source URLs and per-field verification |
+## 2. Rights and the public repository
 
-## 2. Design direction
+- KAI's logo and photographs are **referenced by URL** from KAI's own CDN — the files kaicollections.com itself serves (CORS `*`). None is stored in the repository; a unit test fails if a media file appears outside the git-ignored film folders.
+- Anything that *captures* KAI's media is generated locally and **delivered separately**: BEFORE captures (`public/film/before/`, `output/before/`), film plates (`public/film/plates/`), site screenshots, the contact sheet and the MP4. The previously committed plates, screenshots, contact sheet and MP4 (from the first build) were removed from the tip of the branch, because the regenerated versions show KAI's photography. History was not rewritten.
+- Committed text records instead: `research/before-capture.json` (URLs, time, viewports, titles, HTTP status), `output/video-verification.json`, manifests.
+- `VITE_KAI_MEDIA=off npm run build` produces a build that requests nothing from KAI's CDN (verified: 0 requests across home, shop, product, lookbook, stores, sets; products show labelled sketches; the logo becomes a typeset stand-in that says it is not KAI's logo). Use it for any public hosting KAI has not approved.
+- The concept stays labelled as unofficial everywhere (footer, film lockup, About). Not deployed.
 
-**The Art of Escape** (concept line, labelled): *kai* means ocean, so the site is built on one horizon. The KAI wordmark stands on a rendered sea in plaster-white relief and is reflected — and, while rising, refracted — in moving water. A single day on the water (morning → blue hour) organises the editorial chapters; the film starts at sunrise and ends at dusk.
+## 3. `npm run sync` — run, verified, fixed
 
-Palette (proposal): Sea Salt `#F5F1E9`, Warm Ivory `#FFFDF7`, Sandstone `#D8CDBD`, Mediterranean Blue `#285D74`, Deep Ocean `#173843`, Sunwashed Gold `#E7BA78`, Soft Coral `#D98770` (+ `#B0503A` for AA text), Ink `#202827`. Type: Fraunces Variable (opsz 144, SOFT, WONK italics) + Jost Variable. Devices: the horizon line on every product stage, tide-fill hovers, material macro studies, technical flats. Avoided: clip-art, stock models, glassmorphism, dark luxury pastiche, any BE-INDIE language.
+Bugs found by actually running it against the live store:
 
-## 3. Brand research findings (see `research/`)
+1. **It never reached the network.** Node's built-in `fetch` ignores `HTTPS_PROXY`; the script reported the site unreachable. It now re-runs itself with `NODE_USE_ENV_PROXY=1` when a proxy is configured. Browser scripts hand Chromium the proxy explicitly and keep loopback direct.
+2. **Cents were guessed from magnitude** (`> 10000` ⇒ cents). Prices are now converted by payload shape (`.js` = integer cents, `products.json` = decimal strings).
+3. **Composition regex swallowed prose** ("100% Washed Linen and a relaxed lounge f…", "100% Polyester fabric") and missed `70% Linen / 30% Cotton`. Rewritten with tests.
+4. **Nested lists** (KAI wraps a whole list in one `<li>` on some pages) produced garbage lines — only innermost items are read now.
+5. **A compare-at price lower than the price** (e.g. Black Tencel Pants 1,750 vs 1,599) was treated as a sale. Fixed.
+6. It only refreshed the 56 curated handles (one 404). It now reads all published products and KAI's SS26 collection membership, checks every lead image resolves, tidies size-label whitespace, drops detail bullets that merely repeat fit/care, and reconciles the old snapshot.
 
-Founded 2018 in Cairo by Karim Safadi as a locally made alternative to imported men's swimwear; *kai* = Hawaiian for ocean, also "Cairo" and the K of Karim (Flair 2018). Premium swim and resort wear for men, women and children; linen sets, knitwear, seasonal winterwear; values quality, integrity, local empowerment. Five Cairo flagships, seasonal North Coast stores, Red Sea stockists, UAE storefront. Distinctive assets: named prints with humour, technical product copy, the **Like Father, Like Son** matching line, strong physical retail. Site observations (from indexed structure only): season-coded collections and internal names, EGP/USD inconsistency across pages, heavy markdowns and sold-out density, brand story buried on About.
+A last step was added afterwards: it records the backdrop colour of square packshots (§4). It also runs alone as `npm run backdrops`, and was run that way on the 2026-10-15 snapshot without re-syncing, so prices and stock remain those of that date.
 
-Files: `brand-audit.md`, `visual-identity.md`, `current-site-audit.md`, `product-manifest.json` (56 products, per-field verification), `asset-manifest.json`, `source-links.md`.
+Result (2026-10-15): 1,051 published products → **374 SS26 products** (Men 181 · Women 175 · Kids 18), 308 with sizes available, 66 sold out, 1,732 photographs, 374/374 lead images resolving. Reconciliation of the old 56: 30 current SS26, 25 still published outside SS26 (not shown as current), 1 no longer listed.
 
-## 4. Asset authenticity
+## 4. Design pass around the photography
 
-| Asset | Origin | Status |
-| --- | --- | --- |
-| Product names, prices, sizes, materials, details, stock notes | KAI's own pages via search index, 2026-10-14 | real, dated, cited |
-| Brand facts, quotes | KAI About Us / homepage; 2018 press | real, cited; verbatim quotes marked as such, reported facts not put in quotation marks |
-| Store list | KAI store list + About Us | real (addresses beyond area and phone numbers not captured) |
-| Garment flats (19 types) | original SVG | illustrative, labelled; colour only from product name; prints never drawn |
-| Seascapes, sand, arches | original WebGL / SVG | abstract, labelled "rendered"; no real locations |
-| Material studies | original procedural canvas | generic textile structure, labelled; facts beside them quoted from KAI |
-| Fonts | Fraunces, Jost (SIL OFL) | licensed |
-| Film plates | screenshots of this concept | project |
-| Soundtrack | synthesised in code, no samples | project |
-| KAI photography, logo, BEFORE captures | — | **missing**, fill paths documented |
+KAI shoots mostly 2:3 portraits — studio frames on light grey, and on-location frames full of terracotta and peach walls, pools, palms and sand. The concept's sea/sand/salt palette already sat in that light; the pass made the photographs the lead:
+
+- Product stages follow KAI's 2:3 ratio (no cropped heads or hems); hover reveals KAI's second photograph; sold-out pieces desaturate; "New", "Sale" and "N sizes left" flags come from real data.
+- KAI's square packshots (swim shorts, sarongs, scarves) are shown whole, letterboxed in their own backdrop colour, instead of having their sides cropped by the 2:3 stage. The colour comes from the photographs themselves: the sync reads the edge rows of all 77 square photos (70 flat — 62 of them KAI's #e3e3e3 studio grey; the 7 on-model linen-short crops keep the crop).
+- Phone shop toolbar: the category row scrolls on its own line with size and the two toggles beneath it at full label width (they were squeezed into two- and three-line labels at 360–390 px), and the toolbar scrolls with the page on phones instead of pinning three rows of controls.
+- Product page care: the piece's own care note where KAI gives one (62 products), plus the general "Care Instruction" block KAI's theme shows on every product page, quoted verbatim. (The first pass wrongly said KAI gives no care instructions for the other 312.)
+- The WebGL hero now raises **KAI's own letterforms** out of the sea (CORS-clean texture from the logo PNG, rows 0–412 of 518); the film lockup completes the logo with the COLLECTIONS line cropped from KAI's own artwork rather than typesetting it.
+- Escape doors and departments are opened by KAI's campaign photographs with a tide gradient for legibility; the kids panel pairs the Mini and grown-up Yellow Zebra photos.
+- The Material Edit inspects KAI's own fabric close-ups; the builder lays KAI photos on the towel; the journal pairs KAI photographs with verbatim quotes and marks a product *Pictured* only when KAI uses that exact file on its page.
+- Stores: KAI's store-front photograph beside the verified store list (store list re-read: 24 locations incl. stockists and two Dubai stockists named on About Us; Cairo Festival City shown as KAI lists it, temporarily closed).
 
 ## 5. Routes (all load directly and survive refresh)
 
-`/` · `/shop` · `/shop/men` · `/shop/women` · `/shop/kids` · `/shop/swimwear` · `/shop/linen` · `/shop/resort` · `/shop/everyday` · `/shop/sets` · `/shop/new-arrivals` · `/shop/sale` · `/product/:slug` (56 products) · `/lookbook` · `/about` · `/stores` · `/showcase` (+ `?stage`, `?capture`, `?t=`, `?loop`) · 404 "Lost at sea".
+`/` · `/shop` · `/shop/men` · `/shop/women` · `/shop/kids` · `/shop/swimwear` · `/shop/linen` · `/shop/resort` · `/shop/everyday` · `/shop/sets` · `/shop/new-arrivals` · `/shop/sale` · `/product/:handle` (374) · `/lookbook` · `/about` · `/stores` · `/showcase` (+ `?stage`, `?capture`, `?t=`, `?loop`) · 404.
 
-## 6. Features
+## 6. Testing
 
-**Homepage chapters 00–10:** The Arrival (WebGL sea, rising wordmark, pointer-driven glint) · The KAI philosophy (sourced) · **The Horizon** (sticky scroll-driven day: water → sand → arches → golden → blue hour; real pieces on the waterline; ink tone follows the light) · Choose your escape (4 doors over material studies) · Three wardrobes (accordion panels) · **Resort Atlas** (sun travels a drawn arc; light and edit change; radiogroup keyboard support) · **Material Edit** (7 fabrics, ×3.2 loupe, KAI's own sentences) · Collection Edit (in-place tabs) · **Build your escape** (rule-based builder with live flat-lay, totals, shuffle, dress rule, save look — explicitly not AI) · Coastal Journal · Final Horizon.
+{{TESTING}}
 
-**Commerce:** search overlay (suggestions, highlighted live results, arrow-key/Enter navigation, "see all"), category/department/size/sale/in-stock filters in the URL, five sorts, quick view, product galleries (flat → detail → material study → colour card; or KAI photos after sync), size picker with provenance notes and required-size validation, saved items, concept bag (quantities, remove, subtotal, persisted), honest hand-off to each piece's KAI page (exact URL when indexed, KAI's own search otherwise), matching sets, related products, mobile sticky add bar.
+## 7. Film
 
-**Accessibility & performance:** reduced-motion path for every animation (static Horizon, still seascapes), keyboard support throughout, focus-trapped dialogs with focus return, skip link, labelled canvases, alt text everywhere, AA contrast on shopping pages, IntersectionObserver-paused WebGL, idle-time generation of procedural textures and stills, one shared offscreen context for still vignettes. JS 431 KB (129 KB gzip), CSS 55 KB, film code split into its own chunk.
+{{FILM}}
 
-## 7. Catalog data
+## 8. Deployment readiness
 
-56 products (men 26, women 24, kids 5, unisex 1): 43 with indexed product URLs, 52 with indexed EGP prices, 19 with size runs, 22 with materials, 0 photographs. Snapshot dated 2026-10-14, shown on every PDP and in the footer. Conflicting snapshots are recorded in `notes` (e.g. Beige Linen Pants EGP 1,150 vs 1,450 on two pages — product page used). Four pieces show "Price on kaicollections.com" because no price could be tied to them with certainty. "Tipsy Sardine" and "Butter Isla" (named in the brief) were not found in any indexed page and are not included.
+`vercel.json` (Vite, `npm ci`, `npm run build`, `dist`, SPA rewrite excluding `/assets/` and `/film/`, immutable asset caching, `noindex`). No backend, no secrets, no localhost URLs in the bundle. Root Directory `kai-collections`; add `VITE_KAI_MEDIA=off` unless KAI approves public use of its media. `/showcase` on a clean checkout explains that the film is delivered separately. **Not deployed** (no authorisation).
 
-## 8. Major components
+Bundle: JS 765 KB (175 KB gzip) — of which the 374-product catalog is the largest part — CSS 61 KB (13 KB gzip); film code split into its own chunk.
 
-`src/gl/sea.ts` (shader + still renderer) · `src/components/Seascape.tsx` · `src/components/GarmentFlat.tsx` · `src/gl/materials.ts` · `src/components/Chrome.tsx` (nav, mega menu, mobile sheet, footer) · `src/components/Panels.tsx` (bag, saved, search, quick view) · `src/home/*` (chapters) · `src/pages/*` · `src/showcase/*` (film) · `src/state/store.ts` (bag/saved, `useSyncExternalStore` + guarded `localStorage`).
+## 9. Known limitations
 
-## 9. Testing
+- Prices and availability are a snapshot (2026-10-15), not live; the site says so on every product page. Re-run `npm run sync` to refresh (between two syncs five hours apart, 14 products changed price or stock).
+- 95 products have no written composition on KAI's page; the concept shows the fabric named in the title and says the composition is not stated.
+- Public hosting of KAI's photographs and logo needs KAI's permission (use `VITE_KAI_MEDIA=off` otherwise).
+- kaicollections.ae could not be reached and Instagram redirects to a login wall from this environment; UAE storefront and social content are not audited directly.
+- WebGL in headless/software renderers is slow; real GPUs render it in milliseconds. A CSS-gradient fallback covers browsers without WebGL.
 
-| Check | Result |
-| --- | --- |
-| `npm run typecheck` (tsc, strict) | pass |
-| `npm run build` | pass |
-| `npm test` (Vitest) | **20 / 20 pass** — catalog contract, shop logic, editorial references, sync normaliser |
-| `npx playwright test` | **72 / 72 pass, two consecutive full runs** (desktop 1440 + touch-mobile 390, Chromium with SwiftShader WebGL) — all 18 routes direct + refresh, 404s, titles, mega menu (click/keyboard), nav, skip link, search (suggestions, keyboard, results page, empty state), filters/sort/size/sale/in-stock/URL persistence/clear, quick view, gallery, size validation, bag (qty, subtotal, remove, persistence, hand-off links), saved, official links, related, sets, Horizon (motion on), Escape doors, wardrobes, Atlas (mouse + keyboard), Material Edit + loupe, Edit tabs, Builder (rules, shuffle, save), Journal, Finale, stores filter, axe (no serious/critical WCAG 2 A/AA issues on 7 pages), contrast on shopping pages, focus trap, alt text, internal-link crawl + external-link safety, film player + deterministic seek, overflow at 360/390/768/1024/1440 on all routes, mobile menu, touch gallery/size/sticky bar, mobile Atlas/Builder |
-| Visual review | Desktop 1440 and phone 390/360 screenshots of every chapter and page reviewed; fixes made for ghosted letter shading, overflowing department words, invisible door labels, chapter-text contrast, duplicate suns, drawer-shadow bleed, mobile card overlap, mega-menu hover/click toggle, five live canvases in the reduced-motion Horizon (now stills from one shared context) |
+## 10. Git delivery
 
-## 10. Film
-
-`output/kai-before-after-16s.mp4` — see `output/video-verification.json` for the measured values (duration 16.000 s, 960 frames, 60/1 fps, 1080 × 1920, H.264 High, yuv420p, AAC 48 kHz stereo 16.000 s, faststart, no black stretches, no freezes). Storyboard `output/video-storyboard.md`, contact sheet `output/showcase-contact-sheet.png`.
-
-Engine: the stage is a phone viewport (432 × 768 CSS × 2.5); live parts are the site's own components driven by `t`; UI states are plates photographed from the built site (seamless scroll strips with the real nav and sticky bar drawn on top). CSS transitions are disabled inside the stage so each frame is a pure function of `t`. `npm run render` = build → plates → audio → 960 frames (3 parallel Chromium workers, SwiftShader WebGL) → x264 CRF 16 + AAC 192k → verification. Soundtrack synthesised from scratch and locked to the timeline.
-
-## 11. Deployment readiness
-
-`vercel.json` (Vite, `npm ci`, `npm run build`, `dist`, SPA rewrite that excludes `/assets/` and `/film/`, immutable asset caching, `noindex`). No env vars, no backend, no localhost URLs in the bundle, browser APIs guarded. **Vercel: import `omarrakram/Concepts`, Root Directory `kai-collections`.** Not deployed (no credentials/authorisation given).
-
-## 12. Known limitations
-
-- No KAI photography, logo or live BEFORE footage (network policy) — fill paths: `npm run sync`, logo swap in `Wordmark`, `npm run capture:before`.
-- Prices are a dated snapshot; stock is not live; some sizes are range-derived (flagged in the UI and manifest).
-- Visual parts of the current-site audit (layout, photography, mobile UX) could not be assessed.
-- WebGL in headless/software renderers is slow (seconds per first frame); real GPUs render it in milliseconds. A CSS-gradient fallback covers browsers without WebGL.
-- The BEFORE in the delivered MP4 is the labelled text view, not the live site.
-
-## 13. Git delivery (verified)
-
-| | |
-| --- | --- |
-| Repository | `omarrakram/Concepts` |
-| Branch | `KAI` (created from `main` @ `b7a6039`; never force-pushed; not merged) |
-| Delivery commit | `298ea3c44e6478b6c50a2a3276a47f93328bab76` — feat(kai): build The Art of Escape digital concept and showcase |
-| Earlier commit on the branch | `5e44053` — site foundation |
-| Push | `git push -u origin KAI` → `* [new branch] KAI -> KAI`; `git ls-remote` and the GitHub API both return `298ea3c` for `refs/heads/KAI` |
-| Pushed tree | 118 files under `kai-collections/` incl. `output/kai-before-after-16s.mp4` (18,368,295 bytes) |
-| Outside `kai-collections/` | only `README.md` (+8 lines: the KAI entry in the project index). No other project touched. |
-| Not committed (by design) | `node_modules/`, `dist/`, `.cache/` (soundtrack WAV), `.frames/`, `test-results/`, `src/data/live/` (KAI storefront data), `public/film/before/*` (third-party UI captures) |
-| Branch link | https://github.com/omarrakram/Concepts/tree/KAI |
-
-This section was added in a follow-up commit on the same branch.
-
-## 14. Run locally
-
-```bash
-git clone https://github.com/omarrakram/Concepts.git
-cd Concepts && git checkout KAI && cd kai-collections
-npm install
-npm run dev                 # http://127.0.0.1:5173
-npm run build && npm run preview   # production build at http://127.0.0.1:4173
-npm test && npx playwright test    # tests
-npm run render              # rebuild the film (needs ffmpeg)
-```
+{{GIT}}

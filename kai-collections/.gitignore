@@ -7,12 +7,21 @@ playwright-report/
 *.log
 .DS_Store
 
-# Live captures of kaicollections.com are third-party UI: kept local, never published.
+# ---------------------------------------------------------------------------
+# Third-party media stays out of this public repository.
+# KAI's photographs and logo are referenced by URL from KAI's own CDN. Anything
+# that captures them — the live BEFORE captures of kaicollections.com, the film
+# plates (screenshots of this concept showing KAI's photography), site
+# screenshots, the contact sheet and the film itself — is generated locally
+# (`npm run capture:before`, `npm run render`, `npm run shots`) and delivered
+# to the client separately. See README → "Rights & media".
+# ---------------------------------------------------------------------------
 public/film/before/*
 !public/film/before/.gitkeep
-
-# The root .gitignore ignores *.mp4; the finished film is a deliverable of this project.
-!output/kai-before-after-16s.mp4
-
-# Direct storefront snapshot from `npm run sync` (KAI's data + hotlinked photo URLs): local unless KAI permits publishing
-src/data/live/
+public/film/plates/*
+!public/film/plates/.gitkeep
+output/before/
+output/screenshots/
+output/showcase-contact-sheet.png
+output/frames/
+# (*.mp4 is ignored by the repository root .gitignore; the film is not committed)

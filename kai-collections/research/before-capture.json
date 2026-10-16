@@ -1,0 +1,69 @@
+{
+  "origin": "https://kaicollections.com",
+  "capturedAt": "2026-10-15T23:53:56.623Z",
+  "note": "Live captures of kaicollections.com. Images are kept local (git-ignored); this file records what was captured.",
+  "phone": {
+    "home": {
+      "url": "https://kaicollections.com/",
+      "status": 200,
+      "title": "KAI Collections",
+      "viewport": "432×768 @2.5",
+      "files": [
+        "home.jpg"
+      ]
+    },
+    "collection": {
+      "url": "https://kaicollections.com/collections/ss26-mens-swimwear",
+      "status": 200,
+      "title": "SS26 Mens Swimwear – Kai Collections",
+      "viewport": "432×768 @2.5",
+      "files": [
+        "collection.jpg"
+      ]
+    },
+    "product": {
+      "url": "https://kaicollections.com/products/festival-del-mare-swim-shorts",
+      "status": 200,
+      "title": "Festival del Mare Swim Shorts – Kai Collections",
+      "viewport": "432×768 @2.5",
+      "files": [
+        "product.jpg"
+      ]
+    }
+  },
+  "desktop": {
+    "home": {
+      "url": "https://kaicollections.com/",
+      "status": 200,
+      "title": "KAI Collections",
+      "viewport": "1440×900 @1",
+      "pageHeight": 9187,
+      "files": [
+        "desktop-home.jpg",
+        "desktop-home-long.jpg"
+      ]
+    },
+    "collection": {
+      "url": "https://kaicollections.com/collections/ss26-mens-swimwear",
+      "status": 200,
+      "title": "SS26 Mens Swimwear – Kai Collections",
+      "viewport": "1440×900 @1",
+      "pageHeight": 3273,
+      "files": [
+        "desktop-collection.jpg",
+        "desktop-collection-long.jpg"
+      ]
+    },
+    "product": {
+      "url": "https://kaicollections.com/products/festival-del-mare-swim-shorts",
+      "status": 200,
+      "title": "Festival del Mare Swim Shorts – Kai Collections",
+      "viewport": "1440×900 @1",
+      "pageHeight": 2254,
+      "files": [
+        "desktop-product.jpg",
+        "desktop-product-long.jpg"
+      ]
+    }
+  }
+}

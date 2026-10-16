@@ -1,0 +1,583 @@
+/* ============================================================================
+   Photography layer — KAI's own product and campaign photographs.
+   KAI shoots 2:3 portraits (1200×1800); the stage follows that ratio so heads
+   and hems are not cropped. Studio frames sit on KAI's light grey; on-location
+   frames carry KAI's terracotta, sand and sea.
+   ========================================================================== */
+
+:root {
+  --photo-ratio: 2 / 3;
+  --studio: #e9e7e3;
+}
+
+/* ---------- Logo ---------- */
+.logo {
+  display: block;
+  width: auto;
+  user-select: none;
+}
+.logo--light {
+  filter: invert(1) brightness(1.04);
+}
+.nav__brand .logo {
+  height: 38px;
+}
+.sheet__top .logo {
+  height: 34px;
+}
+.footer__brand .logo {
+  height: clamp(64px, 7vw, 92px);
+  margin-bottom: 8px;
+}
+
+/* ---------- Stage ---------- */
+.stage {
+  aspect-ratio: var(--photo-ratio);
+}
+.stage--photo {
+  background: var(--studio);
+}
+.stage--photo::before {
+  display: none;
+}
+.stage--photo img {
+  object-position: 50% 30%;
+  backface-visibility: hidden;
+}
+.stage--sketch {
+  --top: #efe8dc;
+  --floor: #e3d9c9;
+}
+.stage--sketch.is-pale {
+  --top: #e2d8c8;
+  --floor: #d3c6b2;
+}
+.stage--sketch .stage__cap {
+  font-size: 8px;
+  letter-spacing: 0.12em;
+  color: rgba(32, 40, 39, 0.62);
+}
+
+/* ---------- Cards ---------- */
+.card__media .stage--photo img:first-child {
+  transition: transform 1.6s var(--ease), opacity 0.6s var(--ease);
+}
+.card:hover .card__media .stage--photo img:first-child {
+  transform: scale(1.035);
+}
+.card__media .stage--photo .stage__alt {
+  transition: opacity 0.55s var(--ease);
+}
+.card__media .stage::after {
+  background: linear-gradient(180deg, rgba(23, 56, 67, 0), rgba(23, 56, 67, 0.18));
+}
+.card__flags {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  display: flex;
+  gap: 6px;
+  z-index: 1;
+}
+.card__flags .card__flag {
+  position: static;
+}
+.card__flag--new {
+  background: var(--ink);
+  color: var(--ivory);
+}
+.card__quick {
+  margin-top: calc(150% - 46px);
+}
+.card.is-sold .card__media img {
+  filter: saturate(0.55) brightness(1.03);
+  opacity: 0.86;
+}
+.card__few {
+  font-size: 9px;
+  color: var(--coral-ink);
+  white-space: nowrap;
+}
+
+/* ---------- Sizes ---------- */
+.size.is-out {
+  color: rgba(32, 40, 39, 0.38);
+  background-image: linear-gradient(to top right, transparent calc(50% - 0.5px), rgba(32, 40, 39, 0.28) 50%, transparent calc(50% + 0.5px));
+  cursor: not-allowed;
+}
+.size.is-out:hover {
+  border-color: var(--line);
+}
+
+/* ---------- Gallery (PDP) ---------- */
+.gallery__slide .stage,
+.gallery__sketch .stage {
+  aspect-ratio: var(--photo-ratio);
+}
+.gallery__thumb .stage {
+  display: block;
+  aspect-ratio: var(--photo-ratio);
+}
+.stage--zoomable {
+  cursor: zoom-in;
+}
+.stage--zoomable.is-zoomed {
+  cursor: zoom-out;
+}
+.gallery__zoom {
+  position: absolute;
+  inset: 0;
+  background-size: 260% auto;
+  background-repeat: no-repeat;
+  background-color: var(--studio);
+  animation: zoomIn 0.35s var(--ease);
+}
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+  }
+}
+.gallery__nav {
+  gap: 12px;
+}
+.gallery__mode {
+  margin-left: auto;
+}
+.chip--sm {
+  padding: 6px 12px;
+  font-size: 10px;
+}
+.gallery__credit {
+  margin: 8px 0 0;
+  font-size: 9px;
+}
+.pdp__new {
+  color: var(--coral-ink);
+}
+.pdp__add:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ---------- Shop: more / scrolling category bar ---------- */
+.more {
+  display: grid;
+  justify-items: center;
+  gap: 14px;
+  padding-top: 8px;
+  padding-bottom: 60px;
+}
+.seg--scroll {
+  max-width: 100%;
+  overflow-x: auto;
+  scrollbar-width: none;
+  flex-wrap: nowrap;
+}
+.seg--scroll::-webkit-scrollbar {
+  display: none;
+}
+.seg--scroll .seg__b {
+  white-space: nowrap;
+  flex: none;
+}
+
+/* ---------- Mega menu feature ---------- */
+.mega__img {
+  height: 180px;
+  overflow: hidden;
+  border-radius: 2px;
+  background: var(--studio);
+}
+.mega__img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 30%;
+}
+
+/* ---------- Thumbs (bag, saved, search) ---------- */
+.thumb .stage,
+.sres__img .stage,
+.qv__media .stage {
+  aspect-ratio: var(--photo-ratio);
+}
+
+/* ---------- 03 Escape doors ---------- */
+.door {
+  aspect-ratio: 2 / 3;
+  color: var(--ivory);
+}
+.door__img {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background: var(--base);
+  overflow: hidden;
+}
+.door__img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.04);
+  transition: transform 2.2s var(--ease);
+}
+.door:hover .door__img img,
+.door:focus-visible .door__img img {
+  transform: scale(1.12);
+}
+.door__tide {
+  background: linear-gradient(180deg, rgba(10, 25, 32, 0) 30%, rgba(10, 25, 32, 0.58) 100%);
+  opacity: 1;
+  transform: translateY(30%);
+}
+.door__tide::before {
+  background: rgba(255, 253, 247, 0.75);
+}
+.door__word {
+  background: none;
+  color: var(--ivory);
+  padding: 0;
+  text-shadow: 0 2px 30px rgba(10, 25, 32, 0.35);
+}
+.door__line {
+  background: rgba(255, 253, 247, 0.92);
+  color: var(--ink);
+}
+.escape__credit {
+  margin: 14px 0 0;
+  font-size: 9px;
+}
+
+/* ---------- 04 Departments ---------- */
+.dept--photo {
+  color: var(--ivory);
+}
+.dept__img {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+}
+.dept__img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 28%;
+  transform: scale(1.06);
+  transition: transform 1.6s var(--ease), filter 1s var(--ease);
+  filter: saturate(0.92);
+}
+.dept.is-active .dept__img img {
+  transform: scale(1);
+  filter: none;
+}
+.dept--photo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(180deg, rgba(10, 25, 32, 0.28) 0%, rgba(10, 25, 32, 0) 30%, rgba(10, 25, 32, 0) 50%, rgba(10, 25, 32, 0.62) 100%);
+}
+.dept--photo .dept__hz {
+  opacity: 0.45;
+}
+.dept__word {
+  text-shadow: 0 2px 40px rgba(10, 25, 32, 0.25);
+}
+.dept__pair {
+  position: absolute;
+  inset: 12% 8% 34%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 4%;
+}
+.dept__card {
+  width: min(44%, 260px);
+  aspect-ratio: 2 / 3;
+  overflow: hidden;
+  box-shadow: 0 30px 50px -20px rgba(23, 56, 67, 0.45);
+  transition: transform 1s var(--ease);
+  background: var(--studio);
+}
+.dept__card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.dept__card--0 {
+  transform: rotate(-4deg) translateY(4%);
+}
+.dept__card--1 {
+  transform: rotate(5deg) translateY(-6%) scale(0.86);
+}
+.dept.is-active .dept__card--0 {
+  transform: rotate(-2deg);
+}
+.dept.is-active .dept__card--1 {
+  transform: rotate(3deg) translateY(-10%) scale(0.9);
+}
+
+/* ---------- 02 Horizon cards ---------- */
+.hz-card .stage {
+  aspect-ratio: var(--photo-ratio);
+}
+
+/* ---------- 06 Materials ---------- */
+.mats__swatch {
+  background: var(--studio);
+}
+.mats__swatch > img,
+.mats__swatch .stage {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.mats__lens {
+  background-repeat: no-repeat;
+  background-color: var(--studio);
+}
+.mats__spec .link-u {
+  justify-self: start;
+}
+
+/* ---------- 08 Builder towel ---------- */
+.towel__piece .stage {
+  box-shadow: 0 24px 36px -18px rgba(23, 56, 67, 0.55);
+  outline: 6px solid var(--ivory);
+}
+
+/* ---------- 09 Journal ---------- */
+.jr__img > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.jr__img figcaption {
+  background: rgba(10, 25, 32, 0.42);
+  padding: 4px 9px;
+  border-radius: 99px;
+  font-size: 8.5px;
+}
+.jr__products {
+  display: grid;
+  gap: 10px;
+  margin-top: 22px;
+}
+.jr__p {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: 14px;
+  align-items: center;
+  padding-top: 10px;
+  border-top: 1px solid var(--line);
+}
+.jr__pimg .stage {
+  width: 56px;
+}
+.jr__pinfo {
+  display: grid;
+  gap: 2px;
+}
+.jr__pname {
+  font-family: var(--serif);
+  font-size: 16px;
+  line-height: 1.2;
+}
+.jr__p:hover .jr__pname {
+  color: var(--med);
+}
+.jr__products--md .jr__p {
+  grid-template-columns: 72px 1fr;
+}
+.jr__products--md .jr__pimg .stage {
+  width: 72px;
+}
+
+/* ---------- Lookbook ---------- */
+.spread__img {
+  aspect-ratio: 4 / 5;
+  background: var(--studio);
+}
+.spread__img > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.spread__img figcaption {
+  background: rgba(10, 25, 32, 0.42);
+  padding: 4px 9px;
+  border-radius: 99px;
+  font-size: 9px;
+}
+.lb-archive {
+  padding-top: clamp(60px, 10vh, 120px);
+  padding-bottom: clamp(60px, 10vh, 120px);
+  display: grid;
+  gap: 22px;
+}
+.lb-archive__t {
+  font-size: clamp(38px, 5vw, 84px);
+  margin: 0;
+}
+.lb-archive__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  grid-auto-flow: dense;
+}
+.lb-tile {
+  margin: 0;
+  display: grid;
+  gap: 8px;
+  align-content: start;
+}
+.lb-tile img {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  background: var(--studio);
+}
+.lb-tile--wide {
+  grid-column: span 2;
+}
+.lb-tile--wide img {
+  aspect-ratio: 3 / 2;
+}
+.lb-tile figcaption {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-size: 9px;
+}
+.lb-archive__note {
+  margin: 0;
+  max-width: 70ch;
+}
+
+/* ---------- Sets ---------- */
+.set__pair--3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+.set__pair--4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+.set__media {
+  display: block;
+}
+.set__item.is-sold .set__media img {
+  filter: saturate(0.5);
+  opacity: 0.8;
+}
+.set__name {
+  font-size: 15px;
+  line-height: 1.2;
+}
+
+/* ---------- Stores ---------- */
+.store-photo {
+  margin: 0;
+  display: grid;
+  gap: 8px;
+}
+.store-photo img {
+  width: 100%;
+  aspect-ratio: 1120 / 1306;
+  object-fit: cover;
+  background: var(--studio);
+}
+
+@media (max-width: 1100px) {
+  .lb-archive__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 760px) {
+  .nav__brand .logo {
+    height: 30px;
+  }
+  /* on phones the card sits under the chapter text, on the waterline */
+  .hz-card {
+    width: 36vw;
+  }
+  .hz-card .stage {
+    aspect-ratio: 1 / 1;
+  }
+  .door {
+    aspect-ratio: 3 / 4;
+  }
+  .dept__pair {
+    inset: 10% 6% 38%;
+  }
+  .lb-archive__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .lb-tile--wide {
+    grid-column: span 2;
+  }
+  .set__pair--3,
+  .set__pair--4 {
+    grid-template-columns: 1fr 1fr;
+  }
+  .card__quick {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card:hover .card__media .stage--photo img:first-child,
+  .door:hover .door__img img,
+  .dept__img img {
+    transform: none;
+  }
+}
+
+/* ---------- Stores: header beside KAI's store photograph ---------- */
+.stores {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  column-gap: clamp(24px, 5vw, 80px);
+  align-items: end;
+}
+.stores__grid,
+.stores__src {
+  grid-column: 1 / -1;
+}
+.stores__photo {
+  margin-bottom: 44px;
+}
+.stores__photo img {
+  max-height: 520px;
+}
+.store__acts {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.store__acts a {
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+@media (max-width: 760px) {
+  .stores {
+    grid-template-columns: 1fr;
+  }
+  .stores__head {
+    margin-bottom: 24px;
+  }
+  .stores__photo img {
+    max-height: 420px;
+  }
+}
+
+/* ---------- Square packshots shown whole in a 2:3 stage ----------
+   Letterboxed in the photograph's own backdrop colour (inline, from the catalog's `bg`). */
+.stage--fit > img:first-of-type {
+  object-fit: contain;
+  object-position: 50% 50%;
+}

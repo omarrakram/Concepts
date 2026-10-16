@@ -8,8 +8,9 @@
  * manifest with the tap targets the film animates.
  *
  * Nothing here is a mock-up: every plate is a screenshot of the built site.
+ * Plates show KAI's photography, so public/film/plates is git-ignored.
  */
-import { mkdirSync, writeFileSync, rmSync } from 'node:fs';
+import { mkdirSync, readFileSync, writeFileSync, rmSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { launch, SETTLE_CSS, HIDE_NAV_CSS } from './lib/browser.mjs';
 import { ROOT, arg, startServer } from './lib/server.mjs';
@@ -18,13 +19,17 @@ const W = 432;
 const H = 768;
 const DPR = 2.5;
 const OUT = resolve(ROOT, 'public/film/plates');
+// the product the commerce scene shops (single source of truth: src/showcase/film.ts)
+const FILM_PRODUCT = readFileSync(resolve(ROOT, 'src/showcase/film.ts'), 'utf8').match(/FILM_PRODUCT = '([^']+)'/)[1];
 rmSync(OUT, { recursive: true, force: true });
 mkdirSync(OUT, { recursive: true });
+writeFileSync(resolve(OUT, '.gitkeep'), '');
 
 const server = arg('base') ? { base: arg('base'), stop: () => {} } : await startServer({ port: 4318 });
 const browser = await launch();
 const ctx = await browser.newContext({ viewport: { width: W, height: H }, deviceScaleFactor: DPR, hasTouch: true, isMobile: true, reducedMotion: 'no-preference' });
 const page = await ctx.newPage();
+page.setDefaultTimeout(45000); // fail loudly instead of waiting forever on a blocked click
 const errors = [];
 page.on('pageerror', (e) => errors.push(e.message));
 
@@ -35,10 +40,32 @@ async function open(path, { hideNav = true } = {}) {
   await page.addStyleTag({ content: SETTLE_CSS + (hideNav ? HIDE_NAV_CSS : '') });
   await page.evaluate(() => document.fonts.ready);
   await page.waitForTimeout(600);
+  await settle();
+}
+/** KAI's photographs load from KAI's CDN: wait until every image on screen has decoded */
+async function settle() {
+  await page.waitForLoadState('networkidle', { timeout: 20000 }).catch(() => {});
+  const failed = await page.evaluate(() => {
+    // a lazy image that never starts loading never decodes: every wait is bounded
+    const within = (p, ms) => Promise.race([p, new Promise((r) => setTimeout(r, ms))]);
+    const visible = [...document.images].filter((i) => {
+      const r = i.getBoundingClientRect();
+      return r.bottom > 0 && r.top < innerHeight && r.right > 0 && r.left < innerWidth && r.width > 0;
+    });
+    return Promise.all(
+      visible.map(async (i) => {
+        if (!i.complete) await within(new Promise((r) => (i.addEventListener('load', r, { once: true }), i.addEventListener('error', r, { once: true }))), 20000);
+        await within(i.decode().catch(() => {}), 5000);
+        return i.complete && i.naturalWidth ? null : i.currentSrc || i.src;
+      }),
+    ).then((x) => x.filter(Boolean));
+  });
+  if (failed.length) errors.push('images not loaded: ' + failed.join(', '));
 }
 async function scrollTo(y) {
   await page.evaluate((v) => window.scrollTo({ top: v, behavior: 'instant' }), y);
-  await page.waitForTimeout(900);
+  await page.waitForTimeout(500);
+  await settle();
 }
 async function shot(name) {
   const file = `${name}.jpg`;
@@ -105,19 +132,23 @@ await open('/shop/women');
 await page.addStyleTag({ content: STRIP_CSS });
 await page.waitForTimeout(1200);
 manifest.plates.shop = await strip('shop', 0, Math.round(H * 2.2));
-manifest.taps.card = await pageBox('[data-slug=black-playa-one-piece] .card__media');
+manifest.taps.card = await pageBox(`[data-slug=${FILM_PRODUCT}] .card__media`);
+if (manifest.taps.card.y + manifest.taps.card.h > H * 2.2) errors.push(`${FILM_PRODUCT} card is outside the film's shop strip (y=${manifest.taps.card.y})`);
 
+console.log('[plates] commerce:', FILM_PRODUCT);
 // 5 — commerce: a real product page, real interactions (nav + sticky bar drawn by the film)
-await open('/product/black-playa-one-piece');
+await open(`/product/${FILM_PRODUCT}`);
 await page.addStyleTag({ content: STRIP_CSS });
 await page.waitForTimeout(900);
 manifest.plates.pdp = await shot('pdp-0');
 manifest.taps.next = await pageBox('[data-testid=gallery-next]');
 await page.click('[data-testid=gallery-next]');
 await page.waitForTimeout(900);
+await settle();
 manifest.plates.pdpDetail = await shot('pdp-1');
 await page.click('[data-testid=gallery-next]');
 await page.waitForTimeout(900);
+await settle();
 manifest.plates.pdpMaterial = await shot('pdp-2');
 await scrollTo(H);
 manifest.plates.pdpStrip = [manifest.plates.pdpMaterial, await shot('pdp-strip-1')];
@@ -126,13 +157,14 @@ manifest.plates.pdpStrip = [manifest.plates.pdpMaterial, await shot('pdp-strip-1
   manifest.plates.pdpInfoScroll = y;
   await scrollTo(y);
 }
-manifest.taps.size = await pageBox('.size:nth-child(2)');
+manifest.taps.size = await pageBox('.size:not(.is-out)');
 manifest.taps.add = await pageBox('[data-testid=add-to-bag]');
-await page.click('.size:nth-child(2)');
+await page.click('.size:not(.is-out)');
 await page.waitForTimeout(400);
 manifest.plates.pdpSize = await shot('pdp-size');
 await page.click('[data-testid=add-to-bag]');
 await page.waitForTimeout(1200);
+await settle();
 manifest.plates.pdpBag = await shot('pdp-bag');
 
 writeFileSync(resolve(OUT, 'manifest.json'), JSON.stringify(manifest, null, 2));

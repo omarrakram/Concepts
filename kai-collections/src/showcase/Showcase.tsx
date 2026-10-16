@@ -1,11 +1,12 @@
 import { useEffect, useState, type CSSProperties, type ReactNode } from 'react';
 import { flushSync } from 'react-dom';
 import { Seascape } from '../components/Seascape';
-import { Icon, Price, Wordmark } from '../components/ui';
+import { Icon, Logo, Price } from '../components/ui';
 import { BY_SLUG } from '../data/catalog';
+import { LOGO, MEDIA_ON, imgUrl } from '../data/media';
 import { HorizonStage, horizonState } from '../home/Horizon';
 import { LIGHTS, mixLight, type Light } from '../gl/sea';
-import { DURATION, E, ease, lerp, path, seg, type BeforeManifest, type PlateManifest } from './film';
+import { DURATION, E, FILM_PRODUCT, ease, lerp, path, seg, type BeforeManifest, type PlateManifest } from './film';
 import './showcase.css';
 
 /*
@@ -133,7 +134,8 @@ function Stage() {
     const markReady = () => {
       if (!alive) return;
       const c = document.querySelector<HTMLCanvasElement>('.film-sea canvas');
-      if (c?.dataset.ready === '1') document.body.dataset.ready = '1';
+      // ready once the sea has drawn AND its wordmark texture (KAI's logo, or the typeset fallback) is in place
+      if (c?.dataset.ready === '1' && c.dataset.text && c.dataset.text !== 'pending') document.body.dataset.ready = '1';
       else requestAnimationFrame(markReady);
     };
     markReady();
@@ -156,7 +158,22 @@ function Stage() {
     };
   }, [loaded]);
 
-  if (error) return <div className="film film--msg">{error}</div>;
+  if (error)
+    return (
+      <div className="film film--msg" data-testid="film-missing">
+        {/plates missing/.test(error) ? (
+          <>
+            <strong>The film isn’t part of this build.</strong>
+            <span>
+              Its plates show KAI’s own photography, so they are generated locally and never published with the code. Run <code>npm run capture:plates</code> (needs
+              access to kaicollections.com’s CDN) — or watch the MP4 delivered with the concept.
+            </span>
+          </>
+        ) : (
+          error
+        )}
+      </div>
+    );
   if (!loaded || !plates) return <div className="film film--msg">Preparing the film…</div>;
   return <Film t={t} P={plates} B={before} />;
 }
@@ -235,7 +252,7 @@ function Film({ t, P, B }: { t: number; P: PlateManifest; B: BeforeManifest | nu
           sand={sand}
           time={t * 0.9 + 6}
           text="KAI"
-          textSize={0.6}
+          textSize={TEXT_SIZE}
           textHorizon={HERO_HZ}
           textOn={textOn}
           textLift={textLift}
@@ -300,16 +317,19 @@ function Before({ t, B }: { t: number; B: BeforeManifest | null }) {
 }
 
 function BeforeCapture({ k, local, B, t }: { k: 'home' | 'collection' | 'product'; local: number; B: BeforeManifest; t: number }) {
-  const shots = B.pages[k].shots;
-  const max = (shots.length - 1) * H;
+  const { shots, height } = B.pages[k];
+  const tall = height != null && shots.length === 1;
+  const max = tall ? Math.max(0, height - H) : (shots.length - 1) * H;
   const reach = k === 'home' ? Math.min(max, H * 1.35) : k === 'collection' ? Math.min(max, H * 0.85) : Math.min(max, H * 0.3);
   const y = ease.inOutSine(local) * reach;
   const flash = Math.max(1 - seg(t, 1.1, 1.18), 0) * (t >= 1.1 ? 1 : 0) + Math.max(1 - seg(t, 2.2, 2.28), 0) * (t >= 2.2 ? 1 : 0);
   return (
     <div className="before__cap">
-      {shots.map((s, i) => (
-        <img key={s} src={s} alt="" style={{ top: i * H - y }} />
-      ))}
+      {tall ? (
+        <img src={shots[0]} alt="" style={{ top: -y, height }} />
+      ) : (
+        shots.map((s, i) => <img key={s} src={s} alt="" style={{ top: i * H - y }} />)
+      )}
       {flash > 0 && <div className="before__flash" style={{ opacity: flash * 0.6 }} />}
       <div className="before__meta label-sm">
         Live capture · {new Date(B.capturedAt).toISOString().slice(0, 10)}
@@ -318,20 +338,19 @@ function BeforeCapture({ k, local, B, t }: { k: 'home' | 'collection' | 'product
   );
 }
 
-/** Honest fallback: KAI's own words and prices as indexed, set as a plain text view (not a fake screenshot). */
+/** Fallback when no live capture is present: KAI's own words and prices from the live pages (2026-10-15), set as a plain text view — not a fake screenshot. */
 const TEXT: Record<'home' | 'collection' | 'product', { title: string; lines: [string, string?][] }> = {
   home: {
     title: 'kaicollections.com',
     lines: [
-      ['Swimwear'],
-      ['Effortless, elegant, worn all summer'],
-      ['shop now'],
+      ['International shipping available'],
+      ['RETREAT · New Arrivals'],
       ['New Arrivals'],
-      ['Olive Kaia One Piece', 'EGP 2,399.00  EGP 1,679.00'],
-      ['Black Cala One Piece', 'EGP 2,399.00  EGP 1,679.00'],
       ['Brown Ruffle Tencel Dress', 'EGP 1,499.00  EGP 750.00'],
-      ['Festival del mare sarong', 'EGP 599.00  EGP 399.00'],
-      ['Yellow Zebra Swim Shorts', 'EGP 1,699.00  EGP 999.00'],
+      ['Women Black linen top', 'EGP 1,199.00  EGP 720.00'],
+      ['Women Beige linen skirt', 'EGP 1,799.00  EGP 1,099.00'],
+      ['Trending now · Linen · Sets · Knitwear · Cover ups'],
+      ['Swimwear — Effortless, elegant, worn all summer'],
       ['Pass by a store to try on the latest arrivals in person.'],
     ],
   },
@@ -339,21 +358,21 @@ const TEXT: Record<'home' | 'collection' | 'product', { title: string; lines: [s
     title: '/collections/ss26-mens-swimwear',
     lines: [
       ['SS26 Mens Swimwear'],
-      ['Yellow Zebra Swim Shorts', 'EGP 1,699.00'],
-      ['Blue Maze Swim Shorts', 'EGP 1,699.00'],
-      ['Pink Starfish Swim Shorts', 'EGP 1,699.00'],
-      ['Tropic Noir Swim Shorts', 'EGP 1,699.00'],
-      ['Mallorca Swim Shorts'],
+      ['Yellow Zebra Swim Shorts', 'EGP 1,699.00  EGP 999.00'],
+      ['Abstract Blues Swim Shorts', 'EGP 1,699.00  EGP 1,190.00'],
+      ['Festival del Mare Swim Shorts', 'EGP 1,699.00  EGP 1,189.00'],
+      ['Pink Giraffes Swim Shorts', 'EGP 1,699.00  EGP 1,190.00'],
+      ['Navy Stingrays Swim Shorts', 'EGP 1,699.00  EGP 999.00'],
     ],
   },
   product: {
     title: '/products/festival-del-mare-swim-shorts',
     lines: [
       ['Festival del Mare Swim Shorts'],
-      ['EGP 1,699.00'],
+      ['EGP 1,699.00  EGP 1,189.00'],
       ['Size', 'XS (28-30) … 3XL (40-42)'],
-      ['100% Polyester'],
-      ['Made in Egypt'],
+      ['100% Polyester fabric'],
+      ['Elastic drawstring waistband'],
     ],
   },
 };
@@ -377,8 +396,7 @@ function BeforeText({ k, local, t }: { k: 'home' | 'collection' | 'product'; loc
         </div>
       </div>
       <div className="before__note">
-        Text view of KAI’s live pages as indexed, Oct 2026. The live site could not be reached from the build environment — run <code>npm run capture:before</code> for the
-        real capture.
+        Text view of KAI’s live pages, 15 Oct 2026 — shown because no live capture is present in this build. Run <code>npm run capture:before</code> to film the real site.
       </div>
       <div className="before__step">{t < 1.1 ? 'Home' : t < 2.2 ? 'Collection' : 'Product'}</div>
     </div>
@@ -457,7 +475,7 @@ function FilmNav({ solid, o }: { solid: boolean; o: number }) {
           <Icon.menu />
         </span>
         <span className="nav__brand">
-          <Wordmark size={26} />
+          <Logo height={30} />
         </span>
         <div className="nav__right">
           <span className="icon-btn">
@@ -514,7 +532,6 @@ function Collections({ t, P }: { t: number; P: PlateManifest }) {
 }
 
 /* --------------------------------------------------------------- AFTER: commerce */
-const FILM_PRODUCT = 'black-playa-one-piece';
 
 function Commerce({ t, P }: { t: number; P: PlateManifest }) {
   const p = P.plates;
@@ -623,15 +640,30 @@ function Phone({ src, style }: { src: string; style: CSSProperties }) {
 }
 
 /* --------------------------------------------------------------- lockup */
+/** footprint of the logo's KAI letters on the film's 432×768 sea (same maths as wordmarkCanvas in gl/sea.ts) */
+const TEXT_SIZE = 0.52;
+const LOGO_H = Math.round(Math.min(W * TEXT_SIZE, H * 0.6)) * 0.74;
+const LOGO_W = (LOGO_H * LOGO.w) / (LOGO.h * LOGO.kaiHeight);
+
 function Lockup({ t }: { t: number }) {
   const a = E(t, 14.55, 15.1, ease.outCubic);
   const b = E(t, 14.8, 15.4, ease.outCubic);
   const c = E(t, 15.15, 15.6, ease.outCubic);
   return (
     <div className="lockup" style={{ ['--hz' as string]: `${HERO_HZ * 100}%` }}>
-      <div className="lockup__sub label" style={{ opacity: a, letterSpacing: `${0.9 - a * 0.3}em` }}>
-        Collections
-      </div>
+      {MEDIA_ON ? (
+        // the COLLECTIONS line of KAI's own logo artwork (rows 477–517 of 518), under the logo's KAI letters on the horizon
+        <div
+          className="lockup__collections"
+          role="img"
+          aria-label="Collections"
+          style={{ opacity: a, width: LOGO_W, top: `calc(100% - var(--hz) + ${Math.round(LOGO_H * 0.157)}px)`, backgroundImage: `url(${imgUrl(LOGO.src, 1800)})` }}
+        />
+      ) : (
+        <div className="lockup__sub label" style={{ opacity: a, letterSpacing: `${0.9 - a * 0.3}em` }}>
+          Collections
+        </div>
+      )}
       <div className="lockup__line display" style={{ opacity: b, transform: `translateY(${(1 - b) * 18}px)` }}>
         The art <span className="italic">of escape.</span>
       </div>

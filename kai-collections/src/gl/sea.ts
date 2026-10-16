@@ -370,12 +370,48 @@ export function createSea(canvas: HTMLCanvasElement): SeaRenderer | null {
 }
 
 /** Wordmark texture: letters standing on the horizon line, baseline exactly at the waterline. */
-export function wordmarkCanvas(w: number, h: number, horizon: number, text: string, sizeFrac: number, tracking = 0.04) {
+/* ---------- KAI's logo as the horizon texture ---------- */
+let logoPromise: Promise<HTMLImageElement | null> | null = null;
+/** Loads KAI's logo once, CORS-clean (KAI's CDN sends Access-Control-Allow-Origin: *) so WebGL can sample it. */
+export function loadLogo(src: string): Promise<HTMLImageElement | null> {
+  if (!logoPromise)
+    logoPromise = new Promise((res) => {
+      const im = new Image();
+      im.crossOrigin = 'anonymous';
+      im.decoding = 'async';
+      im.onload = () => res(im);
+      im.onerror = () => res(null);
+      im.src = src;
+    });
+  return logoPromise;
+}
+
+export interface LogoArt {
+  img: HTMLImageElement;
+  /** fraction of the artwork height taken by the "KAI" letters */
+  kai: number;
+}
+
+export function wordmarkCanvas(w: number, h: number, horizon: number, text: string, sizeFrac: number, tracking = 0.04, logo?: LogoArt | null) {
   const c = document.createElement('canvas');
   c.width = w;
   c.height = h;
   const ctx = c.getContext('2d')!;
   const size = Math.round(Math.min(w * sizeFrac, h * 0.6));
+  if (logo && text === 'KAI') {
+    // KAI's own letterforms, standing on the horizon: same footprint as the typeset fallback
+    const sw = logo.img.naturalWidth;
+    const sh = logo.img.naturalHeight * logo.kai;
+    const H = size * 0.74;
+    const W = (H * sw) / sh;
+    const base = h * (1 - horizon) + size * 0.006;
+    ctx.drawImage(logo.img, 0, 0, sw, sh, (w - W) / 2, base - H, W, H);
+    ctx.globalCompositeOperation = 'source-in';
+    ctx.fillStyle = '#fff';
+    ctx.fillRect(0, 0, w, h);
+    c.dataset.source = 'logo';
+    return c;
+  }
   ctx.font = `300 ${size}px "Fraunces Variable", "Fraunces", Georgia, serif`;
   ctx.fillStyle = '#fff';
   ctx.textBaseline = 'alphabetic';

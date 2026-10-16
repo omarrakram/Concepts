@@ -1,3 +1,10 @@
+/**
+ * The piece the film's commerce scene shops: KAI's Black Sade One Piece — fourth in KAI's own
+ * Women order (so its card sits inside the film's shop strip), in stock with a size choice,
+ * eight photographs. capture-plates fails loudly if it ever leaves the strip.
+ */
+export const FILM_PRODUCT = 'black-sade-one-piece';
+
 /** Pure timing helpers. Every frame of the film is a function of t (seconds). */
 export const DURATION = 16;
 export const FPS = 60;
@@ -74,5 +81,6 @@ export interface PlateManifest {
 export interface BeforeManifest {
   origin: string;
   capturedAt: string;
-  pages: Record<'home' | 'collection' | 'product', { url: string; shots: string[] }>;
+  /** one tall capture per page (`height` CSS px), or — older captures — stacked screens */
+  pages: Record<'home' | 'collection' | 'product', { url: string; shots: string[]; height?: number }>;
 }

@@ -1,8 +1,21 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link, useParams, useSearchParams } from 'react-router';
 import { ProductCard } from '../components/ProductCard';
 import { Icon } from '../components/ui';
-import { PRODUCTS, SHOP_VIEWS, SNAPSHOT, VIEW_BY_ID, discount, onSale, search, type Category, type Product } from '../data/catalog';
+import {
+  CATEGORY_LABEL,
+  PRODUCTS,
+  SHOP_VIEWS,
+  SNAPSHOT,
+  VIEW_BY_ID,
+  discount,
+  featured,
+  onSale,
+  search,
+  sizeKey,
+  type Category,
+  type Product,
+} from '../data/catalog';
 import { LIGHTS, seaStill, type LightKey } from '../gl/sea';
 import { NotFound } from './NotFound';
 import { useIdleValue } from '../lib/hooks';
@@ -22,19 +35,14 @@ const LIGHT: Record<string, LightKey> = {
 
 const SORTS = [
   ['featured', 'Featured'],
+  ['new', 'Newest'],
   ['price-asc', 'Price: low to high'],
   ['price-desc', 'Price: high to low'],
   ['discount', 'Biggest reduction'],
   ['name', 'Name A–Z'],
 ] as const;
 
-const CATS: [Category | 'all', string][] = [
-  ['all', 'All'],
-  ['swimwear', 'Swim'],
-  ['linen', 'Linen'],
-  ['resort', 'Resort'],
-  ['everyday', 'Everyday'],
-];
+const CAT_ORDER: Category[] = ['swimwear', 'linen', 'shirts', 'tees', 'knitwear', 'tops', 'bottoms', 'skirts-dresses', 'cover-ups', 'accessories', 'sets'];
 const DEPS = [
   ['all', 'All'],
   ['men', 'Men'],
@@ -42,8 +50,8 @@ const DEPS = [
   ['kids', 'Kids'],
 ] as const;
 
-const SIZE_ORDER = ['2Y', '4Y', '6Y', '8Y', '10Y', '12Y', 'XS', 'S', 'M', 'L', 'XL', 'XXL', '2XL', '3XL'];
-const sizeKey = (s: string) => s.split(' ')[0];
+const SIZE_ORDER = ['2Y', '4Y', '6Y', '8Y', '10Y', '12Y', '14Y', 'XXS', 'XS', 'S', 'M', 'L', 'XL', '2XL', '3XL'];
+const PAGE = 24;
 
 export function ShopHeader({
   title,
@@ -103,27 +111,39 @@ export function Shop() {
   }, [v, q]);
 
   const isDept = ['men', 'women', 'kids'].includes(view);
+  const cats = useMemo(() => CAT_ORDER.filter((c) => base.some((p) => p.categories.includes(c))), [base]);
   const sizes = useMemo(() => {
     const set = new Set<string>();
-    base.forEach((p) => p.sizes.forEach((s) => set.add(sizeKey(s))));
+    base.forEach((p) => p.sizes.forEach((s) => s.available && set.add(sizeKey(s.label))));
     return SIZE_ORDER.filter((s) => set.has(s));
   }, [base]);
 
   const list = useMemo(() => {
     let l: Product[] = base;
-    if (cat !== 'all') l = l.filter((p) => (cat === 'everyday' ? p.categories.includes('everyday') || p.categories.includes('knitwear') : p.categories.includes(cat as Category)));
-    if (dep !== 'all') l = l.filter((p) => p.department === dep || (dep !== 'kids' && p.department === 'unisex'));
-    if (size) l = l.filter((p) => p.sizes.some((s) => sizeKey(s) === size));
+    if (cat !== 'all') l = l.filter((p) => p.categories.includes(cat as Category));
+    if (dep !== 'all') l = l.filter((p) => p.department === dep);
+    if (size) l = l.filter((p) => p.sizes.some((s) => s.available && sizeKey(s.label) === size));
     if (saleOnly) l = l.filter(onSale);
     if (hideSold) l = l.filter((p) => p.stock !== 'sold-out');
     const priced = (p: Product, dir: 1 | -1) => (p.price == null ? Infinity : p.price * dir);
+    const sold = (p: Product) => (p.stock === 'sold-out' ? 1 : 0);
     const sorted = [...l];
+    if (sort === 'featured') sorted.sort((a, b) => sold(a) - sold(b) || featured(a, b));
+    if (sort === 'new') sorted.sort((a, b) => sold(a) - sold(b) || (b.published ?? '').localeCompare(a.published ?? '') || featured(a, b));
     if (sort === 'price-asc') sorted.sort((a, b) => priced(a, 1) - priced(b, 1));
     if (sort === 'price-desc') sorted.sort((a, b) => priced(a, -1) - priced(b, -1));
     if (sort === 'discount') sorted.sort((a, b) => discount(b) - discount(a));
     if (sort === 'name') sorted.sort((a, b) => a.name.localeCompare(b.name));
     return sorted;
   }, [base, cat, dep, size, saleOnly, hideSold, sort]);
+
+  const [shown, setShown] = useState(PAGE);
+  const key = `${view}|${params.toString()}`;
+  const [lastKey, setLastKey] = useState(key);
+  if (key !== lastKey) {
+    setLastKey(key);
+    setShown(PAGE);
+  }
 
   if (!v) return <NotFound />;
 
@@ -150,7 +170,7 @@ export function Shop() {
       </nav>
       <div className="toolbar wrap" data-testid="toolbar">
         <div className="toolbar__filters">
-          {!isDept && view !== 'kids' ? (
+          {!isDept ? (
             <div className="seg" role="group" aria-label="Department">
               {DEPS.map(([id, l]) => (
                 <button key={id} className={`seg__b ${dep === id ? 'is-on' : ''}`} aria-pressed={dep === id} onClick={() => set('dep', id)} data-testid={`dep-${id}`}>
@@ -159,13 +179,15 @@ export function Shop() {
               ))}
             </div>
           ) : (
-            <div className="seg" role="group" aria-label="Category">
-              {CATS.map(([id, l]) => (
-                <button key={id} className={`seg__b ${cat === id ? 'is-on' : ''}`} aria-pressed={cat === id} onClick={() => set('cat', id)} data-testid={`cat-${id}`}>
-                  {l}
-                </button>
-              ))}
-            </div>
+            cats.length > 1 && (
+              <div className="seg seg--scroll" role="group" aria-label="Category">
+                {(['all', ...cats] as const).map((id) => (
+                  <button key={id} className={`seg__b ${cat === id ? 'is-on' : ''}`} aria-pressed={cat === id} onClick={() => set('cat', id)} data-testid={`cat-${id}`}>
+                    {id === 'all' ? 'All' : CATEGORY_LABEL[id]}
+                  </button>
+                ))}
+              </div>
+            )
           )}
           {sizes.length > 0 && (
             <label className="select">
@@ -186,7 +208,7 @@ export function Shop() {
           </label>
           <label className="toggle">
             <input type="checkbox" checked={hideSold} onChange={(e) => set('instock', e.target.checked ? '1' : null)} data-testid="instock-toggle" />
-            <span>Hide sold out</span>
+            <span>In stock only</span>
           </label>
         </div>
         <label className="select select--sort">
@@ -213,11 +235,23 @@ export function Shop() {
         </div>
       )}
       {list.length ? (
-        <div className="grid wrap" data-testid="grid">
-          {list.map((p, i) => (
-            <ProductCard key={p.slug} p={p} priority={i < 4} />
-          ))}
-        </div>
+        <>
+          <div className="grid wrap" data-testid="grid">
+            {list.slice(0, shown).map((p, i) => (
+              <ProductCard key={p.slug} p={p} priority={i < 4} />
+            ))}
+          </div>
+          {list.length > shown && (
+            <div className="more wrap">
+              <span className="label-sm muted num" data-testid="shown-count">
+                Showing {shown} of {list.length}
+              </span>
+              <button className="btn btn--ghost" onClick={() => setShown((n) => n + PAGE * 2)} data-testid="show-more">
+                Show more
+              </button>
+            </div>
+          )}
+        </>
       ) : (
         <div className="empty wrap" data-testid="empty">
           <p className="display empty__t">Nothing on this stretch of coast.</p>
@@ -228,8 +262,8 @@ export function Shop() {
         </div>
       )}
       <p className="shop-note wrap label-sm muted">
-        Catalog snapshot {SNAPSHOT.checkedAt} · {SNAPSHOT.method === 'storefront' ? 'read directly from kaicollections.com' : 'read from search-engine snapshots of kaicollections.com'} · prices
-        in EGP are dated, stock is not live · buy on KAI’s own store.
+        KAI’s SS26 catalog read directly from kaicollections.com on {SNAPSHOT.checkedAt} · prices in EGP and availability are from that day, not live · photographs
+        © KAI Collections, loaded from KAI’s CDN · buy on KAI’s own store.
       </p>
     </div>
   );

@@ -1,7 +1,9 @@
 /**
  * npm run shots [-- --base=http://127.0.0.1:4173]
  * Writes the deliverable screenshots of the built site to output/screenshots/.
- * Reveal choreography is settled first so every element is in its final state.
+ * Reveal choreography is settled first so every element is in its final state, and every
+ * photograph on screen (KAI's, loaded from KAI's CDN) has decoded. The screenshots show KAI's
+ * photography, so output/screenshots/ is git-ignored and delivered separately.
  */
 import { mkdirSync } from 'node:fs';
 import { resolve } from 'node:path';
@@ -25,6 +27,18 @@ async function shot(name, ctxOpts, path, prepare) {
   await page.waitForTimeout(1500);
   if (prepare) await prepare(page);
   await page.waitForTimeout(1200);
+  await page.waitForLoadState('networkidle', { timeout: 20000 }).catch(() => {});
+  await page.evaluate(() => {
+    const within = (p, ms) => Promise.race([p, new Promise((r) => setTimeout(r, ms))]);
+    return Promise.all(
+      [...document.images]
+        .filter((i) => {
+          const r = i.getBoundingClientRect();
+          return r.bottom > 0 && r.top < innerHeight && r.right > 0 && r.left < innerWidth;
+        })
+        .map((i) => within(i.decode().catch(() => {}), 15000)),
+    );
+  });
   await page.screenshot({ path: resolve(OUT, `${name}.png`), timeout: 120000 });
   console.log('[shots]', `${name}.png`);
   await ctx.close();
@@ -44,8 +58,8 @@ await shot('desktop-home', DESKTOP, '/', async (p) => p.waitForTimeout(1800));
 await shot('mobile-home', MOBILE, '/', async (p) => p.waitForTimeout(1800));
 await shot('mens-collection', DESKTOP, '/shop/men');
 await shot('womens-collection', DESKTOP, '/shop/women', toSection('[data-testid=toolbar]', -330));
-await shot('product', DESKTOP, '/product/black-playa-one-piece', async (p) => {
-  await p.click('.size:nth-child(2)');
+await shot('product', DESKTOP, '/product/black-sade-one-piece', async (p) => {
+  await p.click('.size:not(.is-out)');
 });
 await shot('horizon-interaction', DESKTOP, '/', async (p) => {
   await p.evaluate(() => {

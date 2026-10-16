@@ -12,6 +12,7 @@
     "test": "vitest run",
     "test:e2e": "playwright test",
     "sync": "node scripts/sync-catalog.mjs",
+    "backdrops": "node scripts/photo-backdrops.mjs",
     "capture:before": "node scripts/capture-before.mjs",
     "capture:plates": "node scripts/capture-plates.mjs",
     "audio": "node scripts/make-audio.mjs",

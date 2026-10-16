@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { Link } from 'react-router';
-import { GarmentFlat, flatVariant } from '../components/GarmentFlat';
+import { Photo } from '../components/Photo';
 import { Icon, Kicker } from '../components/ui';
 import { BY_SLUG, PRODUCTS, VIEW_BY_ID } from '../data/catalog';
+import { campaign, fitStage, MEDIA_ON } from '../data/media';
 import { useReveal } from '../lib/hooks';
 
 export const DEPTS = [
@@ -13,18 +14,18 @@ export const DEPTS = [
     bg: '#173843',
     fg: '#F5F1E9',
     accent: '#E7BA78',
-    note: 'Where it started: tailored swim shorts, 2018.',
-    flats: ['yellow-zebra-swim-shorts', 'white-semi-collar-shirt', 'navy-linen-pants'],
+    note: 'Where it started: tailored swim shorts, 2018. Now linen, Tencel and knit.',
+    photo: 'men-linen',
   },
   {
     id: 'women',
     word: 'Women',
     to: '/shop/women',
     bg: '#E8D6C4',
-    fg: '#202827',
+    fg: '#FFFDF7',
     accent: '#D98770',
-    note: 'One pieces, bikini separates and washed linen.',
-    flats: ['fuchsia-playa-one-piece', 'women-s-white-linen-v-neck-top', 'women-beige-linen-skirt'],
+    note: 'One pieces, bikinis, washed linen in soft colours, crochet.',
+    photo: 'women-linen',
   },
   {
     id: 'kids',
@@ -33,8 +34,8 @@ export const DEPTS = [
     bg: '#9CCBE4',
     fg: '#173843',
     accent: '#FFFDF7',
-    note: 'Mini prints that match their grown-up versions.',
-    flats: ['mini-sky-penguins', 'mini-funky-fish', 'mini-olive-camels-swim-shorts'],
+    note: 'Mini swim shorts in the same prints as the grown-up pairs.',
+    pair: ['mini-yellow-zebra-swim-shorts', 'yellow-zebra-swim-shorts'],
   },
 ] as const;
 
@@ -53,30 +54,38 @@ export function Departments() {
       <div className="depts__row">
         {DEPTS.map((d, i) => {
           const n = PRODUCTS.filter(VIEW_BY_ID.get(d.id)!.test).length;
+          const c = 'photo' in d ? campaign(d.photo) : null;
+          const pair = 'pair' in d ? d.pair.map((s) => BY_SLUG.get(s)!).filter(Boolean) : [];
           return (
             <Link
               key={d.id}
               to={d.to}
-              className={`dept ${active === d.id ? 'is-active' : ''}`}
+              className={`dept ${active === d.id ? 'is-active' : ''} ${c ? 'dept--photo' : 'dept--pair'}`}
               style={{ ['--bg' as string]: d.bg, ['--fg' as string]: d.fg, ['--ac' as string]: d.accent }}
               onMouseEnter={() => setActive(d.id)}
               onFocus={() => setActive(d.id)}
               data-testid={`dept-${d.id}`}
             >
+              {c && MEDIA_ON && (
+                <span className="dept__img" aria-hidden="true">
+                  <Photo src={c.src} w={c.w} h={c.h} alt="" decorative sizes="(max-width: 760px) 100vw, 60vw" max={1800} />
+                </span>
+              )}
+              {pair.length > 0 && MEDIA_ON && (
+                <span className="dept__pair" aria-hidden="true">
+                  {pair.map((p, k) =>
+                    p.images[0] ? (
+                      <span key={p.slug} className={`dept__card dept__card--${k} ${fitStage(p.images[0]).className}`} style={fitStage(p.images[0]).style}>
+                        <Photo src={p.images[0].src} w={p.images[0].w} h={p.images[0].h} alt="" decorative sizes="(max-width: 760px) 40vw, 18vw" max={720} />
+                      </span>
+                    ) : null,
+                  )}
+                </span>
+              )}
               <span className="dept__hz" aria-hidden="true" />
               <span className="dept__top label-sm">
                 <span className="num">0{i + 1}</span>
                 <span className="num">{n} pieces</span>
-              </span>
-              <span className="dept__flats" aria-hidden="true">
-                {d.flats.map((s, k) => {
-                  const p = BY_SLUG.get(s)!;
-                  return (
-                    <span key={s} className={`dept__flat dept__flat--${k}`}>
-                      <GarmentFlat kind={p.kind} colour={p.colour} variant={flatVariant(p.slug, p.department)} />
-                    </span>
-                  );
-                })}
               </span>
               <span className="dept__word display">{d.word}</span>
               <span className="dept__foot">

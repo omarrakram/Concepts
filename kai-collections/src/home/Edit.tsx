@@ -2,46 +2,47 @@ import { useState } from 'react';
 import { Link } from 'react-router';
 import { ProductCard } from '../components/ProductCard';
 import { Icon, Kicker } from '../components/ui';
-import { BY_SLUG, PRODUCTS, onSale, type Product } from '../data/catalog';
+import { BY_SLUG, PRODUCTS, availableSizes, discount, featured, onSale, type Product } from '../data/catalog';
 import { useReveal } from '../lib/hooks';
+
+const pick = (slugs: string[], test: (p: Product) => boolean = () => true) =>
+  slugs.map((s) => BY_SLUG.get(s)).filter((p): p is Product => !!p && p.stock !== 'sold-out' && test(p));
 
 const EDITS: { id: string; label: string; to: string; pick: () => Product[]; note: string }[] = [
   {
     id: 'new',
     label: 'New in',
     to: '/shop/new-arrivals',
-    note: 'From KAI’s homepage New Arrivals and SS26 collections.',
-    pick: () =>
-      ['olive-kaia-one-piece', 'yellow-zebra-swim-shorts', 'brown-ruffle-tencel-dress', 'blue-maze-swim-shorts', 'black-cala-one-piece', 'women-beige-linen-skirt', 'pink-starfish-swim-shorts']
-        .map((s) => BY_SLUG.get(s)!)
-        .filter(Boolean),
+    note: 'From KAI’s SS26 New Arrivals collection.',
+    pick: () => {
+      const lead = pick(['olive-kaia-one-piece', 'black-tencel-cuban-shirt', 'women-beige-linen-skirt', 'matcha-gigi-one-piece', 'brown-linen-crinkle-cuban-shirt', 'womens-knit-stripe-polo', 'mocha-rimal-one-piece'], (p) => p.isNew);
+      const more = PRODUCTS.filter((p) => p.isNew && p.stock !== 'sold-out' && !lead.includes(p)).sort(featured);
+      return [...lead, ...more].slice(0, 7);
+    },
   },
   {
     id: 'swim',
     label: 'Swim',
     to: '/shop/swimwear',
-    note: 'Treated swim shorts and nylon–elastane one pieces.',
-    pick: () =>
-      ['festival-del-mare-swim-shorts', 'pear-isola-one-piece', 'purple-octopus-swim-shorts', 'fuchsia-playa-one-piece', 'green-labyrinth-swim-shorts', 'black-zaria-bikini-top', 'orange-tangle-swim-shorts']
-        .map((s) => BY_SLUG.get(s)!)
-        .filter(Boolean),
+    note: 'Swim shorts with mesh lining and engraved drawcords; one pieces and bikinis in recycled polyester.',
+    pick: () => pick(['black-nahla-one-piece', 'pink-polar-swim-shorts', 'mocha-maya-bikini-top', 'festival-del-mare-swim-shorts', 'rust-gigi-one-piece', 'navy-whales-swim-shorts', 'butter-isla-one-piece']),
   },
   {
     id: 'linen',
     label: 'Linen',
     to: '/shop/linen',
-    note: 'Pure and washed linen, relaxed cuts.',
-    pick: () =>
-      ['white-semi-collar-shirt', 'women-s-beige-linen-v-neck-top', 'olive-linen-over-shirt', 'womens-beige-linen-pants', 'navy-linen-pants', 'womens-beige-linen-shorts', 'beige-linen-shirt']
-        .map((s) => BY_SLUG.get(s)!)
-        .filter(Boolean),
+    note: 'Washed pure linen, relaxed cuts.',
+    pick: () => pick(['womens-white-linen-shirt', 'white-short-sleeve-linen-shirt', 'women-s-beige-linen-v-neck-top', 'olive-linen-crinkle-cuban-shirt', 'womens-baby-yellow-linen-pants', 'sky-blue-cuban-linen-shirt', 'womens-beige-linen-pants']),
   },
   {
     id: 'last',
-    label: 'Last chance',
+    label: 'Last sizes',
     to: '/shop/sale',
-    note: 'Reduced in the snapshot. Dated prices — confirm on KAI.',
-    pick: () => PRODUCTS.filter((p) => onSale(p) && p.stock !== 'sold-out').slice(0, 7),
+    note: 'Reduced on KAI, with only a size or two left on the snapshot date.',
+    pick: () =>
+      PRODUCTS.filter((p) => onSale(p) && p.stock === 'in-stock' && p.sizes.length > 2 && availableSizes(p).length <= 2)
+        .sort((a, b) => discount(b) - discount(a) || featured(a, b))
+        .slice(0, 7),
   },
 ];
 

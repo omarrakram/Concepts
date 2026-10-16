@@ -1,9 +1,9 @@
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router';
-import { GarmentFlat, flatVariant } from '../components/GarmentFlat';
 import { SaveButton } from '../components/ProductCard';
+import { ProductMedia } from '../components/ProductMedia';
 import { Kicker, Price } from '../components/ui';
-import { formatEGP, KIND_LABEL, PRODUCTS, type Kind } from '../data/catalog';
+import { featured, formatEGP, PRODUCTS, typeLine, type Kind } from '../data/catalog';
 import { shop, useShop } from '../state/store';
 import { useReveal } from '../lib/hooks';
 
@@ -20,26 +20,28 @@ export const WARDROBES: Record<'him' | 'her', { label: string; slots: Slot[] }> 
   him: {
     label: 'For him',
     slots: [
-      { id: 'swim', label: 'Swim', kinds: ['swim-short'], depts: ['men'], place: [6, 46, 44, -7] },
-      { id: 'top', label: 'Top', kinds: ['shirt', 'overshirt', 'tee', 'tee-long', 'sweater'], depts: ['men'], place: [40, 4, 52, 5] },
-      { id: 'bottom', label: 'Bottom', kinds: ['pants', 'sweatpants'], depts: ['men', 'unisex'], place: [62, 40, 36, 3] },
+      { id: 'swim', label: 'Swim', kinds: ['swim-short'], depts: ['men'], place: [4, 40, 34, -6] },
+      { id: 'top', label: 'Top', kinds: ['shirt', 'cuban-shirt', 'overshirt', 'tee', 'polo', 'tee-long', 'knit'], depts: ['men'], place: [34, 6, 34, 3] },
+      { id: 'bottom', label: 'Bottom', kinds: ['pants', 'shorts', 'sweatpants'], depts: ['men'], place: [64, 36, 32, 5] },
     ],
   },
   her: {
     label: 'For her',
     slots: [
-      { id: 'swim', label: 'Swim', kinds: ['one-piece', 'one-piece-cutout', 'bikini-top', 'bikini-bottom'], depts: ['women'], place: [5, 30, 38, -6] },
-      { id: 'layer', label: 'Layer', kinds: ['v-top', 'shirt', 'tank', 'sarong', 'dress'], depts: ['women'], place: [38, 3, 46, 4] },
-      { id: 'bottom', label: 'Bottom', kinds: ['pants', 'shorts', 'skirt'], depts: ['women', 'unisex'], place: [60, 44, 36, -3] },
+      { id: 'swim', label: 'Swim', kinds: ['one-piece', 'bikini-top'], depts: ['women'], place: [4, 34, 34, -5] },
+      { id: 'layer', label: 'Layer', kinds: ['top', 'shirt', 'tank', 'sarong', 'cover-up', 'dress', 'knit'], depts: ['women'], place: [34, 4, 34, 3] },
+      { id: 'bottom', label: 'Bottom', kinds: ['pants', 'shorts', 'skirt'], depts: ['women'], place: [64, 38, 32, -4] },
     ],
   },
 };
 
-export const optionsFor = (s: Slot) => PRODUCTS.filter((p) => s.kinds.includes(p.kind) && s.depts.includes(p.department));
+/** Only pieces KAI listed as available, in KAI's own Featured order. */
+export const optionsFor = (s: Slot) =>
+  PRODUCTS.filter((p) => s.kinds.includes(p.kind) && s.depts.includes(p.department) && p.stock !== 'sold-out' && p.images.length > 0).sort(featured);
 
 const START: Record<'him' | 'her', Record<string, string>> = {
-  him: { swim: 'yellow-zebra-swim-shorts', top: 'white-semi-collar-shirt', bottom: 'navy-linen-pants' },
-  her: { swim: 'fuchsia-playa-one-piece', layer: 'women-s-beige-linen-v-neck-top', bottom: 'women-beige-linen-skirt' },
+  him: { swim: 'yellow-zebra-swim-shorts', top: 'black-tencel-cuban-shirt', bottom: 'black-tencel-relaxed-shorts' },
+  her: { swim: 'olive-kaia-one-piece', layer: 'women-beige-linen-top', bottom: 'women-beige-linen-skirt' },
 };
 
 const hash = (n: number) => {
@@ -99,7 +101,7 @@ export function Builder() {
             Pack for <span className="italic">the weekend.</span>
           </h2>
           <p className="muted build__rule">
-            Rule-based styling: each slot only offers pieces of the right department and garment type. There is no AI here.
+            Rule-based styling: each slot only offers in-stock pieces of the right department and garment type. There is no AI here.
           </p>
           <div className="build__who" role="radiogroup" aria-label="Wardrobe">
             {(Object.keys(WARDROBES) as ('him' | 'her')[]).map((k) => (
@@ -128,11 +130,11 @@ export function Builder() {
                   className={`towel__piece ${hidden ? 'is-off' : ''}`}
                   style={{ left: `${l}%`, top: `${t}%`, width: `${w}%`, transform: `rotate(${r}deg)` }}
                 >
-                  <GarmentFlat kind={p.kind} colour={p.colour} variant={flatVariant(p.slug, p.department)} />
+                  <ProductMedia p={p} hover={false} sizes="(max-width: 760px) 34vw, 14vw" />
                 </div>
               );
             })}
-            <span className="towel__cap label-sm">Flat-lay · illustrative flats</span>
+            <span className="towel__cap label-sm">Your look · KAI photographs</span>
           </div>
           <div className="build__slots">
             {chosen.map(({ s, p }) => {
@@ -157,7 +159,7 @@ export function Builder() {
                           {p.name}
                         </Link>
                         <div className="slot__meta">
-                          <span className="label-sm muted">{KIND_LABEL[p.kind]}</span>
+                          <span className="label-sm muted">{typeLine(p)}</span>
                           <Price p={p} size="sm" />
                         </div>
                       </div>

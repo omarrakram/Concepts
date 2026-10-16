@@ -60,14 +60,26 @@ html.film-doc body {
 }
 .film--msg {
   display: grid;
-  place-items: center;
+  align-content: center;
+  justify-items: center;
+  gap: 14px;
   font-family: var(--sans);
-  font-size: 13px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--ink);
   padding: 40px;
   text-align: center;
+}
+.film--msg strong {
+  font-family: var(--serif);
+  font-weight: 340;
+  font-size: 24px;
+}
+.film--msg code {
+  font-size: 12px;
+  background: rgba(32, 40, 39, 0.08);
+  padding: 1px 5px;
+  border-radius: 3px;
 }
 .film-sea {
   position: absolute;
@@ -359,11 +371,21 @@ html.film-doc body {
   font-size: 12px;
   text-indent: 0.6em;
 }
+.lockup__collections {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  aspect-ratio: 900 / 41;
+  background-size: 100% auto;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  filter: invert(1);
+}
 .lockup__line {
   position: absolute;
   left: 0;
   right: 0;
-  top: calc(100% - var(--hz) + 46px);
+  top: calc(100% - var(--hz) + 58px);
   text-align: center;
   font-size: 42px;
   text-shadow: 0 2px 30px rgba(5, 15, 20, 0.45);

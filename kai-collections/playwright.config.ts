@@ -6,6 +6,12 @@ import { defineConfig, devices } from '@playwright/test';
  * frame (fast and deterministic in software-rendered CI browsers); the scroll-
  * driven Horizon is tested with motion on.
  */
+/** KAI's photography loads from KAI's CDN; when egress goes through a proxy, Chromium needs it handed over explicitly. */
+const egress = process.env.HTTPS_PROXY || process.env.https_proxy;
+const proxy = egress ? { server: egress, bypass: '127.0.0.1,localhost,::1' } : undefined;
+// …while the local preview server stays direct (Playwright otherwise forces loopback through the proxy)
+if (egress) process.env.PLAYWRIGHT_DISABLE_FORCED_CHROMIUM_PROXIED_LOOPBACK = '1';
+
 export default defineConfig({
   testDir: 'tests/e2e',
   // WebGL runs on SwiftShader (software) in headless Chromium: first frames and shader compiles take seconds
@@ -19,7 +25,7 @@ export default defineConfig({
     baseURL: process.env.BASE_URL ?? 'http://127.0.0.1:4173',
     reducedMotion: 'reduce',
     trace: 'retain-on-failure',
-    launchOptions: { args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'] },
+    launchOptions: { proxy, args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'] },
   },
   projects: [
     { name: 'desktop', use: { viewport: { width: 1440, height: 900 } }, testIgnore: /mobile\.spec/ },

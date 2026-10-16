@@ -10,19 +10,26 @@ export async function startServer({ port = 4317, build = false } = {}) {
     console.log('[server] building…');
     execSync('npm run build', { cwd: ROOT, stdio: 'inherit' });
   }
+  // own process group, so stop() takes down npx *and* the vite server it spawned
   const proc = spawn('npx', ['vite', 'preview', '--host', '127.0.0.1', '--port', String(port), '--strictPort'], {
     cwd: ROOT,
-    stdio: ['ignore', 'pipe', 'pipe'],
+    stdio: 'ignore',
+    detached: true,
   });
+  const kill = () => {
+    try {
+      process.kill(-proc.pid, 'SIGTERM');
+    } catch {}
+  };
   const base = `http://127.0.0.1:${port}`;
   for (let i = 0; i < 100; i++) {
     try {
       const r = await fetch(base + '/');
-      if (r.ok) return { base, stop: () => proc.kill('SIGTERM') };
+      if (r.ok) return { base, stop: kill };
     } catch {}
     await new Promise((r) => setTimeout(r, 200));
   }
-  proc.kill('SIGTERM');
+  kill();
   throw new Error('preview server did not start');
 }
 

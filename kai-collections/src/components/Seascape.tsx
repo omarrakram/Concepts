@@ -1,5 +1,6 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { createSea, cssFallback, wordmarkCanvas, type Light, type SeaRenderer } from '../gl/sea';
+import { createSea, cssFallback, loadLogo, wordmarkCanvas, type Light, type SeaRenderer } from '../gl/sea';
+import { imgUrl, LOGO, MEDIA_ON } from '../data/media';
 import { usePrefersReducedMotion } from '../lib/hooks';
 
 export interface SeascapeProps {
@@ -112,13 +113,18 @@ export function Seascape({
     s.resize(size[0], size[1]);
     let cancelled = false;
     if (text) {
-      const make = () => {
+      const el = ref.current!;
+      el.dataset.text = 'pending';
+      const font = document.fonts?.load ? document.fonts.load(`300 64px "Fraunces Variable"`).catch(() => null) : Promise.resolve(null);
+      // KAI's official logo when KAI-hosted media is on; the typeset stand-in otherwise (or if it fails)
+      const logo = MEDIA_ON && text === 'KAI' ? loadLogo(imgUrl(LOGO.src, 1800)) : Promise.resolve(null);
+      Promise.all([font, logo]).then(([, img]) => {
         if (cancelled) return;
-        s.setText(wordmarkCanvas(size[0], size[1], textHorizon ?? props.current.horizon, text, textSize));
+        const c = wordmarkCanvas(size[0], size[1], textHorizon ?? props.current.horizon, text, textSize, 0.04, img ? { img, kai: LOGO.kaiHeight } : null);
+        s.setText(c);
+        el.dataset.text = c.dataset.source === 'logo' ? 'logo' : 'typeset';
         draw.current();
-      };
-      if (document.fonts?.load) document.fonts.load(`300 64px "Fraunces Variable"`).then(make, make);
-      else make();
+      });
     } else s.setText(null);
     draw.current();
     return () => {

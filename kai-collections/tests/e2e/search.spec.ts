@@ -16,6 +16,7 @@ test('search shows suggestions, live results and keyboard navigation', async ({ 
   await input.fill('zebra');
   const opts = page.getByTestId('search-results').getByRole('option');
   await expect(opts.first()).toContainText(/Zebra/);
+  await expect(opts.first().locator('img')).toHaveAttribute('src', /cdn\.shopify\.com/);
   await input.press('ArrowDown');
   await expect(opts.nth(1)).toHaveAttribute('aria-selected', 'true');
   await input.press('ArrowUp');
@@ -33,11 +34,14 @@ test('“see all results” lands on a filtered shop that can be cleared', async
   await page.getByRole('link', { name: /See all results/ }).click();
   await expect(page).toHaveURL(/\/shop\?q=one%20piece|\/shop\?q=one\+piece/);
   await expect(page.getByTestId('query-chip')).toContainText('one piece');
-  const n = await page.getByTestId('product-card').count();
+  const count = async () => Number((await page.getByTestId('result-count').textContent())!.match(/\d+/)![0]);
+  const n = await count();
   expect(n).toBeGreaterThan(5);
   for (const t of await page.getByTestId('product-card').locator('.card__name').allTextContents()) expect(t).toMatch(/One Piece/i);
+  // results carry KAI's photographs
+  await expect(page.getByTestId('product-card').first().locator('img[data-kai-photo]').first()).toHaveAttribute('src', /cdn\.shopify\.com/);
   await page.getByTestId('query-chip').click();
-  await expect(page.getByTestId('product-card')).not.toHaveCount(n);
+  await expect.poll(count).toBeGreaterThan(n);
 });
 
 test('search has a clear empty state and closes with Escape', async ({ page }) => {
