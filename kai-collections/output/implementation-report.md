@@ -65,7 +65,23 @@ KAI shoots mostly 2:3 portraits — studio frames on light grey, and on-location
 
 ## 7. Film
 
-{{FILM}}
+`output/kai-before-after-16s.mp4` — **delivered separately, not committed** (it shows KAI's photography and live captures of kaicollections.com). Re-rendered on 2026-10-16 from the final build: plates recaptured (`npm run render -- --plates`), 960 frames rendered headless through `/showcase?capture` in 637 s, encoded in 66 s.
+
+| Check (`npm run verify:video`, 2026-10-16T10:07:31Z) | Result |
+| --- | --- |
+| Duration (container / video / audio) | 16.000 s / 16.000 s / 16.000 s |
+| Frames · rate | 960 · 60/1 |
+| Size | 1080 × 1920 (9:16) |
+| Video | H.264 High, yuv420p, ≈12.5 Mbit/s, faststart (moov first) |
+| Audio | AAC, 48 kHz stereo, ≈192 kbit/s — synthesised in `scripts/make-audio.mjs` |
+| Black stretches · frozen stretches | none · none |
+| File | 25,396,622 bytes (24.22 MB) |
+
+All 13 checks pass; the full record is `output/video-verification.json`, the contact sheet (24 frames) is `output/showcase-contact-sheet.png` (local only).
+
+- **BEFORE (0–2.8 s) is genuine footage**: phone captures (432 × 768 CSS px at 2.5×) of kaicollections.com's homepage, SS26 Mens Swimwear and Festival del Mare Swim Shorts, captured 2026-10-15T23:53Z with `npm run capture:before` (all HTTP 200; record in `research/before-capture.json`). Each page is one tall capture scrolled in the film, so KAI's sticky header appears once, as on the phone. Desktop captures at 1440 × 900 (first screen + long page) are in `output/before/` for review — local only.
+- **AFTER** is the finished concept: live components rendered at `t` (the sea, KAI's logo letters on the horizon, The Horizon with KAI's photographs) and plates photographed from the built site (homepage, wardrobes, Women shop, Black Sade One Piece product page, size, bag, Builder, Journal, Atlas). The storyboard and timings are unchanged (`output/video-storyboard.md`).
+- The only visible differences from the 2026-10-16 00:06 render are the ones the site gained since: square packshots shown whole (kids pair, builder towel) and the phone shop toolbar.
 
 ## 8. Deployment readiness
 

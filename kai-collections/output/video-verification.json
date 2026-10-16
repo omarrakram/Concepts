@@ -1,6 +1,6 @@
 {
   "file": "output/kai-before-after-16s.mp4",
-  "bytes": 25397392,
+  "bytes": 25396622,
   "megabytes": 24.22,
   "format_duration": "16.000000",
   "video": {
@@ -12,7 +12,7 @@
     "r_frame_rate": "60/1",
     "frames": "960",
     "duration": "16.000000",
-    "bit_rate": "12493851"
+    "bit_rate": "12493382"
   },
   "audio": {
     "codec": "aac",
@@ -65,5 +65,5 @@
     "no_black_stretches": true,
     "no_freezes": true
   },
-  "verifiedAt": "2026-10-16T00:06:29.401Z"
+  "verifiedAt": "2026-10-16T10:07:31.798Z"
 }
