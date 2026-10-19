@@ -91,7 +91,7 @@ Bundle: JS 765 KB (175 KB gzip) — of which the 374-product catalog is the larg
 
 ## 9. Known limitations
 
-- Prices and availability are a snapshot (2026-10-15), not live; the site says so on every product page. Re-run `npm run sync` to refresh (between two syncs five hours apart, 14 products changed price or stock).
+- Prices and availability are a snapshot (2026-10-15), not live; the site says so on every product page. Re-run `npm run sync` to refresh (between two syncs five hours apart, 14 products changed price or stock). A re-check on 2026-10-19 found prices unchanged on the film's pieces but sizes moved: Black Sade One Piece M (38) has sold out (the film's XS (34) is still available), and Festival del Mare M (32-34) and Yellow Zebra L (34-36), sold out in the snapshot, now show as available. The snapshot was kept, because the film, research and this report all describe it.
 - 95 products have no written composition on KAI's page; the concept shows the fabric named in the title and says the composition is not stated.
 - Public hosting of KAI's photographs and logo needs KAI's permission (use `VITE_KAI_MEDIA=off` otherwise).
 - kaicollections.ae could not be reached and Instagram redirects to a login wall from this environment; UAE storefront and social content are not audited directly.
