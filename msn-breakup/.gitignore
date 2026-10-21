@@ -1,0 +1,7 @@
+node_modules/
+out/
+.cache/
+*.log
+# the licensed song is supplied locally, never committed (see public/music/README.md)
+public/music/*
+!public/music/README.md
