@@ -23,6 +23,24 @@ or step by step:
 Shooting needs the CDN photo cache or network access to the official IYS
 image CDN (`scripts/lib/cdn-route.mjs`). Rendering, audio and QA are offline.
 
+## Source lock: check the deployed site first
+
+```
+NODE_USE_ENV_PROXY=1 node scripts/showcase-30/verify-site.mjs --local-dist=dist
+```
+
+Opens the deployed site (default: the `iys5retro` preview of
+`feature/iys-retro-conversion-upgrade`) in fresh browser contexts with
+service workers blocked. It checks that the URL answers, that it names the
+same content-hashed JS/CSS as the local build, and that the 32 catalogue
+shards are byte-identical. It then takes the reference screenshots:
+- desktop 1440×900: first visit, desktop, IYS INTERNET, product, and MY BAG
+  after a real ADD TO BAG
+- IYS MOBILE 390×844: home and product
+
+Only reads reach the site; mail, rewards and writes are aborted and listed
+in `out/site-verify/<stamp>/site-verification.json`.
+
 ## How a take is filmed (`lib/stage.mjs`)
 
 * Playwright's fake clock advances `Date`, timers, `requestAnimationFrame` and
