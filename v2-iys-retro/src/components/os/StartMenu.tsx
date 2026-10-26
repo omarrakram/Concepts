@@ -5,6 +5,7 @@ import { MENU } from '../../data/taxonomy';
 import { collectionCount } from '../../lib/catalogue/hydrate';
 import { formatCount } from '../../lib/catalogue/format';
 import { useCatalogue } from '../../lib/catalogue/load';
+import { switchToRealIYS } from '../../lib/checkout';
 import { collectionPath, useBrowse } from '../../lib/useBrowse';
 import { useOS, type AppId } from '../../state/os';
 import { Icon, type IconName } from './Icon';
@@ -72,6 +73,16 @@ export function StartMenu() {
     { label: 'XCHANGE.EXE :)', icon: 'exchange', sub: 'Exchanges / refunds', act: () => app('exchange') },
     { label: 'IYS ESSENTIALS', icon: 'txt', sub: 'Refunds, shipping, terms', act: () => app('essentials') },
     { label: 'CONTROL PANEL', icon: 'control', sub: 'Sound, CRT, wallpaper', act: () => app('control') },
+    // The always-there way out: the real store, with this bag (same handoff as the REAL IYS switch).
+    {
+      label: concept.escape.menuItem,
+      icon: 'internet',
+      sub: concept.escape.menuSub,
+      act: () => {
+        useOS.getState().setStart(false);
+        switchToRealIYS();
+      },
+    },
   ];
 
   return (

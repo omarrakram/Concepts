@@ -129,6 +129,24 @@ snapshot is always in the build, so a rollback never leaves an empty shop.
 
 ## 7. IYS MAIL
 
+**Why it never sent before (fixed 2026-10-26):** the project is an ES module
+package, and Vercel compiles each `api/*.ts` file on its own, keeping import
+paths as written. Node refuses extensionless relative imports in ES modules,
+so `/api/support-email` (and `/api/commerce`, `/api/rewards`) crashed on load
+with `ERR_MODULE_NOT_FOUND` → Vercel answered `500 FUNCTION_INVOCATION_FAILED`
+(plain text) → the form showed "Could not reach the mail server". Every
+relative import under `api/` now names its `.js` file, and a unit test keeps it
+that way. Reproduced and verified with the real Vercel CLI (`vercel build`, then
+loading each compiled function).
+
+**Check a deployment in the browser:** open `https://<deployment>/api/support-email?status`.
+It answers `{"configured": true|false, "missing": [...], "deliversTo": "orders@inyourshoe.com"}`
+and never shows a secret. `configured: false` means the variables below are not
+set **for that Vercel project and that environment**. Preview and Production
+have separate values: tick *Preview* as well as *Production* when adding them,
+then redeploy. Several Vercel projects build `v2-iys-retro` from this repo;
+set them on the project whose URL you actually test.
+
 - With `RESEND_API_KEY` + `SUPPORT_FROM_EMAIL` set, IYS MAIL sends a real email
   to `orders@inyourshoe.com`, Reply-To the customer, and shows MAIL SENT only
   after Resend accepts it.

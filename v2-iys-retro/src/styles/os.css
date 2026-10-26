@@ -402,6 +402,17 @@
   background: linear-gradient(#d84545, #ff6060);
   box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.4);
 }
+/* DESKTOP: the same coral corner button, now "show desktop"; pressed while the desktop is shown. */
+.start--desktop {
+  text-transform: lowercase;
+}
+.start--desktop svg {
+  flex: none;
+}
+.start--desktop[aria-pressed='true'] {
+  background: linear-gradient(#d84545, #ff6060);
+  box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.4);
+}
 .start:focus-visible {
   outline: 1px dotted #fff;
   outline-offset: -4px;

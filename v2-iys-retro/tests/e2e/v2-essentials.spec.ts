@@ -34,7 +34,7 @@ test.describe('IYS ESSENTIALS everywhere (desktop)', () => {
     await expectOfficial(w, /^TRACK YOUR ORDER/, 'https://inyourshoe.com/pages/track-your-order');
     await expectOfficial(w, /^CONTACT US/, 'https://inyourshoe.com/pages/contact-us');
     await w.getByRole('button', { name: /^Close/ }).click();
-    await page.getByRole('button', { name: 'IYS menu' }).click();
+    await page.getByRole('button', { name: 'MENU', exact: true }).click() // top-left MENU (the taskbar corner is DESKTOP);
     await page.getByRole('menu', { name: 'IYS menu' }).getByRole('menuitem', { name: /IYS ESSENTIALS/ }).click();
     await expect(page.getByRole('dialog', { name: 'IYS ESSENTIALS' })).toBeVisible();
   });

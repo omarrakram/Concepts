@@ -9,11 +9,12 @@ import type { Product } from '../../lib/catalogue/types';
 import { useHandoff } from '../../lib/checkout';
 import { commerceMode, liveFreeShipping, verifyDiscount } from '../../lib/commerce';
 import { activeOffers, cleanCode, shippingProgress, today } from '../../lib/incentives';
-import { upsell } from '../../lib/upsell';
+import { bagIdeas } from '../../lib/recommend';
 import { productPath } from '../../lib/useBrowse';
 import { subtotal, useCart } from '../../state/cart';
 import { addToBag, quickRequest } from '../../state/status';
 import { Busy } from './Busy';
+import { ProductCarousel } from './ProductCarousel';
 import { Price } from './Price';
 import { RemoteImage } from './RemoteImage';
 
@@ -152,58 +153,56 @@ function IdeaCard({ p, because, onOpen }: { p: Product; because: string; onOpen:
   const chosen = sizes.find((s) => s.label === size) ?? null;
   const req = single ? (chosen ? quickRequest(p, chosen) : null) : !p.optionNames && !p.sizes.length ? quickRequest(p) : null;
   return (
-    <li className="bagx-idea">
-      <Link to={productPath(p.handle)} className="bagx-idea__img" onClick={(e) => (e.preventDefault(), onOpen(p.handle))} tabIndex={-1} aria-hidden="true">
-        <RemoteImage src={p.image} alt="" title={p.title} base={160} sizes="64px" max={240} />
+    <li className="reco__item bagx-idea">
+      <Link to={productPath(p.handle)} className="reco__img bagx-idea__img" onClick={(e) => (e.preventDefault(), onOpen(p.handle))} tabIndex={-1} aria-hidden="true">
+        <RemoteImage src={p.image} alt="" title={p.title} width={p.imageWidth} height={p.imageHeight} base={240} sizes="132px" max={480} />
       </Link>
-      <div className="bagx-idea__info">
-        <button type="button" className="link bagx-idea__name" onClick={() => onOpen(p.handle)}>
-          {p.title}
+      <button type="button" className="link reco__name bagx-idea__name" onClick={() => onOpen(p.handle)}>
+        {p.title}
+      </button>
+      <Price price={p.price} compareAt={p.compareAtPrice} />
+      <small className="reco__why">{because}</small>
+      {single && (
+        // never preselected: the shopper picks the size before + ADD appears
+        <span className="bagx-idea__sizes" role="group" aria-label={`Size for ${p.title}`} data-repeatable>
+          {sizes.map((s) => (
+            <button key={s.label} type="button" className="btn btn--small" aria-pressed={size === s.label} disabled={!s.available} onClick={() => setSize(s.label)}>
+              {s.label}
+            </button>
+          ))}
+        </span>
+      )}
+      {req ? (
+        <button type="button" className="btn btn--go btn--small" onClick={() => addToBag(req)}>
+          {concept.bag.upsellAdd}
+          {single && chosen ? ` (${chosen.label})` : ''}
         </button>
-        <Price price={p.price} compareAt={p.compareAtPrice} />
-        <small className="muted">{because}</small>
-        {single && (
-          <span className="bagx-idea__sizes" role="group" aria-label={`Size for ${p.title}`}>
-            {sizes.map((s) => (
-              <button key={s.label} type="button" className="btn btn--small" aria-pressed={size === s.label} disabled={!s.available} onClick={() => setSize(s.label)}>
-                {s.label}
-              </button>
-            ))}
-          </span>
-        )}
-        {req ? (
-          <button type="button" className="btn btn--go btn--small" onClick={() => addToBag(req)}>
-            {concept.bag.upsellAdd}
-            {single && chosen ? ` (${chosen.label})` : ''}
-          </button>
-        ) : single ? (
-          <small className="muted">{concept.y2k.pickSizeFirst}</small>
-        ) : (
-          <button type="button" className="btn btn--small" onClick={() => onOpen(p.handle)}>
-            {concept.bag.upsellOptions}
-          </button>
-        )}
-      </div>
+      ) : single ? (
+        <small className="muted">{concept.y2k.pickSizeFirst}</small>
+      ) : (
+        <button type="button" className="btn btn--small" onClick={() => onOpen(p.handle)}>
+          {concept.bag.upsellOptions}
+        </button>
+      )}
     </li>
   );
 }
 
-/** "U MIGHT LIKE THESE": up to 3 deterministic, in-stock complements (src/lib/upsell.ts). */
-export function BagIdeas({ onOpenProduct }: { onOpenProduct: (handle: string) => void }) {
+/** "U MIGHT ALSO LIKE": up to 10 deterministic, in-stock real pieces (src/lib/recommend.ts), as a sideways carousel. */
+export function BagIdeas({ onOpenProduct, variant = 'desktop' }: { onOpenProduct: (handle: string) => void; variant?: 'desktop' | 'mobile' }) {
   const cat = useCatalogue();
   const items = useCart((s) => s.items);
   const handles = items.map((i) => i.handle).join(',');
-  const picks = useMemo(() => (cat && FEATURES.bagUpsell ? upsell(cat, handles ? handles.split(',') : []) : []), [cat, handles]);
+  const picks = useMemo(() => (cat && FEATURES.bagUpsell ? bagIdeas(cat, handles ? handles.split(',') : []) : []), [cat, handles]);
   if (!picks.length) return null;
   return (
-    <section className="bagx-ideas" aria-label={concept.bag.upsellTitle}>
-      <p className="bagx-title">{concept.bag.upsellTitle}</p>
-      <ul>
+    <div className="bagx-ideas">
+      <ProductCarousel title={concept.bag.upsellTitle} note={concept.reco.bagNote} count={picks.length} variant={variant}>
         {picks.map((x) => (
           <IdeaCard key={x.product.handle} p={x.product} because={x.because} onOpen={onOpenProduct} />
         ))}
-      </ul>
-    </section>
+      </ProductCarousel>
+    </div>
   );
 }
 

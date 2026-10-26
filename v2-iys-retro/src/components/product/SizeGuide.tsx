@@ -60,7 +60,7 @@ export function SizeChartView({ handle, title, sourceUrl, ask }: { handle: strin
     );
   return (
     <div className="sizeguide">
-      <div className="sizeguide__bar" role="group" aria-label="Zoom">
+      <div className="sizeguide__bar" role="group" aria-label="Zoom" data-repeatable>
         <span>Zoom:</span>
         {([1, 2] as const).map((z) => (
           <button key={z} type="button" className="btn btn--small" aria-pressed={zoom === z} onClick={() => setZoom(z)}>

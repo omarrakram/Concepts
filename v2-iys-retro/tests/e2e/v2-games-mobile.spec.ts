@@ -52,7 +52,7 @@ test.describe('IYS GAMES (mobile)', () => {
 
   test('MENU entry; every game launches, takes touch input and pauses', async ({ page }) => {
     await boot(page);
-    await page.getByRole('button', { name: 'MENU' }).click();
+    await page.getByRole('button', { name: 'MENU', exact: true }).click();
     await page.getByRole('button', { name: /IYS GAMES · 6 GAMES/ }).click();
     const center = page.locator('.m-soft__center');
     const cases: [string, (p: Page) => Promise<void>][] = [

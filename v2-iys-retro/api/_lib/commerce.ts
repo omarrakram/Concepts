@@ -10,8 +10,8 @@
  * Not configured → 503 { ok:false, reason:'not-configured' } and the client
  * stays on the snapshot. Errors never include provider details or secrets.
  */
-import { clientKey, createRateLimiter, json, readJson, sameOrigin } from './http';
-import { activeFreeShipping, buildLiveCatalogue, createCart, shopifyConfig, type Fetcher, type LiveCatalogue, type ShopifyEnv } from './shopify';
+import { clientKey, createRateLimiter, json, readJson, sameOrigin } from './http.js';
+import { activeFreeShipping, buildLiveCatalogue, createCart, shopifyConfig, type Fetcher, type LiveCatalogue, type ShopifyEnv } from './shopify.js';
 
 const CATALOGUE_TTL = 10 * 60_000;
 const PROMO_TTL = 5 * 60_000;

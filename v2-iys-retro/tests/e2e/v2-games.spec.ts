@@ -63,7 +63,7 @@ test.describe('IYS GAMES (desktop)', () => {
     await expect(hub.getByText(/coming soon/i)).toHaveCount(0);
     await axe(page, '[data-window="games"]');
     await hub.getByRole('button', { name: 'Close IYS GAMES' }).click();
-    await page.getByRole('button', { name: 'IYS menu' }).click();
+    await page.getByRole('button', { name: 'MENU', exact: true }).click() // top-left MENU (the taskbar corner is DESKTOP);
     await page.getByRole('menu', { name: 'IYS menu' }).getByRole('menuitem', { name: /IYS GAMES/ }).click();
     await expect(page.getByRole('dialog', { name: 'IYS GAMES' })).toBeVisible();
   });

@@ -57,6 +57,8 @@ export const concept = {
   dialog: { app: 'IYS.EXE', cancel: 'Cancel', ok: 'Obviously', postponed: 'cool decision postponed. it’ll wait 4 u xo' },
   notFound: { title: 'IYS.EXE', line: 'omg this page went offline :(' },
   imageOffline: 'IMAGE COULD NOT LOAD :(',
+  /** Large photo frames while the photo is on its way (same flying-file look as ADD TO BAG). */
+  loadingPhoto: 'Copying photo...',
   copying: 'COPYING ITEM TO:',
   itemAdded: 'ADDED 2 BAG :)',
   wallpaperUpdated: 'WALLPAPER UPDATED xo',
@@ -86,6 +88,9 @@ export const concept = {
     another: 'Write another',
     errorTitle: 'MAIL NOT SENT :(',
     failed: 'Could not reach the mail server. Ur message is still here - please try again.',
+    /** The mail function answered, but not with a result (crashed / not deployed). Never "sent". */
+    serverError: (status: number) => `The mail server had a problem (HTTP ${status}), so ur message was NOT sent. It is still here - try again or use ur email app.`,
+    retrying: 'Mail server is slow, trying again...',
     placeholder: 'hi IYS! my message is...',
     note: 'Goes to orders@inyourshoe.com. We only use ur details to reply.',
     /** No mail provider configured on this deployment: say so, never pretend it was sent. */
@@ -253,7 +258,7 @@ export const concept = {
     codeBad: 'that doesn’t look like an IYS code :( letters, numbers, - and _ only',
     codeRemove: 'remove',
     offersTitle: 'OFFERS',
-    upsellTitle: 'U MIGHT LIKE THESE',
+    upsellTitle: 'U MIGHT ALSO LIKE',
     upsellPick: 'PICK SIZE ›',
     upsellOptions: 'CHOOSE OPTIONS ›',
     upsellAdd: '+ ADD',
@@ -262,15 +267,27 @@ export const concept = {
     handoffSlow: 'taking a while?',
     handoffDirect: 'open it directly ↗',
   },
+  /** Product carousels (src/components/shop/ProductCarousel.tsx). Real products only. */
+  reco: {
+    productTitle: 'MORE LIKE THIS',
+    productNote: 'from IYS’s own collections',
+    bagNote: 'real IYS pieces 4 ur bag',
+    prev: 'Previous products',
+    next: 'More products',
+    trackLabel: (title: string, n: number) => `${title}: ${n} products, scroll sideways`,
+  },
   /** The escape route (src/lib/frustration.ts): caring and funny, never pushy. */
   escape: {
     title: 'IYS.EXE',
-    heading: 'HAVING A HARD TIME? :(',
-    body: 'this 2006 computer can be a lot lol. wanna shop the old-school way on the real IYS site?',
+    heading: 'COMPUTER SAYING NO? :(',
+    body: 'WANNA SHOP THE EASY WAY? this 2006 computer can be a lot lol. the real IYS site is one tap away.',
     bag: (n: number) => `ur bag (${n} ${n === 1 ? 'item' : 'items'}) comes with u.`,
-    open: 'OPEN REAL IYS ↗',
-    stay: 'I’M GOOD :)',
+    open: 'TAKE ME TO REAL IYS ↗',
+    stay: 'NAH I’M GOOD',
     stayed: 'ok! we’ll stop asking xo',
+    /** MENU item (desktop + mobile): leave any time, no frustration needed. */
+    menuItem: 'OPEN REAL IYS ↗',
+    menuSub: 'inyourshoe.com · ur bag comes along',
   },
   /** SIZE GUIDE: official IYS chart images only (see src/lib/sizeCharts.ts). */
   sizeGuide: {

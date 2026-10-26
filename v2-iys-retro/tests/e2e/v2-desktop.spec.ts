@@ -171,8 +171,9 @@ test.describe('IYS Retro V2 desktop upgrades', () => {
     mode = 'ok';
     await mail.getByRole('button', { name: 'TRY AGAIN :(' }).click();
     await expect(mail).toContainText('MAIL SENT :) xo');
-    expect(posted).toHaveLength(2);
-    expect(posted[1]).toMatchObject({ email: 'mona@example.com', name: 'Mona', order: '1234', topic: 'Delivery', subject: 'Where is my order?', message: 'It has not arrived yet.', website: '' });
+    // 1 send + 2 bounded automatic retries (same draft, same idempotency key), then the shopper's TRY AGAIN
+    expect(posted).toHaveLength(4);
+    for (const body of posted) expect(body).toMatchObject({ email: 'mona@example.com', name: 'Mona', order: '1234', topic: 'Delivery', subject: 'Where is my order?', message: 'It has not arrived yet.', website: '' });
   });
 
   test('P3B: IYS NEWSLETTER is its own app and never fakes a signup', async ({ page }) => {

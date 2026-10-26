@@ -3,6 +3,7 @@ import { Link, useNavigate, useParams, useSearchParams } from 'react-router';
 import { Icon } from '../../components/os/Icon';
 import { VariantPicker } from '../../components/product/VariantPicker';
 import { hasSizes, SizeChartView, SizeGuideButton } from '../../components/product/SizeGuide';
+import { MoreLikeThis } from '../../components/shop/ProductCarousel';
 import { ESSENTIALS } from '../../data/essentials';
 import { ProductInfo } from '../../components/product/ProductInfo';
 import { QuantityPicker } from '../../components/product/QuantityPicker';
@@ -400,6 +401,7 @@ export function MProduct() {
             </p>
             <EssentialLinks className="props__snapshot" label="Before u buy:" ids={['shipping', 'exchange-refund']} />
             <ProductInfo p={p} />
+            <MoreLikeThis handle={p.handle} variant="mobile" />
           </>
         ) : (
           <PageLoading label="Loading sizes..." />

@@ -65,7 +65,8 @@ export function defaultRect(app: AppId, desk: { w: number; h: number }, stack: n
     wardrobe: [Math.min(820, desk.w * 0.62), Math.min(560, desk.h * 0.78)],
     camera: [Math.min(800, desk.w * 0.6), Math.min(580, desk.h * 0.82)],
     viewer: [Math.min(760, desk.w * 0.56), Math.min(640, desk.h * 0.9)],
-    bag: [420, Math.min(640, desk.h * 0.86)],
+    // tall enough for the bag, the U MIGHT ALSO LIKE row and the checkout footer together
+    bag: [420, Math.min(820, desk.h - 40)],
     control: [520, Math.min(520, desk.h * 0.82)],
     mail: [500, 500],
     readme: [420, 320],
@@ -114,6 +115,12 @@ interface OSState {
   startOpen: boolean;
   /** Where the IYS menu was opened from: the taskbar button, or the top strip's MENU button. */
   startAnchor: 'taskbar' | 'top';
+  /**
+   * DESKTOP (show desktop) is on: which windows it tucked away and which one
+   * was active, so pressing it again brings exactly those back. Cleared as soon
+   * as the visitor opens or focuses a window themselves.
+   */
+  desktopShown: { ids: string[]; activeId: string | null } | null;
   setDesk: (w: number, h: number) => void;
   open: (app: AppId, opts?: { id?: string; title?: string; props?: Record<string, unknown>; maximized?: boolean; focus?: boolean }) => string;
   close: (id: string) => void;
@@ -126,6 +133,8 @@ interface OSState {
   /** Merge app state into a window's props (e.g. which view IYS MESSENGER shows). */
   setProps: (id: string, props: Record<string, unknown>) => void;
   minimizeAll: () => void;
+  /** DESKTOP button: minimize every window, or restore the ones it minimized. Nothing is closed. */
+  toggleDesktop: () => void;
   closeAll: () => void;
   showDialog: (d: Dialog | null) => void;
   showBalloon: (b: Balloon | null) => void;
@@ -166,6 +175,7 @@ export const useOS = create<OSState>()((set, get) => ({
   notice: null,
   startOpen: false,
   startAnchor: 'taskbar',
+  desktopShown: null,
   setDesk: (w, h) =>
     set((s) => ({
       desk: { w, h },
@@ -184,6 +194,7 @@ export const useOS = create<OSState>()((set, get) => ({
         activeId: id,
         top: z,
         startOpen: false,
+        desktopShown: null,
       });
       return id;
     }
@@ -199,7 +210,7 @@ export const useOS = create<OSState>()((set, get) => ({
       rect: defaultRect(app, s.desk, s.windows.length),
       opened: Date.now(),
     };
-    set({ windows: [...s.windows, win], activeId: id, top: z, startOpen: false });
+    set({ windows: [...s.windows, win], activeId: id, top: z, startOpen: false, desktopShown: null });
     return id;
   },
   close: (id) =>
@@ -211,7 +222,7 @@ export const useOS = create<OSState>()((set, get) => ({
     set((s) => {
       if (s.activeId === id && s.windows.find((w) => w.id === id)?.z === s.top) return s;
       const z = s.top + 1;
-      return { windows: s.windows.map((w) => (w.id === id ? { ...w, z, minimized: false } : w)), activeId: id, top: z };
+      return { windows: s.windows.map((w) => (w.id === id ? { ...w, z, minimized: false } : w)), activeId: id, top: z, desktopShown: null };
     }),
   minimize: (id) =>
     set((s) => {
@@ -225,6 +236,18 @@ export const useOS = create<OSState>()((set, get) => ({
   setTitle: (id, title) => set((s) => ({ windows: s.windows.map((w) => (w.id === id && w.title !== title ? { ...w, title } : w)) })),
   setProps: (id, props) => set((s) => ({ windows: s.windows.map((w) => (w.id === id ? { ...w, props: { ...w.props, ...props } } : w)) })),
   minimizeAll: () => set((s) => ({ windows: s.windows.map((w) => ({ ...w, minimized: true })), activeId: null })),
+  toggleDesktop: () =>
+    set((s) => {
+      if (s.desktopShown) {
+        const back = new Set(s.desktopShown.ids);
+        const windows = s.windows.map((w) => (back.has(w.id) ? { ...w, minimized: false } : w));
+        const active = s.desktopShown.activeId && windows.some((w) => w.id === s.desktopShown!.activeId && !w.minimized) ? s.desktopShown.activeId : topActive(windows);
+        return { windows, activeId: active, desktopShown: null, startOpen: false };
+      }
+      const ids = s.windows.filter((w) => !w.minimized).map((w) => w.id);
+      if (!ids.length) return { startOpen: false };
+      return { windows: s.windows.map((w) => ({ ...w, minimized: true })), activeId: null, desktopShown: { ids, activeId: s.activeId }, startOpen: false };
+    }),
   closeAll: () => set({ windows: [], activeId: null }),
   showDialog: (dialog) => set({ dialog }),
   showBalloon: (balloon) => set({ balloon }),

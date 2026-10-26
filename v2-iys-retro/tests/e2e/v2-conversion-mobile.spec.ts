@@ -121,3 +121,183 @@ test('JOURNEY C (mobile): بنطلون → real pants, an understood line, add o
   await page.locator('.m-add').click();
   await expect(page.getByRole('button', { name: /My Bag, 1 items/ })).toBeVisible();
 });
+
+/*
+ * Sideways overflow regression (iPhone report 2026-10-26): the DOCUMENT never
+ * overflowed; the app's own page scroller (#m-main) did, because an
+ * absolutely positioned sr-only span inside a product strip escaped the
+ * strip's clip. So every scroller is measured, not only the document.
+ * Product strips/galleries may scroll inside themselves; nothing else may.
+ */
+const CAROUSELS = 'ul.m-drop, .m-gallery, .m-tabs, .gallery__thumbs, .viewer__film, [data-carousel]';
+const sideways = (page: Page) =>
+  page.evaluate((carousels) => {
+    const all = [document.documentElement, ...document.querySelectorAll('body *')];
+    return all
+      .filter((e) => e.scrollWidth > e.clientWidth + 1 && (e === document.documentElement || /auto|scroll/.test(getComputedStyle(e).overflowX)) && !e.matches(carousels))
+      .map((e) => `${e.tagName.toLowerCase()}${e.id ? '#' + e.id : ''}.${String(e.className).split(' ')[0]} ${e.scrollWidth}>${e.clientWidth}`);
+  }, CAROUSELS);
+
+test('no sideways page scroll on any screen at 320–430px (the document AND the app scroller)', async ({ page }) => {
+  test.setTimeout(120_000);
+  const sizedHoodie = products.find((p) => p.sz && p.a === 1 && /hoodie/i.test(p.t))!;
+  await session(page);
+  for (const path of ['/', '/shop', `/product/${sizedHoodie.h}`, '/search?q=hoodie', `/search?q=${encodeURIComponent('بنطلون')}`, '/favorites', '/stores']) {
+    for (const w of [320, 360, 375, 390, 393, 414, 430]) {
+      await page.setViewportSize({ width: w, height: 800 });
+      await page.goto(path);
+      await expect(page.locator('.m-shell')).toBeVisible();
+      await page.waitForTimeout(300);
+      // bring the lower sections (shelves, newsletter, footer) into the layout too
+      await page.evaluate(() => {
+        const m = document.querySelector('#m-main')!;
+        m.scrollTop = m.scrollHeight;
+      });
+      expect(await sideways(page), `${path} at ${w}px`).toEqual([]);
+    }
+  }
+});
+
+test('a sideways scroll moves only the product strip under the pointer, never the page', async ({ page }) => {
+  await page.setViewportSize({ width: 360, height: 800 });
+  await session(page);
+  await page.goto('/');
+  await page.locator('.m-panel--drop .m-drop__card').first().waitFor();
+  await page.evaluate(() => {
+    const m = document.querySelector('#m-main')!;
+    m.scrollTop = m.scrollHeight;
+  });
+  const left = () => page.evaluate(() => document.querySelector('#m-main')!.scrollLeft);
+  const title = page.locator('.m-panel__title').last();
+  await title.hover({ position: { x: 5, y: 5 } });
+  await page.mouse.wheel(400, 0);
+  await page.waitForTimeout(300);
+  expect(await left()).toBe(0);
+  const strip = page.locator('ul.m-drop').last();
+  await strip.hover();
+  await page.mouse.wheel(300, 0);
+  await expect.poll(() => strip.evaluate((u) => u.scrollLeft)).toBeGreaterThan(0);
+  expect(await left()).toBe(0);
+  expect(await page.evaluate(() => [scrollX, document.documentElement.scrollWidth - document.documentElement.clientWidth])).toEqual([0, 0]);
+});
+
+test('top chrome: MENU top left and MY BAG top right around the 2006 / REAL IYS switch, 360–430px', async ({ page }) => {
+  await session(page);
+  await page.addInitScript(() => {
+    if (!localStorage.getItem('iys2006.bag')) localStorage.setItem('iys2006.bag', JSON.stringify({ state: { items: [{ key: 'a', handle: 'x', title: 'x', variantId: 1, variantTitle: null, size: null, quantity: 3, price: 100, image: null }] }, version: 1 }));
+  });
+  await page.goto('/');
+  for (const w of [320, 360, 375, 390, 393, 414, 430]) {
+    await page.setViewportSize({ width: w, height: 800 });
+    const menu = (await page.getByRole('button', { name: 'IYS MENU' }).boundingBox())!;
+    const sw = (await page.getByRole('button', { name: /IYS 2006.*REAL IYS/ }).boundingBox())!;
+    const bag = (await page.getByRole('button', { name: 'MY BAG: 3 items' }).boundingBox())!;
+    const badge = (await page.locator('.m-topkey__badge').boundingBox())!;
+    expect(menu.x, `${w}`).toBeLessThan(12);
+    expect(menu.x + menu.width, `${w}`).toBeLessThanOrEqual(sw.x);
+    expect(sw.x + sw.width, `${w}`).toBeLessThanOrEqual(bag.x);
+    expect(badge.x + badge.width, `${w}`).toBeLessThanOrEqual(w);
+    expect(bag.x + bag.width, `${w}`).toBeGreaterThan(w - 20);
+    expect(Math.min(menu.height, bag.height), `${w}`).toBeGreaterThanOrEqual(32);
+    expect(await sideways(page), `${w}`).toEqual([]);
+  }
+});
+
+test('top MENU / MY BAG and the soft keys share ONE menu and ONE bag (same state, same count)', async ({ page }) => {
+  await session(page);
+  await page.goto(`/product/${withChart.h}`);
+  await expect(page.locator('.m-add')).toBeVisible();
+  await page.locator('.chip label', { hasText: new RegExp(`^${chartSize[0]}$`) }).click();
+  await page.locator('.m-add').click();
+  const top = page.getByRole('button', { name: 'MY BAG: 1 item' });
+  const soft = page.getByRole('navigation', { name: 'Soft keys' }).getByRole('button', { name: /My Bag, 1 items/ });
+  await expect(top).toBeVisible();
+  await expect(soft).toBeVisible();
+  await top.click();
+  await expect(top).toHaveAttribute('aria-expanded', 'true');
+  await expect(page.locator('.bag__row')).toHaveCount(1);
+  await soft.click(); // the soft key closes the same bag
+  await expect(page.locator('.bag__row')).toHaveCount(0);
+  await expect(top).toHaveAttribute('aria-expanded', 'false');
+  // MENU from a product page (where the soft key says BACK): one menu, toggles
+  const menu = page.getByRole('button', { name: 'IYS MENU' });
+  await menu.click();
+  await expect(menu).toHaveAttribute('aria-expanded', 'true');
+  await expect(page.locator('.m-title')).toHaveText('IYS MOBILE › MENU');
+  await menu.click();
+  await expect(menu).toHaveAttribute('aria-expanded', 'false');
+  await expect(page.locator('.m-title')).toHaveText('IYS MOBILE › GALLERY');
+  // and from search
+  await page.goto('/search?q=hoodie');
+  await page.getByRole('button', { name: 'MY BAG: 1 item' }).click();
+  await expect(page.locator('.bag__row')).toHaveCount(1);
+});
+
+test('escape route on IYS MOBILE: 4 taps on the disabled ADD → dialog fits the phone → TAKE ME TO REAL IYS carries the bag', async ({ page }) => {
+  await page.setViewportSize({ width: 360, height: 800 });
+  await session(page);
+  await stubStore(page);
+  await page.addInitScript((item) => {
+    if (!localStorage.getItem('iys2006.bag')) localStorage.setItem('iys2006.bag', JSON.stringify({ state: { items: [item] }, version: 1 }));
+  }, { key: `${withChart.h}::${chartSize[2]}`, handle: withChart.h, title: withChart.t, variantId: chartSize[2], variantTitle: chartSize[0], size: chartSize[0], quantity: 2, price: 100, image: null });
+  await page.goto(`/product/${withChart.h}`);
+  const add = page.locator('.m-add');
+  await expect(add).toBeDisabled();
+  const b = (await add.boundingBox())!;
+  for (let i = 0; i < 4; i++) {
+    await page.touchscreen.tap(b.x + b.width / 2, b.y + b.height / 2);
+    await page.waitForTimeout(150);
+  }
+  const dlg = page.getByRole('alertdialog', { name: 'IYS.EXE' });
+  await expect(dlg).toBeVisible({ timeout: 6000 });
+  await expect(dlg).toContainText('COMPUTER SAYING NO? :(');
+  const d = (await dlg.boundingBox())!;
+  expect(d.x).toBeGreaterThanOrEqual(0);
+  expect(d.x + d.width).toBeLessThanOrEqual(360);
+  expect(d.y + d.height).toBeLessThanOrEqual(800);
+  await dlg.getByRole('button', { name: 'TAKE ME TO REAL IYS ↗' }).click();
+  await expect(page).toHaveURL(`https://inyourshoe.com/cart/${chartSize[2]}:2?storefront=true`);
+});
+
+test('escape route never fires from game taps on IYS MOBILE', async ({ page }) => {
+  await session(page);
+  await page.goto('/');
+  await page.getByRole('navigation', { name: 'Soft keys' }).getByRole('button', { name: 'MENU', exact: true }).click();
+  await page.getByRole('button', { name: /IYS GAMES/ }).click();
+  await page.getByRole('button', { name: 'PLAY CATCHY SNAKE' }).click();
+  await page.locator('.game__cta').click();
+  const pad = (await page.locator('.pad').first().boundingBox())!;
+  for (let i = 0; i < 8; i++) {
+    await page.touchscreen.tap(pad.x + pad.width / 2, pad.y + pad.height / 2);
+    await page.waitForTimeout(120);
+  }
+  await page.waitForTimeout(2500);
+  await expect(page.getByText('COMPUTER SAYING NO? :(')).toHaveCount(0);
+});
+
+test('IYS MOBILE MENU › OPEN REAL IYS ↗ is always there (no frustration needed)', async ({ page }) => {
+  await session(page);
+  await page.route('https://inyourshoe.com/', (r) => r.fulfill({ status: 200, contentType: 'text/html', body: '<title>REAL IYS (test stub)</title>' }));
+  await page.goto('/stores');
+  await page.getByRole('button', { name: 'IYS MENU' }).click();
+  await page.getByRole('button', { name: /OPEN REAL IYS/ }).click();
+  await expect(page).toHaveURL('https://inyourshoe.com/');
+});
+
+test('mobile product page: MORE LIKE THIS scrolls by itself; the page never scrolls sideways', async ({ page }) => {
+  await page.setViewportSize({ width: 375, height: 812 });
+  await session(page);
+  await page.goto(`/product/${withChart.h}`);
+  await expect(page.locator('.m-add')).toBeVisible();
+  const reco = page.getByRole('region', { name: /MORE LIKE THIS/ });
+  await reco.scrollIntoViewIfNeeded();
+  const track = reco.locator('.reco__track');
+  await track.hover();
+  await page.mouse.wheel(300, 0);
+  await expect.poll(() => track.evaluate((t) => t.scrollLeft)).toBeGreaterThan(0);
+  expect(await page.evaluate(() => document.querySelector('#m-main')!.scrollLeft)).toBe(0);
+  expect(await sideways(page)).toEqual([]);
+  await reco.locator('.reco__card').first().click();
+  await expect(page).toHaveURL(/\/product\//);
+  await expect(page.locator('.m-h1--product')).not.toHaveText(withChart.t);
+});

@@ -6,7 +6,7 @@
  *   SUPPORT_TO_EMAIL    only with SUPPORT_TEST_MODE=1: a designated test inbox (subject marked [TEST]);
  *                       otherwise every message goes to orders@inyourshoe.com
  */
-import { handleSupport, resendSender } from './_lib/support';
+import { handleSupport, resendSender } from './_lib/support.js';
 
 declare const process: { env: Record<string, string | undefined> };
 

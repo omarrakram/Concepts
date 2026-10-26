@@ -1,9 +1,10 @@
 import { useId, useRef, useState } from 'react';
 import { Icon } from '../../components/os/Icon';
 import { Window } from '../../components/os/Window';
-import { SUPPORT_EMAIL_ENDPOINT, SUPPORT_EMAIL_TO } from '../../config/integrations';
+import { SUPPORT_EMAIL_TO } from '../../config/integrations';
 import { concept } from '../../data/copy';
 import type { Win } from '../../state/os';
+import { deliver } from '../../lib/supportMail';
 
 const TOPICS = ['Order question', 'Delivery', 'Product question', 'Payment', 'Store question', 'Other'] as const;
 type Phase = 'idle' | 'sending' | 'sent' | 'error' | 'not-connected';
@@ -36,30 +37,29 @@ export default function Mail({ win }: { win: Win }) {
   const draftKey = useRef(newDraftKey());
   const set = (k: keyof typeof f) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => setF((s) => ({ ...s, [k]: e.target.value }));
 
+  const [note, setNote] = useState('');
   const send = async (e: React.FormEvent) => {
     e.preventDefault();
     if (busy.current) return;
     busy.current = true;
     setPhase('sending');
     setError('');
+    setNote('');
     try {
-      const res = await fetch(SUPPORT_EMAIL_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-Idempotency-Key': draftKey.current }, body: JSON.stringify(f) });
-      const body = (await res.json().catch(() => null)) as { ok?: boolean; error?: string; reason?: string } | null;
-      if (res.ok && body?.ok === true) setPhase('sent');
-      else if (res.status === 503 && body?.reason === 'not-connected') setPhase('not-connected');
+      const r = await deliver(f, draftKey.current, setNote);
+      if (r.kind === 'sent') setPhase('sent');
+      else if (r.kind === 'not-connected') setPhase('not-connected');
       else {
-        setError(body?.error ?? concept.mail.failed);
+        setError(r.message);
         setPhase('error');
       }
-    } catch {
-      setError(concept.mail.failed);
-      setPhase('error');
     } finally {
       busy.current = false;
+      setNote('');
     }
   };
 
-  const status = phase === 'sending' ? concept.mail.sending : phase === 'sent' ? concept.mail.done : phase === 'error' ? `${concept.mail.errorTitle} ${error}` : phase === 'not-connected' ? concept.mail.notConnectedStatus : 'Ready.';
+  const status = phase === 'sending' ? note || concept.mail.sending : phase === 'sent' ? concept.mail.done : phase === 'error' ? `${concept.mail.errorTitle} ${error}` : phase === 'not-connected' ? concept.mail.notConnectedStatus : 'Ready.';
 
   return (
     <Window

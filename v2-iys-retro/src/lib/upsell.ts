@@ -28,9 +28,9 @@ export interface UpsellPick {
   because: string;
 }
 
-const isKids = (p: Product) => p.collections.includes(KIDS);
+export const isKids = (p: Product) => p.collections.includes(KIDS);
 /** IYS marks gendered pieces in the title ("Female …", "Male …") and in the women / men collections. */
-function audience(p: Product): 'women' | 'men' | 'any' {
+export function audience(p: Product): 'women' | 'men' | 'any' {
   const t = p.title.toLowerCase();
   const w = t.startsWith('female ') || (p.collections.includes('women') && !p.collections.includes('unisex') && !p.collections.includes('men'));
   const m = t.startsWith('male ') || (p.collections.includes('men') && !p.collections.includes('unisex') && !p.collections.includes('women'));

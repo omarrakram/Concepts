@@ -17,8 +17,8 @@
  * Unique single-use codes would need the Admin API write scope and real
  * authentication; see docs/SHOPIFY_GO_LIVE_CHECKLIST.md.
  */
-import { clientKey, createRateLimiter, json, readJson, sameOrigin } from './http';
-import { codeStatus, shopifyConfig, type Fetcher, type ShopifyEnv } from './shopify';
+import { clientKey, createRateLimiter, json, readJson, sameOrigin } from './http.js';
+import { codeStatus, shopifyConfig, type Fetcher, type ShopifyEnv } from './shopify.js';
 
 export const GAMES = ['snake', 'stacks', 'chomp', 'tower', 'invaders', 'purbale-closet', 'purbale-pairs', 'purbale-pack'] as const;
 export type Game = (typeof GAMES)[number];

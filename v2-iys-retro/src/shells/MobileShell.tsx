@@ -1,6 +1,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Route, Routes, useLocation, useNavigate } from 'react-router';
 import { Dialogs } from '../components/os/Dialogs';
+import { Icon } from '../components/os/Icon';
 import { RealSwitch } from '../components/os/RealSwitch';
 import { CRT, TransferDialog } from '../components/os/Overlays';
 import { brand } from '../data/assets';
@@ -9,6 +10,7 @@ import { useCatalogue } from '../lib/catalogue/load';
 import { play } from '../lib/sound';
 import { collectionTitle } from '../lib/useShopQuery';
 import { itemCount, useCart } from '../state/cart';
+import { watchRageClicks } from '../lib/frustration';
 import { useOS } from '../state/os';
 import { usePjoysUnread, useSession } from '../state/preferences';
 import { FEATURES } from '../config/features';
@@ -44,6 +46,8 @@ export default function MobileShell() {
   const [toast, setToast] = useState<string | null>(null);
   const content = useRef<HTMLElement>(null);
 
+  // The escape route listens for repeated presses that change nothing (src/lib/rageClicks.ts).
+  useEffect(() => watchRageClicks(), []);
   useEffect(() => {
     if (!splash) return;
     const t = window.setTimeout(() => {
@@ -82,6 +86,12 @@ export default function MobileShell() {
     setGame(null);
     setOverlay(o);
     content.current?.scrollTo(0, 0);
+  };
+  /** The ONE way MENU and MY BAG open (top keys and soft keys alike): same overlay, same state, second press closes. */
+  const toggle = (o: 'menu' | 'bag') => {
+    play('click');
+    if (overlay === o) setOverlay(null);
+    else open(o);
   };
   const path = location.pathname;
   const home = path === '/' && !overlay;
@@ -148,8 +158,32 @@ export default function MobileShell() {
       </a>
       <header className="m-head">
         <StatusBar />
-        <div className="m-realbar">
+        <div className={`m-realbar${FEATURES.topNav ? ' m-realbar--nav' : ''}`}>
+          {FEATURES.topNav && (
+            <button type="button" className="m-topkey m-topkey--menu" aria-label="IYS MENU" aria-expanded={overlay === 'menu'} onClick={() => toggle('menu')}>
+              <img className="m-topkey__mark" src={brand.markWhite} alt="" width={20} height={10} />
+              <span>MENU</span>
+            </button>
+          )}
           <RealSwitch />
+          {FEATURES.topNav && (
+            <button
+              type="button"
+              className="m-topkey m-topkey--bag"
+              aria-expanded={overlay === 'bag'}
+              aria-label={bag ? `MY BAG: ${bag} ${bag === 1 ? 'item' : 'items'}` : 'MY BAG: empty'}
+              onClick={() => toggle('bag')}
+            >
+              <Icon name="bag" size={14} />
+              <span className="m-topkey__my">MY</span>
+              <span>BAG</span>
+              {bag > 0 && (
+                <span className="m-topkey__badge" aria-hidden="true">
+                  {bag > 99 ? '99+' : bag}
+                </span>
+              )}
+            </button>
+          )}
         </div>
         <MBar
           title={title}
@@ -191,7 +225,7 @@ export default function MobileShell() {
       </main>
       <nav className="m-soft" aria-label="Soft keys">
         {home ? (
-          <button type="button" className="m-soft__key" onClick={() => open('menu')}>
+          <button type="button" className="m-soft__key" onClick={() => toggle('menu')}>
             MENU
           </button>
         ) : (
@@ -211,7 +245,7 @@ export default function MobileShell() {
         >
           {center?.label ?? 'HOME'}
         </button>
-        <button type="button" className="m-soft__key m-soft__key--right" onClick={() => (overlay === 'bag' ? setOverlay(null) : open('bag'))} aria-label={`My Bag, ${bag} items`}>
+        <button type="button" className="m-soft__key m-soft__key--right" onClick={() => toggle('bag')} aria-label={`My Bag, ${bag} items`}>
           BAG{bag ? ` (${bag})` : ''}
         </button>
       </nav>

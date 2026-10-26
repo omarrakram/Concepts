@@ -18,6 +18,7 @@ import { FEATURES } from '../config/features';
 import { Window } from '../components/os/Window';
 import { Busy } from '../components/shop/Busy';
 import { APP_ICONS } from '../components/os/Taskbar';
+import { watchRageClicks } from '../lib/frustration';
 import { useOS, type AppId, type Win } from '../state/os';
 import { usePjoysUnread, useSession } from '../state/preferences';
 import { openChat } from '../apps/Messenger/nav';
@@ -98,6 +99,8 @@ export default function DesktopShell() {
 
   // First paint after boot: welcome dialog on "/", browser straight away on deep links.
   const started = useRef(false);
+  // The escape route listens for repeated presses that change nothing (src/lib/rageClicks.ts).
+  useEffect(() => watchRageClicks(), []);
   useEffect(() => {
     if (booting || started.current) return;
     started.current = true;

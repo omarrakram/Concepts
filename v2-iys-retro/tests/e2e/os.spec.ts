@@ -84,7 +84,7 @@ test.describe('window manager', () => {
 
   test('IYS menu lists real departments with counts', async ({ page }) => {
     await desktop(page);
-    await page.getByRole('button', { name: 'IYS menu' }).click();
+    await page.getByRole('button', { name: 'MENU', exact: true }).click() // top-left MENU (the taskbar corner is DESKTOP);
     const menu = page.getByRole('menu', { name: 'IYS menu' });
     await expect(menu.getByRole('menuitem', { name: /PJOYS/ }).first()).toBeVisible();
     await menu.getByRole('menuitem', { name: /^CAIRO/ }).click();

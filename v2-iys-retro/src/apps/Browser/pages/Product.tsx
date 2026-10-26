@@ -7,6 +7,7 @@ import { QuantityPicker } from '../../../components/product/QuantityPicker';
 import { VariantPicker } from '../../../components/product/VariantPicker';
 import { hasSizes, SizeGuideButton } from '../../../components/product/SizeGuide';
 import { FavoriteButton } from '../../../components/shop/FavoriteButton';
+import { MoreLikeThis } from '../../../components/shop/ProductCarousel';
 import { PageLoading } from '../../../components/shop/PageLoading';
 import { Price, SaleBadge, StockNote } from '../../../components/shop/Price';
 import { RemoteImage } from '../../../components/shop/RemoteImage';
@@ -41,7 +42,7 @@ export default function Product() {
   const [addedHandle, setAddedHandle] = useState<string | null>(null);
   const { cat, indexed, detail, p, variant } = s;
   const title = p?.title ?? indexed?.title ?? 'Loading...';
-  usePage(title, detail.status === 'loading' ? 'Loading image...' : p ? 'Done.' : undefined);
+  usePage(title, detail.status === 'loading' ? 'Opening product...' : p ? 'Done.' : undefined);
   useEffect(() => {
     if (detail.status === 'error') noteFrustration('load-error', handle ?? '');
   }, [detail.status, handle]);
@@ -178,6 +179,8 @@ export default function Product() {
           </table>
         </section>
       </div>
+      {/* below the purchase controls: discovery never competes with ADD TO BAG */}
+      <MoreLikeThis handle={p.handle} variant="desktop" />
     </div>
   );
 }

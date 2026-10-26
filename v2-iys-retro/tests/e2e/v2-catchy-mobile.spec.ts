@@ -42,7 +42,7 @@ for (const width of [320, 390, 430]) {
     await page.getByRole('button', { name: '◀ BACK' }).click();
     await expect(pet(page)).toBeVisible();
     // overlays (MENU, BAG, GAMES) suspend him too
-    await page.getByRole('button', { name: 'MENU' }).click();
+    await page.getByRole('button', { name: 'MENU', exact: true }).click();
     await expect(pet(page)).toHaveCount(0);
     await page.getByRole('button', { name: '◀ BACK' }).click();
     await expect(pet(page)).toBeVisible();
@@ -57,7 +57,7 @@ for (const width of [320, 390, 430]) {
 test('MENU › Settings: Catchy can be turned off and stays off', async ({ page }) => {
   await boot(page);
   await expect(pet(page)).toBeVisible();
-  await page.getByRole('button', { name: 'MENU' }).click();
+  await page.getByRole('button', { name: 'MENU', exact: true }).click();
   await page.getByRole('checkbox', { name: 'Catchy on the home screen' }).uncheck();
   await page.getByRole('button', { name: '◀ BACK' }).click();
   await expect(page.locator('.m-hero')).toBeVisible();
@@ -65,7 +65,7 @@ test('MENU › Settings: Catchy can be turned off and stays off', async ({ page 
   await page.reload();
   await expect(page.locator('.m-hero')).toBeVisible();
   await expect(pet(page)).toHaveCount(0);
-  await page.getByRole('button', { name: 'MENU' }).click();
+  await page.getByRole('button', { name: 'MENU', exact: true }).click();
   await page.getByRole('checkbox', { name: 'Catchy on the home screen' }).check();
   await page.getByRole('button', { name: '◀ BACK' }).click();
   await expect(pet(page)).toBeVisible();

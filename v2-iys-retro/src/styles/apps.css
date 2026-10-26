@@ -92,7 +92,37 @@
   background: var(--os-face);
   font-size: var(--fs-chrome);
 }
+/*
+ * THE IYS loading language, defined once: a little file flies from one icon
+ * to the other (ADD TO BAG's "COPYING ITEM TO: MY BAG") over the coral
+ * segmented .progress bar. Used by the transfer dialog, <Busy> and image
+ * loading; each only sets where the file starts, lands and how high it hops.
+ */
+@keyframes iys-fly {
+  from {
+    left: var(--fly-from, 34px);
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(var(--fly-lift, -8px));
+  }
+  to {
+    left: var(--fly-to, calc(100% - 64px));
+    transform: translateY(0);
+  }
+}
+.fly-file {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid #1b2b44;
+  background: #fff;
+}
 .transfer__anim {
+  --fly-from: 34px;
+  --fly-to: calc(100% - 64px);
+  --fly-lift: -8px;
   position: relative;
   display: flex;
   justify-content: space-between;
@@ -101,33 +131,16 @@
   margin-bottom: 6px;
 }
 .transfer__file {
-  position: absolute;
   left: 36px;
   top: 6px;
   width: 28px;
   height: 32px;
-  overflow: hidden;
-  border: 1px solid #1b2b44;
-  background: #fff;
-  animation: fly 0.62s linear forwards;
+  animation: iys-fly 0.62s linear forwards;
 }
 .transfer__file img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-}
-@keyframes fly {
-  from {
-    left: 34px;
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-8px);
-  }
-  to {
-    left: calc(100% - 64px);
-    transform: translateY(0);
-  }
 }
 .transfer__name {
   margin: 2px 0 8px;
@@ -796,7 +809,7 @@
   opacity: 1;
 }
 img.is-loading {
-  background: #f0efe9 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='90' height='14'%3E%3Ctext x='0' y='11' font-family='Tahoma,Verdana,sans-serif' font-size='10' fill='%23888'%3ELoading image...%3C/text%3E%3C/svg%3E") center no-repeat;
+  background: #f0efe9;
 }
 .pcard__title {
   font-size: var(--fs-chrome);
@@ -1136,6 +1149,7 @@ img.is-loading {
   transform: scale(2.2);
 }
 .gallery__thumbs {
+  position: relative; /* containing block: nothing escapes the sideways scroll */
   display: flex;
   gap: 4px;
   margin: 0;
@@ -1759,6 +1773,7 @@ span.explorer__twisty {
   place-items: start;
 }
 .viewer__film {
+  position: relative; /* containing block: nothing escapes the sideways scroll */
   display: flex;
   gap: 4px;
   margin: 0;
@@ -2507,6 +2522,9 @@ span.explorer__twisty {
 
 /* ══ Busy: the one loading look (same language as COPYING ITEM TO: MY BAG) ══ */
 .busy--block .busy__anim {
+  --fly-from: 34px;
+  --fly-to: calc(100% - 60px);
+  --fly-lift: -7px;
   position: relative;
   display: flex;
   justify-content: space-between;
@@ -2516,29 +2534,99 @@ span.explorer__twisty {
   margin: 0 auto;
 }
 .busy__file {
-  position: absolute;
   left: 34px;
   top: 6px;
-  display: grid;
-  place-items: center;
   width: 26px;
   height: 28px;
-  border: 1px solid #1b2b44;
-  background: #fff;
-  animation: busy-hop 1.1s steps(11) infinite;
+  animation: iys-fly 1.1s steps(11) infinite;
 }
-@keyframes busy-hop {
-  from {
-    left: 34px;
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-7px);
-  }
+
+/*
+ * Image loading, in the same language (see .fly-file / iys-fly above), sized to
+ * the frame: compact = the bar only (thumbnails), card = mini fly + bar,
+ * gallery = the full transfer look + label. Covers the frame only while the
+ * photo is on its way; cached photos never show it.
+ */
+.imgload {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 6px;
+  padding: 6px;
+  background: #f0efe9;
+  pointer-events: none;
+  /* appears only if the photo takes longer than 150 ms: cached photos never flash it (the photo itself is never delayed) */
+  opacity: 0;
+  animation: imgload-in 1ms linear 150ms forwards;
+}
+@keyframes imgload-in {
   to {
-    left: calc(100% - 60px);
-    transform: translateY(0);
+    opacity: 1;
   }
+}
+.imgload--measure {
+  visibility: hidden;
+}
+.imgload--off {
+  display: none;
+}
+.imgload__anim {
+  --fly-from: 22px;
+  --fly-to: calc(100% - 40px);
+  --fly-lift: -5px;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 92px;
+  height: 26px;
+}
+.imgload__file {
+  left: 22px;
+  top: 4px;
+  width: 16px;
+  height: 18px;
+  animation: iys-fly 1.1s steps(11) infinite;
+}
+.imgload__bar {
+  width: 72px;
+  height: 10px;
+}
+.imgload--compact .imgload__bar {
+  width: min(44px, 80%);
+  height: 8px;
+  padding: 0;
+}
+.imgload--gallery .imgload__anim {
+  --fly-from: 34px;
+  --fly-to: calc(100% - 60px);
+  --fly-lift: -7px;
+  width: 180px;
+  height: 40px;
+}
+.imgload--gallery .imgload__file {
+  left: 34px;
+  top: 6px;
+  width: 26px;
+  height: 28px;
+}
+.imgload--gallery .imgload__bar {
+  width: 200px;
+  height: 16px;
+}
+.imgload__label {
+  font-family: var(--system-font);
+  font-size: var(--fs-chrome);
+  font-weight: bold;
+  color: var(--ink);
+}
+/* the frames photos load into are the loader's containing block */
+.strip__media,
+.gallery__stage {
+  position: relative;
 }
 .busy__label {
   font-family: var(--system-font);
@@ -2700,48 +2788,121 @@ span.explorer__twisty {
 .bagx-code__form .bagx-note {
   flex-basis: 100%;
 }
-.bagx-ideas {
-  margin: 8px 0 4px;
-  padding: 6px 8px;
-  border: 1px solid #9fb3cf;
-  background: #fff;
+/*
+ * Product carousels (MORE LIKE THIS, U MIGHT ALSO LIKE): the JUST DROPPED look,
+ * scrolling sideways inside the track only. position: relative makes the
+ * track the containing block, so nothing inside can widen the page.
+ */
+.reco {
+  min-width: 0;
+  margin-top: 10px;
 }
-.bagx-ideas ul {
-  display: grid;
-  gap: 6px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-.bagx-idea {
-  display: grid;
-  grid-template-columns: 56px minmax(0, 1fr);
+.reco__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   gap: 8px;
-  align-items: start;
-  font-size: var(--fs-chrome);
 }
-.bagx-idea__img {
+.reco__head h2 {
+  flex: 1;
+  min-width: 0;
+}
+.reco--desktop .reco__head .box__title {
+  margin: 0;
+}
+.reco__nav {
+  display: inline-flex;
+  flex: none;
+  gap: 3px;
+  padding-right: 6px;
+}
+.reco__arrow {
+  min-width: 26px;
+}
+.reco__track {
+  position: relative;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 132px;
+  gap: 10px;
+  margin: 0;
+  padding: 8px 8px 10px;
+  list-style: none;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity;
+  scroll-padding-inline: 8px;
+}
+.reco__track:focus-visible {
+  outline: 1px dotted var(--ink);
+  outline-offset: -3px;
+}
+.reco__item {
+  display: grid;
+  align-content: start;
+  gap: 3px;
+  min-width: 0;
+  scroll-snap-align: start;
+  font-size: var(--fs-small);
+}
+.reco__card {
+  display: grid;
+  gap: 3px;
+  color: var(--ink);
+  text-decoration: none;
+}
+.reco__img {
+  position: relative;
   display: block;
-  width: 56px;
   aspect-ratio: 4 / 5;
   overflow: hidden;
   border: 1px solid #c9d5e6;
   background: #f5f5f5;
 }
-.bagx-idea__img img,
-.bagx-idea__img .img-offline {
+.reco__img img,
+.reco__img .img-offline {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
-.bagx-idea__info {
-  display: grid;
-  gap: 2px;
-  justify-items: start;
-}
-.bagx-idea__name {
+.reco__name {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  color: var(--link);
   font-weight: bold;
   text-align: left;
+}
+.reco__card:hover .reco__name {
+  text-decoration: underline;
+}
+.reco__why {
+  color: var(--muted);
+}
+.product > .reco {
+  margin: 12px 8px 8px;
+}
+.bagx-ideas {
+  margin: 8px 0 4px;
+}
+.bagx-ideas .reco {
+  margin: 0;
+}
+/* desktop MY BAG window: compact cards so the row fits above the checkout footer */
+.bag .reco__track {
+  grid-auto-columns: 104px;
+  gap: 8px;
+  padding: 6px 6px 8px;
+}
+.bag .reco__img {
+  aspect-ratio: 1 / 1;
+}
+.bag .reco__head .box__title small {
+  display: none;
+}
+.bagx-idea {
+  font-size: var(--fs-chrome);
 }
 .bagx-idea__sizes {
   display: flex;

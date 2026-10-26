@@ -14,7 +14,7 @@ import { MENU } from '../../data/taxonomy';
 import { setWallpaperImage } from '../../lib/actions';
 import { formatCount, formatEGP } from '../../lib/catalogue/format';
 import { useCatalogue } from '../../lib/catalogue/load';
-import { startCheckout } from '../../lib/checkout';
+import { startCheckout, switchToRealIYS } from '../../lib/checkout';
 import { chatScript } from '../../lib/chatScript';
 import { prefersReducedMotion } from '../../lib/motion';
 import { play, unlockAudio } from '../../lib/sound';
@@ -61,7 +61,7 @@ export function MBag({ close }: { close: () => void }) {
           <HandoffStatus />
         </div>
       )}
-      {items.length > 0 && <BagIdeas onOpenProduct={openProduct} />}
+      {items.length > 0 && <BagIdeas onOpenProduct={openProduct} variant="mobile" />}
     </div>
   );
 }
@@ -202,6 +202,13 @@ export function MMenu({ close, openOverlay }: { close: () => void; openOverlay: 
           <button type="button" onClick={() => openOverlay('games')}>
             <Icon name="games" size={24} />
             <span>IYS GAMES · 6 GAMES</span>
+          </button>
+        </li>
+        <li>
+          <button type="button" onClick={() => switchToRealIYS()}>
+            <Icon name="internet" size={24} />
+            <span>{concept.escape.menuItem}</span>
+            <small>{concept.escape.menuSub}</small>
           </button>
         </li>
         {MENU.filter((m) => !m.collection || (cat?.collections.get(m.collection)?.count ?? 0) > 0).map((m) => (

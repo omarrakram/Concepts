@@ -5,6 +5,7 @@ import { FREE_SHIPPING, OFFERS, type FreeShippingRule } from '../config/promotio
 import { collectionProducts, hydrate } from '../lib/catalogue/hydrate';
 import type { IndexFile } from '../lib/catalogue/types';
 import { frustration, shouldOffer, THRESHOLD, WINDOW_MS, type Signal } from '../lib/frustration';
+import { isRage, RAGE, type Press } from '../lib/rageClicks';
 import { activeOffers, cleanCode, shippingProgress } from '../lib/incentives';
 import { buildShelves, HOME_SHELVES } from '../lib/merch';
 import { upsell } from '../lib/upsell';
@@ -125,7 +126,7 @@ describe('escape-route signal score', () => {
     expect(shouldOffer([s('checkout-error', 'x', t), s('no-results', 'q', t), s('no-results', 'r', t)], t)).toBe(true);
   });
   it('the same page / query twice counts once', () => {
-    expect(frustration([s('not-found', '/a', t), s('not-found', '/a', t + 5)], t + 5)).toEqual({ score: 2, events: 1 });
+    expect(frustration([s('not-found', '/a', t), s('not-found', '/a', t + 5)], t + 5)).toEqual({ score: 2, events: 1, rage: false });
     expect(shouldOffer([s('no-results', 'q', t), s('no-results', 'q', t), s('no-results', 'q', t), s('no-results', 'q', t)], t)).toBe(false);
   });
   it('old signals expire', () => {
@@ -149,5 +150,31 @@ describe('official size charts: the synced file matches what the guide reads', (
     expect(chartState(f, 'no-such-product-handle')).toMatchObject({ status: 'none', gone: false });
     const fake = { ...f, notPublic: ['gone-tee'] };
     expect(chartState(fake, 'gone-tee')).toMatchObject({ status: 'none', gone: true });
+  });
+});
+
+describe('rage presses (repeated presses that change nothing)', () => {
+  const at = (ms: number, x = 100, y = 100, print = 'same'): Press => ({ x, y, at: ms, print });
+  it('4 presses in 2 s on the same spot with nothing changing → rage', () => {
+    expect(RAGE).toEqual({ presses: 4, withinMs: 2000, radiusPx: 48 });
+    expect(isRage([at(0), at(300), at(600), at(900)])).toBe(true);
+    expect(isRage([at(0), at(500, 120, 110), at(1000, 90, 95), at(1900, 130, 70)])).toBe(true);
+  });
+  it('a double or triple click is not rage', () => {
+    expect(isRage([at(0), at(150)])).toBe(false);
+    expect(isRage([at(0), at(150), at(300)])).toBe(false);
+  });
+  it('slow presses, presses all over the screen, or presses that DID change something are not rage', () => {
+    expect(isRage([at(0), at(800), at(1600), at(2400)])).toBe(false);
+    expect(isRage([at(0), at(200, 300, 100), at(400), at(600)])).toBe(false);
+    // each press changed what's on screen (quantity, next page, menu toggling...)
+    expect(isRage([at(0, 100, 100, 'a'), at(200, 100, 100, 'b'), at(400, 100, 100, 'c'), at(600, 100, 100, 'd')])).toBe(false);
+    expect(isRage([at(0, 100, 100, 'open'), at(200, 100, 100, 'closed'), at(400, 100, 100, 'open'), at(600, 100, 100, 'closed')])).toBe(false);
+  });
+  it('one rage burst is enough to offer the way out; one ordinary error still is not', () => {
+    const t = 1_000_000;
+    expect(shouldOffer([{ kind: 'rage-click', key: 'button:pick a size first :)', at: t }], t)).toBe(true);
+    expect(shouldOffer([{ kind: 'not-found', key: '/x', at: t }], t)).toBe(false);
+    expect(frustration([{ kind: 'rage-click', key: 'b', at: t }], t)).toEqual({ score: 4, events: 1, rage: true });
   });
 });

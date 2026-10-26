@@ -35,7 +35,7 @@ export default function Bag({ win }: { win: Win }) {
           <Icon name="folder-open" size={16} /> C:\MY BAG\
         </p>
         <BagList onOpenProduct={(h) => browse(productPath(h))} />
-        {items.length > 0 && <BagIdeas onOpenProduct={(h) => browse(productPath(h))} />}
+        {items.length > 0 && <BagIdeas onOpenProduct={(h) => browse(productPath(h))} variant="desktop" />}
         {items.length === 0 && (
           <p className="cp-actions bag__empty-actions">
             <button type="button" className="btn btn--go" onClick={() => browse('/collections/newest')}>

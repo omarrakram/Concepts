@@ -3,7 +3,7 @@
  * GAME_REWARDS + REWARDS_SECRET (+ Admin API access) are configured.
  * See api/_lib/rewards.ts and docs/SHOPIFY_GO_LIVE_CHECKLIST.md.
  */
-import { handleRewards } from './_lib/rewards';
+import { handleRewards } from './_lib/rewards.js';
 
 declare const process: { env: Record<string, string | undefined> };
 

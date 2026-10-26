@@ -21,6 +21,8 @@ export const FEATURES = {
   bagIncentives: flag('VITE_FEATURE_BAG_INCENTIVES', true),
   /** MY BAG: a few complementary, in-stock, real products ("u might like these"). */
   bagUpsell: flag('VITE_FEATURE_BAG_UPSELL', true),
+  /** Every product page: MORE LIKE THIS carousel of real, in-stock products. */
+  productRecs: flag('VITE_FEATURE_PRODUCT_RECS', true),
   /** Home: extra real-merchandise shelves below JUST DROPPED. */
   homeShelves: flag('VITE_FEATURE_HOME_SHELVES', true),
   /** Game completion can reveal a merchant-configured reward (never shows one that isn't live). */

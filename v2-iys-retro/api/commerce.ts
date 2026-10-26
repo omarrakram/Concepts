@@ -3,7 +3,7 @@
  * Live Shopify mode is OFF unless the server env enables it; see
  * api/_lib/shopify.ts and docs/SHOPIFY_GO_LIVE_CHECKLIST.md.
  */
-import { handleCommerce } from './_lib/commerce';
+import { handleCommerce } from './_lib/commerce.js';
 
 declare const process: { env: Record<string, string | undefined> };
 

@@ -6,7 +6,7 @@ test.beforeEach(async ({ page }) => {
 
 test('mobile MENU lists every essential as an official link', async ({ page }) => {
   await page.goto('/');
-  await page.getByRole('button', { name: 'MENU' }).click();
+  await page.getByRole('button', { name: 'MENU', exact: true }).click();
   const list = page.getByRole('list', { name: 'Essentials' });
   const links = list.getByRole('link');
   await expect(links).toHaveCount(8);

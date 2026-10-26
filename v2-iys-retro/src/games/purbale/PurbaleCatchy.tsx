@@ -1,4 +1,5 @@
 import { lazy, Suspense, useState } from 'react';
+import { Busy } from '../../components/shop/Busy';
 import { useClaimCenter } from '../../shells/mobile/chrome';
 import { CatchySticker } from '../shared/catchy';
 import { COPY, type GameProps } from '../shared/GameShell';
@@ -29,7 +30,7 @@ export default function PurbaleCatchy(props: GameProps) {
   const inner: GameProps = { ...props, onExit: () => setMode(null), backLabel: 'PURBALE' };
   if (mode)
     return (
-      <Suspense fallback={<p className="app-loading" role="status">Loading...</p>}>
+      <Suspense fallback={<Busy label="Loading game..." from="games" to="computer" />}>
         {mode === 'closet' ? <Closet {...inner} /> : mode === 'pairs' ? <Pairs {...inner} /> : <Pack {...inner} />}
       </Suspense>
     );

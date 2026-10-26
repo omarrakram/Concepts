@@ -5,8 +5,8 @@ import { useOS } from '../../state/os';
 import { Icon } from './Icon';
 
 /**
- * Top strip, left: the same IYS menu as the taskbar's coral "menu" button,
- * opened from the top of the screen (one menu, two doors).
+ * Top strip, left: THE IYS menu (the taskbar corner is DESKTOP now; with the
+ * top nav switched off, the taskbar corner goes back to being the menu).
  */
 export function TopMenuButton() {
   const open = useOS((s) => s.startOpen && s.startAnchor === 'top');

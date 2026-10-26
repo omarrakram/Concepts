@@ -24,7 +24,7 @@ export function Busy({ label, from = 'internet', to = 'computer', inline = false
     <div className="busy busy--block page-loading is-busy" role="status" aria-live="polite">
       <div className="busy__anim" aria-hidden="true">
         <Icon name={from} size={32} />
-        <span className="busy__file">
+        <span className="fly-file busy__file">
           <Icon name="txt" size={24} />
         </span>
         <Icon name={to} size={32} />
