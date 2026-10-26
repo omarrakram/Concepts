@@ -1,5 +1,15 @@
 # 30-second showcase: what was staged, and what filming found
 
+## Source filmed
+
+The production build (`npm run build && npm run preview`) of the app source at
+**`664a8cbbb00d42ce0aa8cc00377ecce9faacab49`** (`feature/iys-retro-conversion-upgrade`,
+"Fix IYS Retro mobile layout and commerce QA issues"). The film branch adds
+only `scripts/showcase-30/`, these docs and the `film30*` npm scripts; `src/`
+and `public/` are unchanged, and a rebuild on the film branch produces the
+same `dist/index.html` (md5 `0f42f84ffdc93238b783412d1610d54e`). Catalogue
+snapshot: 2026-09-30. Takes filmed on 2026-10-26.
+
 ## Staged (controlled, deterministic, disclosed)
 
 * **Starting state** of each take (`scripts/showcase-30/takes/seed.mjs`):
@@ -88,3 +98,13 @@ outside request was blocked (`take.json` → `external` is empty).
    (`catchy.css`: z-index 20 < windows 100), so his ADD TO BAG and IYS GAMES
    reactions are not visible on narrow desktops. Not a bug; noted because it
    shaped the film.
+4. **MY BAG opens partly off the right edge when other windows are open.**
+   `defaultRect` (`src/state/os.ts`) anchors MY BAG at `desk.w - w - 36`, then
+   adds the cascade offset (`(stack % 6) * 26`) like any other window, and
+   `clampRect` only keeps 120 px on screen. With IYS INTERNET and SIZE GUIDE
+   open on an 864 px desktop: 408 + 52 = 460, so the 420 px window ends at
+   880, 16 px past the edge, and its close button and the "799 EGP" column
+   are clipped (visible in the film at 12.3 s and 26.3 s, as filmed). The
+   same applies to the other right-anchored windows (MESSENGER, SIZE GUIDE).
+   Suggested fix: apply the offset to anchored windows towards the inside
+   (subtract it on the x axis), or clamp them to `desk.w - w`.

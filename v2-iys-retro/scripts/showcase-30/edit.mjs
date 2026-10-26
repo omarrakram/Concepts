@@ -103,11 +103,11 @@ export const SHOTS = [
   // 0:25–0:27  MONTAGE on the eighth notes
   { id: 'mFavs', t0: 25.0, t1: 25.25, take: 'mobile', kind: 'phone', map: [[25.0, 'favs-7'], [25.25, 'favs+8']], fx: [['flash', 25.0, 0.04, 0.35]] },
   { id: 'mStores', t0: 25.25, t1: 25.5, take: 'mobile', kind: 'phone', map: [[25.25, 'stores-7'], [25.5, 'stores+8']], fx: [['flash', 25.25, 0.04, 0.35]] },
-  { id: 'mMsg', t0: 25.5, t1: 25.75, take: 'mobile', kind: 'phone', map: [[25.5, 'msg-7'], [25.75, 'msg+8']], fx: [['flash', 25.5, 0.04, 0.35]] },
-  { id: 'xAdd', t0: 25.75, t1: 26.0, take: D.a, map: [[25.75, 'addClick+36'], [26.0, 'addClick+51']], cam: [[25.75, 432, 614, 2.3], [26.0, 432, 614, 2.5]], cursor: false, fx: [['flash', 25.75, 0.05, 0.5], ['chroma', 25.75, 0.05, 6]] },
-  { id: 'xSearch', t0: 26.0, t1: 26.25, take: D.b, map: [[26.0, 'results+8'], [26.25, 'results+23']], cam: [[26.0, 260, 400, 2.3], [26.25, 260, 400, 2.5]], cursor: false, fx: [['flash', 26.0, 0.04, 0.35]] },
-  { id: 'xGuide', t0: 26.25, t1: 26.5, take: D.a, map: [[26.25, 'sizeGuideOpen+6'], [26.5, 'sizeGuideOpen+21']], cam: [[26.25, 250, 420, 2.3], [26.5, 250, 420, 2.5]], cursor: false, fx: [['flash', 26.25, 0.04, 0.35]] },
-  { id: 'xMenu', t0: 26.5, t1: 26.75, take: D.a, map: [[26.5, 'menuClick+14'], [26.75, 'menuClick+29']], cam: [[26.5, 250, 440, 1.9], [26.75, 250, 440, 2.1]], cursor: false, fx: [['flash', 26.5, 0.04, 0.35]] },
+  { id: 'mMsg', t0: 25.5, t1: 25.75, take: 'mobile', kind: 'phone', map: [[25.5, 'msg+24'], [25.75, 'msg+39']], fx: [['flash', 25.5, 0.04, 0.35]] },
+  { id: 'xPhoto', t0: 25.75, t1: 26.0, take: D.a, map: [[25.75, 'galleryNext+12'], [26.0, 'galleryNext+27']], cam: [[25.75, 432, 700, 1.4], [26.0, 432, 690, 1.55]], cursor: false, fx: [['flash', 25.75, 0.05, 0.5], ['chroma', 25.75, 0.05, 6]] },
+  { id: 'xAdd', t0: 26.0, t1: 26.25, take: D.a, map: [[26.0, 'addClick+36'], [26.25, 'addClick+51']], cam: [[26.0, 432, 614, 2.3], [26.25, 432, 614, 2.5]], cursor: false, fx: [['flash', 26.0, 0.04, 0.35]] },
+  { id: 'xReco', t0: 26.25, t1: 26.5, take: D.a, map: [[26.25, 'recoScroll+10'], [26.5, 'recoScroll+25']], cam: [[26.25, 660, 1030, 1.95], [26.5, 660, 1030, 2.05]], cursor: false, fx: [['flash', 26.25, 0.04, 0.35]] },
+  { id: 'xTower', t0: 26.5, t1: 26.75, take: D.c, map: [[26.5, 'play+28'], [26.75, 'play+43']], cam: [[26.5, 484, 760, 1.85], [26.75, 484, 760, 2.05]], cursor: false, fx: [['flash', 26.5, 0.04, 0.35]] },
   { id: 'xBoot', t0: 26.75, t1: 27.0, take: D.a, map: [[26.75, 70], [27.0, 85]], cam: [[26.75, 290, 868, 2.0], [27.0, 290, 868, 2.2]], cursor: false, fx: [['flash', 26.75, 0.04, 0.4], ['glitch', 26.95, 0.05]] },
   // 0:27–0:30  FINAL HERO FRAME
   { id: 'final', t0: 27.0, t1: 30.0, take: 'morph', kind: 'card', map: [[27.0, 'desktop+20'], [30.0, 'desktop+20']], cam: [[27.0, 432, 768, 1.12], [30.0, 432, 768, 1.0]], fx: [['flash', 27.0, 0.25, 0.95]] },
