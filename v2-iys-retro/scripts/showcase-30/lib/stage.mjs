@@ -126,7 +126,14 @@ function pageInit({ seed, local, session }) {
  * Open a take. Returns a `Take` whose every action advances the film clock
  * and records frames. `dir` receives f0000.png... + take.json.
  */
-export async function openTake({ base, dir, viewport, dsf = 2, mobile = false, seed = 2006, local = {}, session = {}, path = '/', ready, preroll = 1000, prepare, onPage, format = 'jpeg' }) {
+export async function openTake({ base, dir, viewport, dsf = 2, mobile = false, seed = 2006, local = {}, session = {}, path = '/', ready, preroll = 1000, prepare, onPage, format = 'jpeg', source = null }) {
+  // Source lock: when the website build is given (out/source/source-build.json), film only if
+  // the server answers with exactly that build's index.html (its content-hashed JS/CSS names).
+  if (source) {
+    const html = await fetch(`${base}/`).then((r) => r.text());
+    const md5 = createHash('md5').update(html).digest('hex');
+    if (md5 !== source.indexHtmlMd5) throw new Error(`film: ${base} does not serve the source build ${source.sha} (index.html ${md5}, expected ${source.indexHtmlMd5})`);
+  }
   const browser = await launch();
   const context = await browser.newContext({
     viewport,
@@ -343,7 +350,7 @@ export async function openTake({ base, dir, viewport, dsf = 2, mobile = false, s
     async close(info = {}) {
       writeFileSync(
         resolve(dir, 'take.json'),
-        JSON.stringify({ fps: FPS, viewport, dsf, frames, meta, marks, rects, external, ...info }, null, 1),
+        JSON.stringify({ fps: FPS, viewport, dsf, base, source: source && { sha: source.sha, branch: source.branch, indexHtmlMd5: source.indexHtmlMd5, buildDir: source.buildDir }, filmedAt: new Date().toISOString(), frames, meta, marks, rects, external, ...info }, null, 1),
       );
       await browser.close();
       if (external.length) console.warn(`[film] ${external.length} non-local requests were blocked`, external.slice(0, 3));

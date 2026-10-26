@@ -120,13 +120,20 @@
     const sy = o.sy ?? 0;
     const sw = o.sw ?? img.naturalWidth;
     const sh = o.sh ?? img.naturalHeight;
+    if (o.flipY) {
+      // mirror image (a reflection): drawn upside down into its destination rect
+      ctx.translate(0, (o.dy ?? 0) * 2 + (o.dh ?? H));
+      ctx.scale(1, -1);
+    }
     if (o.motion && o.motion.n > 1) {
       // motion blur: average n sub-positions along the camera path
       const n = o.motion.n;
       for (let k = 0; k < n; k++) {
         const f = k / (n - 1) - 0.5;
         ctx.globalAlpha = (o.alpha ?? 1) * (k === 0 ? 1 : 1 / (k + 1));
-        ctx.drawImage(img, sx + o.motion.dx * f, sy + o.motion.dy * f, sw * (1 + (o.motion.dz ?? 0) * f), sh * (1 + (o.motion.dz ?? 0) * f), o.dx ?? 0, o.dy ?? 0, o.dw ?? W, o.dh ?? H);
+        // a zoom (dz) scales the source rect about its centre, not its corner
+        const z = (o.motion.dz ?? 0) * f;
+        ctx.drawImage(img, sx + o.motion.dx * f - (sw * z) / 2, sy + o.motion.dy * f - (sh * z) / 2, sw * (1 + z), sh * (1 + z), o.dx ?? 0, o.dy ?? 0, o.dw ?? W, o.dh ?? H);
       }
     } else {
       ctx.drawImage(img, sx, sy, sw, sh, o.dx ?? 0, o.dy ?? 0, o.dw ?? W, o.dh ?? H);
@@ -241,6 +248,86 @@
     g.addColorStop(0, 'rgba(255,255,255,0.16)');
     g.addColorStop(0.35, 'rgba(255,255,255,0.03)');
     g.addColorStop(0.36, 'rgba(255,255,255,0)');
+    ctx.fillStyle = g;
+    ctx.fillRect(o.x, o.y, o.w, o.h);
+    ctx.restore();
+  }
+
+  /** A dark room lit only by the screen: deep navy, a soft blue glow around the screen rect. */
+  function opRoom(o) {
+    if ((o.alpha ?? 1) <= 0.001) return;
+    ctx.save();
+    ctx.globalAlpha = o.alpha ?? 1;
+    const bg = ctx.createLinearGradient(0, 0, 0, H);
+    bg.addColorStop(0, '#02050c');
+    bg.addColorStop(0.5, '#071226');
+    bg.addColorStop(1, '#02050c');
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, W, H);
+    const cx = o.x + o.w / 2;
+    const cy = o.y + o.h / 2;
+    const glow = ctx.createRadialGradient(cx, cy, Math.min(o.w, o.h) * 0.2, cx, cy, Math.max(o.w, o.h) * 1.05);
+    glow.addColorStop(0, `rgba(70,140,255,${0.3 * (o.glow ?? 1)})`);
+    glow.addColorStop(0.55, `rgba(40,110,230,${0.1 * (o.glow ?? 1)})`);
+    glow.addColorStop(1, 'rgba(20,60,160,0)');
+    ctx.fillStyle = glow;
+    ctx.fillRect(0, 0, W, H);
+    ctx.restore();
+  }
+  /** A plain, unbranded monitor around the screen rect (x, y, w, h): bezel, chin, short stand. */
+  function opMonitor(o) {
+    if ((o.alpha ?? 1) <= 0.001) return;
+    const b = o.bezel;
+    const chin = o.chin ?? b * 1.6;
+    const r = o.r ?? b * 0.7;
+    const x = o.x - b;
+    const y = o.y - b;
+    const w = o.w + 2 * b;
+    const h = o.h + b + chin;
+    ctx.save();
+    ctx.globalAlpha = o.alpha ?? 1;
+    // stand: a neck and a foot, darker than the bezel
+    ctx.fillStyle = '#10131a';
+    ctx.fillRect(o.x + o.w / 2 - w * 0.06, y + h - 2, w * 0.12, chin * 1.6);
+    roundRect(ctx, o.x + o.w / 2 - w * 0.2, y + h + chin * 1.5, w * 0.4, chin * 0.42, chin * 0.2);
+    ctx.fill();
+    ctx.shadowColor = 'rgba(0,0,0,0.6)';
+    ctx.shadowBlur = 60;
+    ctx.shadowOffsetY = 24;
+    const body = ctx.createLinearGradient(x, y, x, y + h);
+    body.addColorStop(0, '#2a303b');
+    body.addColorStop(1, '#151920');
+    ctx.fillStyle = body;
+    roundRect(ctx, x, y, w, h, r);
+    ctx.fill();
+    ctx.shadowColor = 'transparent';
+    ctx.strokeStyle = 'rgba(255,255,255,0.12)';
+    ctx.lineWidth = Math.max(1, b * 0.06);
+    roundRect(ctx, x + 1, y + 1, w - 2, h - 2, r - 1);
+    ctx.stroke();
+    // power LED
+    ctx.fillStyle = `rgba(90,255,140,${o.led ?? 0.9})`;
+    ctx.beginPath();
+    ctx.arc(o.x + o.w - b * 0.4, o.y + o.h + chin * 0.5, Math.max(1.5, b * 0.09), 0, Math.PI * 2);
+    ctx.fill();
+    // the screen recess, black until the picture is drawn on it
+    ctx.fillStyle = '#000';
+    ctx.fillRect(o.x, o.y, o.w, o.h);
+    ctx.restore();
+  }
+  /** Faint glass sheen over a screen rect (fades out as the camera moves in). */
+  function opSheen(o) {
+    if ((o.alpha ?? 1) <= 0.001) return;
+    ctx.save();
+    ctx.globalAlpha = o.alpha ?? 1;
+    ctx.beginPath();
+    ctx.rect(o.x, o.y, o.w, o.h);
+    ctx.clip();
+    const g = ctx.createLinearGradient(o.x, o.y, o.x + o.w * 0.7, o.y + o.h);
+    g.addColorStop(0, 'rgba(255,255,255,0.10)');
+    g.addColorStop(0.45, 'rgba(255,255,255,0.03)');
+    g.addColorStop(0.46, 'rgba(255,255,255,0)');
+    g.addColorStop(1, 'rgba(255,255,255,0)');
     ctx.fillStyle = g;
     ctx.fillRect(o.x, o.y, o.w, o.h);
     ctx.restore();
@@ -376,7 +463,7 @@
     ctx.restore();
   }
 
-  const OPS = { glow: opGlow, squeeze: opSqueeze, bloom: opBloom, image: opImage, cursor: opCursor, ripple: opRipple, phone: opPhone, glass: opGlass, fill: opFill, gradient: opGradient, text: opText, chroma: opChroma, glitch: opGlitch, crt: opCrt };
+  const OPS = { glow: opGlow, squeeze: opSqueeze, bloom: opBloom, image: opImage, cursor: opCursor, ripple: opRipple, phone: opPhone, glass: opGlass, room: opRoom, monitor: opMonitor, sheen: opSheen, fill: opFill, gradient: opGradient, text: opText, chroma: opChroma, glitch: opGlitch, crt: opCrt };
 
   window.__film = {
     ready: document.fonts.ready.then(() => true),

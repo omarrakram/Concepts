@@ -1,7 +1,7 @@
 /**
- * npm run film30:render [-- --stills=0,1.2,11.5] [-- --from=0 --to=1800]
+ * npm run film30:render [-- --edit=edit-proof.mjs] [-- --stills=0,1.2,11.5] [-- --from=0 --to=1800]
  *
- * Draws the 1,800 frames of the edit (edit.mjs) with the compositor
+ * Draws the frames of an edit (default edit.mjs, the archived film) with the compositor
  * (compositor/, run in Chromium) and pipes them to FFmpeg:
  * H.264 High, yuv420p, CRF 16, 60 fps, 1080×1920. The takes must exist
  * (npm run film30:shoot). Audio is added by mux.mjs. Output goes to
@@ -13,12 +13,15 @@ import { existsSync, mkdirSync, readFileSync } from 'node:fs';
 import { extname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { launch } from '../lib/chromium.mjs';
-import { FPS, FRAMES, H, W, checkShots, loadTakes, makePlanner } from './edit.mjs';
 
 const arg = (k, d) => process.argv.find((a) => a.startsWith(`--${k}=`))?.split('=')[1] ?? d;
+const EDIT = arg('edit', 'edit.mjs');
+const { FPS, FRAMES, H, W, checkShots, loadTakes, makePlanner, NAME, TAKES_DIR, OUT_DIR, SOURCE_PUBLIC } = await import(`./${EDIT}`);
 const ROOT = fileURLToPath(new URL('../..', import.meta.url));
-const OUT = resolve(ROOT, arg('out', 'out/showcase-30'));
-const TAKES = resolve(OUT, 'takes');
+const OUT = resolve(ROOT, arg('out', OUT_DIR ?? 'out/showcase-30'));
+const TAKES = TAKES_DIR ? resolve(ROOT, TAKES_DIR) : resolve(OUT, 'takes');
+// V2 edits draw the site's own art (cursors, logos) from the website source checkout, not from this branch.
+const PUBLIC = SOURCE_PUBLIC ? resolve(JSON.parse(readFileSync(resolve(ROOT, 'out/source/source-build.json'), 'utf8')).buildDir, '..', 'public') : resolve(ROOT, 'public');
 const stills = arg('stills', null);
 const from = Number(arg('from', '0'));
 const to = Number(arg('to', String(FRAMES)));
@@ -32,7 +35,7 @@ const browser = await launch();
 const page = await browser.newPage({ viewport: { width: W, height: H }, deviceScaleFactor: 1 });
 await page.route('http://film.local/**', (route) => {
   const p = decodeURIComponent(new URL(route.request().url()).pathname);
-  const file = p.startsWith('/takes/') ? resolve(TAKES, p.slice(7)) : p.startsWith('/public/') ? resolve(ROOT, 'public', p.slice(8)) : resolve(ROOT, 'scripts/showcase-30/compositor', p.slice(1));
+  const file = p.startsWith('/takes/') ? resolve(TAKES, p.slice(7)) : p.startsWith('/public/') ? resolve(PUBLIC, p.slice(8)) : resolve(ROOT, 'scripts/showcase-30/compositor', p.slice(1));
   if (!existsSync(file)) return route.fulfill({ status: 404, body: 'missing' });
   return route.fulfill({ status: 200, contentType: TYPES[extname(file)] ?? 'application/octet-stream', body: readFileSync(file) });
 });
@@ -60,7 +63,7 @@ if (stills) {
 }
 
 mkdirSync(OUT, { recursive: true });
-const VIDEO = resolve(OUT, 'iys-internet-2006-30s-video.mp4');
+const VIDEO = resolve(OUT, NAME ? `${NAME}-video.mp4` : 'iys-internet-2006-30s-video.mp4');
 const ff = spawn('ffmpeg', ['-y', '-loglevel', 'error', '-f', 'image2pipe', '-framerate', String(FPS), '-c:v', 'png', '-i', '-', '-c:v', 'libx264', '-preset', 'slow', '-crf', '16', '-pix_fmt', 'yuv420p', '-profile:v', 'high', '-level', '4.2', '-g', '120', '-bf', '2', '-color_primaries', 'bt709', '-color_trc', 'bt709', '-colorspace', 'bt709', '-movflags', '+faststart', '-r', String(FPS), VIDEO], { stdio: ['pipe', 'inherit', 'inherit'] });
 const done = new Promise((res, rej) => ff.on('close', (c) => (c === 0 ? res() : rej(new Error(`ffmpeg exited ${c}`)))));
 const t0 = Date.now();
