@@ -26,7 +26,7 @@ for (const width of [320, 390, 430]) {
     expect(p.x + p.width).toBeLessThanOrEqual(width);
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
     // never on top of the app shortcuts
-    for (const b of await page.locator('.m-grid__item, .m-gamesentry').all()) {
+    for (const b of await page.locator('.m-bar__key, .m-gamesentry').all()) {
       const r = (await b.boundingBox())!;
       expect(p.y >= r.y + r.height || p.y + p.height <= r.y).toBe(true);
     }

@@ -1,20 +1,37 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router';
 import { EssentialLinks } from '../../../components/shop/EssentialLinks';
 import { Gallery } from '../../../components/product/Gallery';
 import { ProductInfo } from '../../../components/product/ProductInfo';
 import { QuantityPicker } from '../../../components/product/QuantityPicker';
 import { VariantPicker } from '../../../components/product/VariantPicker';
+import { hasSizes, SizeGuideButton } from '../../../components/product/SizeGuide';
 import { FavoriteButton } from '../../../components/shop/FavoriteButton';
 import { PageLoading } from '../../../components/shop/PageLoading';
 import { Price, SaleBadge, StockNote } from '../../../components/shop/Price';
 import { RemoteImage } from '../../../components/shop/RemoteImage';
 import { concept } from '../../../data/copy';
 import { usePage } from '../../../lib/usePage';
+import { noteFrustration } from '../../../lib/frustration';
 import { useProductState } from '../../../lib/useProductState';
 import { useOS } from '../../../state/os';
 import { collectionTitle } from '../../../lib/useShopQuery';
 import NotFound from './NotFound';
+
+/**
+ * SIZE GUIDE opens over the photo gallery (left part of the IYS INTERNET
+ * window), so the chart and the size picker are on screen together. A guide
+ * that's already open keeps wherever the visitor put it.
+ */
+function openSizeGuide(handle: string, title: string, sourceUrl: string) {
+  const os = useOS.getState();
+  const fresh = !os.windows.some((w) => w.id === 'sizeguide');
+  os.open('sizeguide', { title: concept.sizeGuide.title(title), props: { handle, title, sourceUrl } });
+  if (!fresh) return;
+  const browser = os.windows.find((w) => w.id === 'internet');
+  const base = browser && !browser.maximized ? browser.rect : { x: 0, y: 0, w: os.desk.w, h: os.desk.h };
+  os.setRect('sizeguide', { x: base.x + 16, y: base.y + 150, w: Math.round(Math.min(560, base.w * 0.52)) });
+}
 
 export default function Product() {
   const { handle } = useParams();
@@ -25,6 +42,9 @@ export default function Product() {
   const { cat, indexed, detail, p, variant } = s;
   const title = p?.title ?? indexed?.title ?? 'Loading...';
   usePage(title, detail.status === 'loading' ? 'Loading image...' : p ? 'Done.' : undefined);
+  useEffect(() => {
+    if (detail.status === 'error') noteFrustration('load-error', handle ?? '');
+  }, [detail.status, handle]);
 
   if (s.missing || detail.status === 'missing') return <NotFound />;
   if (detail.status === 'error')
@@ -82,7 +102,11 @@ export default function Product() {
           </div>
           <StockNote available={available} />
           <VariantPicker p={p} selected={s.selected} onSelect={s.select} />
-          <QuantityPicker value={s.qty} onChange={s.setQty} />
+          {/* SIZE GUIDE shares the compact Qty row: the purchase controls never move down for it. */}
+          <div className="props__qtyrow">
+            <QuantityPicker value={s.qty} onChange={s.setQty} />
+            {hasSizes(p) && <SizeGuideButton onOpen={() => openSizeGuide(p.handle, p.title, p.sourceUrl)} />}
+          </div>
           <div className="props__buy">
             <button
               type="button"

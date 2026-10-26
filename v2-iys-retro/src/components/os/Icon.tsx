@@ -362,6 +362,15 @@ const shapes: Record<string, JSX.Element> = {
       <path d="M22 4.5h3v4h1.5l-.5 1.5h-4z" fill="#4aab9a" stroke={O} strokeWidth=".6" />
     </g>
   ),
+  /** Tape-measure ruler (SIZE GUIDE). */
+  ruler: (
+    <g shapeRendering="crispEdges">
+      <rect x="2.5" y="11.5" width="27" height="10" fill="#ffd66e" stroke={O} />
+      <rect x="3.5" y="12.5" width="25" height="2" fill="#fff3bf" />
+      <path d="M6 12v4M10 12v2.5M14 12v4M18 12v2.5M22 12v4M26 12v2.5" stroke={O} />
+      <rect x="11" y="17" width="10" height="3" fill={C} />
+    </g>
+  ),
   /** Small kids tee with a star. */
   kids: (
     <g>

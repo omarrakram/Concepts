@@ -1,4 +1,5 @@
 import Fuse, { type IFuseOptions } from 'fuse.js';
+import { bridgeSearch, explain, needsBridge, productText, understand } from './arabic';
 import type { Catalogue, Product } from './types';
 
 interface Doc {
@@ -24,6 +25,8 @@ export const FUSE_OPTIONS: IFuseOptions<Doc> = {
 
 export interface Searcher {
   search(q: string): Product[];
+  /** For Arabic / Franco queries: what the search understood (e.g. ["hoodie", "black"]); null for plain English. */
+  explain(q: string): string[] | null;
 }
 
 /** Build once per catalogue; ~1k docs index in a few ms. */
@@ -36,16 +39,32 @@ export function createSearcher(cat: Catalogue): Searcher {
     tags: p.tags,
   }));
   const fuse = new Fuse(docs, FUSE_OPTIONS);
+  const fuzzy = (query: string) => {
+    // Exact (case-insensitive) title containment always wins, then fuzzy order.
+    const lower = query.toLowerCase();
+    const results = fuse.search(query);
+    const exact = results.filter((r) => r.item.title.toLowerCase().includes(lower));
+    const rest = results.filter((r) => !r.item.title.toLowerCase().includes(lower));
+    return [...exact, ...rest].map((r) => r.item.p);
+  };
+  let texts: Map<Product, string> | null = null;
   return {
     search(q: string) {
       const query = normalizeQuery(q);
       if (!query) return [];
-      // Exact (case-insensitive) title containment always wins, then fuzzy order.
-      const lower = query.toLowerCase();
-      const results = fuse.search(query);
-      const exact = results.filter((r) => r.item.title.toLowerCase().includes(lower));
-      const rest = results.filter((r) => !r.item.title.toLowerCase().includes(lower));
-      return [...exact, ...rest].map((r) => r.item.p);
+      // Plain English keeps the original search exactly; Arabic / Franco goes through the lexicon bridge.
+      if (!needsBridge(query)) return fuzzy(query);
+      const u = understand(query);
+      if (u.concepts.length || u.size) {
+        texts ??= new Map(cat.products.map((p) => [p, productText(cat, p)]));
+        return bridgeSearch(cat, u, texts);
+      }
+      // Nothing understood: only the Latin words (if any) are searched; unknown Arabic is never guessed.
+      return u.words.length ? fuzzy(u.words.join(' ')) : [];
+    },
+    explain(q: string) {
+      const query = normalizeQuery(q);
+      return query && needsBridge(query) ? explain(understand(query)) : null;
     },
   };
 }

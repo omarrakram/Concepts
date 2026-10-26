@@ -456,6 +456,23 @@
 .hero--small .hero__img img {
   aspect-ratio: 1920 / 640;
 }
+/* Home fold: the FW27 hero gives up just enough height for JUST DROPPED to
+   peek into the first screen (--hero-h comes from useFoldPeek in Home.tsx). */
+.hero--fold .hero__img img {
+  height: var(--hero-h, auto);
+  aspect-ratio: auto;
+  object-fit: cover;
+  object-position: 50% 15%;
+}
+.portal--short .portal__head {
+  padding: 2px 0 6px;
+}
+.portal--short .portal__logo {
+  width: min(210px, 45%);
+}
+.portal--short .portal__official {
+  font-size: 17px;
+}
 .hero figcaption {
   padding: 4px 8px;
   background: #fff;
@@ -611,9 +628,10 @@
   background: linear-gradient(#1f4f9a, var(--iys-blue));
   color: #fff;
 }
+/* deeper than --iys-coral so the small white text keeps 4.5:1 contrast */
 .new-flag {
   padding: 0 4px;
-  background: var(--iys-coral);
+  background: #d32f2f;
   color: #fff;
   font-size: 10px;
 }
@@ -1244,8 +1262,18 @@ img.is-loading {
   text-align: center;
   font-weight: bold;
 }
-.props__qty + .props__buy {
+.props__qty + .props__buy,
+.props__qtyrow + .props__buy {
   margin-top: 6px;
+}
+.props__qtyrow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 14px;
+}
+.props__qtyrow .sizeguide__open {
+  margin: 0;
 }
 .props__buy {
   display: flex;
@@ -2291,13 +2319,28 @@ span.explorer__twisty {
   overflow: hidden;
 }
 .mail__error {
-  display: flex;
-  align-items: center;
-  gap: 6px;
+  display: grid;
+  gap: 4px;
   padding: 4px 6px;
   border: 1px solid #b13030;
   background: #fff0f0;
   color: #8a1010;
+}
+.mail__error p {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+}
+/* Not connected is not a failure of the customer's: amber, with the real way out. */
+.mail__error--offline {
+  border-color: #a07000;
+  background: #fff8e0;
+  color: #4a3500;
+}
+.mail__openapp {
+  text-decoration: none;
 }
 .mail__foot {
   display: flex;
@@ -2453,4 +2496,268 @@ span.explorer__twisty {
 }
 .cp-catchy img {
   flex: none;
+}
+
+/* search: what an Arabic / Franco query was understood as */
+.results__understood {
+  margin: -2px 0 8px;
+  color: var(--grass-deep);
+  font-size: var(--fs-small);
+}
+
+/* ══ Busy: the one loading look (same language as COPYING ITEM TO: MY BAG) ══ */
+.busy--block .busy__anim {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 180px;
+  height: 40px;
+  margin: 0 auto;
+}
+.busy__file {
+  position: absolute;
+  left: 34px;
+  top: 6px;
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 28px;
+  border: 1px solid #1b2b44;
+  background: #fff;
+  animation: busy-hop 1.1s steps(11) infinite;
+}
+@keyframes busy-hop {
+  from {
+    left: 34px;
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-7px);
+  }
+  to {
+    left: calc(100% - 60px);
+    transform: translateY(0);
+  }
+}
+.busy__label {
+  font-family: var(--system-font);
+  font-weight: bold;
+  color: var(--ink);
+}
+.busy--block .busy__bar {
+  width: 200px;
+  margin: 0 auto;
+}
+.busy--inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  vertical-align: middle;
+  font-size: var(--fs-chrome);
+}
+.busy--inline .busy__bar {
+  width: 56px;
+  height: 10px;
+  padding: 1px;
+}
+
+/* ══ SIZE GUIDE (official IYS chart images) ══ */
+.sizeguide__open {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin: 2px 0 8px;
+}
+.sizeguide {
+  display: grid;
+  gap: 8px;
+}
+.sizeguide__bar {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: var(--fs-chrome);
+}
+.sizeguide__bar .btn[aria-pressed='true'] {
+  box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.4);
+  font-weight: bold;
+}
+.sizeguide__fig {
+  margin: 0;
+  border: 1px solid #9fb3cf;
+  background: #fff;
+}
+.sizeguide__scroll {
+  max-height: 60vh;
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+.sizeguide__scroll img {
+  display: block;
+  max-width: none;
+  height: auto;
+}
+.sizeguide__fig figcaption {
+  padding: 3px 6px;
+  border-top: 1px solid #d5deea;
+  font-size: var(--fs-small);
+  text-align: right;
+}
+.sizeguide__msg {
+  display: grid;
+  gap: 8px;
+  padding: 10px;
+  border: 1px dashed var(--os-shadow);
+  background: #fffef0;
+  font-size: var(--fs-chrome);
+}
+.sizeguide__msg p:first-child {
+  display: flex;
+  gap: 6px;
+  align-items: flex-start;
+}
+.sizeguide__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.sizeguide__note {
+  color: var(--muted);
+  font-size: var(--fs-small);
+}
+.sizeguide-win {
+  padding: 10px;
+  overflow: auto;
+  height: 100%;
+  box-sizing: border-box;
+}
+.sizeguide-win h2 {
+  margin: 0 0 8px;
+  font-family: var(--system-font);
+  font-size: 13px;
+}
+
+/* ══ MY BAG extras: free-shipping progress, offers, code, ideas, handoff ══ */
+.bagx-ship {
+  margin: 0 0 6px;
+  padding: 6px 8px;
+  border: 1px solid #9fb3cf;
+  background: #fffef0;
+}
+.bagx-ship__line {
+  font-family: var(--system-font);
+  font-size: var(--fs-chrome);
+  font-weight: bold;
+  color: var(--ink);
+}
+.bagx-ship__bar {
+  height: 12px;
+  margin: 4px 0;
+}
+.bagx-ship.is-unlocked {
+  background: var(--grass-pale, #eaffdf);
+  border-color: var(--grass-deep, #2f7d1b);
+}
+.bagx-ship.is-unlocked .bagx-ship__line {
+  color: var(--grass-deep, #2f7d1b);
+}
+.bagx-ship.is-unlocked .progress__bar {
+  background: repeating-linear-gradient(90deg, var(--ok, #2f9e44) 0 8px, transparent 8px 10px);
+}
+.bagx-note {
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.35;
+}
+.bagx-title {
+  margin: 0 0 4px;
+  font-family: var(--system-font);
+  font-size: var(--fs-chrome);
+  font-weight: bold;
+  color: var(--iys-blue);
+}
+.bagx-offers ul {
+  margin: 0 0 6px;
+  padding-left: 16px;
+  font-size: var(--fs-chrome);
+}
+.bagx-code {
+  margin: 4px 0 6px;
+  font-size: var(--fs-chrome);
+}
+.bagx-code__form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 6px;
+  margin-top: 4px;
+}
+.bagx-code__form .input {
+  width: 130px;
+  text-transform: uppercase;
+}
+.bagx-code__form .bagx-note {
+  flex-basis: 100%;
+}
+.bagx-ideas {
+  margin: 8px 0 4px;
+  padding: 6px 8px;
+  border: 1px solid #9fb3cf;
+  background: #fff;
+}
+.bagx-ideas ul {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.bagx-idea {
+  display: grid;
+  grid-template-columns: 56px minmax(0, 1fr);
+  gap: 8px;
+  align-items: start;
+  font-size: var(--fs-chrome);
+}
+.bagx-idea__img {
+  display: block;
+  width: 56px;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border: 1px solid #c9d5e6;
+  background: #f5f5f5;
+}
+.bagx-idea__img img,
+.bagx-idea__img .img-offline {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.bagx-idea__info {
+  display: grid;
+  gap: 2px;
+  justify-items: start;
+}
+.bagx-idea__name {
+  font-weight: bold;
+  text-align: left;
+}
+.bagx-idea__sizes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  margin: 2px 0;
+}
+.bagx-idea__sizes .btn[aria-pressed='true'] {
+  box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.45);
+  font-weight: bold;
+}
+.bagx-handoff {
+  margin-top: 4px;
+  font-size: var(--fs-chrome);
+}
+
+.box--shelf .strip__media {
+  position: relative;
 }

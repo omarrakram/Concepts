@@ -7,6 +7,7 @@ import { FilterPanel } from '../../components/shop/FilterPanel';
 import { Price } from '../../components/shop/Price';
 import { RemoteImage } from '../../components/shop/RemoteImage';
 import { EssentialLinks } from '../../components/shop/EssentialLinks';
+import { BagIdeas, BagOffers, HandoffStatus, PromoCode, ShippingProgress, useHandoffPending } from '../../components/shop/BagExtras';
 import { ESSENTIALS } from '../../data/essentials';
 import { concept } from '../../data/copy';
 import { MENU } from '../../data/taxonomy';
@@ -28,16 +29,16 @@ import { useCatchyEnabled, writeEnabled } from '../../features/catchy/storage';
 export function MBag({ close }: { close: () => void }) {
   const items = useCart((s) => s.items);
   const navigate = useNavigate();
-  useClaimCenter(items.length ? { label: 'CHECKOUT', run: () => startCheckout() } : null);
+  const leaving = useHandoffPending();
+  useClaimCenter(items.length ? { label: 'CHECKOUT', run: () => startCheckout(), disabled: leaving } : null);
+  const openProduct = (h: string) => {
+    close();
+    navigate(productPath(h));
+  };
   return (
     <div className="m-page">
       <h1 className="m-h1">MY BAG ({itemCount(items)})</h1>
-      <BagList
-        onOpenProduct={(h) => {
-          close();
-          navigate(productPath(h));
-        }}
-      />
+      <BagList onOpenProduct={openProduct} />
       {items.length === 0 && (
         <button type="button" className="btn btn--go m-add" onClick={() => { close(); navigate('/collections/newest'); }}>
           {concept.y2k.primary} ›
@@ -45,17 +46,22 @@ export function MBag({ close }: { close: () => void }) {
       )}
       {items.length > 0 && (
         <div className="m-total">
+          <ShippingProgress />
+          <BagOffers />
           <div className="bag__total">
             <span>Subtotal</span>
             <b>{formatEGP(subtotal(items))}</b>
           </div>
           <p className="bag__note">{concept.y2k.bagNote}</p>
           <EssentialLinks className="bag__note" ids={['exchange-refund', 'shipping', 'terms-conditions']} />
-          <button type="button" className="btn btn--go m-add" onClick={() => startCheckout()}>
+          <PromoCode />
+          <button type="button" className="btn btn--go m-add" onClick={() => startCheckout()} disabled={leaving} aria-busy={leaving}>
             {concept.y2k.bagCta}
           </button>
+          <HandoffStatus />
         </div>
       )}
+      {items.length > 0 && <BagIdeas onOpenProduct={openProduct} />}
     </div>
   );
 }

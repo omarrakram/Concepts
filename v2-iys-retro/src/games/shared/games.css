@@ -125,6 +125,49 @@
   color: #4a2a00;
   font-weight: 700;
 }
+.game__reward-hint {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 700;
+  color: #7a2e00;
+}
+.game__reward {
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+  width: 100%;
+  padding: 8px;
+  border: 2px dashed var(--iys-coral);
+  border-radius: 8px;
+  background: #fff7ef;
+  font-size: 12px;
+}
+.game__reward p {
+  margin: 0;
+}
+.game__reward-title {
+  font-weight: 700;
+  color: #7a2e00;
+}
+.game__reward-code code {
+  display: inline-block;
+  padding: 3px 10px;
+  border: 1px solid #333;
+  background: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  user-select: all;
+}
+.game__reward-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+}
+.game__reward-error {
+  color: #8a1010;
+}
 .game__cta {
   min-width: 140px;
   min-height: 34px;

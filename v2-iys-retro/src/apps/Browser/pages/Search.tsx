@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useSearchParams } from 'react-router';
 import { Icon } from '../../../components/os/Icon';
+import { Busy } from '../../../components/shop/Busy';
 import { Pagination } from '../../../components/shop/Pagination';
 import { Price } from '../../../components/shop/Price';
 import { RemoteImage } from '../../../components/shop/RemoteImage';
@@ -11,14 +12,14 @@ import { productPath } from '../../../lib/useBrowse';
 import { useSearch } from '../../../lib/useSearch';
 
 const PER = 20;
-const TRY = ['cairo', 'pjoys', 'hoodie', 'ceral', 'socks', 'kids', 'jeans', 'black'];
+const TRY = ['cairo', 'pjoys', 'hoodie', 'ceral', 'socks', 'kids', 'jeans', 'black', 'هودي', 'بنطلون اسود'];
 
 export default function Search() {
   const [params, setParams] = useSearchParams();
   const q = params.get('q') ?? '';
   const page = Number(params.get('page') ?? '1') || 1;
   const [typed, setTyped] = useState(q);
-  const { cat, results, ms, pending } = useSearch(q);
+  const { cat, results, ms, pending, understood } = useSearch(q);
   useEffect(() => setTyped(q), [q]);
   const pg = results ? paginate(results, page, PER) : null;
   usePage(q ? `${q} - Search` : 'Search', pending ? 'Searching...' : results ? `${formatCount(results.length)} products found.` : 'Done.');
@@ -45,13 +46,15 @@ export default function Search() {
           </button>
         </div>
         <p className="search__hint">
-          Searching {cat ? formatCount(cat.products.length) : '…'} real products by name, type, collection and tags. Typos are OK.{' '}
+          Searching {cat ? formatCount(cat.products.length) : '…'} real products by name, type, collection and tags. Typos are OK, and so is Arabic.{' '}
           {!q && (
             <>
               Try:{' '}
               {TRY.map((t, i) => (
                 <span key={t}>
-                  <Link to={`/search?q=${t}`}>{t}</Link>
+                  <Link to={`/search?q=${encodeURIComponent(t)}`} dir="auto">
+                    {t}
+                  </Link>
                   {i < TRY.length - 1 ? ', ' : ''}
                 </span>
               ))}
@@ -63,12 +66,17 @@ export default function Search() {
       {q && pg && results && (
         <section aria-label="Search results" className="results">
           <p className="results__meta">
-            Results <b>{formatCount(pg.from)}</b> - <b>{formatCount(pg.to)}</b> of <b>{formatCount(pg.total)}</b> for <b>{q}</b> ({(ms / 1000).toFixed(3)} seconds)
+            Results <b>{formatCount(pg.from)}</b> - <b>{formatCount(pg.to)}</b> of <b>{formatCount(pg.total)}</b> for <b dir="auto">{q}</b> ({(ms / 1000).toFixed(3)} seconds)
           </p>
+          {understood && understood.length > 0 && (
+            <p className="results__understood">
+              IYS understood: <b>{understood.join(' · ')}</b>
+            </p>
+          )}
           {pg.total === 0 ? (
             <div className="empty">
               <p>
-                Your search - <b>{q}</b> - did not match any products.
+                Your search - <b dir="auto">{q}</b> - did not match any products in this snapshot.
               </p>
               <p>
                 Try different words, or <Link to="/shop">browse the whole shop</Link>.
@@ -107,7 +115,11 @@ export default function Search() {
           <Pagination page={pg.page} pageCount={pg.pageCount} onPage={(n) => setParams({ q, page: String(n) })} label="Result pages" />
         </section>
       )}
-      {q && !results && <p className="results__meta">Searching...</p>}
+      {q && !results && (
+        <p className="results__meta">
+          <Busy inline label="Searching..." />
+        </p>
+      )}
     </div>
   );
 }

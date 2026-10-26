@@ -13,6 +13,7 @@
     "test:e2e": "playwright test",
     "sync-products": "node scripts/sync-products.mjs",
     "sync-stores": "node scripts/sync-stores.mjs",
+    "sync-size-charts": "node scripts/sync-size-charts.mjs",
     "audit-data": "node scripts/audit-data.mjs",
     "fetch-showcase-assets": "node scripts/fetch-showcase-assets.mjs",
     "record": "node scripts/record.mjs",

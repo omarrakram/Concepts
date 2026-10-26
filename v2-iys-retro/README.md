@@ -324,12 +324,15 @@ never competes with inyourshoe.com in search. The normal build needs no network 
 
 | Concern | Where | Vercel environment variable | If unset |
 | --- | --- | --- | --- |
-| **IYS MAIL** support email → `orders@inyourshoe.com` | `api/support-email.ts` (server-side, Resend REST API) | `RESEND_API_KEY` (secret), `SUPPORT_FROM_EMAIL` (a Resend-verified sender), optional `SUPPORT_TO_EMAIL` (defaults to `orders@inyourshoe.com`) | the endpoint answers 503 and IYS MAIL shows “MAIL NOT SENT :(” — never a fake success |
+| **IYS MAIL** support email → `orders@inyourshoe.com` | `api/support-email.ts` (server-side, Resend REST API) | `RESEND_API_KEY` (secret), `SUPPORT_FROM_EMAIL` (a Resend-verified sender); `SUPPORT_TO_EMAIL` is honoured only with `SUPPORT_TEST_MODE=1` (subject marked `[TEST]`) | the endpoint answers 503 `not-connected` and IYS MAIL says it is not connected, offering OPEN EMAIL APP (prefilled `mailto:`), never a fake success |
+| **Live Shopify** (catalogue, cart, code check, free-shipping rule) | `api/commerce.ts` → `api/_lib/shopify.ts` | server: `COMMERCE_LIVE=1`, `SHOPIFY_STORE_DOMAIN`, `SHOPIFY_STOREFRONT_PRIVATE_TOKEN`, optional `SHOPIFY_ADMIN_TOKEN` (`read_discounts`); build: `VITE_COMMERCE_MODE=live`, `VITE_LIVE_CART=1` | snapshot catalogue + cart permalink (today's behaviour) |
+| **IYS GAMES rewards** (real merchant codes only) | `api/rewards.ts` → `api/_lib/rewards.ts` | server: `GAME_REWARDS`, `REWARDS_SECRET`; build: `VITE_GAME_REWARDS=1` | no reward UI at all |
 | **IYS NEWSLETTER** signup | `src/lib/newsletter.ts` adapter | `VITE_NEWSLETTER_ENDPOINT` (public URL; POST `{ email }` → `{ ok: true }`) | honest “coming online soon” state; the `IYS10` code is revealed only after a confirmed signup |
 | **HELP › IYS Help & Support** (Odoo) | Help window | `VITE_ODOO_HELP_FORM_URL` | intentional “ODOO FORM PLACEHOLDER” |
 | **XCHANGE.EXE :) Exchanges / Refunds** (Odoo) | Exchange window | `VITE_ODOO_EXCHANGE_REFUND_FORM_URL` | intentional “Odoo form will load here” placeholder |
 
-Only `RESEND_API_KEY` is a secret, and it is read only by the server function.
+The secrets (`RESEND_API_KEY`, the Shopify tokens, `REWARDS_SECRET`) are read only by the server functions.
+Step-by-step activation, scopes, validation and rollback: [`docs/SHOPIFY_GO_LIVE_CHECKLIST.md`](docs/SHOPIFY_GO_LIVE_CHECKLIST.md).
 `VITE_*` values are public URLs baked into the client at build time. `/api/*`
 is excluded from the SPA rewrite and from the service-worker navigation
 fallback. Desktop icon positions are stored only in this browser under
@@ -345,6 +348,7 @@ fallback. Desktop icon positions are stored only in this browser under
 | `npm test` / `npm run test:e2e` | Vitest / Playwright + axe |
 | `npm run sync-products` | re-snapshot the public Egyptian catalogue (network) |
 | `npm run sync-stores` | re-read the public store directory (network) |
+| `npm run sync-size-charts` | read the official size chart on each product page (network, polite, 7-day cache; `-- --offline` rebuilds from the cache) → `src/data/size-charts.generated.json` + `docs/SIZE_CHART_COVERAGE.md` |
 | `npm run fetch-showcase-assets` | download + optimise the curated local images (network) |
 | `npm run frames` / `npm run record` | showcase stills / MP4 |
 | `npm run qa:screens` | canonical QA screenshots |

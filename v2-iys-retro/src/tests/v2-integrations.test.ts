@@ -1,7 +1,8 @@
 import { existsSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { describe, expect, it, vi } from 'vitest';
-import { buildSupportMail, DEFAULT_SUPPORT_TO, handleSupport, validateSupport, type Sender } from '../../api/_lib/support';
+import { buildSupportMail, DEFAULT_SUPPORT_TO, handleSupport, recipient, validateSupport, type Sender } from '../../api/_lib/support';
+import { createRateLimiter } from '../../api/_lib/http';
 import { WALLPAPERS } from '../data/assets';
 import { DEFAULT_WALLPAPER } from '../state/preferences';
 import { concept, official } from '../data/copy';
@@ -71,6 +72,42 @@ describe('IYS MAIL support API', () => {
     const text = await r.text();
     expect(text).not.toContain('test-key');
     expect(text).not.toContain('exploded');
+  });
+
+  it('says "not connected" (503 + reason) so the form can offer the email app instead of pretending', async () => {
+    const r = await handleSupport(req(good), {}, vi.fn<Sender>(async () => true));
+    expect(r.status).toBe(503);
+    expect(await r.json()).toMatchObject({ ok: false, reason: 'not-connected' });
+  });
+
+  it('always delivers to orders@inyourshoe.com; a test inbox only in explicit test mode, marked [TEST]', async () => {
+    expect(recipient({ SUPPORT_TO_EMAIL: 'qa@example.com' })).toEqual({ to: 'orders@inyourshoe.com', test: false });
+    expect(recipient({ SUPPORT_TO_EMAIL: 'not an email', SUPPORT_TEST_MODE: '1' })).toEqual({ to: 'orders@inyourshoe.com', test: false });
+    expect(recipient({ SUPPORT_TO_EMAIL: 'QA@Example.com', SUPPORT_TEST_MODE: '1' })).toEqual({ to: 'qa@example.com', test: true });
+    const send = vi.fn<Sender>(async () => true);
+    await handleSupport(req(good), { ...env, SUPPORT_TO_EMAIL: 'qa@example.com', SUPPORT_TEST_MODE: '1' }, send, new Date(), createRateLimiter(5, 60_000));
+    expect(send.mock.calls[0]![0].to).toBe('qa@example.com');
+    expect(send.mock.calls[0]![0].subject).toBe('[TEST] [IYS Support] Where is my order?');
+  });
+
+  it('rate-limits real sends per client (429) without calling the provider', async () => {
+    const send = vi.fn<Sender>(async () => true);
+    const limiter = createRateLimiter(2, 60_000, () => 0);
+    const statuses = [];
+    for (let i = 0; i < 3; i++) statuses.push((await handleSupport(req(good, { 'x-forwarded-for': '203.0.113.9' }), env, send, new Date(), limiter)).status);
+    expect(statuses).toEqual([200, 200, 429]);
+    expect(send).toHaveBeenCalledTimes(2);
+    // another client is unaffected
+    expect((await handleSupport(req(good, { 'x-forwarded-for': '198.51.100.4' }), env, send, new Date(), limiter)).status).toBe(200);
+  });
+
+  it('forwards a well-formed draft key as the provider idempotency key and ignores junk', async () => {
+    const send = vi.fn<Sender>(async () => true);
+    const limiter = createRateLimiter(10, 60_000);
+    await handleSupport(req(good, { 'x-idempotency-key': '0b7e2c9a-1f4d-4c55-9a51-2b8f0c1d2e3f' }), env, send, new Date(), limiter);
+    await handleSupport(req(good, { 'x-idempotency-key': 'bad key; drop table' }), env, send, new Date(), limiter);
+    expect(send.mock.calls[0]![2]).toEqual({ idempotencyKey: '0b7e2c9a-1f4d-4c55-9a51-2b8f0c1d2e3f' });
+    expect(send.mock.calls[1]![2]).toBeUndefined();
   });
 
   it('builds a plain-text message with every field', () => {

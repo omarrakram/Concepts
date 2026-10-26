@@ -9,6 +9,8 @@
  */
 
 export const OFFICIAL_VERIFIED_ON = '2026-09-29';
+/** The announcement-bar lines below were re-read on the live store on this date (they change often). */
+export const ANNOUNCEMENT_VERIFIED_ON = '2026-10-26';
 
 export const official = {
   /** Scrolling marquee + footer, https://inyourshoe.com/ */
@@ -19,10 +21,10 @@ export const official = {
   standOut: 'Stand out, Express yourself! We put ourselves in your shoe, in style! :)',
   /** Footer newsletter block, https://inyourshoe.com/ */
   coolList: 'Join our cool list and receive a 10% OFF code for your 1st purchase!',
-  /** Announcement bar, https://inyourshoe.com/ */
-  sameDay: 'Same-day delivery available ⚡',
-  /** Announcement bar, https://inyourshoe.com/ */
-  freeShipping: 'Free Shipping +2,499',
+  /** Announcement bar, https://inyourshoe.com/ (re-verified ANNOUNCEMENT_VERIFIED_ON) */
+  sameDay: 'SAME DAY DELIVERY',
+  /** Announcement bar, https://inyourshoe.com/ (re-verified ANNOUNCEMENT_VERIFIED_ON; the bag reads the rule from src/config/promotions.ts) */
+  freeShipping: 'FREE SHIPPING OVER 3999 EGP',
   /** Pjoys product descriptions, e.g. https://inyourshoe.com/products/cereal-killer-pjoys */
   pjoys: 'Pjoys are our terminology for pyjama pants that are super joyful, just like you reading this.',
   brand: 'IN YOUR SHOE',
@@ -70,6 +72,8 @@ export const concept = {
     realHint: 'switch to the real In Your Shoe store',
     errorMessage: 'ONE OF UR ITEMS NEEDS A REFRESH. open it, pick ur size again and re-add it - ur bag is still here xo',
     errorAction: 'Open item',
+    /** Live checkout only: Shopify answered but couldn't take a line exactly as it is in the bag. */
+    liveMismatch: 'IYS SAYS ONE OF UR ITEMS ISN’T AVAILABLE LIKE THAT RIGHT NOW (size or quantity). open it to check - ur bag is still here xo',
   },
   /** IYS MAIL — real support mail to orders@inyourshoe.com. */
   mail: {
@@ -84,6 +88,25 @@ export const concept = {
     failed: 'Could not reach the mail server. Ur message is still here - please try again.',
     placeholder: 'hi IYS! my message is...',
     note: 'Goes to orders@inyourshoe.com. We only use ur details to reply.',
+    /** No mail provider configured on this deployment: say so, never pretend it was sent. */
+    notConnectedTitle: 'IYS MAIL IS NOT CONNECTED YET',
+    notConnected: 'Ur message was NOT sent. Open ur own email app and we fill it in for u, addressed to orders@inyourshoe.com.',
+    notConnectedStatus: 'Not sent. IYS MAIL is not connected yet.',
+    openApp: 'OPEN EMAIL APP ↗',
+    orOpenApp: 'or send it from ur own email app:',
+  },
+  /** IYS GAMES rewards: only real, live merchant codes confirmed by /api/rewards. Nothing shows otherwise. */
+  rewards: {
+    ready: (label: string, score: number) => `REAL IYS REWARD: ${label} (score ${score}+)`,
+    next: (label: string, score: number) => `score ${score}+ to unlock ${label}`,
+    earned: 'U UNLOCKED A REAL IYS REWARD :)',
+    claim: 'GET MY CODE',
+    claiming: 'checking with IYS...',
+    copy: 'COPY CODE',
+    copied: 'COPIED :)',
+    use: 'USE IN MY BAG',
+    used: 'SAVED IN MY BAG :)',
+    note: 'Real IYS code. IYS applies its own terms at checkout.',
   },
   /** IYS NEWSLETTER — the cool list. The code is revealed only after a real, confirmed signup. */
   newsletter: {
@@ -211,6 +234,55 @@ export const concept = {
     pickSizeFirst: 'Pick a size first :)',
     back2Shop: 'BACK 2 SHOP',
     shopNew: 'SHOP NEW STUFF',
+  },
+  /** MY BAG extras: shipping progress, code, ideas, handoff (rules in src/config/promotions.ts). */
+  bag: {
+    shipLeft: (amount: string) => `${amount} MORE 4 FREE SHIPPING*`,
+    shipJust: 'JUST A LIL MORE 4 FREE SHIPPING*',
+    shipUnlocked: 'FREE SHIPPING UNLOCKED* xo',
+    shipNote: (threshold: string, checked: string, live = false) =>
+      live
+        ? `*IYS store: free shipping from ${threshold} (checked live with the IYS store today). IYS confirms shipping at checkout.`
+        : `*IYS: free shipping over ${threshold} (inyourshoe.com, checked ${checked}). Uses snapshot prices; IYS confirms shipping at checkout.`,
+    codeToggle: 'GOT A CODE?',
+    codeLabel: 'Discount code',
+    codeApply: 'USE CODE',
+    codeSaved: (code: string) => `CODE ${code} SAVED :) IYS checks it at checkout (it can’t be checked from here).`,
+    codeLiveOk: (code: string) => `CODE ${code} APPLIES TO UR BAG :)`,
+    codeLiveNo: (code: string) => `CODE ${code} DOESN’T APPLY TO THIS BAG :(`,
+    codeBad: 'that doesn’t look like an IYS code :( letters, numbers, - and _ only',
+    codeRemove: 'remove',
+    offersTitle: 'OFFERS',
+    upsellTitle: 'U MIGHT LIKE THESE',
+    upsellPick: 'PICK SIZE ›',
+    upsellOptions: 'CHOOSE OPTIONS ›',
+    upsellAdd: '+ ADD',
+    handoffCheckout: 'Opening IYS checkout...',
+    handoffReal: 'Opening real IYS...',
+    handoffSlow: 'taking a while?',
+    handoffDirect: 'open it directly ↗',
+  },
+  /** The escape route (src/lib/frustration.ts): caring and funny, never pushy. */
+  escape: {
+    title: 'IYS.EXE',
+    heading: 'HAVING A HARD TIME? :(',
+    body: 'this 2006 computer can be a lot lol. wanna shop the old-school way on the real IYS site?',
+    bag: (n: number) => `ur bag (${n} ${n === 1 ? 'item' : 'items'}) comes with u.`,
+    open: 'OPEN REAL IYS ↗',
+    stay: 'I’M GOOD :)',
+    stayed: 'ok! we’ll stop asking xo',
+  },
+  /** SIZE GUIDE: official IYS chart images only (see src/lib/sizeCharts.ts). */
+  sizeGuide: {
+    button: 'SIZE GUIDE',
+    title: (product: string) => `SIZE GUIDE - ${product}`,
+    loading: 'Opening size chart...',
+    error: 'The size chart couldn’t load :( check ur connection and try again.',
+    missing: 'IYS hasn’t published a size chart for this one (yet). Ask IYS before u pick a size :)',
+    gone: 'This item’s page isn’t on inyourshoe.com anymore, so there’s no official chart to show.',
+    source: (checkedOn: string) => `Official IYS size chart, as shown on this item’s page on inyourshoe.com (checked ${checkedOn}). Units exactly as printed on the chart.`,
+    ask: 'ASK IYS ABOUT SIZING',
+    askMobile: 'CONTACT IYS ↗',
   },
   disclaimer: [
     'UNOFFICIAL SPECULATIVE DIGITAL CONCEPT.',

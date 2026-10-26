@@ -3,6 +3,7 @@ import { blip, unlockAudio } from '../../lib/sound';
 import { usePreferences } from '../../state/preferences';
 import { useClaimCenter } from '../../shells/mobile/chrome';
 import { CatchySticker } from './catchy';
+import { RewardResult, RewardTeaser, useRunRewards } from './GameReward';
 import { submitScore, useBest, type ScoreId } from './scores';
 import './games.css';
 
@@ -130,7 +131,9 @@ export function GameShell({
   const stage = useRef<HTMLDivElement>(null);
   const root = useRef<HTMLElement>(null);
 
+  const rewards = useRunRewards(scoreId);
   const start = () => {
+    rewards.newRun();
     onStart();
     requestAnimationFrame(() => stage.current?.focus({ preventScroll: true }));
   };
@@ -225,6 +228,7 @@ export function GameShell({
                   <CatchySticker size={56} />
                   <p className="game__big">{title}</p>
                   {intro && <div className="game__intro">{intro}</div>}
+                  <RewardTeaser r={rewards} />
                   <button type="button" className="btn btn--go game__cta" onClick={start} data-autofocus>
                     {COPY.play}
                   </button>
@@ -248,6 +252,7 @@ export function GameShell({
                     SCORE <b>{result.score}</b> · BEST <b>{result.best}</b>
                   </p>
                   {result.isNew && <p className="game__new">{COPY.newBest}</p>}
+                  <RewardResult key={rewards.runId} r={rewards} game={scoreId} result={result} />
                   <button type="button" className="btn btn--go game__cta" onClick={start} data-autofocus>
                     {COPY.again}
                   </button>

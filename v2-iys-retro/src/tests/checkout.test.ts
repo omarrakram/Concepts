@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { IYS_STOREFRONT_ORIGIN } from '../config/integrations';
-import { buildShopifyCheckoutUrl, buildShopifyStorefrontHandoffUrl, serializeShopifyCart, startCheckout, switchToRealIYS } from '../lib/checkout';
+import { buildShopifyCheckoutUrl, buildShopifyStorefrontHandoffUrl, serializeShopifyCart, startCheckout, switchToRealIYS, useHandoff } from '../lib/checkout';
 import { MAX_QTY, useCart, type CartItem } from '../state/cart';
 import { useOS } from '../state/os';
 
@@ -55,6 +55,7 @@ describe('buildShopifyCheckoutUrl (bag → official IYS cart permalink)', () => 
 
 describe('startCheckout (the one CHECKOUT action)', () => {
   beforeEach(() => {
+    useHandoff.setState({ pending: null });
     useCart.setState({ items: [] });
     useOS.setState({ dialog: null });
   });
@@ -121,6 +122,7 @@ describe('REAL IYS handoff (storefront cart) vs CHECKOUT (direct checkout)', () 
 
 describe('switchToRealIYS (the one action behind the global switch)', () => {
   beforeEach(() => {
+    useHandoff.setState({ pending: null });
     useCart.setState({ items: [] });
     useOS.setState({ dialog: null });
   });
@@ -150,5 +152,45 @@ describe('switchToRealIYS (the one action behind the global switch)', () => {
     expect(go).not.toHaveBeenCalled();
     expect(useOS.getState().dialog).toMatchObject({ kind: 'error', title: 'REAL IYS COULDN’T OPEN :(', message: expect.stringContaining('ONE OF UR ITEMS NEEDS A REFRESH'), action: { handle: 'needs-refresh' } });
     expect(useCart.getState().items).toEqual(items);
+  });
+});
+
+describe('discount code + double-press guard (conversion pass)', () => {
+  beforeEach(() => {
+    useHandoff.setState({ pending: null });
+    useCart.setState({ items: [], discountCode: null });
+    useOS.setState({ dialog: null });
+  });
+
+  it('a clean code rides along as Shopify’s ?discount= on both destinations', () => {
+    const items = [line(111, 2)];
+    expect(buildShopifyCheckoutUrl(items, { discount: 'cool10' })).toEqual({ ok: true, url: 'https://inyourshoe.com/cart/111:2?discount=COOL10' });
+    expect(buildShopifyStorefrontHandoffUrl(items, { discount: 'COOL10' })).toEqual({ ok: true, url: 'https://inyourshoe.com/cart/111:2?storefront=true&discount=COOL10' });
+  });
+
+  it('anything that isn’t a plain code is dropped, never “fixed” (no injection into the URL)', () => {
+    for (const bad of ['a b', 'x&storefront=false', '../', '<script>', '', 'Z'.repeat(65)]) {
+      expect(buildShopifyCheckoutUrl([line(111, 1)], { discount: bad })).toEqual({ ok: true, url: 'https://inyourshoe.com/cart/111:1' });
+    }
+  });
+
+  it('empty bag + code → still just the real homepage', () => {
+    expect(buildShopifyStorefrontHandoffUrl([], { discount: 'COOL10' })).toEqual({ ok: true, url: 'https://inyourshoe.com/' });
+  });
+
+  it('the bag’s saved code is used by CHECKOUT', () => {
+    useCart.setState({ items: [item(111, 1, 'a')], discountCode: 'COOL10' });
+    const go = vi.fn();
+    startCheckout(go);
+    expect(go).toHaveBeenCalledWith('https://inyourshoe.com/cart/111:1?discount=COOL10');
+  });
+
+  it('pressing CHECKOUT twice while the redirect is under way navigates once', () => {
+    useCart.setState({ items: [item(111, 1, 'a')] });
+    const go = vi.fn();
+    startCheckout(go);
+    startCheckout(go);
+    expect(go).toHaveBeenCalledTimes(1);
+    expect(useHandoff.getState().pending).toMatchObject({ to: 'checkout' });
   });
 });

@@ -10,9 +10,11 @@ import { play } from '../lib/sound';
 import { collectionTitle } from '../lib/useShopQuery';
 import { itemCount, useCart } from '../state/cart';
 import { useOS } from '../state/os';
-import { useSession } from '../state/preferences';
+import { usePjoysUnread, useSession } from '../state/preferences';
+import { FEATURES } from '../config/features';
+import storesData from '../data/stores.generated.json';
 import { gameMeta, type GameId } from '../games/registry';
-import { StatusBar, useCenterKey } from './mobile/chrome';
+import { MBar, StatusBar, useCenterKey, type BarKey } from './mobile/chrome';
 import { MGames } from './mobile/games';
 import { MBag, MCamera, MChat, MFilters, MMenu } from './mobile/overlays';
 import { MFavorites, MHome, MList, MNotFound, MProduct, MSearch, MStores, type Overlay } from './mobile/screens';
@@ -38,7 +40,7 @@ export default function MobileShell() {
   const [overlay, setOverlay] = useState<Overlay>(null);
   const [game, setGame] = useState<GameId | null>(null);
   const [splash, setSplash] = useState(() => !useSession.getState().bootSeen && location.pathname === '/');
-  const [ping, setPing] = useState(false);
+  const unread = usePjoysUnread();
   const [toast, setToast] = useState<string | null>(null);
   const content = useRef<HTMLElement>(null);
 
@@ -58,12 +60,11 @@ export default function MobileShell() {
     content.current?.scrollTo(0, 0);
   }, [location.pathname, location.search]);
 
-  // PJOYS texts once per session.
+  // PJOYS texts once per session: a small marker on the bar's envelope, never a banner over the shop.
   useEffect(() => {
-    if (splash || useSession.getState().pjoysPinged) return;
+    if (!FEATURES.mobilePjoysNotice || splash || useSession.getState().pjoysPinged) return;
     const t = window.setTimeout(() => {
       useSession.getState().markPjoys();
-      setPing(true);
       play('ping');
     }, 6000);
     return () => window.clearTimeout(t);
@@ -77,7 +78,7 @@ export default function MobileShell() {
   }, [notice]);
 
   const open = (o: Overlay) => {
-    if (o === 'chat') setPing(false);
+    if (o === 'chat') useSession.getState().markPjoysRead();
     setGame(null);
     setOverlay(o);
     content.current?.scrollTo(0, 0);
@@ -95,6 +96,18 @@ export default function MobileShell() {
   else if (path === '/search') title = 'IYS MOBILE › SEARCH';
   else if (path === '/favorites') title = 'IYS MOBILE › FAVORITES';
   else if (path === '/stores') title = 'IYS MOBILE › STORES';
+
+  // A bar key always lands on its screen: closes any overlay first; same screen → back to its top.
+  const goKey = (to: string) => {
+    play('click');
+    setOverlay(null);
+    setGame(null);
+    if (path === to && !overlay) content.current?.scrollTo(0, 0);
+    else navigate(to);
+  };
+  let current: BarKey | null = null;
+  if (overlay === 'chat') current = 'msg';
+  else if (!overlay) current = path === '/shop' ? 'shop' : path === '/search' ? 'search' : path === '/favorites' ? 'favs' : path === '/stores' ? 'stores' : null;
 
   const back = () => {
     play('click');
@@ -138,7 +151,17 @@ export default function MobileShell() {
         <div className="m-realbar">
           <RealSwitch />
         </div>
-        <p className="m-title">{title}</p>
+        <MBar
+          title={title}
+          current={current}
+          counts={{ shop: cat?.products.length, stores: storesData.storeCount }}
+          unread={unread}
+          onKey={goKey}
+          onMessages={() => {
+            play('click');
+            open('chat');
+          }}
+        />
       </header>
       {toast && (
         <p className="m-toast" role="status">
@@ -154,7 +177,7 @@ export default function MobileShell() {
         {overlay === 'games' && <MGames game={game} setGame={setGame} close={() => setOverlay(null)} />}
         <div className="m-routes" hidden={Boolean(overlay)}>
           <Routes>
-            <Route path="/" element={<MHome open={open} pjoysPing={ping} active={!overlay} />} />
+            <Route path="/" element={<MHome open={open} active={!overlay} />} />
             <Route path="/shop" element={<MList open={open} />} />
             <Route path="/collections/:handle" element={<MList open={open} />} />
             <Route path="/search" element={<MSearch />} />

@@ -47,10 +47,17 @@ export const usePreferences = create<Preferences>()(
 interface SessionState {
   bootSeen: boolean;
   welcomeSeen: boolean;
+  /** PJOYS has texted this session ("u awake?"). */
   pjoysPinged: boolean;
+  /** …and that conversation has been opened since. Unread = pinged && !read. */
+  pjoysRead: boolean;
+  /** IYS MOBILE welcome.htm is minimised to its title bar (restored from that same bar). */
+  welcomeMinimized: boolean;
   markBoot: () => void;
   markWelcome: () => void;
   markPjoys: () => void;
+  markPjoysRead: () => void;
+  setWelcomeMinimized: (min: boolean) => void;
 }
 
 /** sessionStorage: boot plays once per browser session. */
@@ -60,10 +67,27 @@ export const useSession = create<SessionState>()(
       bootSeen: false,
       welcomeSeen: false,
       pjoysPinged: false,
+      pjoysRead: false,
+      welcomeMinimized: false,
       markBoot: () => set({ bootSeen: true }),
       markWelcome: () => set({ welcomeSeen: true }),
       markPjoys: () => set({ pjoysPinged: true }),
+      markPjoysRead: () => set({ pjoysRead: true }),
+      setWelcomeMinimized: (welcomeMinimized) => set({ welcomeMinimized }),
     }),
-    { name: 'iys2006.session', storage: session, version: 1, partialize: ({ bootSeen, welcomeSeen, pjoysPinged }) => ({ bootSeen, welcomeSeen, pjoysPinged }) },
+    {
+      name: 'iys2006.session',
+      storage: session,
+      version: 1,
+      partialize: ({ bootSeen, welcomeSeen, pjoysPinged, pjoysRead, welcomeMinimized }) => ({ bootSeen, welcomeSeen, pjoysPinged, pjoysRead, welcomeMinimized }),
+      // Sessions saved before `pjoysRead` existed never kept an unread marker across reloads: treat them as read.
+      merge: (persisted, current) => {
+        const p = (persisted ?? {}) as Partial<SessionState>;
+        return { ...current, ...p, pjoysRead: p.pjoysRead ?? Boolean(p.pjoysPinged) };
+      },
+    },
   ),
 );
+
+/** The one PJOYS unread state for both shells: texted this session and not opened since. */
+export const usePjoysUnread = () => useSession((s) => s.pjoysPinged && !s.pjoysRead);

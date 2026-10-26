@@ -6,7 +6,17 @@ import { concept } from '../../data/copy';
 import type { Win } from '../../state/os';
 
 const TOPICS = ['Order question', 'Delivery', 'Product question', 'Payment', 'Store question', 'Other'] as const;
-type Phase = 'idle' | 'sending' | 'sent' | 'error';
+type Phase = 'idle' | 'sending' | 'sent' | 'error' | 'not-connected';
+
+/** One key per draft: a double click, or a retry after a lost response, can't send the same mail twice. */
+const newDraftKey = () => (typeof crypto !== 'undefined' && 'randomUUID' in crypto ? crypto.randomUUID() : `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 12)}`);
+
+/** The honest fallback: the customer's own mail app, prefilled. It sends nothing by itself. */
+function mailtoHref(f: { name: string; email: string; order: string; topic: string; subject: string; message: string }) {
+  const details = [`Name: ${f.name}`, `Email: ${f.email}`, f.order && `Order: ${f.order}`, f.topic && `Topic: ${f.topic}`].filter(Boolean);
+  const body = [f.message, '', ...details].join('\n').slice(0, 1800);
+  return `mailto:${SUPPORT_EMAIL_TO}?subject=${encodeURIComponent(f.subject || 'IYS question')}&body=${encodeURIComponent(body)}`;
+}
 
 /**
  * IYS MAIL — the retro support mail client. Sends a REAL email to
@@ -15,10 +25,15 @@ type Phase = 'idle' | 'sending' | 'sent' | 'error';
  */
 export default function Mail({ win }: { win: Win }) {
   const id = useId();
-  const [f, setF] = useState({ email: '', name: '', order: '', topic: '', subject: '', message: '', website: '' });
+  // Another app can open IYS MAIL with a topic + subject already filled in (e.g. SIZE GUIDE → sizing question).
+  const [f, setF] = useState(() => {
+    const topic = String(win.props.topic ?? '');
+    return { email: '', name: '', order: '', topic: (TOPICS as readonly string[]).includes(topic) ? topic : '', subject: String(win.props.subject ?? '').slice(0, 120), message: '', website: '' };
+  });
   const [phase, setPhase] = useState<Phase>('idle');
   const [error, setError] = useState('');
   const busy = useRef(false);
+  const draftKey = useRef(newDraftKey());
   const set = (k: keyof typeof f) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => setF((s) => ({ ...s, [k]: e.target.value }));
 
   const send = async (e: React.FormEvent) => {
@@ -28,9 +43,10 @@ export default function Mail({ win }: { win: Win }) {
     setPhase('sending');
     setError('');
     try {
-      const res = await fetch(SUPPORT_EMAIL_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(f) });
-      const body = (await res.json().catch(() => null)) as { ok?: boolean; error?: string } | null;
+      const res = await fetch(SUPPORT_EMAIL_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-Idempotency-Key': draftKey.current }, body: JSON.stringify(f) });
+      const body = (await res.json().catch(() => null)) as { ok?: boolean; error?: string; reason?: string } | null;
       if (res.ok && body?.ok === true) setPhase('sent');
+      else if (res.status === 503 && body?.reason === 'not-connected') setPhase('not-connected');
       else {
         setError(body?.error ?? concept.mail.failed);
         setPhase('error');
@@ -43,7 +59,7 @@ export default function Mail({ win }: { win: Win }) {
     }
   };
 
-  const status = phase === 'sending' ? concept.mail.sending : phase === 'sent' ? concept.mail.done : phase === 'error' ? `${concept.mail.errorTitle} ${error}` : 'Ready.';
+  const status = phase === 'sending' ? concept.mail.sending : phase === 'sent' ? concept.mail.done : phase === 'error' ? `${concept.mail.errorTitle} ${error}` : phase === 'not-connected' ? concept.mail.notConnectedStatus : 'Ready.';
 
   return (
     <Window
@@ -73,6 +89,7 @@ export default function Mail({ win }: { win: Win }) {
               data-autofocus
               onClick={() => {
                 setF((s) => ({ ...s, subject: '', message: '', order: '' }));
+                draftKey.current = newDraftKey();
                 setPhase('idle');
               }}
             >
@@ -122,14 +139,35 @@ export default function Mail({ win }: { win: Win }) {
             <input id={`${id}-website`} tabIndex={-1} autoComplete="off" value={f.website} onChange={set('website')} />
           </div>
           {phase === 'error' && (
-            <p className="mail__error" role="alert">
-              <Icon name="error" size={16} /> {concept.mail.errorTitle} {error}
-            </p>
+            <div className="mail__error" role="alert">
+              <p>
+                <Icon name="error" size={16} /> {concept.mail.errorTitle} {error}
+              </p>
+              <p className="mail__fallback">
+                {concept.mail.orOpenApp}{' '}
+                <a href={mailtoHref(f)} className="link">
+                  {concept.mail.openApp}
+                </a>
+              </p>
+            </div>
+          )}
+          {phase === 'not-connected' && (
+            <div className="mail__error mail__error--offline" role="alert">
+              <p>
+                <Icon name="warning" size={16} /> <b>{concept.mail.notConnectedTitle}</b>
+              </p>
+              <p>{concept.mail.notConnected}</p>
+              <p>
+                <a href={mailtoHref(f)} className="btn btn--go mail__openapp">
+                  {concept.mail.openApp}
+                </a>
+              </p>
+            </div>
           )}
           <div className="mail__foot">
             <small className="muted">{concept.mail.note}</small>
             <button type="submit" className="btn btn--go" disabled={phase === 'sending'}>
-              {phase === 'sending' ? concept.mail.sending : phase === 'error' ? concept.mail.retry : concept.mail.send}
+              {phase === 'sending' ? concept.mail.sending : phase === 'error' || phase === 'not-connected' ? concept.mail.retry : concept.mail.send}
             </button>
           </div>
         </form>

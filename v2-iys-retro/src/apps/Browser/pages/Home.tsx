@@ -1,3 +1,4 @@
+import { useLayoutEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router';
 import { Icon } from '../../../components/os/Icon';
 import { PageLoading } from '../../../components/shop/PageLoading';
@@ -5,7 +6,7 @@ import { Price, SaleBadge } from '../../../components/shop/Price';
 import { RemoteImage } from '../../../components/shop/RemoteImage';
 import { EssentialLinks } from '../../../components/shop/EssentialLinks';
 import { assets, brand, campaign, curation, localImage, pick } from '../../../data/assets';
-import { concept, official, OFFICIAL_VERIFIED_ON } from '../../../data/copy';
+import { ANNOUNCEMENT_VERIFIED_ON, concept, official, OFFICIAL_VERIFIED_ON } from '../../../data/copy';
 import { BUDDIES, MENU } from '../../../data/taxonomy';
 import storesData from '../../../data/stores.generated.json';
 import { collectionProducts } from '../../../lib/catalogue/hydrate';
@@ -13,6 +14,8 @@ import { formatCount } from '../../../lib/catalogue/format';
 import { useCatalogue } from '../../../lib/catalogue/load';
 import type { Product } from '../../../lib/catalogue/types';
 import { usePage } from '../../../lib/usePage';
+import { buildShelves, HOME_SHELVES, type Shelf } from '../../../lib/merch';
+import { FEATURES } from '../../../config/features';
 import { collectionPath, productPath } from '../../../lib/useBrowse';
 import { useOS } from '../../../state/os';
 import { openChat } from '../../Messenger/nav';
@@ -26,6 +29,36 @@ function Img({ p, local = true, size = 240 }: { p: Product; local?: boolean; siz
   );
 }
 
+/** A home shelf: one of IYS's own collections, same look as JUST DROPPED. */
+function ShelfBox({ shelf }: { shelf: Shelf }) {
+  return (
+    <section className="box box--shelf" aria-labelledby={`shelf-${shelf.handle}`}>
+      <h2 className="box__title" id={`shelf-${shelf.handle}`}>
+        {shelf.title.toUpperCase()} <small>{shelf.note}</small>
+      </h2>
+      <ul className="strip">
+        {shelf.products.map((p) => (
+          <li key={p.handle}>
+            <Link to={productPath(p.handle)}>
+              <span className="strip__media">
+                <Img p={p} local={false} size={240} />
+                {p.onSale && <SaleBadge />}
+              </span>
+              <span>{p.title}</span>
+            </Link>
+            <Price price={p.price} compareAt={p.compareAtPrice} />
+          </li>
+        ))}
+      </ul>
+      <p className="box__more">
+        <Link to={collectionPath(shelf.handle)}>
+          see all {formatCount(shelf.count)} in {shelf.title.toUpperCase()} ›
+        </Link>
+      </p>
+    </section>
+  );
+}
+
 export function WebBadge({ label, sub, tone = 'blue' }: { label: string; sub?: string; tone?: 'blue' | 'coral' | 'green' | 'ink' }) {
   return (
     <span className={`badge88 badge88--${tone}`}>
@@ -35,9 +68,45 @@ export function WebBadge({ label, sub, tone = 'blue' }: { label: string; sub?: s
   );
 }
 
+/**
+ * "Show a little of what comes next": in the page's first screen the FW27
+ * hero gives up just enough height for JUST DROPPED's title and the top row
+ * of its photos to show below it. Layout only: nothing scrolls, nothing is
+ * hidden, and the hero keeps its natural size whenever the window has room.
+ */
+const PEEK = 112;
+const HERO_MIN = 140;
+const SHORT_BELOW = 640;
+function useFoldPeek(ready: boolean) {
+  const portal = useRef<HTMLDivElement>(null);
+  const hero = useRef<HTMLElement>(null);
+  const [short, setShort] = useState(false);
+  useLayoutEffect(() => {
+    const root = portal.current;
+    const fig = hero.current;
+    const page = root?.closest<HTMLElement>('.win__scroll');
+    if (!root || !fig || !page) return;
+    const fit = () => {
+      setShort(page.clientHeight < SHORT_BELOW);
+      const top = fig.getBoundingClientRect().top - page.getBoundingClientRect().top + page.scrollTop;
+      const caption = fig.querySelector('figcaption')?.getBoundingClientRect().height ?? 0;
+      const natural = (fig.clientWidth * 806) / 1920;
+      const room = page.clientHeight - top - caption - 12 - PEEK;
+      fig.style.setProperty('--hero-h', `${Math.round(Math.max(HERO_MIN, Math.min(natural, room)))}px`);
+    };
+    const ro = new ResizeObserver(fit);
+    ro.observe(page);
+    root.querySelectorAll('.portal__head, .portal__cta').forEach((el) => ro.observe(el));
+    fit();
+    return () => ro.disconnect();
+  }, [ready]);
+  return { portal, hero, short };
+}
+
 export default function Home() {
   const cat = useCatalogue();
   const navigate = useNavigate();
+  const fold = useFoldPeek(Boolean(cat));
   usePage('IN YOUR SHOE | The Coolest Apparel In Town!', cat ? `${formatCount(cat.products.length)} products found.` : 'Opening page...');
   if (!cat) return <PageLoading label="Connecting to www.inyourshoe.com..." />;
 
@@ -45,11 +114,15 @@ export default function Home() {
   const newest = collectionProducts(cat, 'newest').slice(0, 6);
   const pjoys = collectionProducts(cat, 'pjoys');
   const cairo = pick(cat, curation.cairo).slice(0, 4);
+  const shelves = FEATURES.homeShelves
+    ? buildShelves(cat, HOME_SHELVES, { exclude: [...newest, ...top8, ...pjoys.slice(0, 6), ...cairo].map((p) => p.handle), per: 6 })
+    : [];
+  const shelf = (i: number) => (shelves[i] ? <ShelfBox key={shelves[i].handle} shelf={shelves[i]} /> : null);
   const fw = campaign('fw27-2');
   const zed = campaign('zed-1');
 
   return (
-    <div className="page portal">
+    <div ref={fold.portal} className={`page portal${fold.short ? ' portal--short' : ''}`}>
       <header className="portal__head">
         <img className="portal__logo" src={brand.wordmark} alt="In Your Shoe" width={346} height={114} />
         <div className="portal__tag">
@@ -59,10 +132,10 @@ export default function Home() {
           <p className="portal__sub">{official.coolestApparel}</p>
         </div>
       </header>
-      <div className="portal__announce" title={`Announcement bar on inyourshoe.com, ${OFFICIAL_VERIFIED_ON}. Offers change - check the real site.`}>
+      <div className="portal__announce" title={`Announcement bar on inyourshoe.com, ${ANNOUNCEMENT_VERIFIED_ON}. Offers change - check the real site.`}>
         <span>{official.sameDay}</span>
-        <span>{official.freeShipping} EGP</span>
-        <span className="portal__announce-note">as announced on inyourshoe.com · {OFFICIAL_VERIFIED_ON}</span>
+        <span>{official.freeShipping}</span>
+        <span className="portal__announce-note">as announced on inyourshoe.com · {ANNOUNCEMENT_VERIFIED_ON}</span>
       </div>
       <div className="marquee">
         <p className="sr-only">New stuff, Pjoys, Fluffy Pjoys, hoodies, socks, Cairo, IYS × ZED, women, kids.</p>
@@ -117,7 +190,7 @@ export default function Home() {
             </div>
           </section>
           {fw && (
-            <figure className="hero">
+            <figure className="hero hero--fold" ref={fold.hero}>
               <button type="button" className="hero__img" onClick={() => navigate('/collections/newest')} aria-label="Open New Stuff (FW27)">
                 <img src={fw.src} alt="In Your Shoe FW27 campaign: two models in brown hoodies beside old computers" width={fw.width} height={fw.height} />
               </button>
@@ -126,6 +199,28 @@ export default function Home() {
               </figcaption>
             </figure>
           )}
+
+          <section className="box box--drop" aria-labelledby="portal-drop-title">
+            <h2 className="box__title" id="portal-drop-title">
+              {concept.y2k.justDropped.toUpperCase()} <span className="new-flag">NEW!</span> <small>from IYS’s own Newest collection</small>
+            </h2>
+            <ul className="strip">
+              {newest.map((p) => (
+                <li key={p.handle}>
+                  <Link to={productPath(p.handle)}>
+                    <span className="strip__media">
+                      <Img p={p} local={false} size={240} />
+                    </span>
+                    <span>{p.title}</span>
+                  </Link>
+                  <Price price={p.price} compareAt={p.compareAtPrice} />
+                </li>
+              ))}
+            </ul>
+            <p className="box__more">
+              <Link to="/collections/newest">omg see all {formatCount(cat.collections.get('newest')?.count ?? 0)} new drops :) ›</Link>
+            </p>
+          </section>
 
           <section className="box">
             <h2 className="box__title box__title--coral">
@@ -151,27 +246,9 @@ export default function Home() {
             </p>
           </section>
 
-          <section className="box">
-            <h2 className="box__title">
-              NEW STUFF <span className="new-flag">NEW!</span> <small>from IYS’s own Newest collection</small>
-            </h2>
-            <ul className="strip">
-              {newest.map((p) => (
-                <li key={p.handle}>
-                  <Link to={productPath(p.handle)}>
-                    <span className="strip__media">
-                      <Img p={p} local={false} size={240} />
-                    </span>
-                    <span>{p.title}</span>
-                  </Link>
-                  <Price price={p.price} compareAt={p.compareAtPrice} />
-                </li>
-              ))}
-            </ul>
-            <p className="box__more">
-              <Link to="/collections/newest">omg see all {formatCount(cat.collections.get('newest')?.count ?? 0)} new drops :) ›</Link>
-            </p>
-          </section>
+
+          {shelf(0)}
+          {shelf(1)}
 
           <section className="box box--pjoys">
             <h2 className="box__title">
@@ -197,6 +274,9 @@ export default function Home() {
             </p>
           </section>
 
+          {shelf(2)}
+          {shelf(3)}
+
           <section className="box box--cairo">
             <h2 className="box__title">
               C:\IYS\CAIRO\ <span lang="ar" dir="rtl" className="arabic">القاهرة</span>
@@ -218,6 +298,8 @@ export default function Home() {
               <Link to="/collections/cairo">{concept.y2k.shopCairo(formatCount(cat.collections.get('cairo')?.count ?? 0))}</Link>
             </p>
           </section>
+
+          {shelf(4)}
 
           {zed && (
             <figure className="hero hero--small">

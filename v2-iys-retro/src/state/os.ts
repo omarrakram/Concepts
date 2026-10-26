@@ -16,7 +16,8 @@ export type AppId =
   | 'exchange'
   | 'essentials'
   | 'games'
-  | 'game';
+  | 'game'
+  | 'sizeguide';
 
 export interface Rect {
   x: number;
@@ -42,7 +43,9 @@ export type Dialog =
   | { kind: 'welcome' }
   | { kind: 'error'; title: string; message: string; action?: { label: string; handle: string } }
   | { kind: 'confirm-reset' }
-  | { kind: 'info'; title: string; lines: string[] };
+  | { kind: 'info'; title: string; lines: string[] }
+  /** "HAVING A HARD TIME?": the escape route to the real store (src/lib/frustration.ts). */
+  | { kind: 'escape' };
 
 export interface Balloon {
   id: string;
@@ -56,12 +59,13 @@ export interface Balloon {
 /** Sensible default geometry per app, clamped to the desktop (taskbar excluded). */
 export function defaultRect(app: AppId, desk: { w: number; h: number }, stack: number): Rect {
   const sizes: Record<AppId, [number, number]> = {
-    internet: [Math.min(1120, desk.w * 0.74), Math.min(780, desk.h * 0.9)],
+    // Taller than the other apps: the shop page gets the whole first screen (hero + the JUST DROPPED peek).
+    internet: [Math.min(1120, desk.w * 0.74), Math.min(860, desk.h - 24)],
     messenger: [268, Math.min(520, desk.h * 0.72)],
     wardrobe: [Math.min(820, desk.w * 0.62), Math.min(560, desk.h * 0.78)],
     camera: [Math.min(800, desk.w * 0.6), Math.min(580, desk.h * 0.82)],
     viewer: [Math.min(760, desk.w * 0.56), Math.min(640, desk.h * 0.9)],
-    bag: [400, Math.min(540, desk.h * 0.8)],
+    bag: [420, Math.min(640, desk.h * 0.86)],
     control: [520, Math.min(520, desk.h * 0.82)],
     mail: [500, 500],
     readme: [420, 320],
@@ -72,6 +76,7 @@ export function defaultRect(app: AppId, desk: { w: number; h: number }, stack: n
     essentials: [380, Math.min(470, desk.h * 0.8)],
     games: [Math.min(700, desk.w * 0.6), Math.min(520, desk.h * 0.8)],
     game: [Math.min(640, desk.w * 0.6), Math.min(700, desk.h * 0.94)],
+    sizeguide: [Math.min(620, desk.w * 0.5), Math.min(520, desk.h * 0.8)],
   };
   const [w0, h0] = sizes[app];
   const w = Math.round(Math.min(w0, desk.w - 16));
@@ -80,6 +85,8 @@ export function defaultRect(app: AppId, desk: { w: number; h: number }, stack: n
     internet: [desk.w * 0.13, 12],
     messenger: [desk.w - w - 24, 24],
     bag: [desk.w - w - 36, desk.h - h - 20],
+    // beside the product page, so the chart and the size picker are both in view
+    sizeguide: [desk.w - w - 24, 40],
   };
   const [ax, ay] = anchors[app] ?? [(desk.w - w) / 2, (desk.h - h) / 2.4];
   const offset = (stack % 6) * 26;
@@ -105,6 +112,8 @@ interface OSState {
   /** Transient taskbar/OS status line (e.g. "WALLPAPER UPDATED xo"). */
   notice: { text: string; at: number } | null;
   startOpen: boolean;
+  /** Where the IYS menu was opened from: the taskbar button, or the top strip's MENU button. */
+  startAnchor: 'taskbar' | 'top';
   setDesk: (w: number, h: number) => void;
   open: (app: AppId, opts?: { id?: string; title?: string; props?: Record<string, unknown>; maximized?: boolean; focus?: boolean }) => string;
   close: (id: string) => void;
@@ -121,7 +130,7 @@ interface OSState {
   showDialog: (d: Dialog | null) => void;
   showBalloon: (b: Balloon | null) => void;
   notify: (text: string) => void;
-  setStart: (open: boolean) => void;
+  setStart: (open: boolean, anchor?: 'taskbar' | 'top') => void;
 }
 
 export const TITLES: Record<AppId, string> = {
@@ -141,6 +150,7 @@ export const TITLES: Record<AppId, string> = {
   essentials: 'IYS ESSENTIALS',
   games: 'IYS GAMES',
   game: 'IYS GAME',
+  sizeguide: 'SIZE GUIDE',
 };
 
 const topActive = (windows: Win[]) =>
@@ -155,6 +165,7 @@ export const useOS = create<OSState>()((set, get) => ({
   balloon: null,
   notice: null,
   startOpen: false,
+  startAnchor: 'taskbar',
   setDesk: (w, h) =>
     set((s) => ({
       desk: { w, h },
@@ -218,5 +229,5 @@ export const useOS = create<OSState>()((set, get) => ({
   showDialog: (dialog) => set({ dialog }),
   showBalloon: (balloon) => set({ balloon }),
   notify: (text) => set({ notice: { text, at: Date.now() } }),
-  setStart: (startOpen) => set({ startOpen }),
+  setStart: (startOpen, anchor) => set((s) => ({ startOpen, startAnchor: startOpen ? anchor ?? 'taskbar' : s.startAnchor })),
 }));
