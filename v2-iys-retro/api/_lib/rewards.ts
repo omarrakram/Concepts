@@ -119,6 +119,7 @@ const TICKET_MAX_AGE = 3 * 3600_000;
 const ACTIVE_TTL = 5 * 60_000;
 const used = new Map<string, number>();
 let active: { at: number; ids: Set<string> } | null = null;
+let checking: Promise<Set<string>> | null = null;
 const claimLimiter = createRateLimiter(5, 10 * 60_000);
 const ticketLimiter = createRateLimiter(30, 10 * 60_000);
 
@@ -126,6 +127,7 @@ const ticketLimiter = createRateLimiter(30, 10 * 60_000);
 export function resetRewards() {
   used.clear();
   active = null;
+  checking = null;
 }
 
 interface Deps {
@@ -139,20 +141,26 @@ const today = (t: number) => new Date(t).toISOString().slice(0, 10);
 async function liveIds(env: RewardsEnv, rewards: RewardConfig[], deps: Deps): Promise<Set<string>> {
   const now = (deps.now ?? Date.now)();
   if (active && now - active.at < ACTIVE_TTL) return active.ids;
-  const cfg = shopifyConfig(env);
-  const ids = new Set<string>();
-  for (const r of rewards) {
-    if (cfg.admin) {
-      try {
-        const st = await codeStatus(cfg, r.code, deps.fetcher, new Date(now));
-        if (st?.active) ids.add(r.id);
-      } catch {
-        /* unverifiable right now → not offered */
-      }
-    } else if (r.merchantConfirmedUntil && today(now) <= r.merchantConfirmedUntil) ids.add(r.id);
-  }
-  active = { at: now, ids };
-  return ids;
+  // One check at a time per instance: a crowd opening the games never fans out to the Admin API.
+  checking ??= (async () => {
+    const cfg = shopifyConfig(env);
+    const ids = new Set<string>();
+    for (const r of rewards) {
+      if (cfg.admin) {
+        try {
+          const st = await codeStatus(cfg, r.code, deps.fetcher, new Date(now));
+          if (st?.active) ids.add(r.id);
+        } catch {
+          /* unverifiable right now → not offered */
+        }
+      } else if (r.merchantConfirmedUntil && today(now) <= r.merchantConfirmedUntil) ids.add(r.id);
+    }
+    active = { at: now, ids };
+    return ids;
+  })().finally(() => {
+    checking = null;
+  });
+  return checking;
 }
 
 export async function handleRewards(req: Request, env: RewardsEnv, deps: Deps = {}): Promise<Response> {

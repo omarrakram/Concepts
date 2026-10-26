@@ -114,6 +114,7 @@ test('JOURNEY C (mobile): بنطلون → real pants, an understood line, add o
   await expect(page.locator('.m-understood')).toContainText('pants');
   await expect(page.locator('.m-meta').first()).toContainText(/\d+ results 4/);
   await page.locator('.m-row').first().click();
+  await expect(page.locator('.m-add')).toBeVisible(); // full product (sizes) loaded before choosing
   const chip = page.locator('.variants__group').first().locator('.chip:not(.is-out) label').first();
   if (await chip.count()) await chip.click();
   if ((await page.locator('.variants__group').count()) > 1) await page.locator('.variants__group').nth(1).locator('.chip:not(.is-out) label').first().click();
