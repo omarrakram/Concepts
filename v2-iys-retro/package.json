@@ -20,6 +20,12 @@
     "frames": "node scripts/frames.mjs",
     "qa:screens": "node scripts/qa-screens.mjs",
     "poster": "node scripts/poster.mjs",
+    "film30": "npm run film30:shoot && npm run film30:audio && npm run film30:render && npm run film30:mux && npm run film30:qa",
+    "film30:shoot": "node scripts/showcase-30/shoot.mjs",
+    "film30:audio": "node scripts/showcase-30/audio.mjs",
+    "film30:render": "node scripts/showcase-30/render.mjs",
+    "film30:mux": "node scripts/showcase-30/mux.mjs",
+    "film30:qa": "node scripts/showcase-30/qa.mjs",
     "load:api": "vitest run --config tests/load/vitest.config.ts",
     "load:static": "node scripts/load-static.mjs"
   },
