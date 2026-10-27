@@ -1,5 +1,13 @@
 # IYS INTERNET 2006: the 30-second showcase film
 
+> **Current film: IYS Retro V2** (`IYS-RETRO-V2-FINAL-30S-1080x1920.mp4`), filmed
+> from `feature/iys-retro-conversion-upgrade` @ `664a8cb` on a wide 1440×900
+> desktop and IYS MOBILE 390×844. Takes `takes-v2/`, edit `edit-v2.mjs`, sound
+> `audio-v2.mjs`; `npm run film-v2` (shoot → audio → render → mux → qa), output in
+> `out/v2-film/`. See `docs/V2_FILM_SOURCE_PROOF.md`, `docs/V2_FILM_TIMELINE.md`
+> and `docs/V2_FILM_NOTES.md`. The rest of this page describes the shared tools
+> and the previous 864×1536 film (`npm run film30`, archived).
+
 A second, separate showcase. The existing 19.2 s `/showcase` route and its
 `record` / `frames` / `poster` scripts are untouched. This film is built only
 from **real frames of the running site**, filmed by a script, then edited and

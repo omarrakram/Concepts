@@ -29,6 +29,12 @@
     "film-v2:source": "node scripts/showcase-30/source-build.mjs",
     "film-v2:verify": "node scripts/showcase-30/verify-site.mjs --url=http://127.0.0.1:4317/",
     "film-v2:proof": "node scripts/showcase-30/shoot.mjs --set=takes-v2 --takes=proof && node scripts/showcase-30/audio-proof.mjs && node scripts/showcase-30/render.mjs --edit=edit-proof.mjs && node scripts/showcase-30/mux.mjs --edit=edit-proof.mjs",
+    "film-v2": "npm run film-v2:shoot && npm run film-v2:audio && npm run film-v2:render && npm run film-v2:mux && npm run film-v2:qa",
+    "film-v2:shoot": "node scripts/showcase-30/shoot.mjs --set=takes-v2 --takes=w-shop,w-explore,w-play,w-morph,w-mobile",
+    "film-v2:audio": "node scripts/showcase-30/audio-v2.mjs",
+    "film-v2:render": "node scripts/showcase-30/render.mjs --edit=edit-v2.mjs",
+    "film-v2:mux": "node scripts/showcase-30/mux.mjs --edit=edit-v2.mjs",
+    "film-v2:qa": "node scripts/showcase-30/qa.mjs --edit=edit-v2.mjs",
     "load:api": "vitest run --config tests/load/vitest.config.ts",
     "load:static": "node scripts/load-static.mjs"
   },

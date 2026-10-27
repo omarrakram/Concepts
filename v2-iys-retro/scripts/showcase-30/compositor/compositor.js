@@ -29,7 +29,7 @@
       img.src = src;
     });
     cache.set(src, p);
-    while (cache.size > 48) {
+    while (cache.size > 20) { // V2 take frames decode to ~47 MB each (4320×2700)
       const [k, old] = cache.entries().next().value;
       cache.delete(k);
       old.then((im) => (im.src = '')).catch(() => {});
@@ -340,6 +340,11 @@
     if (o.rect) {
       roundRect(ctx, o.rect.x, o.rect.y, o.rect.w, o.rect.h, o.rect.r ?? 0);
       ctx.fill();
+      if (o.stroke) {
+        ctx.lineWidth = o.stroke.width;
+        ctx.strokeStyle = o.stroke.color;
+        ctx.stroke();
+      }
     } else ctx.fillRect(0, 0, W, H);
     ctx.restore();
   }

@@ -1,7 +1,7 @@
 /**
- * npm run film30:qa
+ * npm run film30:qa [-- --edit=edit-v2.mjs]
  * Verifies the EXPORTED file (not the timeline config) and writes the
- * supporting deliverables next to it in out/showcase-30/:
+ * supporting deliverables next to it (the edit's OUT_DIR; out/showcase-30/ for the archived film):
  *   validation.json + VALIDATION.md  ffprobe streams, exact frame count, black /
  *                                    frozen-frame scan, loudness, first/last frame
  *   contact-sheet.jpg                one frame per second, timestamped
@@ -11,15 +11,20 @@
  *   frame-first.png, frame-last.png
  */
 import { spawnSync } from 'node:child_process';
-import { mkdirSync, rmSync, writeFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
-import { FPS, FRAMES, SHOTS } from './edit.mjs';
 
+const arg = (k, d) => process.argv.find((x) => x.startsWith(`--${k}=`))?.split('=')[1] ?? d;
+const E = await import(`./${arg('edit', 'edit.mjs')}`);
+const { FPS, FRAMES } = E;
 const ROOT = fileURLToPath(new URL('../..', import.meta.url));
-const OUT = resolve(ROOT, 'out/showcase-30');
-const FILE = resolve(OUT, 'iys-internet-2006-30s-1080x1920.mp4');
+const SHOTS = E.SHOTS ?? E.buildShots(E.loadTakes(resolve(ROOT, E.TAKES_DIR)));
+const OUT = resolve(ROOT, E.OUT_DIR ?? 'out/showcase-30');
+const FILE = resolve(OUT, E.NAME ? `${E.NAME}.mp4` : 'iys-internet-2006-30s-1080x1920.mp4');
+const SECONDS = FRAMES / FPS;
 const TMP = resolve(OUT, 'qa-frames');
 rmSync(TMP, { recursive: true, force: true });
 mkdirSync(TMP, { recursive: true });
@@ -68,13 +73,13 @@ async function sheet(items, out, cols, tw) {
   await sharp({ create: { width: cols * (tw + 6), height: Math.ceil(items.length / cols) * (th + 6), channels: 3, background: '#1a1a1a' } }).composite(tiles).jpeg({ quality: 86 }).toFile(out);
 }
 const ts = (n) => `${String(Math.floor(n / FPS / 60)).padStart(2, '0')}:${(n / FPS % 60).toFixed(2).padStart(5, '0')} f${n}`;
-await sheet(Array.from({ length: 30 }, (_, s) => ({ frame: s * FPS + 30, label: ts(s * FPS + 30) })), resolve(OUT, 'contact-sheet.jpg'), 6, 240);
+await sheet(Array.from({ length: SECONDS }, (_, s) => ({ frame: s * FPS + 30, label: ts(s * FPS + 30) })), resolve(OUT, 'contact-sheet.jpg'), 6, 240);
 await sheet(SHOTS.map((s) => ({ frame: Math.round(s.t0 * FPS), label: `${ts(Math.round(s.t0 * FPS))} ${s.id}` })), resolve(OUT, 'scene-sheet.jpg'), 7, 220);
 
 // ── cover / poster / thumbnail (from the delivered file) ──
-const coverFrame = Math.round(28.8 * FPS);
+const coverFrame = Math.round((E.COVER_AT ?? 28.8) * FPS);
 grab(coverFrame, resolve(OUT, 'cover-1080x1920.png'));
-await sharp(resolve(OUT, 'cover-1080x1920.png')).extract({ left: 0, top: 420, width: 1080, height: 1350 }).jpeg({ quality: 90, mozjpeg: true }).toFile(resolve(OUT, 'poster-1080x1350.jpg'));
+await sharp(resolve(OUT, 'cover-1080x1920.png')).extract({ left: 0, top: E.POSTER_TOP ?? 420, width: 1080, height: 1350 }).jpeg({ quality: 90, mozjpeg: true }).toFile(resolve(OUT, 'poster-1080x1350.jpg'));
 await sharp(resolve(OUT, 'cover-1080x1920.png')).resize(540, 960).jpeg({ quality: 88, mozjpeg: true }).toFile(resolve(OUT, 'thumbnail-540x960.jpg'));
 rmSync(TMP, { recursive: true, force: true });
 
@@ -82,22 +87,29 @@ rmSync(TMP, { recursive: true, force: true });
 const fps = v.r_frame_rate.split('/').map(Number);
 const checks = {
   container: probe.format.format_name.includes('mp4'),
-  duration30: Math.abs(Number(probe.format.duration) - 30) < 0.03,
-  videoDuration30: Math.abs(Number(v.duration) - 30) < 1e-6,
+  duration30: Math.abs(Number(probe.format.duration) - SECONDS) < 0.03,
+  videoDuration30: Math.abs(Number(v.duration) - SECONDS) < 1e-6,
   frames1800: Number(v.nb_read_frames) === FRAMES,
   size1080x1920: v.width === 1080 && v.height === 1920,
   fps60: fps[0] / fps[1] === 60,
   h264: v.codec_name === 'h264',
   yuv420p: v.pix_fmt === 'yuv420p',
   audioPresent: !!a && a.codec_name === 'aac' && Number(a.sample_rate) === 48000 && a.channels === 2,
-  audioDuration30: !!a && Math.abs(Number(a.duration) - 30) < 0.03,
+  audioDuration30: !!a && Math.abs(Number(a.duration) - SECONDS) < 0.03,
+  noSilentGap: silentRanges.every(([s0, s1]) => s0 > SECONDS - 0.6 || s1 - s0 < 0.3),
+  differsFromArchivedFilm: true,
   noBlackRuns: blackRanges.length === 0,
+  noFrozenRuns: frozenRanges.length === 0,
   noFullyBlackFrame: yavg.length === FRAMES && Math.min(...yavg) > 16.5,
   loudness: Math.abs(lufs + 14) <= 1,
   truePeakUnder1: tp <= -1,
 };
+const sha256 = createHash('sha256').update(readFileSync(FILE)).digest('hex');
+const ARCHIVED = resolve(ROOT, 'out/archive/prev-film-864x1536-local-664a8cb/iys-internet-2006-30s-1080x1920.mp4');
+if (E.NAME && existsSync(ARCHIVED)) checks.differsFromArchivedFilm = createHash('sha256').update(readFileSync(ARCHIVED)).digest('hex') !== sha256;
 const report = {
   file: FILE.replace(ROOT, ''),
+  sha256,
   sizeBytes: Number(probe.format.size),
   formatDuration: Number(probe.format.duration),
   bitRate: Number(probe.format.bit_rate),
@@ -112,9 +124,11 @@ const report = {
 };
 writeFileSync(resolve(OUT, 'validation.json'), JSON.stringify(report, null, 2));
 const md = [
-  '# IYS INTERNET 2006 · 30 s showcase · export validation',
+  `# ${E.NAME ?? 'IYS INTERNET 2006 · 30 s showcase'} · export validation`,
   '',
-  `File: \`${report.file}\` (${(report.sizeBytes / 1e6).toFixed(1)} MB, ${(report.bitRate / 1e6).toFixed(1)} Mb/s)`,
+  `File: \`${report.file}\` (${report.sizeBytes.toLocaleString('en-US')} bytes, ${(report.bitRate / 1e6).toFixed(1)} Mb/s)`,
+  '',
+  `sha256: \`${sha256}\``,
   '',
   '| Check | Result |',
   '| --- | --- |',

@@ -26,8 +26,8 @@ const stills = arg('stills', null);
 const from = Number(arg('from', '0'));
 const to = Number(arg('to', String(FRAMES)));
 
-checkShots();
 const takes = loadTakes(TAKES);
+checkShots(takes);
 const planner = makePlanner(takes, { base: 'http://film.local' });
 
 const TYPES = { '.html': 'text/html', '.js': 'text/javascript', '.jpg': 'image/jpeg', '.png': 'image/png', '.svg': 'image/svg+xml', '.webp': 'image/webp' };

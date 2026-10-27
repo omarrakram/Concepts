@@ -46,7 +46,7 @@ export function wideOps({ v, prev, next, src, vw, vh, dsf, W, H, meta, power = 1
     const desk = screen.y + screen.h + chin * 3.75;
     if (desk < H && power > 0) {
       const rh = screen.h * 0.55;
-      ops.push({ op: 'image', src, flipY: true, dx: screen.x + screen.w * 0.03, dy: desk + 6 * v.s, dw: screen.w * 0.94, dh: rh, alpha: 0.2 * Math.min(1, power * 1.5), blur: 2 });
+      ops.push({ op: 'image', src, flipY: true, dx: screen.x + screen.w * 0.03, dy: desk + 6 * v.s, dw: screen.w * 0.94, dh: rh, alpha: 0.3 * Math.min(1, power * 1.5), blur: 2 });
       ops.push({ op: 'gradient', y0: desk, y1: desk + rh + 8 * v.s, stops: [[0, 'rgba(2,5,12,0.15)'], [0.55, 'rgba(2,5,12,0.85)'], [1, 'rgba(2,5,12,1)']] });
     }
     ops.push({ op: 'monitor', ...screen, bezel: 30 * v.s, chin, r: 16 * v.s, alpha: a, led: 0.9 });
@@ -69,12 +69,17 @@ export function wideOps({ v, prev, next, src, vw, vh, dsf, W, H, meta, power = 1
     const op = { op: 'image', src, sx: ix0 * dsf, sy: iy0 * dsf, sw: (ix1 - ix0) * dsf, sh: (iy1 - iy0) * dsf, dx: dest.x, dy: dest.y, dw: dest.w, dh: dest.h, clip: { ...toOut(v, 0, 0, vw, vh), r: 0 } };
     if (brightness) op.brightness = brightness;
     if (prev && next) {
-      // motion blur along the camera path: a 90° shutter (a quarter of one frame's travel), enough to
-      // smooth fast moves while UI text stays readable
-      const dx = ((next.x0 - prev.x0) / 4) * dsf;
-      const dy = ((next.y0 - prev.y0) / 4) * dsf;
-      const dz = (next.s ? prev.s / next.s - 1 : 0) / 4;
-      const px = Math.hypot(dx / dsf, dy / dsf) * v.s;
+      // motion blur along the camera path: a 90° shutter (a quarter of one frame's travel);
+      // smooth fast moves while UI text stays readable; streaks are capped at 18 px, zooms at 1.5 %
+      let dx = ((next.x0 - prev.x0) / 4) * dsf;
+      let dy = ((next.y0 - prev.y0) / 4) * dsf;
+      const dz = Math.max(-0.015, Math.min(0.015, (next.s ? prev.s / next.s - 1 : 0) / 4));
+      let px = Math.hypot(dx / dsf, dy / dsf) * v.s;
+      if (px > 18) {
+        dx *= 18 / px;
+        dy *= 18 / px;
+        px = 18;
+      }
       if (px > 4 || Math.abs(dz) > 0.01) op.motion = { n: Math.min(10, 3 + Math.round(px / 6)), dx, dy, dz };
     }
     ops.push(op);

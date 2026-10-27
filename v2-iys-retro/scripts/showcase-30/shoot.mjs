@@ -3,7 +3,8 @@
  * written as numbered frames + take.json (gitignored).
  *
  * V2 film (wide desktop, the locally reproduced conversion-upgrade source):
- *   node scripts/showcase-30/shoot.mjs --set=takes-v2 --takes=proof [--base=http://127.0.0.1:4317]
+ *   node scripts/showcase-30/shoot.mjs --set=takes-v2 [--takes=w-shop,w-explore] [--base=http://127.0.0.1:4317]
+ *   (default: all five film takes, in the order their storage carries over; --takes=proof for the 5 s proof)
  *   needs out/source/source-build.json (source-build.mjs) and that build served on --base;
  *   refuses to film anything else. Output: out/v2-film/takes/<id>/.
  *
@@ -17,7 +18,7 @@ const arg = (k, d) => process.argv.find((a) => a.startsWith(`--${k}=`))?.split('
 const SET = arg('set', 'takes-v2');
 const V2 = SET === 'takes-v2';
 const BASE = arg('base', V2 ? 'http://127.0.0.1:4317' : 'http://127.0.0.1:4173');
-const ALL = V2 ? ['proof'] : ['desktop-a', 'desktop-b', 'desktop-c', 'morph', 'mobile'];
+const ALL = V2 ? ['w-shop', 'w-explore', 'w-play', 'w-morph', 'w-mobile'] : ['desktop-a', 'desktop-b', 'desktop-c', 'morph', 'mobile'];
 const ids = arg('takes', ALL.join(',')).split(',');
 const OUT = resolve(arg('out', V2 ? 'out/v2-film/takes' : 'out/showcase-30/takes'));
 const SOURCE = resolve(arg('source', 'out/source/source-build.json'));

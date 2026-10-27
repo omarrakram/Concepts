@@ -214,6 +214,7 @@ export async function openTake({ base, dir, viewport, dsf = 2, mobile = false, s
   const meta = []; // per-frame { x, y, cursor, down, touch }
   const marks = {};
   const rects = {};
+  const notes = {}; // facts a take records about itself (e.g. the storage the site wrote), for the takes after it
   let n = 0;
   let ms = 0;
   let lastHash = '';
@@ -255,6 +256,9 @@ export async function openTake({ base, dir, viewport, dsf = 2, mobile = false, s
     },
     mark(name) {
       marks[name] = n;
+    },
+    note(key, value) {
+      notes[key] = value;
     },
     async rect(name, sel, i = 0) {
       rects[name] = await page.evaluate(([s, k]) => window.__film.rect(s, k), [sel, i]);
@@ -350,7 +354,7 @@ export async function openTake({ base, dir, viewport, dsf = 2, mobile = false, s
     async close(info = {}) {
       writeFileSync(
         resolve(dir, 'take.json'),
-        JSON.stringify({ fps: FPS, viewport, dsf, base, source: source && { sha: source.sha, branch: source.branch, indexHtmlMd5: source.indexHtmlMd5, buildDir: source.buildDir }, filmedAt: new Date().toISOString(), frames, meta, marks, rects, external, ...info }, null, 1),
+        JSON.stringify({ fps: FPS, viewport, dsf, base, source: source && { sha: source.sha, branch: source.branch, indexHtmlMd5: source.indexHtmlMd5, buildDir: source.buildDir }, filmedAt: new Date().toISOString(), frames, meta, marks, rects, notes, external, ...info }, null, 1),
       );
       await browser.close();
       if (external.length) console.warn(`[film] ${external.length} non-local requests were blocked`, external.slice(0, 3));
