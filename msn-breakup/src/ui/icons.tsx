@@ -353,3 +353,32 @@ export function Pointer({ size = 20 }: P) {
     </svg>
   );
 }
+
+/** The media player's app mark: a glossy blue disc with a play triangle (an original drawing, not the WMP logo). */
+export function PlayerMark({ size = 16, style }: P) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 20 20" style={{ flex: 'none', ...style }}>
+      <defs>
+        <radialGradient id="pmark" cx="0.35" cy="0.28" r="0.85">
+          <stop offset="0" stopColor="#9fe2ff" />
+          <stop offset="0.5" stopColor="#1f7fe0" />
+          <stop offset="1" stopColor="#0a2f8a" />
+        </radialGradient>
+      </defs>
+      <circle cx="10" cy="10" r="8.6" fill="url(#pmark)" stroke="#0a2a6e" strokeWidth=".9" />
+      <path d="M8 5.8l6 4.2-6 4.2z" fill="#fff" />
+      <ellipse cx="8" cy="5.6" rx="4.6" ry="2" fill="#fff" opacity=".35" />
+    </svg>
+  );
+}
+
+/** The little hourglass of XP's "working in background" pointer (drawn beside the arrow). */
+export function Hourglass({ size = 12 }: P) {
+  return (
+    <svg width={size} height={size * 1.4} viewBox="0 0 10 14" style={{ filter: 'drop-shadow(1px 1px 0.5px rgba(0,0,0,.4))' }}>
+      <path d="M1 .8h8M1 13.2h8" stroke="#000" strokeWidth="1.4" />
+      <path d="M2 1.4h6v2.2L5.6 7 8 10.4v2.2H2v-2.2L4.4 7 2 3.6z" fill="#fff" stroke="#000" strokeWidth=".8" strokeLinejoin="round" />
+      <path d="M3 3.4h4L5 6zM3.2 12h3.6L5 9.4z" fill="#e0a52a" />
+    </svg>
+  );
+}

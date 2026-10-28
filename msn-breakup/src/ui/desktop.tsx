@@ -1,7 +1,7 @@
 import type { CSSProperties } from 'react';
 import { TASKBAR_H, VH, VW } from '../constants';
 import { UI } from '../fonts';
-import { Buddy, DesktopIcon, StartFlag } from './icons';
+import { Buddy, DesktopIcon, PlayerMark, StartFlag } from './icons';
 
 /** His display picture: a moody, slightly over-saturated sunset (the 2007 "deep" DP). */
 export function HisDP({ size }: { size: number }) {
@@ -135,8 +135,12 @@ export function DesktopIcons() {
 
 const TASKBAR = 'linear-gradient(180deg,#3168d5 0%,#4993e6 6%,#2b71e0 14%,#2663da 22%,#2157d6 50%,#245ddb 80%,#2562df 88%,#1d4ec0 96%,#1941a5 100%)';
 
-/** The XP taskbar: Start, quick launch, one button per window, the tray with Messenger + clock. */
-export function Taskbar({ tasks, clock, trayAlert }: { tasks: { label: string; active?: boolean; flash?: boolean; icon?: 'messenger' | 'chat' }[]; clock: string; trayAlert?: boolean }) {
+/**
+ * The XP taskbar: Start, quick launch, one button per window, the tray with Messenger + clock.
+ * A task shows the buddy (Messenger windows) unless it says `icon` ('internet', 'player').
+ * `startPressed`: the Start menu is open.
+ */
+export function Taskbar({ tasks, clock, trayAlert, startPressed }: { tasks: { label: string; active?: boolean; flash?: boolean; icon?: 'messenger' | 'chat' | 'internet' | 'player' }[]; clock: string; trayAlert?: boolean; startPressed?: boolean }) {
   return (
     <div style={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: TASKBAR_H, background: TASKBAR, display: 'flex', alignItems: 'stretch', fontFamily: UI, fontSize: 11, color: '#fff' }}>
       <div
@@ -148,8 +152,8 @@ export function Taskbar({ tasks, clock, trayAlert }: { tasks: { label: string; a
           paddingLeft: 9,
           borderTopRightRadius: 10,
           borderBottomRightRadius: 10,
-          background: 'radial-gradient(circle at 30% 30%, #5fb85f 0%, #379a37 45%, #2b7d2b 100%)',
-          boxShadow: 'inset -2px 0 3px rgba(0,0,0,.35), inset 0 1px 1px rgba(255,255,255,.4)',
+          background: startPressed ? 'radial-gradient(circle at 30% 30%, #3f9a3f 0%, #2b7d2b 45%, #1f611f 100%)' : 'radial-gradient(circle at 30% 30%, #5fb85f 0%, #379a37 45%, #2b7d2b 100%)',
+          boxShadow: startPressed ? 'inset 2px 2px 4px rgba(0,0,0,.45)' : 'inset -2px 0 3px rgba(0,0,0,.35), inset 0 1px 1px rgba(255,255,255,.4)',
           fontFamily: 'Arimo, Arial, sans-serif',
           fontWeight: 700,
           fontStyle: 'italic',
@@ -184,7 +188,7 @@ export function Taskbar({ tasks, clock, trayAlert }: { tasks: { label: string; a
               overflow: 'hidden',
             }}
           >
-            <Buddy size={14} status="online" />
+            {t.icon === 'internet' ? <DesktopIcon kind="internet" size={15} /> : t.icon === 'player' ? <PlayerMark size={15} /> : <Buddy size={14} status="online" />}
             <span style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>{t.label}</span>
           </div>
         ))}

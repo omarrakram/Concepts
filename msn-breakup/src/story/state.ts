@@ -46,7 +46,9 @@ const easeInOut = (u: number) => (u < 0.5 ? 4 * u * u * u : 1 - Math.pow(-2 * u 
 export function keyTimes(b: Extract<Beat, { type: 'her' }>): number[] {
   const n = [...b.text].length;
   const end = b.at - 0.07;
-  const w = Array.from({ length: n }, (_, i) => 0.55 + 0.9 * hash(i + b.from * 31 + n));
+  // the rhythm is seeded by the line's start in the first cut, so moving a line keeps its exact cadence
+  const seed = b.orig?.from ?? b.from;
+  const w = Array.from({ length: n }, (_, i) => 0.55 + 0.9 * hash(i + seed * 31 + n));
   const total = w.reduce((s, v) => s + v, 0);
   let acc = 0;
   return w.map((v) => {

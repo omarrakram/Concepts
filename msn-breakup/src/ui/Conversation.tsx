@@ -108,7 +108,8 @@ const TOOLS: [Parameters<typeof ToolIcon>[0]['kind'], string][] = [
   ['games', 'Games'],
 ];
 
-export function Conversation({ s, nudgePressed }: { s: StoryState; nudgePressed?: boolean }) {
+/** `inactive`: another window has the focus (the later carousel videos), so the title bar greys. */
+export function Conversation({ s, nudgePressed, inactive }: { s: StoryState; nudgePressed?: boolean; inactive?: boolean }) {
   const status = s.himTyping ? `${HIM.name} is typing a message.` : s.received ? `Last message received at ${CLOCK} on ${DATE}.` : '';
   const psm = s.listening ? (
     <span style={{ color: '#6d6d6d', fontStyle: 'italic' }}>
@@ -122,6 +123,7 @@ export function Conversation({ s, nudgePressed }: { s: StoryState; nudgePressed?
     <XPWindow
       title={`${HIM.name} - Conversation`}
       icon={<Buddy size={15} />}
+      inactive={inactive}
       style={{ left: CONVO.x + s.shake.x, top: CONVO.y + s.shake.y, width: CONVO.w, height: CONVO.h }}
       bodyStyle={{ background: '#fff' }}
     >

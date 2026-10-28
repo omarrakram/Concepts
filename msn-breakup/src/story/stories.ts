@@ -3,8 +3,8 @@ import type { Beat, CamKey, CursorKey, Story } from './types';
 /**
  * The breakup, word for word. His lines arrive deliberately (typing notice,
  * then the chime); a silence; then she types, faster and faster, in bursts,
- * until "…". The popup lands, the song starts, and she unravels slower:
- * "i miss u", a nudge, and the last three lines get room to land.
+ * until "…". She unravels slower: "i miss u", a nudge, the last four lines,
+ * and then two more nudges into the silence. He never answers.
  */
 const HIS = ['hey… sry but i think we shud break up :(', 'u mean alot 2 me tho', 'its not u its me', 'dont txt me ok', 'bye x'];
 const HERS = [
@@ -40,8 +40,14 @@ export const SPOT = {
 
 const her = (i: number, from: number, at: number): Beat => ({ type: 'her', from, at, text: HERS[i]! });
 
-export const REEL: Story = {
-  id: 'reel',
+/**
+ * The 2007-10-21 film exactly as first released (commit 38f0d3a): the "is
+ * listening to" popup + song cue at 21.3 s and one nudge. Frozen: the
+ * carousel stills are moments of this cut, and `HeroReelOriginal` re-renders
+ * it for A/B checks. The current film is `REEL` below.
+ */
+export const REEL_ORIGINAL: Story = {
+  id: 'reel-original',
   duration: 33,
   beats: [
     { type: 'signin', at: 0.3 },
@@ -103,6 +109,136 @@ export const REEL: Story = {
     { t: 25.35, x: SPOT.nudge.x, y: SPOT.nudge.y, click: true },
     { t: 26.2, x: SPOT.restNearInput.x, y: SPOT.restNearInput.y },
   ] satisfies CursorKey[],
+};
+
+/**
+ * The film (2026-10-28 cut). Three timing changes from REEL_ORIGINAL, nothing else:
+ *  1. His five lines are 8 % quicker: every interval from the window opening
+ *     (1.0 s) to his last line, typing notices included, is scaled by 0.92.
+ *  2. The "is listening to" popup and its song cue are gone (the song has its
+ *     own carousel video now), so his personal message never changes.
+ *  3. After "no actually" she nudges him twice more (three nudges in all).
+ * Everything after "bye x" (the silence, her spiral, the original nudge) is
+ * the original timing moved 0.56 s earlier (= the time his lines saved), so
+ * her side of the conversation keeps its exact rhythm.
+ */
+export const SAVED = 0.56; // 8.05 s (his last line in the first cut) - 7.49 s (now)
+/** Her line `i` exactly as in the first cut, moved SAVED seconds earlier (same typing rhythm, same key sounds). */
+const moved = (i: number): Beat => {
+  const index = REEL_ORIGINAL.beats.findIndex((b) => b.type === 'her' && b.text === HERS[i]);
+  const b = REEL_ORIGINAL.beats[index] as Extract<Beat, { type: 'her' }>;
+  return { type: 'her', text: b.text, from: +(b.from - SAVED).toFixed(2), at: +(b.at - SAVED).toFixed(2), orig: { from: b.from, index } };
+};
+export const NUDGE_SPOTS = { first: 24.79, rage1: 31.3, rage2: 32.65 };
+
+export const REEL: Story = {
+  id: 'reel',
+  duration: 35,
+  beats: [
+    { type: 'signin', at: 0.3 },
+    { type: 'open', at: 1.0 },
+    // HIM: cold, deliberate (and 8 % quicker than the first cut)
+    { type: 'him', at: 1.83, typing: 0.74, text: HIS[0]! },
+    { type: 'him', at: 3.62, typing: 0.92, text: HIS[1]! },
+    { type: 'him', at: 5.0, typing: 0.83, text: HIS[2]! },
+    { type: 'him', at: 6.29, typing: 0.78, text: HIS[3]! },
+    { type: 'him', at: 7.49, typing: 0.74, text: HIS[4]! },
+    // (silence: the same 1.85 s as the first cut)
+    // HER: the spiral
+    moved(0),
+    moved(1),
+    moved(2),
+    moved(3),
+    moved(4),
+    moved(5),
+    moved(6),
+    moved(7),
+    moved(8),
+    moved(9),
+    moved(10),
+    moved(11),
+    moved(12),
+    moved(13),
+    moved(14),
+    moved(15),
+    moved(16),
+    // the original nudge, at its place between "HELLOOOOO" and "ugh whatever"
+    { type: 'nudge', at: NUDGE_SPOTS.first },
+    moved(17),
+    moved(18),
+    moved(19),
+    moved(20),
+    // "no actually" lands at 30.12; she reads it back, then: nudge, a beat, NUDGE.
+    { type: 'nudge', at: NUDGE_SPOTS.rage1 },
+    { type: 'nudge', at: NUDGE_SPOTS.rage2 },
+    // ...and he still doesn't answer.
+  ],
+  camera: [
+    { t: 0, x: 270, y: 480, z: 1 },
+    { t: 1.09, x: 270, y: 480, z: 1 },
+    { t: 2.2, x: 272, y: 594, z: 1.06 },
+    { t: 7.64, x: 272, y: 594, z: 1.06 },
+    { t: 9.34, x: 232, y: 566, z: 1.22 },
+    { t: 20.14, x: 232, y: 566, z: 1.26 },
+    { t: 20.89, x: 270, y: 480, z: 1 },
+    { t: 23.84, x: 270, y: 480, z: 1 },
+    { t: 24.64, x: 262, y: 590, z: 1.12 },
+    { t: 25.84, x: 262, y: 590, z: 1.12 },
+    { t: 31.2, x: 236, y: 600, z: 1.3 },
+    // the second rage nudge: the camera leans in a notch (the window does the shaking),
+    // drifting left with it so the status line's first letter stays in frame
+    { t: 32.5, x: 226, y: 604, z: 1.36 },
+    { t: 35, x: 226, y: 604, z: 1.36 },
+  ] satisfies CamKey[],
+  cursor: [
+    { t: 0, x: 448, y: 214 },
+    { t: 8.34, x: 452, y: 208 },
+    { t: 9.09, x: SPOT.input.x, y: SPOT.input.y },
+    { t: 9.16, x: SPOT.input.x, y: SPOT.input.y, click: true },
+    { t: 9.64, x: SPOT.restNearInput.x, y: SPOT.restNearInput.y },
+    { t: 24.42, x: SPOT.restNearInput.x, y: SPOT.restNearInput.y },
+    { t: 24.74, x: SPOT.nudge.x, y: SPOT.nudge.y },
+    { t: NUDGE_SPOTS.first, x: SPOT.nudge.x, y: SPOT.nudge.y, click: true },
+    { t: 25.64, x: SPOT.restNearInput.x, y: SPOT.restNearInput.y },
+    // rage nudge #1: straight back to the button
+    { t: 30.98, x: SPOT.restNearInput.x, y: SPOT.restNearInput.y },
+    { t: 31.25, x: SPOT.nudge.x, y: SPOT.nudge.y },
+    { t: NUDGE_SPOTS.rage1, x: SPOT.nudge.x, y: SPOT.nudge.y, click: true },
+    // she never lets go of it: a twitch, and click again
+    { t: 32.05, x: SPOT.nudge.x + 3, y: SPOT.nudge.y + 2 },
+    { t: 32.6, x: SPOT.nudge.x, y: SPOT.nudge.y },
+    { t: NUDGE_SPOTS.rage2, x: SPOT.nudge.x, y: SPOT.nudge.y, click: true },
+  ] satisfies CursorKey[],
+};
+
+/**
+ * The same film recomposed for a 4:5 (1080 × 1350) Instagram carousel: same
+ * beats, same pointer, its own camera over the 540 × 675 part of the screen
+ * that shows. It opens on her contact list (her personal message), drops to
+ * the sign-in toast as the window opens, then keeps the whole conversation
+ * window in frame and pushes in exactly where the 9:16 cut does.
+ */
+export const CAROUSEL_VIEW = { w: 540, h: 675 };
+export const REEL_CAROUSEL: Story = {
+  ...REEL,
+  id: 'reel-carousel',
+  camera: [
+    { t: 0, x: 270, y: 338, z: 1 },
+    { t: 0.35, x: 270, y: 338, z: 1 },
+    { t: 1.05, x: 270, y: 622, z: 1 },
+    { t: 2.2, x: 272, y: 594, z: 1.06 },
+    { t: 7.64, x: 272, y: 594, z: 1.06 },
+    { t: 9.34, x: 232, y: 566, z: 1.22 },
+    { t: 20.14, x: 232, y: 566, z: 1.26 },
+    { t: 20.89, x: 270, y: 594, z: 1 },
+    { t: 23.84, x: 270, y: 594, z: 1 },
+    { t: 24.64, x: 262, y: 590, z: 1.12 },
+    { t: 25.84, x: 262, y: 590, z: 1.12 },
+    // (a little lower than the 9:16 cut, so "Last message received…" stays in the shorter frame)
+    { t: 31.2, x: 236, y: 606, z: 1.3 },
+    { t: 32.5, x: 226, y: 616, z: 1.36 },
+    { t: 35, x: 226, y: 616, z: 1.36 },
+  ],
 };
 
 /** 7 seconds: the sign-in, the dump, her disbelief, a nudge. */

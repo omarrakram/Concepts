@@ -1,12 +1,15 @@
-// npm run cues: the exact music cue and every beat of the reel and teaser,
-// read straight from src/story/stories.ts (so it is always what renders).
+// npm run cues: every beat of every video as time, frame and SMPTE, read straight
+// from the story data (src/story/*.ts), so it is always what renders. Includes the
+// song's placement cue for the music-player video (and its clean export).
 import { fileURLToPath } from 'node:url';
 import { loadTs } from './load-ts.mjs';
 
 const src = (p) => fileURLToPath(new URL(`../src/${p}`, import.meta.url));
 const { FPS } = await loadTs(src('constants.ts'));
-const { REEL, TEASER } = await loadTs(src('story/stories.ts'));
+const { REEL, REEL_CAROUSEL, REEL_ORIGINAL, TEASER } = await loadTs(src('story/stories.ts'));
 const { SONG, HIM, HER } = await loadTs(src('story/cast.ts'));
+const { TUMBLR, TUMBLR_TEXT } = await loadTs(src('story/tumblr.ts'));
+const { PLAYER, PLAY_FRAME, SONG_SOURCE, TRACK } = await loadTs(src('story/player.ts'));
 
 const frame = (s) => Math.round(s * FPS);
 const clock = (s) => {
@@ -20,19 +23,25 @@ const smpte = (s) => {
   const pad = (n) => String(n).padStart(2, '0');
   return `${pad(Math.floor(sec / 3600))}:${pad(Math.floor(sec / 60) % 60)}:${pad(sec % 60)}:${pad(f % FPS)}`;
 };
+const table = (rows, end) => {
+  rows.push([end, 'end']);
+  rows.sort((a, b) => a[0] - b[0]);
+  console.log('\n  time       frame  event');
+  for (const [t, what] of rows) console.log(`  ${clock(t)}  ${String(frame(t)).padStart(5)}  ${what}`);
+};
 
-function sheet(id, story) {
-  console.log(`\n${id}  ${story.duration.toFixed(3)} s · ${frame(story.duration)} frames @ ${FPS} fps · 1080×1920`);
+function film(id, story, size) {
+  console.log(`\n${id}  ${story.duration.toFixed(3)} s · ${frame(story.duration)} frames @ ${FPS} fps · ${size}`);
   const cue = story.beats.find((b) => b.type === 'listening');
   if (cue) {
     console.log(`\n  ♫ MUSIC CUE  “${SONG.title}” by ${SONG.artist}`);
     console.log(`    starts at ${clock(cue.at)}  ·  frame ${frame(cue.at)}  ·  SMPTE ${smpte(cue.at)}`);
     console.log(`    = the frame the “${HIM.name} is listening to” popup starts sliding in.`);
-    console.log(`    Drop a licensed file at public/music/when-youre-gone.(mp3|m4a|wav|aac|ogg) and re-render.`);
   } else {
-    console.log('\n  (no music cue: the teaser ends before the popup)');
+    console.log(`\n  (no music in this video: the song is its own carousel video, MusicPlayerBreakup)`);
   }
   const rows = [];
+  let nudge = 0;
   for (const b of story.beats) {
     if (b.type === 'signin') rows.push([b.at, `${HIM.name} signs in (toast + online chime)`]);
     if (b.type === 'open') rows.push([b.at, 'conversation window opens']);
@@ -44,15 +53,61 @@ function sheet(id, story) {
       rows.push([b.from, `  ${HER.name} starts typing`]);
       rows.push([b.at, `HER  ${b.text}`]);
     }
-    if (b.type === 'nudge') rows.push([b.at, 'NUDGE (window shakes, buzz)']);
+    if (b.type === 'nudge') {
+      const click = story.cursor.some((c) => c.click && Math.abs(c.t - b.at) < 1e-6) ? 'click, ' : '';
+      rows.push([b.at, `NUDGE ${++nudge} (${click}window shakes, buzz, "You have just sent a nudge.")`]);
+    }
     if (b.type === 'listening') rows.push([b.at, `POPUP  ${HIM.name} is listening to “${SONG.title}”  ♫ song starts`]);
   }
-  rows.push([story.duration, 'end']);
-  rows.sort((a, b) => a[0] - b[0]);
-  console.log('\n  time       frame  event');
-  for (const [t, what] of rows) console.log(`  ${clock(t)}  ${String(frame(t)).padStart(5)}  ${what}`);
+  table(rows, story.duration);
 }
 
 console.log('MSN breakup: cue sheet');
-sheet('HeroReel', REEL);
-sheet('Teaser', TEASER);
+film('HeroReel (the film, 9:16 master)', REEL, '1080×1920');
+console.log(`\nBreakupCarousel (carousel slide 1): the same beats as HeroReel, reframed for 4:5 (1080×1350), ${frame(REEL_CAROUSEL.duration)} frames.`);
+
+const T = TUMBLR;
+console.log(`\nTumblrBreakup (carousel slide 2)  ${T.duration.toFixed(3)} s · ${frame(T.duration)} frames @ ${FPS} fps · 1080×1350  (no music)`);
+table(
+  [
+    [T.launch, 'click: Quick Launch → Internet'],
+    [T.shown, `Internet Explorer opens: “Opening page ${TUMBLR_TEXT.formUrl}…”`],
+    [T.loaded, 'the Tumblr text-post form is painted'],
+    [T.titleClick, 'click: Title field'],
+    [T.title.from, '  she starts typing the title'],
+    [T.title.at, `TITLE  ${T.title.text}`],
+    [T.bodyClick, 'click: Post field'],
+    ...T.body.flatMap((b, i) => [
+      [b.from, '  she starts typing'],
+      [b.at, `POST   ${b.text}${i < T.body.length - 1 ? '  (Enter)' : ''}`],
+    ]),
+    [T.create, 'click: Create post'],
+    [T.published, `her blog ${TUMBLR_TEXT.blogUrl} with the post on top`],
+  ],
+  T.duration,
+);
+
+const P = PLAYER;
+const inAt = SONG_SOURCE.inFrames / FPS;
+console.log(`\nMusicPlayerBreakup (carousel slide 3)  ${P.duration.toFixed(3)} s · ${frame(P.duration)} frames @ ${FPS} fps · 1080×1350`);
+console.log(`\n  ♫ SONG CUE  “${SONG.title}” by ${SONG.artist} (the supplied file, public/music/)`);
+console.log(`    starts at ${clock(P.play)}  ·  frame ${PLAY_FRAME}  ·  SMPTE ${smpte(P.play)}  = the frame Play turns to Pause`);
+console.log(`    plays the file from ${inAt.toFixed(3)} s (its first note, ${SONG_SOURCE.firstNote} s, sounds ${((SONG_SOURCE.firstNote - inAt) * 1000).toFixed(0)} ms into frame ${PLAY_FRAME})`);
+console.log(`    fades over the last ${P.fadeOut} s and ends at ${clock(P.duration)} = file ${(inAt + P.duration - P.play).toFixed(3)} s`);
+console.log(`    the player shows 00:00 on frame ${PLAY_FRAME} and a length of ${TRACK.length}`);
+console.log(`    clean export (no song): add the licensed track so its first note lands at ${clock(P.play)} into the clip.`);
+table(
+  [
+    [P.start, 'click: Start (the Start menu opens)'],
+    [P.launch, 'click: Windows Media Player (hourglass while it starts)'],
+    [P.shown, 'Windows Media Player 11 opens: Library ▸ Songs'],
+    [P.select, `click: “${TRACK.title}”, ${TRACK.artist} (selected)`],
+    [P.press, 'mouse down on Play (click)'],
+    [P.play, `PLAY takes effect: Pause, “Playing”, 00:00  ♫ the song begins`],
+    [P.nowPlaying, 'click: Now Playing (the visualisation)'],
+  ],
+  P.duration,
+);
+
+film('Teaser (unchanged)', TEASER, '1080×1920');
+film('HeroReelOriginal (the first cut, kept for A/B)', REEL_ORIGINAL, '1080×1920');

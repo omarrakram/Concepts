@@ -1,47 +1,70 @@
 # Song slot: “When You’re Gone” by Avril Lavigne
 
-No song file is in this repository. The track is copyrighted, so it is not
-sourced, bundled or faked here. Everything in this folder except this README is
-gitignored.
+No song file is in this repository, and none ever will be: everything in this
+folder except this README is gitignored, and `npm run qa` fails if git tracks
+anything else here. The track is copyrighted. It is not downloaded, bundled,
+replaced by a sound-alike or faked.
 
-## How to add it
+The song plays in exactly one place: **carousel slide 3, `MusicPlayerBreakup`**
+(she opens Windows Media Player, selects the song and presses Play). The film
+itself (`HeroReel`, `BreakupCarousel`) has no music at all.
 
-1. Get a copy you have the rights to use for this purpose (e.g. a sync/master
-   licence, or a platform's licensed music library: see "Instagram / TikTok"
-   below).
-2. Save it as **one** of these files:
+## Import the file you were given
 
-   ```
-   public/music/when-youre-gone.mp3
-   public/music/when-youre-gone.m4a
-   public/music/when-youre-gone.wav
-   public/music/when-youre-gone.aac
-   public/music/when-youre-gone.ogg
-   ```
-
-3. Re-render: `npm run render:reel`.
-
-The reel finds the file on its own. The song starts on **frame 639
-(00:00:21.300, SMPTE 00:00:21:09 at 30 fps)**, the exact frame where the
-“karim is listening to” popup starts sliding in. It is audible on that frame (softened over 2 frames),
-stays at 85 % under the effects and fades out over the last second. Without a
-file, the cue stays silent and the rest of the reel is unchanged.
-
-## Options (render props)
-
-```
-npx remotion render src/index.ts HeroReel out/msn-breakup-reel.mp4 \
-  --props='{"songStartSeconds": 0, "songVolume": 0.85}'
+```bash
+npm run import:song -- "/path/to/Avril Lavigne - When You're Gone (Official Video).mp4"
 ```
 
-- `songStartSeconds`: where to start inside the file (e.g. jump to the chorus).
-- `songVolume`: 0 to 1.
-- `cueTone: true`: QA only. Puts a 1 kHz blip exactly on the cue frame, so you
-  can check sync with any waveform viewer.
+This writes, here (gitignored):
 
-## Instagram / TikTok (no file needed)
+| File | What it is |
+| --- | --- |
+| `when-youre-gone.m4a` | the audio stream of your file, **copied untouched** (no re-encode, no pitch or tempo change). An MP3 source becomes `.mp3`; anything else is decoded to lossless `.wav`. |
+| `when-youre-gone-analysis.wav` | the same audio, mono 22.05 kHz PCM. Only the player's visualisation reads it (its spectrum moves the bars). It is never played. |
 
-Render the reel without a song, upload it, and add “When You’re Gone” from the
-app's own music library. Then set the track to start at **0:21.3** in the
-editor, or trim it so the first note lands as the popup appears. `npm run cues`
-prints every timecode.
+It then checks the length against the file the cue points were measured on
+(the official video's audio, 239.258 s). A different file stops the import:
+re-measure its first note and update `SONG_SOURCE` in `src/story/player.ts`.
+
+## The cue
+
+- **The song begins on frame 78 (00:00:02.600, SMPTE 00:00:02:18 at 30 fps):**
+  the first frame on which the Play button shows Pause. The mouse goes down on
+  frame 75 (the click). Nothing of the song plays before frame 78.
+- It plays the file from **4.900 s** (frame 147 of the file). The file opens
+  with 1.9 s of digital silence and a soft swell. Its first note, at 4.903 s,
+  sounds 3 ms into frame 78.
+- Full level from that frame. It fades over the last 0.3 s, into the bar line
+  at file 15.1 s, after the first sung line. The clip ends at 12.8 s.
+- `npm run qa` proves it on the rendered files. In a song-only render, the
+  first non-silent sample is the first sample of frame 78. In the delivered
+  file, the first note is at the Play frame. In the MP4's pixels, the button
+  is ▶ on frame 77 and ❚❚ on frame 78.
+
+Render props (`MusicPlayerBreakup`): `song` (false = the clean export),
+`uiSounds` (false = song only, for checks), `cueTone` (a 1 kHz QA blip on
+frame 78), `songVolume` (0 to 1, default 0.8).
+
+## Rights: read this before posting
+
+**Having the file is not the right to publish it.** Supplying a file for this
+production does not establish public distribution rights. This repository
+makes no claim that the track is licensed, royalty-free or cleared.
+
+- `out/instagram-carousel/03-when-youre-gone-music-player.mp4` contains about
+  10 s of the song. It is for review, or for posting where you hold the
+  rights.
+- `out/instagram-carousel/03-when-youre-gone-music-player-clean.mp4` is the
+  same video with the clicks but **no song**. Use it to add the track from
+  Instagram's own licensed music, when it is available to your account and
+  region. Place the song's first note (the first piano chord after the
+  intro swell) at **0:02.6** of this clip, the moment Play turns to Pause.
+  App editors are not frame-accurate, so the visualisation may run a few
+  frames off the app's copy of the track.
+
+## The first cut
+
+`HeroReelOriginal` (the film as first released, kept for A/B) still has its
+own cue: the song starts on frame 639 (00:00:21.300) with the “karim is
+listening to” popup. It uses the same file and the props `songStartSeconds`,
+`songVolume` and `cueTone`. `npm run cues` prints every timecode.

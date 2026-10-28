@@ -2,7 +2,7 @@ import { AbsoluteFill } from 'remotion';
 import { SCALE, TASKBAR_H, VW } from './constants';
 import { CLOCK } from './story/cast';
 import { SLIDES } from './story/slides';
-import { REEL } from './story/stories';
+import { REEL_ORIGINAL } from './story/stories';
 import { Scene } from './Scene';
 import { DesktopIcons, Taskbar, Wallpaper } from './ui/desktop';
 import { Pointer } from './ui/icons';
@@ -10,9 +10,10 @@ import { SignIn } from './ui/SignIn';
 
 const VIEW = { w: 540, h: 675 };
 
+/** The original carousel stills: moments of the first cut (REEL_ORIGINAL), so they stay exactly as published. */
 export function CarouselStill({ slide }: { slide: number }) {
   const s = SLIDES[Math.max(0, Math.min(SLIDES.length - 1, slide))]!;
-  const story = { ...REEL, camera: [{ t: 0, ...s.cam }] };
+  const story = { ...REEL_ORIGINAL, camera: [{ t: 0, ...s.cam }] };
   return <Scene story={story} t={s.t} view={VIEW} frameSeed={slide * 13 + 5} />;
 }
 

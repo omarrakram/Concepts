@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import { AbsoluteFill } from 'remotion';
 import { SCALE, VH, VW } from './constants';
 import { CLOCK, HER, HIM } from './story/cast';
@@ -19,10 +20,36 @@ import { Toast } from './ui/Toast';
  */
 export function Scene({ story, t, view = { w: VW, h: VH }, frameSeed = 0 }: { story: Story; t: number; view?: { w: number; h: number }; frameSeed?: number }) {
   const s = stateAt(story, t, view);
-  const { x, y, z } = s.camera;
   const convo = s.convoAge !== null;
   const nudgePressed = s.cursor.pressed && Math.hypot(s.cursor.x - SPOT.nudge.x, s.cursor.y - SPOT.nudge.y) < 14;
   const tasks = [{ label: `${HER.name} - MSN Messenger`, active: !convo }, ...(convo ? [{ label: `${HIM.name} - Conversation`, active: true }] : [])];
+  return (
+    <Screen camera={s.camera} view={view} frameSeed={frameSeed}>
+      <Wallpaper />
+      <DesktopIcons />
+      <ContactList inactive={convo} listening={s.listening} />
+      {convo && (
+        <div style={{ opacity: Math.min(1, (s.convoAge ?? 0) / 0.08) }}>
+          <Conversation s={s} nudgePressed={nudgePressed} />
+        </div>
+      )}
+      {s.toasts.map((toast, i) => (
+        <Toast key={`${toast.kind}${i}`} toast={toast} />
+      ))}
+      <Taskbar tasks={tasks} clock={CLOCK} trayAlert={s.toasts.length > 0} />
+      <div style={{ position: 'absolute', left: s.cursor.x - 1, top: s.cursor.y - 1, transform: s.cursor.pressed ? 'scale(.94)' : undefined, transformOrigin: '0 0' }}>
+        <Pointer size={15} />
+      </div>
+    </Screen>
+  );
+}
+
+/**
+ * The monitor every video is filmed on: `children` are laid out on the
+ * virtual 540 × 960 screen, the camera frames `view` of it at 2x, then the
+ * old-screen layer goes on top. Each video only decides what is on screen.
+ */
+export function Screen({ camera: { x, y, z }, view, frameSeed, children }: { camera: { x: number; y: number; z: number }; view: { w: number; h: number }; frameSeed: number; children: ReactNode }) {
   return (
     <AbsoluteFill style={{ background: '#000', overflow: 'hidden' }}>
       <div
@@ -38,21 +65,7 @@ export function Scene({ story, t, view = { w: VW, h: VH }, frameSeed = 0 }: { st
           filter: 'saturate(1.06) contrast(1.02) blur(0.18px)',
         }}
       >
-        <Wallpaper />
-        <DesktopIcons />
-        <ContactList inactive={convo} listening={s.listening} />
-        {convo && (
-          <div style={{ opacity: Math.min(1, (s.convoAge ?? 0) / 0.08) }}>
-            <Conversation s={s} nudgePressed={nudgePressed} />
-          </div>
-        )}
-        {s.toasts.map((toast, i) => (
-          <Toast key={`${toast.kind}${i}`} toast={toast} />
-        ))}
-        <Taskbar tasks={tasks} clock={CLOCK} trayAlert={s.toasts.length > 0} />
-        <div style={{ position: 'absolute', left: s.cursor.x - 1, top: s.cursor.y - 1, transform: s.cursor.pressed ? 'scale(.94)' : undefined, transformOrigin: '0 0' }}>
-          <Pointer size={15} />
-        </div>
+        {children}
       </div>
       <OldScreen seed={frameSeed} />
     </AbsoluteFill>

@@ -1,0 +1,581 @@
+{
+ "commit": "38f0d3a",
+ "REEL": {
+  "id": "reel",
+  "duration": 33,
+  "beats": [
+   {
+    "type": "signin",
+    "at": 0.3
+   },
+   {
+    "type": "open",
+    "at": 1
+   },
+   {
+    "type": "him",
+    "at": 1.9,
+    "typing": 0.8,
+    "text": "hey… sry but i think we shud break up :("
+   },
+   {
+    "type": "him",
+    "at": 3.85,
+    "typing": 1,
+    "text": "u mean alot 2 me tho"
+   },
+   {
+    "type": "him",
+    "at": 5.35,
+    "typing": 0.9,
+    "text": "its not u its me"
+   },
+   {
+    "type": "him",
+    "at": 6.75,
+    "typing": 0.85,
+    "text": "dont txt me ok"
+   },
+   {
+    "type": "him",
+    "at": 8.05,
+    "typing": 0.8,
+    "text": "bye x"
+   },
+   {
+    "type": "her",
+    "from": 9.9,
+    "at": 10.25,
+    "text": "hey"
+   },
+   {
+    "type": "her",
+    "from": 10.75,
+    "at": 11.18,
+    "text": "hello??"
+   },
+   {
+    "type": "her",
+    "from": 11.6,
+    "at": 12,
+    "text": "u there"
+   },
+   {
+    "type": "her",
+    "from": 12.35,
+    "at": 13.08,
+    "text": "y arent u answering"
+   },
+   {
+    "type": "her",
+    "from": 13.4,
+    "at": 13.62,
+    "text": "omg"
+   },
+   {
+    "type": "her",
+    "from": 13.85,
+    "at": 15.02,
+    "text": "did u seriously just dump me on msn??"
+   },
+   {
+    "type": "her",
+    "from": 15.3,
+    "at": 15.62,
+    "text": "answer me"
+   },
+   {
+    "type": "her",
+    "from": 15.82,
+    "at": 16.04,
+    "text": "plssss"
+   },
+   {
+    "type": "her",
+    "from": 16.3,
+    "at": 16.78,
+    "text": "i know ur online"
+   },
+   {
+    "type": "her",
+    "from": 17,
+    "at": 17.82,
+    "text": "ur status literally says “online”"
+   },
+   {
+    "type": "her",
+    "from": 18.3,
+    "at": 18.48,
+    "text": "wow"
+   },
+   {
+    "type": "her",
+    "from": 18.75,
+    "at": 19,
+    "text": "ok fine"
+   },
+   {
+    "type": "her",
+    "from": 19.2,
+    "at": 19.48,
+    "text": "i hate u"
+   },
+   {
+    "type": "her",
+    "from": 20.4,
+    "at": 20.62,
+    "text": "…"
+   },
+   {
+    "type": "listening",
+    "at": 21.3
+   },
+   {
+    "type": "her",
+    "from": 22.4,
+    "at": 22.88,
+    "text": "i miss u"
+   },
+   {
+    "type": "her",
+    "from": 23.55,
+    "at": 24.08,
+    "text": "can we talk"
+   },
+   {
+    "type": "her",
+    "from": 24.5,
+    "at": 24.95,
+    "text": "HELLOOOOO"
+   },
+   {
+    "type": "nudge",
+    "at": 25.35
+   },
+   {
+    "type": "her",
+    "from": 26.55,
+    "at": 27.02,
+    "text": "ugh whatever"
+   },
+   {
+    "type": "her",
+    "from": 27.75,
+    "at": 28.18,
+    "text": "brb crying"
+   },
+   {
+    "type": "her",
+    "from": 29.08,
+    "at": 29.2,
+    "text": "jk"
+   },
+   {
+    "type": "her",
+    "from": 30.2,
+    "at": 30.68,
+    "text": "no actually"
+   }
+  ],
+  "camera": [
+   {
+    "t": 0,
+    "x": 270,
+    "y": 480,
+    "z": 1
+   },
+   {
+    "t": 1.1,
+    "x": 270,
+    "y": 480,
+    "z": 1
+   },
+   {
+    "t": 2.3,
+    "x": 272,
+    "y": 594,
+    "z": 1.06
+   },
+   {
+    "t": 8.2,
+    "x": 272,
+    "y": 594,
+    "z": 1.06
+   },
+   {
+    "t": 9.9,
+    "x": 232,
+    "y": 566,
+    "z": 1.22
+   },
+   {
+    "t": 20.7,
+    "x": 232,
+    "y": 566,
+    "z": 1.26
+   },
+   {
+    "t": 21.45,
+    "x": 270,
+    "y": 480,
+    "z": 1
+   },
+   {
+    "t": 24.4,
+    "x": 270,
+    "y": 480,
+    "z": 1
+   },
+   {
+    "t": 25.2,
+    "x": 262,
+    "y": 590,
+    "z": 1.12
+   },
+   {
+    "t": 26.4,
+    "x": 262,
+    "y": 590,
+    "z": 1.12
+   },
+   {
+    "t": 33,
+    "x": 236,
+    "y": 600,
+    "z": 1.3
+   }
+  ],
+  "cursor": [
+   {
+    "t": 0,
+    "x": 448,
+    "y": 214
+   },
+   {
+    "t": 8.9,
+    "x": 452,
+    "y": 208
+   },
+   {
+    "t": 9.65,
+    "x": 196,
+    "y": 772
+   },
+   {
+    "t": 9.72,
+    "x": 196,
+    "y": 772,
+    "click": true
+   },
+   {
+    "t": 10.2,
+    "x": 288,
+    "y": 806
+   },
+   {
+    "t": 24.98,
+    "x": 288,
+    "y": 806
+   },
+   {
+    "t": 25.3,
+    "x": 306,
+    "y": 720
+   },
+   {
+    "t": 25.35,
+    "x": 306,
+    "y": 720,
+    "click": true
+   },
+   {
+    "t": 26.2,
+    "x": 288,
+    "y": 806
+   }
+  ]
+ },
+ "TEASER": {
+  "id": "teaser",
+  "duration": 7,
+  "beats": [
+   {
+    "type": "signin",
+    "at": 0.15
+   },
+   {
+    "type": "open",
+    "at": 0.75
+   },
+   {
+    "type": "him",
+    "at": 1.45,
+    "typing": 0.65,
+    "text": "hey… sry but i think we shud break up :("
+   },
+   {
+    "type": "him",
+    "at": 2.45,
+    "typing": 0.6,
+    "text": "bye x"
+   },
+   {
+    "type": "her",
+    "from": 3.05,
+    "at": 4.15,
+    "text": "did u seriously just dump me on msn??"
+   },
+   {
+    "type": "her",
+    "from": 4.45,
+    "at": 4.8,
+    "text": "HELLOOOOO"
+   },
+   {
+    "type": "nudge",
+    "at": 5.2
+   }
+  ],
+  "camera": [
+   {
+    "t": 0,
+    "x": 270,
+    "y": 480,
+    "z": 1
+   },
+   {
+    "t": 0.9,
+    "x": 270,
+    "y": 480,
+    "z": 1
+   },
+   {
+    "t": 1.6,
+    "x": 272,
+    "y": 594,
+    "z": 1.06
+   },
+   {
+    "t": 5.1,
+    "x": 250,
+    "y": 590,
+    "z": 1.16
+   },
+   {
+    "t": 7,
+    "x": 244,
+    "y": 594,
+    "z": 1.2
+   }
+  ],
+  "cursor": [
+   {
+    "t": 0,
+    "x": 448,
+    "y": 214
+   },
+   {
+    "t": 2.5,
+    "x": 448,
+    "y": 214
+   },
+   {
+    "t": 2.95,
+    "x": 196,
+    "y": 772
+   },
+   {
+    "t": 3,
+    "x": 196,
+    "y": 772,
+    "click": true
+   },
+   {
+    "t": 3.4,
+    "x": 288,
+    "y": 806
+   },
+   {
+    "t": 4.9,
+    "x": 288,
+    "y": 806
+   },
+   {
+    "t": 5.15,
+    "x": 306,
+    "y": 720
+   },
+   {
+    "t": 5.2,
+    "x": 306,
+    "y": 720,
+    "click": true
+   },
+   {
+    "t": 6,
+    "x": 288,
+    "y": 806
+   }
+  ]
+ },
+ "SPOT": {
+  "input": {
+   "x": 196,
+   "y": 772
+  },
+  "restNearInput": {
+   "x": 288,
+   "y": 806
+  },
+  "nudge": {
+   "x": 306,
+   "y": 720
+  }
+ },
+ "SCRIPT": {
+  "HIS": [
+   "hey… sry but i think we shud break up :(",
+   "u mean alot 2 me tho",
+   "its not u its me",
+   "dont txt me ok",
+   "bye x"
+  ],
+  "HERS": [
+   "hey",
+   "hello??",
+   "u there",
+   "y arent u answering",
+   "omg",
+   "did u seriously just dump me on msn??",
+   "answer me",
+   "plssss",
+   "i know ur online",
+   "ur status literally says “online”",
+   "wow",
+   "ok fine",
+   "i hate u",
+   "…",
+   "i miss u",
+   "can we talk",
+   "HELLOOOOO",
+   "ugh whatever",
+   "brb crying",
+   "jk",
+   "no actually"
+  ]
+ },
+ "cast": {
+  "HIM": {
+   "name": "karim",
+   "email": "karim_86@hotmail.com",
+   "psm": "busy w/ life"
+  },
+  "HER": {
+   "name": "~*nOuR*~",
+   "email": "nour_xoxo_89@hotmail.com",
+   "psm": "in my fluffy pjoys rn (L)"
+  },
+  "SONG": {
+   "title": "When You’re Gone",
+   "artist": "Avril Lavigne"
+  },
+  "TIP": "Click for new Emoticons and Theme Packs from IYS",
+  "CLOCK": "11:47 PM",
+  "DATE": "8/23/2007",
+  "CONTACTS": [
+   {
+    "name": "Yasmine <3",
+    "status": "away",
+    "psm": "cAiRo GiRl"
+   },
+   {
+    "name": "~*~ m0 ~*~",
+    "status": "busy",
+    "psm": "exams kill meeee"
+   },
+   {
+    "name": "sherif",
+    "status": "online",
+    "psm": "ahly 4 life"
+   },
+   {
+    "name": "Hana :P",
+    "status": "online"
+   },
+   {
+    "name": "ziad (dont ask)",
+    "status": "blocked"
+   },
+   {
+    "name": "dina",
+    "status": "offline"
+   },
+   {
+    "name": "tamer_88@hotmail.com",
+    "status": "offline"
+   },
+   {
+    "name": "laila.m",
+    "status": "offline"
+   },
+   {
+    "name": "seif",
+    "status": "offline"
+   },
+   {
+    "name": "mariam ~*",
+    "status": "offline"
+   }
+  ]
+ },
+ "SLIDES": [
+  {
+   "name": "01-the-breakup",
+   "t": 8.9,
+   "cam": {
+    "x": 212,
+    "y": 528,
+    "z": 1.42
+   }
+  },
+  {
+   "name": "02-did-u-seriously",
+   "t": 15.5,
+   "cam": {
+    "x": 212,
+    "y": 528,
+    "z": 1.42
+   }
+  },
+  {
+   "name": "03-ur-status-says-online",
+   "t": 18.1,
+   "cam": {
+    "x": 212,
+    "y": 528,
+    "z": 1.42
+   }
+  },
+  {
+   "name": "04-is-listening-to",
+   "t": 22.1,
+   "cam": {
+    "x": 270,
+    "y": 623,
+    "z": 1
+   }
+  },
+  {
+   "name": "05-brb-crying-jk-no-actually",
+   "t": 31.6,
+   "cam": {
+    "x": 212,
+    "y": 528,
+    "z": 1.42
+   }
+  }
+ ],
+ "BONUS": {
+  "name": "06-bonus-sign-in"
+ }
+}

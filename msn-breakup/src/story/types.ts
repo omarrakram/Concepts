@@ -6,8 +6,12 @@ export type Beat =
   | { type: 'open'; at: number }
   /** His message arrives at `at`; "is typing a message." shows for `typing` seconds before. */
   | { type: 'him'; at: number; text: string; typing: number }
-  /** She types `text` into the input box from `from`, and sends it (Enter) at `at`. */
-  | { type: 'her'; from: number; at: number; text: string }
+  /**
+   * She types `text` into the input box from `from`, and sends it (Enter) at `at`.
+   * `orig`: when a line is moved in time, the start and beat index it had in the
+   * first cut, so its keystroke rhythm and key-click sounds stay exactly as they were.
+   */
+  | { type: 'her'; from: number; at: number; text: string; orig?: { from: number; index: number } }
   /** She sends a nudge: the window shakes. */
   | { type: 'nudge'; at: number }
   /** The "is listening to" popup: the music cue starts on this exact frame. */
