@@ -1,11 +1,14 @@
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import { Icon } from '../../../components/os/Icon';
 import { concept } from '../../../data/copy';
 import { usePage } from '../../../lib/usePage';
+import { noteFrustration } from '../../../lib/frustration';
 
 export default function NotFound() {
   const navigate = useNavigate();
   usePage('Page offline', 'Error: page not found.');
+  useEffect(() => noteFrustration('not-found', window.location.pathname), []);
   return (
     <div className="page notfound">
       <div className="errbox" role="alert">

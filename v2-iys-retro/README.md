@@ -43,6 +43,25 @@ mid-2000s. The website *is* the computer; the store runs inside it.
 4. **Desktop keeps its OS**, gains the same CTA pair above the FW27 hero, a
    green ADD TO BAG / CHECKOUT, the Y2K copy and an *IYS Hills* wallpaper preset.
 
+## Conversion pass (2026-10)
+
+Continuation of V2 (nothing rebuilt; `/showcase` unchanged frame for frame).
+Every capability has its own kill switch in `src/config/features.ts`
+(`VITE_FEATURE_*=0` restores the previous behaviour).
+
+| Area | What changed |
+| --- | --- |
+| Navigation | Desktop top strip: **MENU** (left, opens the one IYS menu) and **MY BAG** (right, live count). |
+| IYS MOBILE | SHOP ALL · SEARCH · FAVS · STORES moved into one bar under the status bar, with **MSG** at its end: PJOYS arrives as a small unread marker instead of a popup. The old tiles are gone. |
+| Above the fold | JUST DROPPED sits right under the hero and peeks into the first screen (desktop 1024–1920 wide, mobile 320–430). `welcome.htm` can be minimized (remembered for the session). |
+| Merchandise | Extra shelves from IYS's own collections (best sellers, hoodies, tees, bottoms, accessories), in stock only, never duplicated. |
+| MY BAG | Free-shipping progress from the **verified** announcement (`src/config/promotions.ts`, re-verify by `showUntil`), merchant offers (none configured), GOT A CODE? (passed to Shopify; never claimed valid unless live Shopify says so), and up to 3 complementary in-stock ideas. |
+| Search | Egyptian Arabic and Franco-Arabic (هودي, بنطلون, شراب, bantalon, bigama...) mapped to IYS categories, colours and fits, with an "IYS understood" line. English search is unchanged. |
+| Size guide | The official chart image from each product page (`npm run sync-size-charts`), 100%/200% zoom; no chart → says so and offers to ask IYS. Coverage: [`docs/SIZE_CHART_COVERAGE.md`](docs/SIZE_CHART_COVERAGE.md). |
+| Escape route | After repeated dead ends (404s, failed checkout, empty searches), once per session and only at a calm moment: an offer to continue on the real IYS site with the exact bag. |
+| Loading | One loader in the ADD TO BAG language (`src/components/shop/Busy.tsx`). |
+| Commerce readiness | Opt-in live Shopify (catalogue, exact cart, code check, free-shipping rule), real-merchant game rewards, hardened IYS MAIL. Off by default; see [`docs/SHOPIFY_GO_LIVE_CHECKLIST.md`](docs/SHOPIFY_GO_LIVE_CHECKLIST.md). |
+
 ## Design thesis
 
 - **Build a computer, not a skin.** IYS OS is a real window manager (drag,
@@ -262,7 +281,14 @@ npm run test:e2e  # Playwright (builds + previews): 32 tests — boot/skip, wind
                   # favorites, stores, 404, back/forward, image fallback, 1024 smoke,
                   # mobile shell/shop/product/bag/search/targets, axe
 npm run qa:screens  # canonical screenshots → docs/qa/
+npm run load:api    # concurrency scenarios for /api/* (in-process, fixture Shopify + mail; nothing external)
+npm run load:static -- http://127.0.0.1:4173 --users 100 --seconds 30   # local preview only (refuses other hosts)
 ```
+
+The conversion pass adds unit suites for Arabic search, bag incentives, upsell,
+shelves, escape-route scoring, size-chart data, live-mode client guards and the
+server adapters (fixture GraphQL only), plus e2e journeys A–H in
+`tests/e2e/v2-conversion*.spec.ts` (store, mail and live APIs are stubbed).
 
 E2E blocks the remote CDN, so tests never depend on IYS being reachable.
 
@@ -324,12 +350,15 @@ never competes with inyourshoe.com in search. The normal build needs no network 
 
 | Concern | Where | Vercel environment variable | If unset |
 | --- | --- | --- | --- |
-| **IYS MAIL** support email → `orders@inyourshoe.com` | `api/support-email.ts` (server-side, Resend REST API) | `RESEND_API_KEY` (secret), `SUPPORT_FROM_EMAIL` (a Resend-verified sender), optional `SUPPORT_TO_EMAIL` (defaults to `orders@inyourshoe.com`) | the endpoint answers 503 and IYS MAIL shows “MAIL NOT SENT :(” — never a fake success |
+| **IYS MAIL** support email → `orders@inyourshoe.com` | `api/support-email.ts` (server-side, Resend REST API) | `RESEND_API_KEY` (secret), `SUPPORT_FROM_EMAIL` (a Resend-verified sender); `SUPPORT_TO_EMAIL` is honoured only with `SUPPORT_TEST_MODE=1` (subject marked `[TEST]`) | the endpoint answers 503 `not-connected` and IYS MAIL says it is not connected, offering OPEN EMAIL APP (prefilled `mailto:`), never a fake success |
+| **Live Shopify** (catalogue, cart, code check, free-shipping rule) | `api/commerce.ts` → `api/_lib/shopify.ts` | server: `COMMERCE_LIVE=1`, `SHOPIFY_STORE_DOMAIN`, `SHOPIFY_STOREFRONT_PRIVATE_TOKEN`, optional `SHOPIFY_ADMIN_TOKEN` (`read_discounts`); build: `VITE_COMMERCE_MODE=live`, `VITE_LIVE_CART=1` | snapshot catalogue + cart permalink (today's behaviour) |
+| **IYS GAMES rewards** (real merchant codes only) | `api/rewards.ts` → `api/_lib/rewards.ts` | server: `GAME_REWARDS`, `REWARDS_SECRET`; build: `VITE_GAME_REWARDS=1` | no reward UI at all |
 | **IYS NEWSLETTER** signup | `src/lib/newsletter.ts` adapter | `VITE_NEWSLETTER_ENDPOINT` (public URL; POST `{ email }` → `{ ok: true }`) | honest “coming online soon” state; the `IYS10` code is revealed only after a confirmed signup |
 | **HELP › IYS Help & Support** (Odoo) | Help window | `VITE_ODOO_HELP_FORM_URL` | intentional “ODOO FORM PLACEHOLDER” |
 | **XCHANGE.EXE :) Exchanges / Refunds** (Odoo) | Exchange window | `VITE_ODOO_EXCHANGE_REFUND_FORM_URL` | intentional “Odoo form will load here” placeholder |
 
-Only `RESEND_API_KEY` is a secret, and it is read only by the server function.
+The secrets (`RESEND_API_KEY`, the Shopify tokens, `REWARDS_SECRET`) are read only by the server functions.
+Step-by-step activation, scopes, validation and rollback: [`docs/SHOPIFY_GO_LIVE_CHECKLIST.md`](docs/SHOPIFY_GO_LIVE_CHECKLIST.md).
 `VITE_*` values are public URLs baked into the client at build time. `/api/*`
 is excluded from the SPA rewrite and from the service-worker navigation
 fallback. Desktop icon positions are stored only in this browser under
@@ -345,6 +374,7 @@ fallback. Desktop icon positions are stored only in this browser under
 | `npm test` / `npm run test:e2e` | Vitest / Playwright + axe |
 | `npm run sync-products` | re-snapshot the public Egyptian catalogue (network) |
 | `npm run sync-stores` | re-read the public store directory (network) |
+| `npm run sync-size-charts` | read the official size chart on each product page (network, polite, 7-day cache; `-- --offline` rebuilds from the cache) → `src/data/size-charts.generated.json` + `docs/SIZE_CHART_COVERAGE.md` |
 | `npm run fetch-showcase-assets` | download + optimise the curated local images (network) |
 | `npm run frames` / `npm run record` | showcase stills / MP4 |
 | `npm run qa:screens` | canonical QA screenshots |
@@ -367,5 +397,9 @@ with its official URL) and [`docs/RESEARCH.md`](docs/RESEARCH.md) (brand and
 - The fake address bar accepts `inyourshoe.com` paths and search terms; it never
   navigates away from the concept.
 - Messenger conversations are fixed concept scripts (by design, no AI).
-- The official “Same-day delivery” / “Free Shipping +2,499” / 10% lines are
-  promotional and dated; re-verify before each publish.
+- The official “Same day delivery” / “Free shipping over 3999 EGP” lines were
+  read on inyourshoe.com on 2026-10-26 (it was +2,499 before); MY BAG stops
+  showing the free-shipping progress after `showUntil` until someone re-verifies.
+- The newsletter's `IYS10` code is only revealed after a confirmed signup, and
+  no signup endpoint is connected; IYS should confirm the code before connecting one.
+- Rate limits on `/api/*` are per warm serverless instance (see the go-live checklist).

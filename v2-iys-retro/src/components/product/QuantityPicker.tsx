@@ -9,7 +9,7 @@ import { MAX_QTY } from '../../state/cart';
 export function QuantityPicker({ value, onChange }: { value: number; onChange: (n: number) => void }) {
   const id = useId();
   return (
-    <div className="props__qty" role="group" aria-labelledby={id}>
+    <div className="props__qty" role="group" aria-labelledby={id} data-repeatable>
       <span id={id}>Qty:</span>
       <button type="button" className="btn btn--small" onClick={() => onChange(value - 1)} disabled={value <= 1} aria-label="Decrease quantity">
         −

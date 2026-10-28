@@ -1,4 +1,5 @@
 import { TITLES, useOS, type Rect } from '../../state/os';
+import { useSession } from '../../state/preferences';
 
 /**
  * IYS MESSENGER is ONE window. Which view it shows is app state in that
@@ -27,6 +28,7 @@ export function focusWhenReady(selector: string) {
 
 /** Open a conversation inside the IYS MESSENGER window (opening Messenger first if needed). */
 export function openChat(id: string, name: string, focus = `[data-window="${MESSENGER}"] .chat__back`) {
+  if (id === 'pjoys') useSession.getState().markPjoysRead();
   const inChat = Boolean(useOS.getState().windows.find((w) => w.id === MESSENGER)?.props.buddy);
   useOS.getState().open('messenger', { title: `${name} - Conversation`, props: { buddy: id } });
   if (!inChat) {

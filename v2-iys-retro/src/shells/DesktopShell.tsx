@@ -13,10 +13,14 @@ import { Balloon, CRT, TransferDialog } from '../components/os/Overlays';
 import { Screensaver } from '../components/os/Screensaver';
 import { StartMenu } from '../components/os/StartMenu';
 import { Taskbar, useOnline } from '../components/os/Taskbar';
+import { TopBagButton, TopHomeButton, TopMenuButton } from '../components/os/TopNav';
+import { FEATURES } from '../config/features';
 import { Window } from '../components/os/Window';
+import { Busy } from '../components/shop/Busy';
 import { APP_ICONS } from '../components/os/Taskbar';
+import { watchRageClicks } from '../lib/frustration';
 import { useOS, type AppId, type Win } from '../state/os';
-import { useSession } from '../state/preferences';
+import { usePjoysUnread, useSession } from '../state/preferences';
 import { openChat } from '../apps/Messenger/nav';
 import { useCatchyEnabled } from '../features/catchy/storage';
 import '../styles/os.css';
@@ -40,6 +44,7 @@ const LOADERS: Record<AppId, () => Promise<{ default: ComponentType<AppProps> }>
   essentials: () => import('../apps/Small/Essentials'),
   games: () => import('../apps/Games/GamesFolder'),
   game: () => import('../apps/Games/GameWindow'),
+  sizeguide: () => import('../apps/SizeGuide/SizeGuide'),
 };
 const CatchyPet = lazy(() => import('../features/catchy/CatchyPet'));
 const APPS = Object.fromEntries(Object.entries(LOADERS).map(([k, load]) => [k, lazy(load)])) as unknown as Record<AppId, ComponentType<AppProps>>;
@@ -54,12 +59,7 @@ function preloadApps() {
 function Loading({ win }: AppProps) {
   return (
     <Window win={win} icon={APP_ICONS[win.app]}>
-      <div className="app-loading is-busy" role="status">
-        <p>Loading {win.title}...</p>
-        <div className="progress" style={{ ['--p' as string]: '60%', width: 200 }}>
-          <div className="progress__bar" />
-        </div>
-      </div>
+      <Busy label={`Loading ${win.title}...`} from="computer" to={APP_ICONS[win.app]} />
     </Window>
   );
 }
@@ -81,7 +81,7 @@ export default function DesktopShell() {
   const session = useSession();
   const deepLink = location.pathname !== '/';
   const [booting, setBooting] = useState(() => !session.bootSeen && !deepLink && !new URLSearchParams(location.search).has('noboot'));
-  const [pjoysUnread, setUnread] = useState(false);
+  const pjoysUnread = usePjoysUnread();
   const deskRef = useRef<HTMLDivElement>(null);
   const cat = useCatalogue();
   const online = useOnline();
@@ -99,6 +99,8 @@ export default function DesktopShell() {
 
   // First paint after boot: welcome dialog on "/", browser straight away on deep links.
   const started = useRef(false);
+  // The escape route listens for repeated presses that change nothing (src/lib/rageClicks.ts).
+  useEffect(() => watchRageClicks(), []);
   useEffect(() => {
     if (booting || started.current) return;
     started.current = true;
@@ -126,7 +128,6 @@ export default function DesktopShell() {
     if (booting || !hasBrowser || useSession.getState().pjoysPinged) return;
     const t = window.setTimeout(() => {
       useSession.getState().markPjoys();
-      setUnread(true);
       play('ping');
       showBalloon({ id: 'pjoys', title: 'PJOYS is online', text: `“${concept.messenger.pjoysOpener}”`, props: { photo: localImage('cereal-killer-pjoys', 1)?.src ?? localImage('cereal-killer-pjoys')?.src } });
     }, 9000);
@@ -134,7 +135,6 @@ export default function DesktopShell() {
   }, [booting, hasBrowser, showBalloon]);
 
   const openPjoys = () => {
-    setUnread(false);
     showBalloon(null);
     openChat('pjoys', 'PJOYS');
   };
@@ -144,8 +144,19 @@ export default function DesktopShell() {
       <a className="skip-link" href="#iys-main" onClick={() => open('internet')}>
         Skip to IYS Internet
       </a>
-      <header className="realbar">
+      <header className={`realbar${FEATURES.topNav ? ' realbar--nav' : ''}`}>
+        {FEATURES.topNav && (
+          <div className="realbar__side">
+            <TopMenuButton />
+            <TopHomeButton />
+          </div>
+        )}
         <RealSwitch />
+        {FEATURES.topNav && (
+          <div className="realbar__side realbar__side--end">
+            <TopBagButton />
+          </div>
+        )}
       </header>
       <main className="desktop" ref={deskRef} aria-label="IYS OS desktop" onMouseDown={() => setStart(false)}>
         <h1 className="sr-only">IYS INTERNET 2006 - an unofficial In Your Shoe concept desktop</h1>

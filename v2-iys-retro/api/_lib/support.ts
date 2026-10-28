@@ -8,6 +8,7 @@
  *
  * Never logs customer data. Never returns provider errors to the client.
  */
+import { clientKey, createRateLimiter } from './http.js';
 
 export const SUPPORT_TOPICS = ['Order question', 'Delivery', 'Product question', 'Payment', 'Store question', 'Other'] as const;
 export type SupportTopic = (typeof SUPPORT_TOPICS)[number];
@@ -105,9 +106,28 @@ export function buildSupportMail(v: SupportRequest, env: { from: string; to: str
 export interface SupportEnv {
   RESEND_API_KEY?: string;
   SUPPORT_FROM_EMAIL?: string;
+  /** Only honoured with SUPPORT_TEST_MODE=1 (a designated test inbox; subject gets "[TEST] "). */
   SUPPORT_TO_EMAIL?: string;
+  SUPPORT_TEST_MODE?: string;
 }
-export type Sender = (mail: OutgoingMail, apiKey: string) => Promise<boolean>;
+/** What the provider said. `true` / `false` are accepted as shorthand for accepted / unavailable. */
+export type SendResult = { ok: true } | { ok: false; kind: 'rejected' | 'unavailable'; status?: number };
+export type Sender = (mail: OutgoingMail, apiKey: string, opts?: { idempotencyKey?: string }) => Promise<boolean | SendResult>;
+
+/**
+ * Where mail goes: always orders@inyourshoe.com. A test inbox is used only
+ * when the deployment is explicitly in test mode, and those messages are
+ * marked [TEST], so nothing is ever silently redirected.
+ */
+export function recipient(env: SupportEnv): { to: string; test: boolean } {
+  const test = env.SUPPORT_TEST_MODE?.trim() === '1';
+  const override = env.SUPPORT_TO_EMAIL?.trim().toLowerCase();
+  if (test && override && isValidEmail(override)) return { to: override, test: true };
+  return { to: DEFAULT_SUPPORT_TO, test: false };
+}
+
+/** Real send attempts per client: 5 per 10 minutes (per warm instance; see createRateLimiter). */
+const sendLimiter = createRateLimiter(5, 10 * 60_000);
 
 const json = (status: number, body: Record<string, unknown>) =>
   new Response(JSON.stringify(body), { status, headers: { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store' } });
@@ -124,7 +144,24 @@ function sameOrigin(req: Request): boolean {
   }
 }
 
-export async function handleSupport(req: Request, env: SupportEnv, send: Sender, now = new Date()): Promise<Response> {
+/**
+ * GET /api/support-email?status → is THIS deployment able to send? (no secrets,
+ * no addresses besides the public one). Lets anyone check a preview in a browser.
+ */
+function status(env: SupportEnv): Response {
+  const { to, test } = recipient(env);
+  return json(200, {
+    ok: true,
+    service: 'IYS MAIL',
+    provider: 'resend',
+    configured: Boolean(env.SUPPORT_FROM_EMAIL?.trim() && env.RESEND_API_KEY?.trim()),
+    missing: [!env.RESEND_API_KEY?.trim() && 'RESEND_API_KEY', !env.SUPPORT_FROM_EMAIL?.trim() && 'SUPPORT_FROM_EMAIL'].filter(Boolean),
+    deliversTo: test ? 'test inbox (SUPPORT_TEST_MODE=1)' : to,
+  });
+}
+
+export async function handleSupport(req: Request, env: SupportEnv, send: Sender, now = new Date(), limiter: { take(key: string): boolean } = sendLimiter): Promise<Response> {
+  if (req.method === 'GET' && new URL(req.url).searchParams.has('status')) return status(env);
   if (req.method !== 'POST') return new Response(JSON.stringify({ ok: false, error: 'Method not allowed.' }), { status: 405, headers: { Allow: 'POST', 'Content-Type': 'application/json' } });
   if (!(req.headers.get('content-type') ?? '').toLowerCase().startsWith('application/json')) return json(415, { ok: false, error: 'Unsupported content type.' });
   if (!sameOrigin(req)) return json(403, { ok: false, error: 'Forbidden.' });
@@ -142,25 +179,58 @@ export async function handleSupport(req: Request, env: SupportEnv, send: Sender,
 
   const from = env.SUPPORT_FROM_EMAIL?.trim();
   const key = env.RESEND_API_KEY?.trim();
-  const to = env.SUPPORT_TO_EMAIL?.trim() || DEFAULT_SUPPORT_TO;
-  if (!from || !key) return json(503, { ok: false, error: 'IYS MAIL is not connected yet. Please email orders@inyourshoe.com directly.' });
+  const { to, test } = recipient(env);
+  if (!from || !key) return json(503, { ok: false, reason: 'not-connected', error: 'IYS MAIL is not connected yet. Please email orders@inyourshoe.com directly.' });
+  if (!limiter.take(clientKey(req))) return json(429, { ok: false, error: 'Too many messages in a row. Please wait a few minutes and try again.' });
 
-  let sent = false;
+  // The form sends one key per draft: a double click (or a retry after a lost response) can't send twice.
+  const idem = req.headers.get('x-idempotency-key') ?? '';
+  const mail = buildSupportMail(v.value, { from, to }, now);
+  if (test) mail.subject = `[TEST] ${mail.subject}`;
+  let result: SendResult;
   try {
-    sent = await send(buildSupportMail(v.value, { from, to }, now), key);
+    const r = await send(mail, key, /^[A-Za-z0-9-]{8,64}$/.test(idem) ? { idempotencyKey: idem } : undefined);
+    result = r === true ? { ok: true } : r === false ? { ok: false, kind: 'unavailable' } : r;
   } catch {
-    sent = false;
+    result = { ok: false, kind: 'unavailable' };
   }
-  if (!sent) return json(502, { ok: false, error: 'Mail server did not accept the message. Please try again.' });
-  return json(200, { ok: true });
+  if (result.ok) return json(200, { ok: true });
+  // Status codes only: never the message, the customer or the provider's body.
+  console.error(`[iys-mail] provider ${result.kind}${result.status ? ` (HTTP ${result.status})` : ''}`);
+  if (result.kind === 'rejected')
+    return json(502, { ok: false, reason: 'provider-rejected', error: 'The mail service refused this message, so it was NOT sent. Please email orders@inyourshoe.com directly.' });
+  return json(502, { ok: false, reason: 'provider-unavailable', error: 'Mail server did not accept the message. Please try again.' });
 }
 
-/** Resend REST API (https://resend.com/docs/api-reference/emails/send-email). */
-export const resendSender: Sender = async (mail, apiKey) => {
-  const res = await fetch('https://api.resend.com/emails', {
-    method: 'POST',
-    headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify({ from: mail.from, to: [mail.to], reply_to: mail.replyTo, subject: mail.subject, text: mail.text }),
-  });
-  return res.ok;
-};
+/**
+ * Resend REST API (https://resend.com/docs/api-reference/emails/send-email).
+ * Bounded retry: one more attempt after a network error, 429 or 5xx, and only
+ * with an idempotency key (so a retry can never deliver twice) or after a 429
+ * (which means "not accepted"). 4xx = rejected (bad key, unverified sender...).
+ */
+export function createResendSender(fetcher: typeof fetch = fetch, pause = (ms: number) => new Promise((r) => setTimeout(r, ms))): Sender {
+  return async (mail, apiKey, opts) => {
+    let last: SendResult = { ok: false, kind: 'unavailable' };
+    for (let attempt = 0; attempt < 2; attempt++) {
+      if (attempt) await pause(700);
+      let status = 0;
+      try {
+        const res = await fetcher('https://api.resend.com/emails', {
+          method: 'POST',
+          headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json', ...(opts?.idempotencyKey ? { 'Idempotency-Key': `iys-mail-${opts.idempotencyKey}` } : {}) },
+          body: JSON.stringify({ from: mail.from, to: [mail.to], reply_to: mail.replyTo, subject: mail.subject, text: mail.text }),
+          signal: AbortSignal.timeout(8000),
+        });
+        status = res.status;
+        if (res.ok) return { ok: true };
+      } catch {
+        status = 0;
+      }
+      const transient = status === 0 || status === 429 || status >= 500;
+      last = transient ? { ok: false, kind: 'unavailable', status: status || undefined } : { ok: false, kind: 'rejected', status };
+      if (!transient || !(opts?.idempotencyKey || status === 429)) break;
+    }
+    return last;
+  };
+}
+export const resendSender: Sender = createResendSender();

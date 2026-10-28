@@ -47,7 +47,7 @@ test('mobile search tolerates typos', async ({ page }) => {
 
 test('mobile touch targets are at least 44px', async ({ page }) => {
   await page.goto('/');
-  for (const el of await page.locator('.m-grid__item, .m-soft button, .m-cta .btn').all()) {
+  for (const el of await page.locator('.m-bar__key, .m-soft button, .m-cta .btn').all()) {
     const b = (await el.boundingBox())!;
     expect(b.height).toBeGreaterThanOrEqual(44);
   }

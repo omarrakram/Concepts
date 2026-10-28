@@ -7,6 +7,7 @@ import { productPath, useBrowse } from '../../lib/useBrowse';
 import { itemCount, subtotal, useCart } from '../../state/cart';
 import { BagList } from '../../components/shop/BagList';
 import { EssentialLinks } from '../../components/shop/EssentialLinks';
+import { BagIdeas, BagOffers, HandoffStatus, PromoCode, ShippingProgress, useHandoffPending } from '../../components/shop/BagExtras';
 import type { Win } from '../../state/os';
 
 export default function Bag({ win }: { win: Win }) {
@@ -14,6 +15,7 @@ export default function Bag({ win }: { win: Win }) {
   const browse = useBrowse();
   const total = subtotal(items);
   const count = itemCount(items);
+  const leaving = useHandoffPending();
   return (
     <Window
       win={win}
@@ -33,6 +35,7 @@ export default function Bag({ win }: { win: Win }) {
           <Icon name="folder-open" size={16} /> C:\MY BAG\
         </p>
         <BagList onOpenProduct={(h) => browse(productPath(h))} />
+        {items.length > 0 && <BagIdeas onOpenProduct={(h) => browse(productPath(h))} variant="desktop" />}
         {items.length === 0 && (
           <p className="cp-actions bag__empty-actions">
             <button type="button" className="btn btn--go" onClick={() => browse('/collections/newest')}>
@@ -46,15 +49,19 @@ export default function Bag({ win }: { win: Win }) {
       </div>
       {items.length > 0 && (
         <div className="bag__foot">
+          <ShippingProgress />
+          <BagOffers />
           <div className="bag__total">
             <span>Subtotal ({count} items)</span>
             <b>{formatEGP(total)}</b>
           </div>
           <p className="bag__note">Snapshot prices in EGP. Delivery and offers are calculated on the real site.</p>
           <EssentialLinks className="bag__note" ids={['exchange-refund', 'shipping', 'terms-conditions']} />
-          <button type="button" className="btn btn--go bag__checkout" onClick={() => startCheckout()}>
+          <PromoCode />
+          <button type="button" className="btn btn--go bag__checkout" onClick={() => startCheckout()} disabled={leaving} aria-busy={leaving}>
             {concept.y2k.bagCta}
           </button>
+          <HandoffStatus />
           <p className="bag__note">
             <button type="button" className="link" onClick={() => browse('/shop')}>
               {concept.y2k.keepShopping}

@@ -1,6 +1,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Route, Routes, useLocation, useNavigate } from 'react-router';
 import { Dialogs } from '../components/os/Dialogs';
+import { Icon } from '../components/os/Icon';
 import { RealSwitch } from '../components/os/RealSwitch';
 import { CRT, TransferDialog } from '../components/os/Overlays';
 import { brand } from '../data/assets';
@@ -9,10 +10,13 @@ import { useCatalogue } from '../lib/catalogue/load';
 import { play } from '../lib/sound';
 import { collectionTitle } from '../lib/useShopQuery';
 import { itemCount, useCart } from '../state/cart';
+import { watchRageClicks } from '../lib/frustration';
 import { useOS } from '../state/os';
-import { useSession } from '../state/preferences';
-import { gameMeta, type GameId } from '../games/registry';
-import { StatusBar, useCenterKey } from './mobile/chrome';
+import { usePjoysUnread, useSession } from '../state/preferences';
+import { FEATURES } from '../config/features';
+import storesData from '../data/stores.generated.json';
+import { GAMES, gameMeta, type GameId } from '../games/registry';
+import { MBar, StatusBar, useCenterKey, type BarKey } from './mobile/chrome';
 import { MGames } from './mobile/games';
 import { MBag, MCamera, MChat, MFilters, MMenu } from './mobile/overlays';
 import { MFavorites, MHome, MList, MNotFound, MProduct, MSearch, MStores, type Overlay } from './mobile/screens';
@@ -38,10 +42,12 @@ export default function MobileShell() {
   const [overlay, setOverlay] = useState<Overlay>(null);
   const [game, setGame] = useState<GameId | null>(null);
   const [splash, setSplash] = useState(() => !useSession.getState().bootSeen && location.pathname === '/');
-  const [ping, setPing] = useState(false);
+  const unread = usePjoysUnread();
   const [toast, setToast] = useState<string | null>(null);
   const content = useRef<HTMLElement>(null);
 
+  // The escape route listens for repeated presses that change nothing (src/lib/rageClicks.ts).
+  useEffect(() => watchRageClicks(), []);
   useEffect(() => {
     if (!splash) return;
     const t = window.setTimeout(() => {
@@ -58,12 +64,11 @@ export default function MobileShell() {
     content.current?.scrollTo(0, 0);
   }, [location.pathname, location.search]);
 
-  // PJOYS texts once per session.
+  // PJOYS texts once per session: a small marker on the bar's envelope, never a banner over the shop.
   useEffect(() => {
-    if (splash || useSession.getState().pjoysPinged) return;
+    if (!FEATURES.mobilePjoysNotice || splash || useSession.getState().pjoysPinged) return;
     const t = window.setTimeout(() => {
       useSession.getState().markPjoys();
-      setPing(true);
       play('ping');
     }, 6000);
     return () => window.clearTimeout(t);
@@ -77,10 +82,16 @@ export default function MobileShell() {
   }, [notice]);
 
   const open = (o: Overlay) => {
-    if (o === 'chat') setPing(false);
+    if (o === 'chat') useSession.getState().markPjoysRead();
     setGame(null);
     setOverlay(o);
     content.current?.scrollTo(0, 0);
+  };
+  /** The ONE way MENU and MY BAG open (top keys and soft keys alike): same overlay, same state, second press closes. */
+  const toggle = (o: 'menu' | 'bag') => {
+    play('click');
+    if (overlay === o) setOverlay(null);
+    else open(o);
   };
   const path = location.pathname;
   const home = path === '/' && !overlay;
@@ -95,6 +106,27 @@ export default function MobileShell() {
   else if (path === '/search') title = 'IYS MOBILE › SEARCH';
   else if (path === '/favorites') title = 'IYS MOBILE › FAVORITES';
   else if (path === '/stores') title = 'IYS MOBILE › STORES';
+
+  // A bar key always lands on its screen: closes any overlay first; same screen → back to its top.
+  const goKey = (to: string) => {
+    play('click');
+    setOverlay(null);
+    setGame(null);
+    if (path === to && !overlay) content.current?.scrollTo(0, 0);
+    else navigate(to);
+  };
+  /** IYS (top left): always the IYS MOBILE home, from any screen or overlay. No reload; bag, favorites and settings untouched. */
+  const goHome = () => {
+    play('click');
+    setOverlay(null);
+    setGame(null);
+    if (path === '/' && !location.search) content.current?.scrollTo(0, 0);
+    else navigate('/');
+  };
+  let current: BarKey | null = null;
+  if (overlay === 'chat') current = 'msg';
+  else if (overlay === 'games') current = 'games';
+  else if (!overlay) current = path === '/shop' ? 'shop' : path === '/search' ? 'search' : path === '/stores' ? 'stores' : null;
 
   const back = () => {
     play('click');
@@ -135,10 +167,52 @@ export default function MobileShell() {
       </a>
       <header className="m-head">
         <StatusBar />
-        <div className="m-realbar">
+        <div className={`m-realbar${FEATURES.topNav ? ' m-realbar--nav' : ''}`}>
+          {FEATURES.topNav && (
+            <div className="m-topnav__start">
+              <button type="button" className="m-topkey m-topkey--menu" aria-label="IYS MENU" aria-expanded={overlay === 'menu'} onClick={() => toggle('menu')}>
+                <span>MENU</span>
+              </button>
+              <button type="button" className="m-topkey m-topkey--ice m-topkey--home" aria-label="Go to IYS Retro home" title="IYS home" onClick={goHome}>
+                <img className="m-topkey__iys" src={brand.mark} alt="" width={34} height={12} />
+              </button>
+            </div>
+          )}
           <RealSwitch />
+          {FEATURES.topNav && (
+            <button
+              type="button"
+              className="m-topkey m-topkey--ice m-topkey--bag"
+              aria-expanded={overlay === 'bag'}
+              aria-label={bag ? `MY BAG: ${bag} ${bag === 1 ? 'item' : 'items'}` : 'MY BAG: empty'}
+              onClick={() => toggle('bag')}
+            >
+              <Icon name="bag" size={14} />
+              <span className="m-topkey__my">MY</span>
+              <span>BAG</span>
+              {bag > 0 && (
+                <span className="m-topkey__badge" aria-hidden="true">
+                  {bag > 99 ? '99+' : bag}
+                </span>
+              )}
+            </button>
+          )}
         </div>
-        <p className="m-title">{title}</p>
+        <MBar
+          title={title}
+          current={current}
+          counts={{ shop: cat?.products.length, games: GAMES.length, stores: storesData.storeCount }}
+          unread={unread}
+          onKey={goKey}
+          onGames={() => {
+            play('click');
+            open('games');
+          }}
+          onMessages={() => {
+            play('click');
+            open('chat');
+          }}
+        />
       </header>
       {toast && (
         <p className="m-toast" role="status">
@@ -154,7 +228,7 @@ export default function MobileShell() {
         {overlay === 'games' && <MGames game={game} setGame={setGame} close={() => setOverlay(null)} />}
         <div className="m-routes" hidden={Boolean(overlay)}>
           <Routes>
-            <Route path="/" element={<MHome open={open} pjoysPing={ping} active={!overlay} />} />
+            <Route path="/" element={<MHome />} />
             <Route path="/shop" element={<MList open={open} />} />
             <Route path="/collections/:handle" element={<MList open={open} />} />
             <Route path="/search" element={<MSearch />} />
@@ -168,7 +242,7 @@ export default function MobileShell() {
       </main>
       <nav className="m-soft" aria-label="Soft keys">
         {home ? (
-          <button type="button" className="m-soft__key" onClick={() => open('menu')}>
+          <button type="button" className="m-soft__key" onClick={() => toggle('menu')}>
             MENU
           </button>
         ) : (
@@ -188,7 +262,7 @@ export default function MobileShell() {
         >
           {center?.label ?? 'HOME'}
         </button>
-        <button type="button" className="m-soft__key m-soft__key--right" onClick={() => (overlay === 'bag' ? setOverlay(null) : open('bag'))} aria-label={`My Bag, ${bag} items`}>
+        <button type="button" className="m-soft__key m-soft__key--right" onClick={() => toggle('bag')} aria-label={`My Bag, ${bag} items`}>
           BAG{bag ? ` (${bag})` : ''}
         </button>
       </nav>

@@ -5,12 +5,14 @@ import { MENU } from '../../data/taxonomy';
 import { collectionCount } from '../../lib/catalogue/hydrate';
 import { formatCount } from '../../lib/catalogue/format';
 import { useCatalogue } from '../../lib/catalogue/load';
+import { switchToRealIYS } from '../../lib/checkout';
 import { collectionPath, useBrowse } from '../../lib/useBrowse';
 import { useOS, type AppId } from '../../state/os';
 import { Icon, type IconName } from './Icon';
 
 export function StartMenu() {
   const open = useOS((s) => s.startOpen);
+  const anchor = useOS((s) => s.startAnchor);
   const setStart = useOS((s) => s.setStart);
   const cat = useCatalogue();
   const browse = useBrowse();
@@ -21,7 +23,8 @@ export function StartMenu() {
     ref.current?.querySelector<HTMLElement>('a, button')?.focus();
     const onDown = (e: MouseEvent) => {
       const t = e.target as HTMLElement;
-      if (!ref.current?.contains(t) && !t.closest('.start')) setStart(false);
+      // Either door (taskbar "menu" or the top strip's MENU) toggles it itself.
+      if (!ref.current?.contains(t) && !t.closest('.start, .topnav--menu')) setStart(false);
     };
     window.addEventListener('mousedown', onDown);
     return () => window.removeEventListener('mousedown', onDown);
@@ -44,7 +47,7 @@ export function StartMenu() {
     if (e.key === 'Escape') {
       e.preventDefault();
       setStart(false);
-      document.querySelector<HTMLElement>('.start')?.focus();
+      document.querySelector<HTMLElement>(anchor === 'top' ? '.topnav--menu' : '.start')?.focus();
     } else if (e.key === 'ArrowDown') {
       e.preventDefault();
       items[(i + 1) % items.length]?.focus();
@@ -55,24 +58,35 @@ export function StartMenu() {
   };
 
   const shopItems = MENU.filter((m) => m.collection === null || (collectionCount(cat, m.collection) ?? 0) > 0);
+  // Shopping first (SEARCH, MY BAG, FAVORITES, STORES, MY WARDROBE), then the rest of IYS OS.
   const system: { label: string; icon: IconName; sub: string; act: () => void }[] = [
     { label: 'SEARCH', icon: 'search', sub: 'Find anything', act: () => go('/search') },
     { label: 'MY BAG', icon: 'bag', sub: 'Your cool decisions', act: () => app('bag') },
     { label: 'FAVORITES', icon: 'favorites', sub: 'Saved items', act: () => go('/favorites') },
     { label: 'STORES', icon: 'stores', sub: 'Find IYS IRL', act: () => go('/stores') },
+    { label: 'MY WARDROBE', icon: 'wardrobe', sub: 'Browse by folder', act: () => app('wardrobe') },
     { label: 'IYS MESSENGER', icon: 'messenger', sub: 'Who’s online', act: () => app('messenger') },
     { label: 'IYS CAMERA', icon: 'camera', sub: 'DCIM photos', act: () => app('camera') },
     { label: 'IYS GAMES', icon: 'games', sub: '6 games starring Catchy', act: () => app('games') },
-    { label: 'MY WARDROBE', icon: 'wardrobe', sub: 'Browse by folder', act: () => app('wardrobe') },
     { label: 'IYS MAIL', icon: 'mail', sub: 'Support · orders@', act: () => app('mail') },
     { label: 'IYS NEWSLETTER', icon: 'newsletter', sub: 'Cool list · 10% off', act: () => app('newsletter') },
     { label: 'XCHANGE.EXE :)', icon: 'exchange', sub: 'Exchanges / refunds', act: () => app('exchange') },
     { label: 'IYS ESSENTIALS', icon: 'txt', sub: 'Refunds, shipping, terms', act: () => app('essentials') },
     { label: 'CONTROL PANEL', icon: 'control', sub: 'Sound, CRT, wallpaper', act: () => app('control') },
+    // The always-there way out: the real store, with this bag (same handoff as the REAL IYS switch).
+    {
+      label: concept.escape.menuItem,
+      icon: 'internet',
+      sub: concept.escape.menuSub,
+      act: () => {
+        useOS.getState().setStart(false);
+        switchToRealIYS();
+      },
+    },
   ];
 
   return (
-    <div ref={ref} className="startmenu" id="iys-menu" role="menu" aria-label="IYS menu" onKeyDown={onKeyDown}>
+    <div ref={ref} className={`startmenu${anchor === 'top' ? ' startmenu--top' : ''}`} id="iys-menu" role="menu" aria-label="IYS menu" onKeyDown={onKeyDown}>
       <div className="startmenu__head">
         <img src={brand.markWhite} alt="" />
         <div>

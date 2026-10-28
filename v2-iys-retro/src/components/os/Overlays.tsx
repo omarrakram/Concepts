@@ -85,7 +85,7 @@ export function TransferDialog() {
       <div className="transfer__body">
         <div className="transfer__anim" aria-hidden="true">
           <Icon name="product" size={32} />
-          <span className={`transfer__file${complete ? ' is-done' : ''}`}>
+          <span className={`fly-file transfer__file${complete ? ' is-done' : ''}`}>
             {item.image ? <img src={sized(item.image, 120)} alt="" /> : <Icon name="image" size={24} />}
           </span>
           <Icon name="bag" size={32} />

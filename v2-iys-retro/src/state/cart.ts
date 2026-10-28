@@ -42,6 +42,12 @@ export function setQuantity(items: CartItem[], key: string, qty: number): CartIt
 
 interface CartState {
   items: CartItem[];
+  /**
+   * A discount code the shopper typed (or a game reward they applied). It is
+   * handed to Shopify with the bag; only Shopify decides whether it applies.
+   */
+  discountCode: string | null;
+  setDiscountCode: (code: string | null) => void;
   add: (item: Omit<CartItem, 'key' | 'quantity'>, qty?: number) => void;
   inc: (key: string) => void;
   dec: (key: string) => void;
@@ -53,6 +59,8 @@ export const useCart = create<CartState>()(
   persist(
     (set) => ({
       items: [],
+      discountCode: null,
+      setDiscountCode: (discountCode) => set({ discountCode }),
       add: (item, qty = 1) => set((s) => ({ items: addItem(s.items, item, qty) })),
       inc: (key) => set((s) => ({ items: setQuantity(s.items, key, (s.items.find((i) => i.key === key)?.quantity ?? 0) + 1) })),
       dec: (key) => set((s) => ({ items: setQuantity(s.items, key, (s.items.find((i) => i.key === key)?.quantity ?? 0) - 1) })),

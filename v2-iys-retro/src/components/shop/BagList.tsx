@@ -28,7 +28,7 @@ export function BagList({ onOpenProduct }: { onOpenProduct: (handle: string) => 
             </button>
             {(it.variantTitle || it.size) && <span className="bag__variant">{it.variantTitle ?? `Size ${it.size}`}</span>}
             <span className="bag__unit">{formatEGP(it.price)} each</span>
-            <div className="bag__qty" role="group" aria-label={`Quantity of ${it.title}`}>
+            <div className="bag__qty" role="group" aria-label={`Quantity of ${it.title}`} data-repeatable>
               <button type="button" className="btn btn--small" onClick={() => dec(it.key)} aria-label={`Decrease quantity of ${it.title}`}>
                 −
               </button>

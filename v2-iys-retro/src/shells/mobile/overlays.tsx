@@ -7,37 +7,38 @@ import { FilterPanel } from '../../components/shop/FilterPanel';
 import { Price } from '../../components/shop/Price';
 import { RemoteImage } from '../../components/shop/RemoteImage';
 import { EssentialLinks } from '../../components/shop/EssentialLinks';
+import { BagIdeas, BagOffers, HandoffStatus, PromoCode, ShippingProgress, useHandoffPending } from '../../components/shop/BagExtras';
 import { ESSENTIALS } from '../../data/essentials';
 import { concept } from '../../data/copy';
 import { MENU } from '../../data/taxonomy';
 import { setWallpaperImage } from '../../lib/actions';
 import { formatCount, formatEGP } from '../../lib/catalogue/format';
 import { useCatalogue } from '../../lib/catalogue/load';
-import { startCheckout } from '../../lib/checkout';
+import { startCheckout, switchToRealIYS } from '../../lib/checkout';
 import { chatScript } from '../../lib/chatScript';
 import { prefersReducedMotion } from '../../lib/motion';
 import { play, unlockAudio } from '../../lib/sound';
 import { collectionPath, productPath } from '../../lib/useBrowse';
 import { useShopQuery } from '../../lib/useShopQuery';
 import { itemCount, subtotal, useCart } from '../../state/cart';
+import { useFavorites } from '../../state/favorites';
 import { useOS } from '../../state/os';
 import { usePreferences } from '../../state/preferences';
 import { useClaimCenter } from './chrome';
-import { useCatchyEnabled, writeEnabled } from '../../features/catchy/storage';
 
 export function MBag({ close }: { close: () => void }) {
   const items = useCart((s) => s.items);
   const navigate = useNavigate();
-  useClaimCenter(items.length ? { label: 'CHECKOUT', run: () => startCheckout() } : null);
+  const leaving = useHandoffPending();
+  useClaimCenter(items.length ? { label: 'CHECKOUT', run: () => startCheckout(), disabled: leaving } : null);
+  const openProduct = (h: string) => {
+    close();
+    navigate(productPath(h));
+  };
   return (
     <div className="m-page">
       <h1 className="m-h1">MY BAG ({itemCount(items)})</h1>
-      <BagList
-        onOpenProduct={(h) => {
-          close();
-          navigate(productPath(h));
-        }}
-      />
+      <BagList onOpenProduct={openProduct} />
       {items.length === 0 && (
         <button type="button" className="btn btn--go m-add" onClick={() => { close(); navigate('/collections/newest'); }}>
           {concept.y2k.primary} ›
@@ -45,17 +46,22 @@ export function MBag({ close }: { close: () => void }) {
       )}
       {items.length > 0 && (
         <div className="m-total">
+          <ShippingProgress />
+          <BagOffers />
           <div className="bag__total">
             <span>Subtotal</span>
             <b>{formatEGP(subtotal(items))}</b>
           </div>
           <p className="bag__note">{concept.y2k.bagNote}</p>
           <EssentialLinks className="bag__note" ids={['exchange-refund', 'shipping', 'terms-conditions']} />
-          <button type="button" className="btn btn--go m-add" onClick={() => startCheckout()}>
+          <PromoCode />
+          <button type="button" className="btn btn--go m-add" onClick={() => startCheckout()} disabled={leaving} aria-busy={leaving}>
             {concept.y2k.bagCta}
           </button>
+          <HandoffStatus />
         </div>
       )}
+      {items.length > 0 && <BagIdeas onOpenProduct={openProduct} variant="mobile" />}
     </div>
   );
 }
@@ -173,13 +179,21 @@ export function MMenu({ close, openOverlay }: { close: () => void; openOverlay: 
   const cat = useCatalogue();
   const navigate = useNavigate();
   const prefs = usePreferences();
-  const catchy = useCatchyEnabled();
+  const favs = useFavorites((st) => st.handles.length);
   useClaimCenter(null);
   return (
     <div className="m-page">
       <h1 className="m-h1">MENU</h1>
       <p className="m-meta">{concept.y2k.menuHint}</p>
       <ul className="m-menu">
+        {/* FAVS left the IYS MOBILE bar for GAMES: same /favorites screen, same saved list */}
+        <li>
+          <button type="button" onClick={() => { close(); navigate('/favorites'); }}>
+            <Icon name="favorites" size={24} />
+            <span>FAVS · MY FAVORITES</span>
+            <small>{favs} saved</small>
+          </button>
+        </li>
         <li>
           <button type="button" onClick={() => openOverlay('chat')}>
             <Icon name="messenger" size={24} />
@@ -196,6 +210,13 @@ export function MMenu({ close, openOverlay }: { close: () => void; openOverlay: 
           <button type="button" onClick={() => openOverlay('games')}>
             <Icon name="games" size={24} />
             <span>IYS GAMES · 6 GAMES</span>
+          </button>
+        </li>
+        <li>
+          <button type="button" onClick={() => switchToRealIYS()}>
+            <Icon name="internet" size={24} />
+            <span>{concept.escape.menuItem}</span>
+            <small>{concept.escape.menuSub}</small>
           </button>
         </li>
         {MENU.filter((m) => !m.collection || (cat?.collections.get(m.collection)?.count ?? 0) > 0).map((m) => (
@@ -227,10 +248,6 @@ export function MMenu({ close, openOverlay }: { close: () => void; openOverlay: 
       <label className="m-setting">
         <input type="checkbox" className="check" checked={prefs.crt} onChange={(e) => prefs.setCrt(e.target.checked)} />
         CRT filter
-      </label>
-      <label className="m-setting">
-        <input type="checkbox" className="check" checked={catchy} onChange={(e) => writeEnabled(e.target.checked)} />
-        Catchy on the home screen
       </label>
       <button type="button" className="btn" onClick={() => { prefs.reset(); useOS.getState().notify(concept.wallpaperUpdated); }}>
         Reset wallpaper

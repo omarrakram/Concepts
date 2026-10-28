@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { brand } from '../../data/assets';
+import { FEATURES } from '../../config/features';
 import { concept } from '../../data/copy';
 import { play, unlockAudio } from '../../lib/sound';
 import { useCart, itemCount } from '../../state/cart';
@@ -24,6 +25,7 @@ export const APP_ICONS: Record<AppId, IconName> = {
   essentials: 'txt',
   games: 'games',
   game: 'games',
+  sizeguide: 'ruler',
 };
 
 function Clock() {
@@ -64,6 +66,7 @@ export function Taskbar({ onStart, pjoysUnread, onMessenger }: { onStart: () => 
   const windows = useOS((s) => s.windows);
   const activeId = useOS((s) => s.activeId);
   const startOpen = useOS((s) => s.startOpen);
+  const desktopShown = useOS((s) => Boolean(s.desktopShown));
   const notice = useOS((s) => s.notice);
   const { focus, minimize, open } = useOS.getState();
   const sound = usePreferences((s) => s.sound);
@@ -82,18 +85,38 @@ export function Taskbar({ onStart, pjoysUnread, onMessenger }: { onStart: () => 
 
   return (
     <nav className="taskbar" aria-label="Taskbar">
-      <button type="button" className="start" aria-haspopup="menu" aria-expanded={startOpen} aria-controls="iys-menu" onClick={onStart}>
-        <img src={brand.markWhite} alt="" width={30} height={15} style={{ width: 'auto' }} />
-        <span>menu</span>
-        <span className="sr-only">IYS menu</span>
-      </button>
+      {FEATURES.topNav ? (
+        // MENU lives top left; this corner shows the desktop (and brings the same windows back).
+        <button
+          type="button"
+          className="start start--desktop"
+          aria-pressed={desktopShown}
+          aria-label={desktopShown ? 'DESKTOP: bring my windows back' : 'DESKTOP: show the desktop'}
+          title={desktopShown ? 'Bring my windows back' : 'Show the desktop'}
+          onClick={() => {
+            play('click');
+            useOS.getState().toggleDesktop();
+          }}
+        >
+          <Icon name="computer" size={18} />
+          <span>desktop</span>
+        </button>
+      ) : (
+        <button type="button" className="start" aria-haspopup="menu" aria-expanded={startOpen} aria-controls="iys-menu" onClick={onStart}>
+          <img src={brand.markWhite} alt="" width={30} height={15} style={{ width: 'auto' }} />
+          <span>menu</span>
+          <span className="sr-only">IYS menu</span>
+        </button>
+      )}
       <div className="quicklaunch" role="group" aria-label="Quick launch">
         <button type="button" title="IYS INTERNET" aria-label="Quick launch: IYS Internet" onClick={() => open('internet')}>
           <Icon name="internet" size={20} />
         </button>
-        <button type="button" title="Show Desktop" aria-label="Show desktop (minimize all windows)" onClick={() => useOS.getState().minimizeAll()}>
-          <Icon name="computer" size={20} />
-        </button>
+        {!FEATURES.topNav && (
+          <button type="button" title="Show Desktop" aria-label="Show desktop (minimize all windows)" onClick={() => useOS.getState().toggleDesktop()}>
+            <Icon name="computer" size={20} />
+          </button>
+        )}
         <button type="button" title={`MY BAG (${bagCount})`} aria-label={`Quick launch: My Bag (${bagCount})`} onClick={() => open('bag')}>
           <Icon name="bag" size={20} />
         </button>

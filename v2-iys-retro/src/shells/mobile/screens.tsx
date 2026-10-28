@@ -1,15 +1,20 @@
-import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router';
-import { Icon, type IconName } from '../../components/os/Icon';
+import { Icon } from '../../components/os/Icon';
 import { VariantPicker } from '../../components/product/VariantPicker';
+import { hasSizes, SizeChartView, SizeGuideButton } from '../../components/product/SizeGuide';
+import { MoreLikeThis } from '../../components/shop/ProductCarousel';
+import { ESSENTIALS } from '../../data/essentials';
 import { ProductInfo } from '../../components/product/ProductInfo';
 import { QuantityPicker } from '../../components/product/QuantityPicker';
 import { FavoriteButton } from '../../components/shop/FavoriteButton';
 import { PageLoading } from '../../components/shop/PageLoading';
+import { Busy } from '../../components/shop/Busy';
 import { Pagination } from '../../components/shop/Pagination';
 import { Price, SaleBadge, StockNote } from '../../components/shop/Price';
 import { RemoteImage } from '../../components/shop/RemoteImage';
 import { EssentialLinks } from '../../components/shop/EssentialLinks';
+import { FreshPicks, useSearchCombobox } from '../../components/shop/SearchAssist';
 import { assets, brand } from '../../data/assets';
 import { concept, official, officialSources } from '../../data/copy';
 import storesData from '../../data/stores.generated.json';
@@ -18,16 +23,17 @@ import { formatCount } from '../../lib/catalogue/format';
 import { useCatalogue } from '../../lib/catalogue/load';
 import { paginate } from '../../lib/catalogue/query';
 import type { Product } from '../../lib/catalogue/types';
-import { productPath } from '../../lib/useBrowse';
+import { collectionPath, productPath } from '../../lib/useBrowse';
+import { buildShelves, HOME_SHELVES } from '../../lib/merch';
+import { FEATURES } from '../../config/features';
 import { useProductState } from '../../lib/useProductState';
 import { useSearch } from '../../lib/useSearch';
+import { noteFrustration } from '../../lib/frustration';
 import { collectionTitle, useShopQuery } from '../../lib/useShopQuery';
 import { useFavorites } from '../../state/favorites';
-import { usePreferences } from '../../state/preferences';
+import { usePreferences, useSession } from '../../state/preferences';
+import { play } from '../../lib/sound';
 import { useClaimCenter } from './chrome';
-import { useCatchyEnabled } from '../../features/catchy/storage';
-
-const CatchyPet = lazy(() => import('../../features/catchy/CatchyPet'));
 
 export type Overlay = 'bag' | 'camera' | 'chat' | 'menu' | 'filters' | 'games' | null;
 const PER = 24;
@@ -38,12 +44,34 @@ function useTitle(t: string) {
   }, [t]);
 }
 
-export function MHome({ open, pjoysPing, active = true }: { open: (o: Overlay) => void; pjoysPing: boolean; active?: boolean }) {
-  const catchy = useCatchyEnabled();
+/** One product card in a home strip (JUST DROPPED and the shelves below it). */
+function MDropCard({ p }: { p: Product }) {
+  return (
+    <li>
+      <Link to={productPath(p.handle)} className="m-drop__card">
+        <span className="m-drop__img">
+          <RemoteImage src={p.image} alt="" title={p.title} base={240} sizes="128px" max={480} />
+          {p.onSale && <SaleBadge />}
+        </span>
+        <span className="m-drop__name">{p.title}</span>
+        <Price price={p.price} compareAt={p.compareAtPrice} />
+      </Link>
+    </li>
+  );
+}
+
+/**
+ * The IYS MOBILE home: welcome.htm, JUST DROPPED, IYS's own shelves. No
+ * mascot here (Catchy lives on the desktop only) and no games tile (GAMES is
+ * in the bar), so the clothes get the room.
+ */
+export function MHome() {
   const cat = useCatalogue();
   const navigate = useNavigate();
   const wp = usePreferences((s) => s.wallpaper);
   const mode = usePreferences((s) => s.wallpaperMode);
+  const minimized = useSession((s) => s.welcomeMinimized);
+  const setMinimized = useSession((s) => s.setWelcomeMinimized);
   useTitle('IYS MOBILE');
   useClaimCenter({ label: 'SHOP', run: () => navigate('/collections/newest') });
   // Default screen = the original IYS Hills sky; a photo/pattern the visitor
@@ -52,34 +80,40 @@ export function MHome({ open, pjoysPing, active = true }: { open: (o: Overlay) =
   const bgStyle = custom ? { backgroundImage: `url("${custom}")`, backgroundSize: mode === 'tile' ? '120px auto' : 'cover', backgroundRepeat: mode === 'tile' ? 'repeat' : 'no-repeat' } : undefined;
   const n = (h: string) => cat?.collections.get(h)?.count ?? 0;
   const drop = cat ? collectionProducts(cat, 'newest').slice(0, 8) : [];
-  const quick: { label: string; icon: IconName; to: string; count?: number | null }[] = [
-    { label: concept.y2k.shopAll.toUpperCase(), icon: 'hanger', to: '/shop', count: cat?.products.length },
-    { label: 'SEARCH', icon: 'search', to: '/search' },
-    { label: 'FAVS', icon: 'favorites', to: '/favorites' },
-    { label: 'STORES', icon: 'stores', to: '/stores', count: storesData.storeCount },
-  ];
+  const shelves = cat && FEATURES.homeShelves ? buildShelves(cat, HOME_SHELVES, { exclude: drop.map((p) => p.handle), per: 8 }) : [];
   return (
     <div className={`m-home${custom ? ' m-home--custom' : ''}`} style={bgStyle}>
-      {pjoysPing && (
-        <button type="button" className="m-notify" onClick={() => open('chat')}>
-          <Icon name="mail" size={24} />
-          <span>
-            <b>{concept.y2k.ping}</b> “{concept.messenger.pjoysOpener}”
+      {minimized && <h1 className="sr-only">IYS MOBILE</h1>}
+      <section className={`m-hero${minimized ? ' is-min' : ''}`} aria-label="welcome.htm">
+        <div className="m-hero__bar">
+          <span aria-hidden="true">✧ welcome.htm</span>
+          <span className="m-hero__ctl">
+            <span aria-hidden="true">✧ ✧ ✧</span>
+            <button
+              type="button"
+              className="tbtn m-hero__min"
+              aria-controls="m-hero-body"
+              aria-expanded={!minimized}
+              aria-label={minimized ? 'Restore welcome.htm' : 'Minimize welcome.htm'}
+              title={minimized ? 'Restore' : 'Minimize'}
+              onClick={() => {
+                play(minimized ? 'click' : 'minimize');
+                setMinimized(!minimized);
+              }}
+            >
+              <svg viewBox="0 0 10 10" shapeRendering="crispEdges" aria-hidden="true">
+                {minimized ? <path d="M0 0h10v10H0zm1 3v6h8V3z" fill="#fff" fillRule="evenodd" /> : <rect x="1" y="7" width="6" height="2" fill="#fff" />}
+              </svg>
+            </button>
           </span>
-        </button>
-      )}
-      <section className="m-hero" aria-labelledby="m-hero-title">
-        <p className="m-hero__bar" aria-hidden="true">
-          <span>✧ welcome.htm</span>
-          <span>✧ ✧ ✧</span>
-        </p>
-        <div className="m-hero__body">
+        </div>
+        <div className="m-hero__body" id="m-hero-body" hidden={minimized}>
           <img src={brand.wordmark} alt="In Your Shoe" className="m-hero__logo" width={346} height={114} />
           <p className="m-hero__kicker">{concept.y2k.heroKicker}</p>
           <h1 className="m-hero__title" id="m-hero-title">
             {official.coolDecision}
           </h1>
-          {cat && <p className="m-hero__line">{formatCount(cat.products.length)} real IYS pieces · prices in EGP</p>}
+          <p className="m-hero__line">{cat ? `${formatCount(cat.products.length)} real IYS pieces · prices in EGP` : '\u00a0'}</p>
           <div className="m-cta">
             <button type="button" className="btn btn--go m-cta__primary" onClick={() => navigate('/collections/newest')}>
               {concept.y2k.primary} ›{n('newest') ? <small>{formatCount(n('newest'))} new</small> : null}
@@ -90,52 +124,41 @@ export function MHome({ open, pjoysPing, active = true }: { open: (o: Overlay) =
           </div>
         </div>
       </section>
-      <ul className="m-grid" aria-label={concept.y2k.quick}>
-        {quick.map((it) => (
-          <li key={it.label}>
-            <button type="button" className="m-grid__item" onClick={() => navigate(it.to)} aria-label={`${it.label}${it.count ? `, ${it.count} items` : ''}`}>
-              <Icon name={it.icon} size={32} />
-              <span>{it.label}</span>
-            </button>
-          </li>
-        ))}
-      </ul>
-      {catchy && active && (
-        <Suspense fallback={null}>
-          <CatchyPet mode="mobile" />
-        </Suspense>
-      )}
-      <button type="button" className="m-gamesentry" onClick={() => open('games')}>
-        <Icon name="games" size={32} />
-        <span>
-          <b>IYS GAMES</b>
-          <small>6 games starring Catchy</small>
-        </span>
-        <span aria-hidden="true">›</span>
-      </button>
-      {drop.length > 0 && (
-        <section className="m-panel" aria-labelledby="m-drop-title">
-          <h2 className="m-panel__title" id="m-drop-title">
-            {concept.y2k.justDropped}
+      {/* JUST DROPPED sits right under the hero, so its first cards peek into the first screen. */}
+      <section className="m-panel m-panel--drop" aria-labelledby="m-drop-title">
+        <h2 className="m-panel__title" id="m-drop-title">
+          {concept.y2k.justDropped}
+        </h2>
+        <ul className="m-drop">
+          {drop.length
+            ? drop.map((p) => <MDropCard key={p.handle} p={p} />)
+            : [0, 1, 2].map((i) => (
+                <li key={i} aria-hidden="true">
+                  <span className="m-drop__card m-drop__card--wait">
+                    <span className="m-drop__img" />
+                  </span>
+                </li>
+              ))}
+        </ul>
+        <Link to="/collections/newest" className="m-panel__more">
+          {concept.y2k.seeAllNew} ({formatCount(n('newest'))}) ›
+        </Link>
+      </section>
+      {shelves.map((sh) => (
+        <section key={sh.handle} className="m-panel" aria-labelledby={`m-shelf-${sh.handle}`}>
+          <h2 className="m-panel__title" id={`m-shelf-${sh.handle}`}>
+            {sh.title.toUpperCase()} <small className="m-panel__note">{sh.note}</small>
           </h2>
           <ul className="m-drop">
-            {drop.map((p) => (
-              <li key={p.handle}>
-                <Link to={productPath(p.handle)} className="m-drop__card">
-                  <span className="m-drop__img">
-                    <RemoteImage src={p.image} alt="" title={p.title} base={240} sizes="128px" max={480} />
-                  </span>
-                  <span className="m-drop__name">{p.title}</span>
-                  <Price price={p.price} compareAt={p.compareAtPrice} />
-                </Link>
-              </li>
+            {sh.products.map((p) => (
+              <MDropCard key={p.handle} p={p} />
             ))}
           </ul>
-          <Link to="/collections/newest" className="m-panel__more">
-            {concept.y2k.seeAllNew} ({formatCount(n('newest'))}) ›
+          <Link to={collectionPath(sh.handle)} className="m-panel__more">
+            see all {formatCount(sh.count)} ›
           </Link>
         </section>
-      )}
+      ))}
       <section className="m-panel m-news" aria-labelledby="m-news-title">
         <h2 className="m-panel__title" id="m-news-title">
           {concept.y2k.newsletterTitle}
@@ -214,17 +237,37 @@ export function MList({ open }: { open: (o: Overlay) => void }) {
 
 export function MSearch() {
   const [params, setParams] = useSearchParams();
+  const navigate = useNavigate();
   const q = params.get('q') ?? '';
   const [typed, setTyped] = useState(q);
-  const { results } = useSearch(q);
+  const { results, understood } = useSearch(q);
   const page = Number(params.get('page') ?? '1') || 1;
   const pg = results ? paginate(results, page, PER) : null;
   const input = useRef<HTMLInputElement>(null);
   useTitle(q ? `${q} - Search` : 'Search');
-  useClaimCenter({ label: 'GO', run: () => setParams(typed.trim() ? { q: typed.trim() } : {}) });
+  const run = (v: string) => {
+    const t = v.trim();
+    setParams(t ? { q: t } : {});
+    input.current?.blur();
+  };
+  useClaimCenter({ label: 'GO', run: () => run(typed) });
+  useEffect(() => setTyped(q), [q]);
   useEffect(() => {
     if (!q) input.current?.focus();
   }, [q]);
+  // suggestions in the page under the box while typing; a suggested search runs, a category / product opens
+  const box = useSearchCombobox({
+    value: typed,
+    onChange: setTyped,
+    layout: 'inline',
+    onChoose: (c) => {
+      if (c.kind === 'term') {
+        setTyped(c.query);
+        run(c.query);
+      } else navigate(c.kind === 'product' ? productPath(c.handle) : collectionPath(c.handle));
+    },
+  });
+  const showResults = Boolean(q) && typed.trim() !== '' && !box.open;
   return (
     <div className="m-page">
       <form
@@ -232,27 +275,55 @@ export function MSearch() {
         role="search"
         onSubmit={(e) => {
           e.preventDefault();
-          setParams(typed.trim() ? { q: typed.trim() } : {});
-          input.current?.blur();
+          box.close();
+          run(typed);
         }}
       >
         <label htmlFor="m-q" className="m-h1">
           SEARCH
         </label>
         <div className="m-search__row">
-          <input ref={input} id="m-q" className="input" type="search" enterKeyHint="search" value={typed} onChange={(e) => setTyped(e.target.value)} placeholder={concept.y2k.searchPlaceholder} />
+          <div className="suggest">
+            <input ref={input} id="m-q" className="input" type="search" enterKeyHint="search" placeholder={concept.y2k.searchPlaceholder} {...box.inputProps} />
+          </div>
           <button type="submit" className="btn btn--go">
             Go
           </button>
         </div>
+        {box.status}
       </form>
-      {pg && (
+      {box.panel}
+      {!box.open && !showResults && <FreshPicks variant="mobile" />}
+      {showResults && q && !pg && (
+        <p className="m-meta">
+          <Busy inline label="Searching..." />
+        </p>
+      )}
+      {showResults && pg && (
         <>
-          <p className="m-meta">{pg.total ? `${formatCount(pg.total)} results 4 “${q}” :)` : `0 results 4 “${q}” :( try another word?`}</p>
+          <p className="m-meta">
+            {pg.total ? `${formatCount(pg.total)} results 4 ` : '0 results 4 '}
+            “<bdi>{q}</bdi>”
+            {pg.total ? ' :)' : ' :( try another word?'}
+          </p>
+          {understood && understood.length > 0 && <p className="m-meta m-understood">IYS understood: {understood.join(' · ')}</p>}
           {pg.total === 0 && (
-            <Link className="btn btn--go m-add" to="/shop">
-              {concept.y2k.shopAll.toUpperCase()} ›
-            </Link>
+            <>
+              <Link className="btn btn--go m-add" to="/shop">
+                {concept.y2k.shopAll.toUpperCase()} ›
+              </Link>
+              <p className="m-meta">
+                or try:{' '}
+                {['hoodie', 'pjoys', 'هودي', 'بنطلون'].map((t, i) => (
+                  <span key={t}>
+                    {i > 0 && ', '}
+                    <Link to={`/search?q=${encodeURIComponent(t)}`} dir="auto">
+                      {t}
+                    </Link>
+                  </span>
+                ))}
+              </p>
+            </>
           )}
           <ul className="m-list">
             {pg.items.map((p) => (
@@ -271,6 +342,7 @@ export function MProduct() {
   const s = useProductState(handle);
   const { indexed, p, variant, detail } = s;
   const [idx, setIdx] = useState(0);
+  const [guide, setGuide] = useState(false);
   const strip = useRef<HTMLDivElement>(null);
   useTitle(p?.title ?? indexed?.title ?? 'Product');
   const missing = p?.options.find((_, i) => !s.selected[i])?.name;
@@ -312,6 +384,21 @@ export function MProduct() {
           <>
             <StockNote available={variant ? variant.available : p.available} />
             <VariantPicker p={p} selected={s.selected} onSelect={s.select} />
+            {hasSizes(p) && (
+              <>
+                <SizeGuideButton onOpen={() => setGuide((g) => !g)} expanded={guide} controls="m-sizeguide" />
+                {guide && (
+                  <div className="m-sizeguide" id="m-sizeguide">
+                    <SizeChartView
+                      handle={p.handle}
+                      title={p.title}
+                      sourceUrl={p.sourceUrl}
+                      ask={{ label: concept.sizeGuide.askMobile, href: ESSENTIALS.find((e) => e.id === 'contact')?.url ?? 'https://inyourshoe.com/pages/contact-us' }}
+                    />
+                  </div>
+                )}
+              </>
+            )}
             <QuantityPicker value={s.qty} onChange={s.setQty} />
             <button type="button" className="btn btn--go m-add" disabled={!s.canAdd} onClick={() => s.add()}>
               {s.needsChoice ? `pick a ${missing?.toLowerCase() ?? 'size'} first :)` : variant?.available === false ? concept.y2k.soldOut : `${concept.y2k.add} ✧`}
@@ -328,6 +415,7 @@ export function MProduct() {
             </p>
             <EssentialLinks className="props__snapshot" label="Before u buy:" ids={['shipping', 'exchange-refund']} />
             <ProductInfo p={p} />
+            <MoreLikeThis handle={p.handle} variant="mobile" />
           </>
         ) : (
           <PageLoading label="Loading sizes..." />
@@ -405,6 +493,7 @@ export function MStores() {
 export function MNotFound() {
   const navigate = useNavigate();
   useTitle('Not found');
+  useEffect(() => noteFrustration('not-found', window.location.pathname), []);
   return (
     <div className="m-page m-notfound">
       <Icon name="error" size={48} />
