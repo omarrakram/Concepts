@@ -132,6 +132,71 @@ wav('click', 0.09, (b) => {
   }
 });
 
+// The carousel's opening (a present-day screen that breaks into 2007): a soft, airy swell as it lights up.
+wav('screen-on', 0.6, (b) => {
+  const r = rng(41);
+  let y = 0;
+  for (let i = 0; i < b.length; i++) {
+    const t = i / RATE;
+    const env = Math.min(1, t / 0.18) * Math.exp(-5 * Math.max(0, t - 0.18));
+    y += (r() * 2 - 1 - y) * 0.04; // filtered air
+    b[i] = env * (0.16 * Math.sin(2 * Math.PI * 523.25 * t) + 0.1 * Math.sin(2 * Math.PI * 784 * t) + 0.5 * y);
+  }
+});
+
+// ...then it glitches: stuttering bursts of bit-crushed noise and buzz, with dead-air gaps.
+wav('glitch', 0.9, (b) => {
+  const r = rng(53);
+  const bursts = [];
+  for (let t = 0; t < 0.88; ) {
+    const len = 0.025 + r() * 0.07;
+    bursts.push([t, len, 90 + r() * 900, r()]);
+    t += len + r() * 0.05;
+  }
+  for (const [t0, len, freq, kind] of bursts) {
+    const s0 = Math.round(t0 * RATE);
+    const n = Math.round(len * RATE);
+    const hold = 4 + Math.floor(kind * 40); // sample-and-hold: the "bit-crush"
+    let held = 0;
+    for (let i = 0; i < n && s0 + i < b.length; i++) {
+      const t = i / RATE;
+      if (i % hold === 0) held = kind > 0.45 ? r() * 2 - 1 : Math.sign(Math.sin(2 * Math.PI * freq * t));
+      b[s0 + i] += held * 0.55 * Math.min(1, (n - i) / 60) * (0.6 + 0.4 * (t0 / 0.88));
+    }
+  }
+});
+
+// ...and crashes: the picture collapses like an old monitor switching off (a falling zap and a thump).
+wav('crash', 0.6, (b) => {
+  const r = rng(67);
+  let phase = 0;
+  let y = 0;
+  for (let i = 0; i < b.length; i++) {
+    const t = i / RATE;
+    const f = 60 + 1500 * Math.exp(-14 * t);
+    phase += (2 * Math.PI * f) / RATE;
+    y += (r() * 2 - 1 - y) * 0.3;
+    const zap = Math.sin(phase) * Math.exp(-7 * t) * 0.5;
+    const thump = Math.sin(2 * Math.PI * 48 * t) * Math.exp(-11 * t) * 0.6;
+    b[i] = zap + thump + y * 0.35 * Math.exp(-18 * t);
+  }
+});
+
+// ...and the old computer comes on: a CRT's degauss, a thunk and a buzzing hum that wobbles and dies away.
+wav('degauss', 0.9, (b) => {
+  const r = rng(79);
+  let y = 0;
+  for (let i = 0; i < b.length; i++) {
+    const t = i / RATE;
+    const env = Math.min(1, t / 0.008) * Math.exp(-4.2 * t);
+    const wob = 1 + 0.35 * Math.sin(2 * Math.PI * 7 * t) * Math.exp(-3 * t);
+    const hum = 0.5 * Math.sin(2 * Math.PI * 60 * t) + 0.3 * wob * Math.sin(2 * Math.PI * 180 * t) + 0.15 * Math.sin(2 * Math.PI * 300 * t) + 0.08 * Math.sin(2 * Math.PI * 420 * t);
+    const thunk = Math.sin(2 * Math.PI * 38 * t) * Math.exp(-16 * t) * 0.7;
+    y += (r() * 2 - 1 - y) * 0.05;
+    b[i] = env * hum * 0.55 + thunk + y * 0.12 * Math.exp(-9 * t);
+  }
+});
+
 // QA only (npm run render:reel -- --props='{"cueTone":true}'): a sharp marker tone at the music cue.
 wav('cue-tone', 0.25, (b) => {
   for (let i = 0; i < b.length; i++) b[i] = 0.6 * Math.sin((2 * Math.PI * 1000 * i) / RATE) * Math.min(1, (b.length - i) / 400);

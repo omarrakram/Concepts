@@ -12,6 +12,7 @@ export const cast = await loadTs(src('story/cast.ts'));
 export const slides = await loadTs(src('story/slides.ts'));
 export const tumblr = await loadTs(src('story/tumblr.ts'));
 export const player = await loadTs(src('story/player.ts'));
+export const intro = await loadTs(src('story/intro.ts'));
 /** The first cut's story data, frozen from commit 38f0d3a. */
 export const FIRST_CUT = JSON.parse(readFileSync(new URL('./fixtures/first-cut-38f0d3a.json', import.meta.url), 'utf8'));
 export const source = (p) => readFileSync(src(p), 'utf8');

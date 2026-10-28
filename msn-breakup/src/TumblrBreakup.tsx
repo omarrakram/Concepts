@@ -4,24 +4,24 @@ import { clickCues, Cues, typingCues } from './sound';
 import { HER, HIM } from './story/cast';
 import { stateAt } from './story/state';
 import { CAROUSEL_VIEW, REEL } from './story/stories';
-import { IE_WIN, TUMBLR, TUMBLR_CURSOR, TUMBLR_TEXT, tumblrAt } from './story/tumblr';
+import { IE_WIN, TEASER_POST, TUMBLR, TUMBLR_CURSOR, TUMBLR_TEXT, tumblrAt } from './story/tumblr';
 import { IEWindow } from './ui/Browser';
 import { ContactList } from './ui/ContactList';
 import { Conversation } from './ui/Conversation';
 import { DesktopIcons, Taskbar, Wallpaper } from './ui/desktop';
 import { Pointer } from './ui/icons';
-import { TumblrBlog, TumblrPostForm } from './ui/Tumblr';
+import { TumblrBlog, TumblrDashboard, TumblrPostForm } from './ui/Tumblr';
 
 /** The conversation exactly as the film leaves it: every line, the three nudges, "Last message received…". */
 export const FILM_END = stateAt(REEL, REEL.duration);
 
 const CUES = [
   ...clickCues(TUMBLR_CURSOR),
-  ...typingCues(TUMBLR.title, 'title', false),
+  ...(TUMBLR.title ? typingCues(TUMBLR.title, 'title', false) : []),
   ...TUMBLR.body.flatMap((b, i) => typingCues(b, `body${i}`, i < TUMBLR.body.length - 1)),
 ];
 
-/** Carousel slide 2 (4:5): her Tumblr post, a minute after the film. No music. */
+/** Carousel slide 2 (4:5): a minute after the film, her Tumblr post, the teaser. No music. */
 export function TumblrBreakup({ view = CAROUSEL_VIEW }: { view?: { w: number; h: number } }) {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -34,7 +34,6 @@ export function TumblrBreakup({ view = CAROUSEL_VIEW }: { view?: { w: number; h:
     { label: `${HIM.name} - Conversation`, active: msnActive },
     ...(s.ieShown ? [{ label: `${s.pageTitle}${TUMBLR_TEXT.windowSuffix}`, active: true, icon: 'internet' as const }] : []),
   ];
-  const post = { title: TUMBLR.title.text, body: TUMBLR.body.map((b) => b.text) };
   return (
     <>
       <Screen camera={s.camera} view={view} frameSeed={frame}>
@@ -45,8 +44,9 @@ export function TumblrBreakup({ view = CAROUSEL_VIEW }: { view?: { w: number; h:
         {s.ieShown && (
           <div style={{ opacity: Math.min(1, s.ieAge / 0.08) }}>
             <IEWindow win={IE_WIN} title={s.pageTitle} url={s.url} loading={s.loading} progress={s.progress} status={s.status} canGoBack={s.page === 'blog'} frame={frame}>
+              {s.page === 'dashboard' && <TumblrDashboard textPressed={s.textPressed} />}
               {s.page === 'form' && <TumblrPostForm title={s.title} body={s.body} focus={s.focus} caretOn={s.caretOn} createPressed={s.createPressed} />}
-              {s.page === 'blog' && <TumblrBlog title={post.title} body={post.body} />}
+              {s.page === 'blog' && <TumblrBlog title={TEASER_POST.title} body={TEASER_POST.body} />}
             </IEWindow>
           </div>
         )}

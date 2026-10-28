@@ -1,4 +1,4 @@
-import type { CSSProperties, ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import { UI } from '../fonts';
 import { PLAYER_TEXT, TRACK, WMP, WMP_WIN } from '../story/player';
 import { PlayerMark } from './icons';
@@ -335,36 +335,23 @@ function NowPlaying({ bars, peaks, playing }: MediaPlayerProps) {
   );
 }
 
-/** The transport: seek bar, time, and the buttons around the big round Play. */
+/**
+ * The transport, as Microsoft's own WMP11 design pages showed it: the seek
+ * bar; the status area (a thumbnail, the title, the time, on one line); plain
+ * shuffle, repeat and stop glyphs; the capsule of previous / next around the
+ * big round Play; the volume.
+ */
 function Transport({ playing, elapsed, playHover, playPressed }: MediaPlayerProps) {
-  const T = PLAYER_TEXT;
   const top = H - WMP.controls;
   const frac = Math.min(1, elapsed / TRACK.seconds);
   const cy = WMP.play.y - top;
-  const small = (cx: number, r: number, glyph: ReactNode, dim?: boolean): ReactNode => (
-    <div
-      key={cx}
-      style={{
-        position: 'absolute',
-        left: cx - r,
-        top: cy - r,
-        width: 2 * r,
-        height: 2 * r,
-        boxSizing: 'border-box',
-        borderRadius: r,
-        border: '1px solid #5a6a85',
-        background: 'radial-gradient(circle at 40% 30%,#6b7c98,#1c2534 60%,#07090d)',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        opacity: dim ? 0.75 : 1,
-      }}
-    >
-      {glyph}
-    </div>
+  const glyph = (cx: number, w: number, h: number, children: ReactNode) => (
+    <svg key={cx} width={w} height={h} viewBox={`0 0 ${w} ${h}`} style={{ position: 'absolute', left: cx - w / 2, top: cy - h / 2 }}>
+      {children}
+    </svg>
   );
   const r = WMP.play.r;
-  const labelStyle: CSSProperties = { position: 'absolute', left: 9, width: 106, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' };
+  const capsule = { left: 204, right: 312, h: 22 };
   return (
     <div style={{ position: 'absolute', left: 0, top, width: W, height: WMP.controls, background: 'linear-gradient(180deg,#2c3646 0%,#141a24 18%,#07090d 60%,#000 100%)', borderTop: '1px solid #4d6383' }}>
       {/* seek bar */}
@@ -372,19 +359,29 @@ function Transport({ playing, elapsed, playHover, playPressed }: MediaPlayerProp
         <div style={{ width: `${frac * 100}%`, height: '100%', borderRadius: 2, background: 'linear-gradient(180deg,#a6e6ff,#2d8fe0)' }} />
         {playing && <div style={{ position: 'absolute', left: `calc(${frac * 100}% - 4px)`, top: -2, width: 8, height: 8, borderRadius: 4, background: 'radial-gradient(circle at 40% 35%,#fff,#7cc8ff 60%,#2a6fc2)' }} />}
       </div>
-      {/* status + time (blank until something plays) */}
+      {/* the status area: thumbnail, title, time (blank until something plays) */}
       {playing && (
-        <>
-          <div style={{ ...labelStyle, top: 18, color: '#9fc4ec' }}>{T.playing}</div>
-          <div style={{ ...labelStyle, top: 31, color: '#fff' }}>{TRACK.title}</div>
-          <div style={{ ...labelStyle, top: 46, color: '#cfe3f8', fontSize: 12 }}>{mmss(elapsed)}</div>
-        </>
+        <div style={{ position: 'absolute', left: 8, top: cy - 9, width: 108, height: 18, display: 'flex', alignItems: 'center', gap: 5, whiteSpace: 'nowrap', fontSize: 11 }}>
+          <div style={{ flex: 'none', width: 18, height: 18, border: '1px solid #5a6a85', boxSizing: 'border-box', overflow: 'hidden' }}>
+            <NoArt size={16} />
+          </div>
+          <span style={{ flex: 1, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', color: '#fff' }}>{TRACK.title}</span>
+          <span style={{ flex: 'none', color: '#cfe3f8' }}>{mmss(elapsed)}</span>
+        </div>
       )}
-      {small(128, 10, <Shuffle />, true)}
-      {small(154, 10, <Repeat />, true)}
-      {small(194, 11, <svg width="9" height="9" viewBox="0 0 9 9"><rect x="1" y="1" width="7" height="7" fill="#fff" /></svg>)}
-      {small(224, 12, <svg width="12" height="10" viewBox="0 0 12 10"><path d="M1 1v8M11 1L4.5 5 11 9z" stroke="#fff" fill="#fff" strokeWidth="1.4" /></svg>)}
-      {small(292, 12, <svg width="12" height="10" viewBox="0 0 12 10"><path d="M11 1v8M1 1l6.5 4L1 9z" stroke="#fff" fill="#fff" strokeWidth="1.4" /></svg>)}
+      {glyph(130, 14, 12, <path d="M1 3h3l5.5 6H13M1 9h3l5.5-6H13" fill="none" stroke="#c9d3e2" strokeWidth="1.4" />)}
+      {glyph(155, 14, 12, (
+        <>
+          <path d="M3 8.5a4 4 0 0 1 0-5h7.5M11 3.5a4 4 0 0 1 0 5H3.5" fill="none" stroke="#c9d3e2" strokeWidth="1.4" />
+          <path d="M9.5 1l2.2 2.5-2.2 2.5zM4.5 11l-2.2-2.5 2.2-2.5z" fill="#c9d3e2" />
+        </>
+      ))}
+      <div style={{ position: 'absolute', left: 172, top: cy - 9, width: 1, height: 18, background: '#2c3646' }} />
+      {glyph(190, 10, 10, <rect x="1" y="1" width="8" height="8" fill="#8f9bb0" />)}
+      {/* previous / next: one glass capsule behind the Play button */}
+      <div style={{ position: 'absolute', left: capsule.left, top: cy - capsule.h / 2, width: capsule.right - capsule.left, height: capsule.h, boxSizing: 'border-box', borderRadius: capsule.h / 2, border: '1px solid #5a6a85', background: 'linear-gradient(180deg,#56657e 0%,#273141 45%,#0d1119 55%,#1c2533 100%)', boxShadow: 'inset 0 1px 0 rgba(255,255,255,.18)' }} />
+      {glyph(222, 14, 10, <path d="M1.5 1v8M13 1L8 5l5 4zM8 1L3 5l5 4z" stroke="#fff" fill="#fff" strokeWidth="1.2" strokeLinejoin="round" />)}
+      {glyph(294, 14, 10, <path d="M12.5 1v8M1 1l5 4-5 4zM6 1l5 4-5 4z" stroke="#fff" fill="#fff" strokeWidth="1.2" strokeLinejoin="round" />)}
       {/* Play / Pause */}
       <div
         style={{
@@ -436,15 +433,3 @@ function Transport({ playing, elapsed, playHover, playPressed }: MediaPlayerProp
     </div>
   );
 }
-
-const Shuffle = () => (
-  <svg width="12" height="10" viewBox="0 0 12 10">
-    <path d="M1 2h2.5l5 6H11M1 8h2.5l5-6H11" fill="none" stroke="#dfe7f2" strokeWidth="1.2" />
-  </svg>
-);
-const Repeat = () => (
-  <svg width="12" height="10" viewBox="0 0 12 10">
-    <path d="M2 6V3.5h7.5M10 4v2.5H2.5" fill="none" stroke="#dfe7f2" strokeWidth="1.2" />
-    <path d="M8.5 1.5l1.6 2-1.6 2zM3.5 8.5l-1.6-2 1.6-2z" fill="#dfe7f2" />
-  </svg>
-);

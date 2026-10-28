@@ -24,13 +24,18 @@ test('every composition is registered at the right size, rate and length', () =>
     return { fps: +m[1], w: +m[2], h: +m[3], frames: +m[4] };
   };
   assert.deepEqual(row('HeroReel'), { fps: 30, w: 1080, h: 1920, frames: 1050 });
-  assert.deepEqual(row('BreakupCarousel'), { fps: 30, w: 1080, h: 1350, frames: 1050 });
-  assert.deepEqual(row('TumblrBreakup'), { fps: 30, w: 1080, h: 1350, frames: 300 });
+  // slide 1: the opening (4.8 s) and then the film (35 s)
+  assert.deepEqual(row('BreakupCarousel'), { fps: 30, w: 1080, h: 1350, frames: 144 + 1050 });
+  assert.deepEqual(row('TumblrBreakup'), { fps: 30, w: 1080, h: 1350, frames: 267 });
   assert.deepEqual(row('MusicPlayerBreakup'), { fps: 30, w: 1080, h: 1350, frames: 384 });
   assert.deepEqual(row('HeroReelOriginal'), { fps: 30, w: 1080, h: 1920, frames: 990 });
   assert.deepEqual(row('Teaser'), { fps: 30, w: 1080, h: 1920, frames: 210 });
   for (const id of ['Carousel', 'SignIn']) assert.match(out, new RegExp(`^${id}\\s+`, 'm'));
-  for (const c of CAROUSEL) assert.ok(row(c.id).frames / 30 <= 60);
+  for (const c of CAROUSEL) {
+    assert.ok(row(c.id).frames / 30 <= 60);
+    // the QA checks each rendered file against this number
+    assert.equal(row(c.id).frames, c.frames, `${c.id} frames in carousel-list`);
+  }
 });
 
 test('the 4:5 film is the same story as the 9:16 master, only reframed', () => {

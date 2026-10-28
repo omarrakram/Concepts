@@ -9,8 +9,9 @@ const root = fileURLToPath(new URL('..', import.meta.url));
 const font = `${root}/public/fonts/wine-tahoma.ttf`;
 /** seconds of each slide's key moments */
 const MOMENTS = {
-  1: [0, 2.0, 7.6, 14.8, 20.95, 24.9, 30.4, 31.45, 32.8, 34.95],
-  2: [0.2, 1.3, 2.3, 3.7, 5.3, 6.1, 6.8, 7.2, 7.6, 9.95],
+  // the opening (today's screen, the glitch, the crash, the XP loading bar, "welcome"), then the film (+4.8 s)
+  1: [0.4, 1.9, 2.5, 3.2, 4.1, 4.8 + 2.0, 4.8 + 14.8, 4.8 + 24.9, 4.8 + 31.45, 4.8 + 34.95],
+  2: [0.2, 1.3, 1.9, 2.3, 3.0, 3.8, 4.4, 4.93, 5.7, 8.87],
   3: [0.2, 0.8, 1.1, 1.4, 1.7, 2.1, 77 / 30, 78 / 30, 5.0, 12.77],
 };
 const tmp = `${root}/out/qa/sheet-rows`;

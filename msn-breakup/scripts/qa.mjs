@@ -1,8 +1,8 @@
 // npm run qa: checks the rendered files themselves (run npm run render:carousel and
 // npm run render:reel first). Writes out/qa/report.json and exits non-zero on any failure.
-//   - ffprobe: 1080 × 1350 (4:5) / 1080 × 1920, 30 fps, every frame present, H.264 yuv420p, AAC
+//   - ffprobe: 1080 × 1350 (4:5) / 1080 × 1920, 30 fps, exactly the composition's frames, H.264 yuv420p, AAC
 //   - every file decodes start to end without an error (no corrupt video or audio)
-//   - no black frames, no frozen stretch outside the designed holds, audio not clipped, not silent
+//   - no black frames and no frozen stretch outside the designed ones, audio not clipped, not silent
 //   - slide 3: the song begins exactly on PLAY_FRAME: in a song-only render as uncompressed WAV
 //     (the exact mix: digital zero until the first sample of PLAY_FRAME), in the delivered MP4
 //     (its first note at the Play frame), and the button turns to Pause on that frame (its pixels)
@@ -10,7 +10,7 @@
 import { spawnSync } from 'node:child_process';
 import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
-import { CAROUSEL, MASTER_HOLDS, OUT_DIR } from './carousel-list.mjs';
+import { CAROUSEL, MASTER_FRAMES, MASTER_HOLDS, OUT_DIR } from './carousel-list.mjs';
 import { loadTs } from './load-ts.mjs';
 import { probe } from './manifest.mjs';
 
@@ -35,9 +35,9 @@ const pcm = (file, rate = 48000) => {
 const dbfs = (x) => (x > 0 ? 20 * Math.log10(x / 32768) : -Infinity);
 
 const files = [
-  ...CAROUSEL.map((c) => ({ file: `${OUT_DIR}/${c.file}`, w: 1080, h: 1350, holds: c.holds ?? [] })),
-  { file: `${OUT_DIR}/${CAROUSEL[2].clean.file}`, w: 1080, h: 1350, holds: [] },
-  { file: 'out/msn-breakup-reel.mp4', w: 1080, h: 1920, holds: MASTER_HOLDS },
+  ...CAROUSEL.map((c) => ({ file: `${OUT_DIR}/${c.file}`, w: 1080, h: 1350, frames: c.frames, holds: c.holds ?? [], dark: c.dark ?? [] })),
+  { file: `${OUT_DIR}/${CAROUSEL[2].clean.file}`, w: 1080, h: 1350, frames: CAROUSEL[2].frames, holds: [], dark: [] },
+  { file: 'out/msn-breakup-reel.mp4', w: 1080, h: 1920, frames: MASTER_FRAMES, holds: MASTER_HOLDS, dark: [] },
 ];
 for (const f of files) {
   const path = `${root}/${f.file}`;
@@ -46,15 +46,20 @@ for (const f of files) {
     continue;
   }
   const m = probe(path);
+  // every frame of the composition, no more, no less, and a video stream exactly that long
   check(
-    `${f.file}: ${m.width}×${m.height} ${m.aspect}, ${m.fps} fps, ${m.frames} frames, ${m.video}, ${m.pix_fmt}, ${m.audio} ${m.sample_rate} Hz`,
-    m.width === f.w && m.height === f.h && m.fps === FPS && m.frames === Math.round(m.duration * FPS) && m.video.startsWith('h264') && m.pix_fmt === 'yuv420p' && m.audio.startsWith('aac'),
-    `${m.duration} s, ${(m.bytes / 1e6).toFixed(2)} MB`,
+    `${f.file}: ${m.width}×${m.height} ${m.aspect}, ${m.fps} fps, ${m.frames} frames (composition: ${f.frames}), ${m.video}, ${m.pix_fmt}, ${m.audio} ${m.sample_rate} Hz`,
+    m.width === f.w && m.height === f.h && m.fps === FPS && m.frames === f.frames && Math.abs(m.videoDuration - f.frames / FPS) < 0.5 / FPS && m.video.startsWith('h264') && m.pix_fmt === 'yuv420p' && m.audio.startsWith('aac'),
+    `video ${m.videoDuration} s, container ${m.duration} s, ${(m.bytes / 1e6).toFixed(2)} MB`,
   );
   const decode = run('ffmpeg', ['-v', 'error', '-i', path, '-f', 'null', '-']).stderr.trim();
   check(`${f.file}: decodes start to end with no error`, decode === '', decode.slice(0, 200));
-  const black = ffmpegLog(['-i', path, '-an', '-vf', 'blackdetect=d=0.05:pix_th=0.10', '-f', 'null', '-']).match(/black_start:[\d.]+/g) ?? [];
-  check(`${f.file}: no black frames`, black.length === 0, black.join(' '));
+  // a black picture is only allowed inside a designed dark moment (± 0.1 s): slide 1's crash and old Windows starting
+  const blackLog = ffmpegLog(['-i', path, '-an', '-vf', 'blackdetect=d=0.05:pix_th=0.10', '-f', 'null', '-']);
+  const black = [...blackLog.matchAll(/black_start:([\d.]+) black_end:([\d.]+)/g)].map((x) => [Number(x[1]), Number(x[2])]);
+  const strayBlack = black.filter(([a, b]) => !f.dark.some(([d0, d1]) => a >= d0 - 0.1 && b <= d1 + 0.1));
+  const blackShown = black.map(([a, b]) => `${a.toFixed(2)}–${b.toFixed(2)} s`).join(', ');
+  check(`${f.file}: no black frames outside the designed dark moments`, strayBlack.length === 0, blackShown ? `black: ${blackShown}; designed: ${f.dark.map(([a, b]) => `${a}–${b} s`).join(', ') || 'none'}` : 'none');
   // a still picture of 1 s or more is only allowed inside a designed hold (± 0.1 s)
   const log = ffmpegLog(['-i', path, '-an', '-vf', 'freezedetect=n=0.0005:d=1.0', '-f', 'null', '-']);
   const starts = [...log.matchAll(/freeze_start: ([\d.]+)/g)].map((x) => Number(x[1]));

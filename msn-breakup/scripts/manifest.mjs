@@ -18,6 +18,8 @@ export function probe(file) {
   const k = g(v.width, v.height);
   return {
     duration: +Number(j.format.duration).toFixed(3),
+    /** the video stream's own length (the container's can be a few ms longer: AAC pads its last frame) */
+    videoDuration: +Number(v.duration).toFixed(3),
     width: v.width,
     height: v.height,
     aspect: `${v.width / k}:${v.height / k}`,

@@ -2,8 +2,10 @@ import { Composition, Still } from 'remotion';
 import './fonts';
 import { FPS } from './constants';
 import { Reel, type ReelProps } from './Reel';
+import { BreakupCarousel } from './BreakupCarousel';
 import { CarouselStill, SignInStill } from './Stills';
-import { CAROUSEL_VIEW, REEL, REEL_CAROUSEL, REEL_ORIGINAL, TEASER } from './story/stories';
+import { INTRO } from './story/intro';
+import { REEL, REEL_CAROUSEL, REEL_ORIGINAL, TEASER } from './story/stories';
 import { MusicPlayerBreakup, type MusicPlayerProps } from './MusicPlayerBreakup';
 import { PLAYER } from './story/player';
 import { TUMBLR } from './story/tumblr';
@@ -22,17 +24,17 @@ export function Root() {
         height={1920}
         defaultProps={{} satisfies ReelProps}
       />
-      {/* carousel slide 1: the same film recomposed for 4:5 */}
+      {/* carousel slide 1: the opening (today's computer breaking into 2007), then the film recomposed for 4:5 */}
       <Composition
         id="BreakupCarousel"
-        component={(p: ReelProps) => <Reel story={REEL_CAROUSEL} view={CAROUSEL_VIEW} {...p} />}
-        durationInFrames={Math.round(REEL_CAROUSEL.duration * FPS)}
+        component={BreakupCarousel}
+        durationInFrames={Math.round(INTRO.duration * FPS) + Math.round(REEL_CAROUSEL.duration * FPS)}
         fps={FPS}
         width={1080}
         height={1350}
         defaultProps={{} satisfies ReelProps}
       />
-      {/* carousel slide 2: her Tumblr post */}
+      {/* carousel slide 2: her Tumblr post, the teaser */}
       <Composition id="TumblrBreakup" component={TumblrBreakup} durationInFrames={Math.round(TUMBLR.duration * FPS)} fps={FPS} width={1080} height={1350} />
       {/* carousel slide 3: she plays the song (it starts on the Play frame) */}
       <Composition

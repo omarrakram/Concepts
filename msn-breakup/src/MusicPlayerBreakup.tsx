@@ -7,7 +7,7 @@ import { clickCues, Cues } from './sound';
 import { HER, HIM } from './story/cast';
 import { PLAY_FRAME, PLAYER, PLAYER_CURSOR, playerAt, SONG_SOURCE } from './story/player';
 import { CAROUSEL_VIEW } from './story/stories';
-import { IE_WIN, TUMBLR, TUMBLR_TEXT } from './story/tumblr';
+import { IE_WIN, TEASER_POST, TUMBLR_TEXT } from './story/tumblr';
 import { FILM_END } from './TumblrBreakup';
 import { IEWindow } from './ui/Browser';
 import { ContactList } from './ui/ContactList';
@@ -115,7 +115,7 @@ function Player({ song = true, uiSounds = true, cueTone = false, songVolume = 0.
         <Conversation s={{ ...FILM_END, caretOn: false }} inactive />
         {/* her blog, as the Tumblr video left it */}
         <IEWindow win={IE_WIN} title={TUMBLR_TEXT.blogTitle} url={TUMBLR_TEXT.blogUrl} loading={false} progress={0} status={TUMBLR_TEXT.done} canGoBack frame={frame} inactive={s.wmpShown || s.menuOpen}>
-          <TumblrBlog title={TUMBLR.title.text} body={TUMBLR.body.map((b) => b.text)} />
+          <TumblrBlog title={TEASER_POST.title} body={TEASER_POST.body} />
         </IEWindow>
         {s.wmpShown && (
           <div style={{ opacity: Math.min(1, s.wmpAge / 0.08) }}>

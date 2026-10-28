@@ -8,7 +8,8 @@ const src = (p) => fileURLToPath(new URL(`../src/${p}`, import.meta.url));
 const { FPS } = await loadTs(src('constants.ts'));
 const { REEL, REEL_CAROUSEL, REEL_ORIGINAL, TEASER } = await loadTs(src('story/stories.ts'));
 const { SONG, HIM, HER } = await loadTs(src('story/cast.ts'));
-const { TUMBLR, TUMBLR_TEXT } = await loadTs(src('story/tumblr.ts'));
+const { TUMBLR, TUMBLR_TEXT, TEASER_POST } = await loadTs(src('story/tumblr.ts'));
+const { INTRO, INTRO_TEXT } = await loadTs(src('story/intro.ts'));
 const { PLAYER, PLAY_FRAME, SONG_SOURCE, TRACK } = await loadTs(src('story/player.ts'));
 
 const frame = (s) => Math.round(s * FPS);
@@ -64,19 +65,42 @@ function film(id, story, size) {
 
 console.log('MSN breakup: cue sheet');
 film('HeroReel (the film, 9:16 master)', REEL, '1080×1920');
-console.log(`\nBreakupCarousel (carousel slide 1): the same beats as HeroReel, reframed for 4:5 (1080×1350), ${frame(REEL_CAROUSEL.duration)} frames.`);
+const slide1 = INTRO.duration + REEL_CAROUSEL.duration;
+console.log(`\nBreakupCarousel (carousel slide 1)  ${slide1.toFixed(3)} s · ${frame(INTRO.duration) + frame(REEL_CAROUSEL.duration)} frames @ ${FPS} fps · 1080×1350`);
+console.log(`  the opening (${INTRO.duration} s, frames 0–${frame(INTRO.duration) - 1}), then the same beats as HeroReel, reframed for 4:5, each ${INTRO.duration} s later`);
+table(
+  [
+    [0, `today's lock screen lights up: “${INTRO_TEXT.time}”, “${INTRO_TEXT.date}” (screen-on sound)`],
+    [INTRO.glitch, 'it glitches, more and more (glitch sound)'],
+    [INTRO.crash, 'it crashes: the picture collapses to a line, then a dot (crash sound)'],
+    [INTRO.black, 'black'],
+    [INTRO.boot, 'old Windows starts: the old monitor comes on (degauss), the XP loading bar'],
+    [INTRO.bootEnd, 'black'],
+    [INTRO.welcome, `the XP “${INTRO_TEXT.welcome}” screen`],
+    [INTRO.desktop, 'her XP desktop fades in over it: the film’s first frame'],
+    [INTRO.duration, 'the film (HeroReel’s beats, reframed)'],
+  ],
+  slide1,
+);
 
 const T = TUMBLR;
 console.log(`\nTumblrBreakup (carousel slide 2)  ${T.duration.toFixed(3)} s · ${frame(T.duration)} frames @ ${FPS} fps · 1080×1350  (no music)`);
+console.log(`  the post: TEASER_POST in src/story/tumblr.ts (${TEASER_POST.final ? 'final wording' : 'PENDING the collaborator’s final wording'})`);
 table(
   [
     [T.launch, 'click: Quick Launch → Internet'],
-    [T.shown, `Internet Explorer opens: “Opening page ${TUMBLR_TEXT.formUrl}…”`],
-    [T.loaded, 'the Tumblr text-post form is painted'],
-    [T.titleClick, 'click: Title field'],
-    [T.title.from, '  she starts typing the title'],
-    [T.title.at, `TITLE  ${T.title.text}`],
-    [T.bodyClick, 'click: Post field'],
+    [T.shown, `Internet Explorer opens: “Opening page ${TUMBLR_TEXT.dashboardUrl}…”`],
+    [T.dashboard, `her Tumblr dashboard: “${TUMBLR_TEXT.addNew}” ${TUMBLR_TEXT.postTypes.join(' ')}`],
+    [T.textClick, 'click: Text'],
+    [T.loaded, `the text-post form is painted (${TUMBLR_TEXT.formUrl})`],
+    ...(T.title
+      ? [
+          [T.titleClick, 'click: Title field'],
+          [T.title.from, '  she starts typing the title'],
+          [T.title.at, `TITLE  ${T.title.text}`],
+        ]
+      : []),
+    ...(T.bodyClick !== null ? [[T.bodyClick, 'click: Post field']] : []),
     ...T.body.flatMap((b, i) => [
       [b.from, '  she starts typing'],
       [b.at, `POST   ${b.text}${i < T.body.length - 1 ? '  (Enter)' : ''}`],

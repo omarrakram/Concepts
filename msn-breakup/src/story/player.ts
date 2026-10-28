@@ -85,7 +85,6 @@ export const PLAYER_TEXT = {
   library: 'Library',
   libraryViews: ['Recently Added', 'Artist', 'Album', 'Songs', 'Genre', 'Year', 'Rating'],
   columns: ['Album', '#', 'Title', 'Length', 'Rating'],
-  playing: 'Playing',
 } as const;
 
 /** Where things are (virtual screen px). */
