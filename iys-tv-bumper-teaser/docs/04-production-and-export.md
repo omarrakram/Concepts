@@ -102,7 +102,7 @@ Remotion renders PNG frames and encodes them with its bundled ffmpeg:
 ```sh
 npm run qa -- --set=final          # → out/final/qa/validation.{md,json}; exits 1 on any failure
 npm run sheet -- out/final/IYS-LOST-TV-BUMPER-TEASER-1080x1920.mp4 out/final/contact-sheet.jpg
-npm run sheet -- --storyboard out/animatic/IYS-LOST-TV-BUMPER-ANIMATIC-1080x1920.mp4 docs/storyboard.jpg
+npm run sheet -- --storyboard out/final/IYS-LOST-TV-BUMPER-TEASER-1080x1920.mp4 docs/storyboard.jpg
 ```
 
 ## Optional versions

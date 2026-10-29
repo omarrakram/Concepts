@@ -2,8 +2,8 @@
 
 15.0 s, 30 fps, 450 frames (0–449), 9:16 (1080 × 1920). The picture board
 is [`storyboard.jpg`](storyboard.jpg): one panel per beat, pulled from the
-animatic, with its frame and timecode. The cue numbers below are the
-soundtrack's (`audio/synth.mjs`, `CUES`).
+finished film (`npm run sheet -- --storyboard`), with its frame and timecode.
+The cue numbers below are the soundtrack's (`audio/synth.mjs`, `CUES`).
 
 ## The idea in one line
 
