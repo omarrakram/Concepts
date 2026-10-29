@@ -15,8 +15,9 @@ const findShell = (): string | null => {
   const root = '/opt/pw-browsers';
   if (!existsSync(root)) return null;
   const dir = readdirSync(root).find((d) => d.startsWith('chromium_headless_shell-'));
-  const bin = dir ? `${root}/${dir}/chrome-linux/headless_shell` : null;
-  return bin && existsSync(bin) ? bin : null;
+  // the shell's layout differs between Playwright builds
+  const bin = dir ? ['chrome-linux/headless_shell', 'chrome-headless-shell-linux64/chrome-headless-shell'].map((p) => `${root}/${dir}/${p}`).find((p) => existsSync(p)) : null;
+  return bin ?? null;
 };
 const shell = findShell();
 if (shell) Config.setBrowserExecutable(shell);

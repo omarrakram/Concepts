@@ -58,8 +58,9 @@ const shell = (() => {
   if (process.env.REMOTION_BROWSER) return process.env.REMOTION_BROWSER;
   const dir = '/opt/pw-browsers';
   const found = existsSync(dir) && readdirSync(dir).find((d) => d.startsWith('chromium_headless_shell-'));
-  const bin = found && join(dir, found, 'chrome-linux/headless_shell');
-  return bin && existsSync(bin) ? bin : null;
+  // the shell's layout differs between Playwright builds
+  const bin = found && ['chrome-linux/headless_shell', 'chrome-headless-shell-linux64/chrome-headless-shell'].map((p) => join(dir, found, p)).find(existsSync);
+  return bin ?? null;
 })();
 
 const sh = (cmd, argv, env = {}) => {

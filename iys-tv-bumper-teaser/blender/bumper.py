@@ -164,7 +164,7 @@ def eye_look(f):
 def mouth_shape(f):
     """The smile's (width, height) scale: bigger when it is pleased, gone while it says "o"."""
     happy = keys([(0, 1.0), (152, 1.0), (158, 1.25), (166, 1.0), (196, 1.0), (200, 1.2), (210, 1.0)], f)
-    shown = 1 - span(f, 236, 238) * (1 - span(f, 255, 258))
+    shown = 1 - span(f, 236, 238) * (1 - span(f, 251, 255))
     return (max(1e-3, (0.9 + 0.1 * happy) * shown), max(1e-3, happy * shown))
 
 
