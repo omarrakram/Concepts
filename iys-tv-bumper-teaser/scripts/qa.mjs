@@ -3,7 +3,8 @@
 // The technical validation of a rendered master, written to out/<set>/qa/validation.{json,md}:
 //   streams      H.264 High, yuv420p, 1080 × 1920, 30 fps CFR, 450 frames, BT.709; AAC stereo 48 kHz; durations match
 //   faststart    the index (moov) is before the media (mdat)
-//   picture      every frame decoded: no black or near-black frames, no frozen runs, no duplicated frames,
+//   picture      every frame decoded: no black or near-black frames, no frozen runs before the end card (whose
+//                hold is measured), no duplicated frames,
 //                highlight clipping measured, the biggest frame-to-frame changes listed (the designed cuts)
 //   audio        integrated loudness, true peak, loudness range, clipped samples, a clean start and end
 //   copy         the only on-screen line is the approved one; no event name, offer, price, discount,
@@ -69,9 +70,21 @@ check('streams', 'file', null, `${(Number(probe.format.size) / 1e6).toFixed(2)} 
 {
   const r = run('ffmpeg', ['-hide_banner', '-nostats', '-i', video, '-vf', 'blackdetect=d=0.03:pix_th=0.10:pic_th=0.98,freezedetect=n=0.002:d=0.25', '-an', '-f', 'null', '-']);
   const blacks = [...r.stderr.matchAll(/black_start:([\d.]+) black_end:([\d.]+)/g)].map((m) => `${m[1]}–${m[2]} s`);
-  const freezes = [...r.stderr.matchAll(/freeze_start: ([\d.]+)[\s\S]*?freeze_duration: ([\d.]+)/g)].map((m) => `${m[1]} s for ${m[2]} s`);
+  // a freeze still running at the end of the file reports no end: it runs to the end
+  const freezes = [];
+  for (const m of r.stderr.matchAll(/freeze_(start|end): ([\d.]+)/g)) {
+    if (m[1] === 'start') freezes.push({ start: Number(m[2]), end: FRAMES / FPS });
+    else if (freezes.length) freezes[freezes.length - 1].end = Number(m[2]);
+  }
+  // the end card holds once the bug is in (src/timeline.ts, T.bug): stillness there is designed, up to a second of it
+  const endCard = Number(/bug: \[\d+, (\d+)\]/.exec(readFileSync(join(root, 'src/timeline.ts'), 'utf8'))[1]) / FPS;
+  const span = (z) => `${z.start.toFixed(2)}–${z.end.toFixed(2)} s`;
+  const unplanned = freezes.filter((z) => z.start < endCard);
+  const hold = freezes.filter((z) => z.start >= endCard);
+  const held = hold.reduce((s, z) => s + z.end - z.start, 0);
   check('picture', 'black frames (ffmpeg blackdetect)', blacks.length === 0, blacks.length ? blacks.join(', ') : 'none', 'none');
-  check('picture', 'frozen runs ≥ 0.25 s (ffmpeg freezedetect)', freezes.length === 0, freezes.length ? freezes.join(', ') : 'none', 'none');
+  check('picture', 'frozen runs ≥ 0.25 s before the end card (ffmpeg freezedetect)', unplanned.length === 0, unplanned.length ? unplanned.map(span).join(', ') : 'none', `none before ${endCard.toFixed(2)} s`);
+  check('picture', 'the end card holding still (freezedetect, from the bug landing)', held <= 1.0, hold.length ? `${hold.map(span).join(', ')}: ${held.toFixed(2)} s` : 'none', '≤ 1.0 s');
 }
 
 // ------------------------------------------------------------------ picture: every frame, measured here
@@ -111,7 +124,7 @@ const stats = await new Promise((done, fail) => {
   const stillest = stats.map((s, i) => ({ i, mad: s.mad })).filter((s) => s.mad !== null).sort((x, y) => x.mad - y.mad).slice(0, 3);
   check('picture', 'stillest frames (mean change vs previous)', null, stillest.map((s) => `f${s.i} ${s.mad.toFixed(2)}`).join(', '));
   const jumps = stats.map((s, i) => ({ i, mad: s.mad ?? 0 })).sort((x, y) => y.mad - x.mad).slice(0, 5);
-  check('picture', 'biggest frame-to-frame changes', null, jumps.map((s) => `f${s.i} ${s.mad.toFixed(1)}`).join(', '), 'the designed flash and wipe at 96–97');
+  check('picture', 'biggest frame-to-frame changes', null, jumps.map((s) => `f${s.i} ${s.mad.toFixed(1)}`).join(', '), 'the action (the lid, the spin, the landing), under 25 except the flash');
   const designed = new Set([96, 97]);
   const wild = jumps.filter((j) => !designed.has(j.i) && j.mad > 25);
   check('picture', 'unplanned hard changes (> 25 mean luma)', wild.length === 0, wild.length ? wild.map((j) => `f${j.i}`).join(', ') : 'none', 'none outside 96–97');

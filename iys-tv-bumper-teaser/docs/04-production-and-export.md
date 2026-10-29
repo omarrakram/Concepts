@@ -21,7 +21,7 @@ src/Teaser.tsx (Remotion): room → dissolve → bumper → HD reveal,         �
 | Set | Use | 3D | Time on 4 CPU cores |
 | --- | --- | --- | --- |
 | `animatic` | Phase D: timing, rhythm, readability | 360 × 640, 6 samples, no motion blur | about 35 min |
-| `final` | the master | the room and the bumper up to the reveal at 720 × 1280, 12 samples, motion blur; the reveal (frames 330–449) at 1080 × 1920, 16 samples, motion blur | about 3½ h (the reveal is about 40 s a frame) |
+| `final` | the master | the room and the bumper up to the reveal at 720 × 1280, 12 samples, motion blur; the reveal (frames 330–449) at 1080 × 1920, 16 samples, motion blur | about 4 h (the reveal is about 47 s a frame) |
 
 In the final, the room and the bumper's first part are rendered at 720 × 1280
 and scaled to 1080 × 1920 in the composite, while the picture still carries the
@@ -58,7 +58,7 @@ BLENDER=/path/to/blender npm run render -- --animatic
 # Phase E/F: the master (all steps, in order; --resume skips 3D frames already on disk)
 BLENDER=/path/to/blender npm run render -- --set=final --resume
 #   → out/final/IYS-LOST-TV-BUMPER-TEASER-1080x1920.mp4
-#   → out/final/stills/ (cover, first, last, four style frames)
+#   → out/final/stills/ (cover, first, last, four style frames, the 4:5 cover)
 
 # one step at a time, in this order: audio | bumper | tv | room | bumper-hd | teaser | stills
 npm run render -- --set=final teaser stills
@@ -113,9 +113,11 @@ npm run render -- --set=final feed silent
 
 - **4:5 feed** (`…-1080x1350.mp4`): the `Teaser4x5` composition. The same picture
   from 285 px down (so the TV, the character and the box stay in frame), the
-  line in its place, the corner bug moved into the feed frame's own corner. It
-  is rendered from the frames, not cropped from the encoded master, so there is
-  no second generation of compression.
+  line in its place, the corner bug moved into the feed frame's own corner. The
+  big hop out of the TV (frames 132–160) is taller than the feed frame, so there
+  the window follows the character up and back, under the push into the screen
+  and the settle onto the face. It is rendered from the frames, not cropped
+  from the encoded master, so there is no second generation of compression.
 - **Without sound** (`…-silent.mp4`): the master's video stream, copied.
 - **16:9** is not a crop of the 9:16 film: it needs its own camera framing in
   the bumper scene (`blender/bumper.py`, the camera keys) and is not made here.

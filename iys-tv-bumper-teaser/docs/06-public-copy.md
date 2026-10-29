@@ -17,7 +17,8 @@ and urgency.
 
 The cover frame is the hero moment with the line: the IN YOUR SHOE box, its
 lid lifting, light spilling out, **STAY TUNED.** under it
-(`docs/stills/cover-f420.png`). No other cover text is needed; if a platform
+(`docs/stills/cover-f420.jpg`; the 4:5 feed version's, `docs/stills/cover-4x5-f420.jpg`;
+full-quality PNGs are delivered with the films). No other cover text is needed; if a platform
 asks for a title, use **STAY TUNED.**
 
 ## Caption and description drafts

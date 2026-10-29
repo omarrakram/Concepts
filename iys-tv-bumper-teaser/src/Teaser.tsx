@@ -13,12 +13,17 @@ export const BUG = { right: 70, top: 228, width: 108 };
  * The 4:5 feed version (1080 × 1350) is the same picture, not a re-render: the 9:16 frame from
  * CROP_4X5 down, which keeps the TV, the character and the box in frame; the line keeps its
  * place in the picture, and the bug goes to the feed frame's own corner (feeds have no overlay).
+ * The big hop out of the TV is taller than the feed frame (its apex near the top of the 9:16
+ * frame, its landing near the bottom, four frames apart): there the window follows it up and
+ * back (HOP_4X5), under the push into the screen and the settle onto the face.
  */
 export type Format = '9x16' | '4x5';
 export const CROP_4X5 = 285;
+const HOP_4X5 = { frames: [132, 144, 160], top: [CROP_4X5, 105, CROP_4X5] };
 const BUG_4X5 = { right: 60, top: 60, width: 100 };
 
 const clamp = { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' } as const;
+const smoothstep = (t: number) => t * t * (3 - 2 * t);
 const KNEE = '0 0.125 0.25 0.375 0.5 0.625 0.745 0.855 0.94';
 const full: CSSProperties = { position: 'absolute', left: 0, top: 0, width: '100%', height: '100%' };
 
@@ -29,7 +34,7 @@ const full: CSSProperties = { position: 'absolute', left: 0, top: 0, width: '100
  */
 export function Teaser({ set, audio = true, format = '9x16' }: { set: RenderSet; audio?: boolean; format?: Format }) {
   const f = useCurrentFrame();
-  const crop = format === '4x5' ? CROP_4X5 : 0;
+  const crop = format === '4x5' ? Math.round(interpolate(f, HOP_4X5.frames, HOP_4X5.top, { ...clamp, easing: smoothstep })) : 0;
   const layers: { src: string; opacity: number }[] = [];
   if (f <= T.roomEnd) layers.push({ src: frameFile(set, 'room', f), opacity: 1 });
   if (f >= T.dissolve[0]) layers.push({ src: frameFile(set, 'bumper', Math.min(f, set === 'final' ? T.hd[1] : f)), opacity: interpolate(f, T.dissolve, [0, 1], clamp) });

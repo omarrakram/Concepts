@@ -7,7 +7,7 @@
 //   room       the room and the TV, 3D        → public/renders/<set>/room/####.png  (Blender; needs tv)
 //   bumper-hd  the reveal at full resolution  → public/renders/final/bumper-hd/     (Blender, final only)
 //   teaser     the 9:16 master                → out/<set>/<name>.mp4                (Remotion; needs all of the above)
-//   stills     cover, first/last, style frames → out/<set>/stills/*.png             (Remotion)
+//   stills     cover, first/last, style frames, the 4:5 cover → out/<set>/stills/*.png (Remotion)
 //   feed       optional: the 4:5 feed version   → out/<set>/…-1080x1350.mp4          (Remotion, the same picture cropped)
 //   silent     optional: the master without sound → out/<set>/…-silent.mp4          (ffmpeg, a stream copy)
 //
@@ -139,6 +139,12 @@ if (run('stills')) {
     await renderStill({ serveUrl: await serve(), composition: comp, inputProps, frame, output, imageFormat: 'png', browserExecutable: shell, overwrite: true });
     console.log(`  still ${name} (frame ${frame}) → ${output.slice(root.length)}`);
   }
+  // the feed version's cover: the same frame, in the 4:5 composition
+  const feedProps = { set, audio: false, format: '4x5' };
+  const feed = await composition('Teaser4x5', feedProps);
+  const output = resolve(root, `out/${set}/stills/cover-4x5-f${String(STILLS.cover).padStart(3, '0')}.png`);
+  await renderStill({ serveUrl: await serve(), composition: feed, inputProps: feedProps, frame: STILLS.cover, output, imageFormat: 'png', browserExecutable: shell, overwrite: true });
+  console.log(`  still cover-4x5 (frame ${STILLS.cover}) → ${output.slice(root.length)}`);
 }
 
 if (run('feed')) await encode('Teaser4x5', { set, audio: true, format: '4x5' }, master.replace('1080x1920', '1080x1350'), 'feed (4:5)');

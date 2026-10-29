@@ -32,7 +32,7 @@ product anywhere in it.
 ```sh
 npm ci
 BLENDER=/path/to/blender npm run render -- --animatic          # the animatic, about 35 min
-BLENDER=/path/to/blender npm run render -- --set=final --resume # the master, about 3½ h on 4 cores
+BLENDER=/path/to/blender npm run render -- --set=final --resume # the master, about 4 h on 4 cores
 npm run qa -- --set=final
 ```
 
