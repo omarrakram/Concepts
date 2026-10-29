@@ -1,0 +1,30 @@
+{
+  "name": "iys-tv-bumper-teaser",
+  "version": "1.0.0",
+  "private": true,
+  "description": "IN YOUR SHOE: the lost TV bumper. A 15 s vertical teaser: a 2000s room, a CRT cartoon interrupted by a CGI channel bumper that turns into IN YOUR SHOE.",
+  "type": "module",
+  "scripts": {
+    "dev": "remotion studio src/index.ts",
+    "typecheck": "tsc --noEmit",
+    "audio": "node audio/synth.mjs",
+    "render": "node scripts/render-all.mjs",
+    "render:animatic": "node scripts/render-all.mjs --animatic",
+    "qa": "node scripts/qa.mjs",
+    "sheet": "node scripts/contact-sheet.mjs"
+  },
+  "dependencies": {
+    "@remotion/bundler": "4.0.534",
+    "@remotion/cli": "4.0.534",
+    "@remotion/fonts": "4.0.534",
+    "@remotion/renderer": "4.0.534",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "remotion": "4.0.534"
+  },
+  "devDependencies": {
+    "@fontsource/montserrat": "5.2.8",
+    "@types/react": "19.3.0",
+    "typescript": "5.9.3"
+  }
+}

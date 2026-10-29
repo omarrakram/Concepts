@@ -1,0 +1,7 @@
+node_modules/
+renders/
+out/
+public/renders/
+public/audio/
+*.blend1
+__pycache__/
