@@ -35,6 +35,8 @@ export interface CursorKey {
 export interface Story {
   id: string;
   duration: number;
+  /** the date in the conversation's status line ("Last message received at … on <date>."); the first release's stories leave it out and keep cast.DATE */
+  date?: string;
   beats: Beat[];
   camera: CamKey[];
   cursor: CursorKey[];

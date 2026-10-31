@@ -14,24 +14,10 @@ const frames = (s) => Math.round(s * FPS);
 const film = (s) => +(INTRO.duration + s).toFixed(3);
 
 /** The final carousel (its own folder: the earlier versions' folders are left as they were). */
-export const OUT_DIR = 'out/instagram-carousel-final-v2';
+export const OUT_DIR = 'out/instagram-carousel-final-v3';
 /** The 9:16 master has the same ending hold as slide 1, and the film's exact length. */
 export const MASTER_HOLDS = [[33.5, 35.0]];
 export const MASTER_FRAMES = frames(REEL.duration);
-
-/**
- * Slide 2 is the approved clean music-player master (no song: it is added by hand),
- * delivered unchanged: copied byte for byte from the approved export, never re-rendered.
- * render:carousel copies the first of `from` whose SHA-256 matches; QA checks the hash.
- */
-export const PLAYER_MASTER = {
-  sha256: '25e234d95ce31c03baaf1a0f6c128a956244a56ae0934b912b4b511dc17ee768',
-  from: ['out/instagram-carousel-final/02-music-player-final-clean.mp4', 'out/archive/approved-aabe785/02-music-player-final-clean.mp4'],
-  cover: {
-    sha256: '1f3351c1bfa8200e4906724cd8a789119e750465ab6581fda20a778fe7b9bcc6',
-    from: ['out/instagram-carousel-final/covers/cover-02-music-player.png', 'out/archive/approved-aabe785/covers/cover-02-music-player.png'],
-  },
-};
 
 /** The order (final): the breakup, then the song, then her Tumblr post with STAY TUNED. in it. */
 export const CAROUSEL = [
@@ -56,11 +42,14 @@ export const CAROUSEL = [
   {
     slide: 2,
     id: 'MusicPlayerBreakup',
-    file: '02-music-player-final-clean.mp4',
-    title: 'When You’re Gone, in Windows Media Player (clean: the song is added by hand, its first note at 0:02.6)',
+    file: '02-music-player-final.mp4',
+    title: 'When You’re Gone, in Windows Media Player: the song from the frame Play turns to Pause (0:02.6)',
     frames: frames(PLAYER.duration),
     cover: { file: 'cover-02-music-player.png', frame: 330 },
-    keep: PLAYER_MASTER,
+    // it carries the supplied song (public/music/, gitignored): render:carousel stops if the song is not imported
+    song: true,
+    // also: the same video without the song (the bars still follow it), for adding a licensed track in the app instead
+    clean: { file: '02-music-player-final-clean.mp4', props: { song: false } },
   },
   {
     slide: 3,

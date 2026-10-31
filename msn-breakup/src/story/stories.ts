@@ -134,6 +134,8 @@ export const NUDGE_SPOTS = { first: 24.79, rage1: 31.3, rage2: 32.65 };
 export const REEL: Story = {
   id: 'reel',
   duration: 35,
+  /** the night of the breakup: the same night as her Tumblr post, 8.11.2007 (written as the brief writes it) */
+  date: '8.11.2007',
   beats: [
     { type: 'signin', at: 0.3 },
     { type: 'open', at: 1.0 },

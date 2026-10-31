@@ -1,5 +1,5 @@
 import type { CSSProperties, ReactNode } from 'react';
-import { CLOCK, DATE, HER, HIM, SONG, TIP } from '../story/cast';
+import { CLOCK, HER, HIM, SONG, TIP } from '../story/cast';
 import type { StoryState } from '../story/state';
 import { HER_FONT, HIS_FONT, UI } from '../fonts';
 import { HerDP, HisDP } from './desktop';
@@ -110,7 +110,7 @@ const TOOLS: [Parameters<typeof ToolIcon>[0]['kind'], string][] = [
 
 /** `inactive`: another window has the focus (the later carousel videos), so the title bar greys. */
 export function Conversation({ s, nudgePressed, inactive }: { s: StoryState; nudgePressed?: boolean; inactive?: boolean }) {
-  const status = s.himTyping ? `${HIM.name} is typing a message.` : s.received ? `Last message received at ${CLOCK} on ${DATE}.` : '';
+  const status = s.himTyping ? `${HIM.name} is typing a message.` : s.received ? `Last message received at ${CLOCK} on ${s.date}.` : '';
   const psm = s.listening ? (
     <span style={{ color: '#6d6d6d', fontStyle: 'italic' }}>
       <MusicNote size={11} style={{ verticalAlign: '-1px', marginRight: 3 }} />

@@ -2,7 +2,7 @@
 
 A present-day Windows desktop, 11:47 PM. The pointer stops; the picture
 glitches; through the cracks the old system shows, and the Windows XP desktop
-of 2007 takes over. It's 11:47 PM on 23 August 2007, with MSN Messenger 7.5
+of 2007 takes over. It's 11:47 PM on 8.11.2007, with MSN Messenger 7.5
 open. karim dumps ~\*nOuR\*~ in five lines, then goes quiet. She spirals,
 nudges him, says “no actually”, and nudges him twice more. Nothing. She opens
 Windows Media Player and plays “When You’re Gone” by Avril Lavigne. Then, on
@@ -19,10 +19,11 @@ sounds. Each frame is a pure function of time, so renders are deterministic.
 
 | Output | Size | Length | Command |
 | --- | --- | --- | --- |
-| `out/instagram-carousel-final-v2/01-msn-breakup-present-to-2007-final.mp4` (slide 1: the present-day opening, then the film, 4:5) | 1080 × 1350, 30 fps, H.264 + AAC | 39.8 s | `npm run render:carousel:film` |
-| `out/instagram-carousel-final-v2/02-music-player-final-clean.mp4` (slide 2: the music player, clean; the song is added by hand) | 1080 × 1350, 30 fps | 12.8 s | `npm run render:carousel:player` (copies the approved master, unchanged) |
-| `out/instagram-carousel-final-v2/03-tumblr-published-stay-tuned-final.mp4` (slide 3: her Tumblr post, STAY TUNED. in it) | 1080 × 1350, 30 fps | 15.8 s | `npm run render:carousel:tumblr` |
-| `out/instagram-carousel-final-v2/covers/`, `contact-sheet.png`, `MANIFEST.md`, `manifest.json`, `CUES.txt` | | | `npm run render:carousel` (all of the above) |
+| `out/instagram-carousel-final-v3/01-msn-breakup-present-to-2007-final.mp4` (slide 1: the present-day opening, then the film, 4:5) | 1080 × 1350, 30 fps, H.264 + AAC | 39.8 s | `npm run render:carousel:film` |
+| `out/instagram-carousel-final-v3/02-music-player-final.mp4` (slide 2: the music player, with the song) | 1080 × 1350, 30 fps | 12.8 s | `npm run render:carousel:player` (needs the song imported) |
+| `out/instagram-carousel-final-v3/02-music-player-final-clean.mp4` (slide 2 without the song) | 1080 × 1350, 30 fps | 12.8 s | (same) |
+| `out/instagram-carousel-final-v3/03-tumblr-published-stay-tuned-final.mp4` (slide 3: her Tumblr post, STAY TUNED. in it) | 1080 × 1350, 30 fps | 15.8 s | `npm run render:carousel:tumblr` |
+| `out/instagram-carousel-final-v3/covers/`, `contact-sheet.png`, `MANIFEST.md`, `manifest.json`, `CUES.txt` | | | `npm run render:carousel` (all of the above) |
 | `out/msn-breakup-reel.mp4` (the film, 9:16 master) | 1080 × 1920, 30 fps | 35.0 s | `npm run render:reel` |
 | `out/msn-breakup-teaser.mp4` (teaser, unchanged) | 1080 × 1920, 30 fps | 7.0 s | `npm run render:teaser` |
 | `out/stills/01…05-*.png`, `06-bonus-sign-in.png` (stills, unchanged) | 1080 × 1350 | 6 stills | `npm run render:stills` |
@@ -34,16 +35,10 @@ an earlier file: if the output exists and no copy is archived yet,
 release's renders and their SHA-256 sums are kept in
 `out/archive/original-38f0d3a/`, the approved carousel before the final
 corrections in `out/archive/approved-ad78f3f/`, the approved set before the
-present-day opening in `out/archive/approved-aabe785/` (each with its
-`NOTE.md`), and the final carousel goes to its own folder,
-`out/instagram-carousel-final-v2/` (the previous one,
-`out/instagram-carousel-final/`, is left as it was).
-
-**Slide 2 is never re-rendered.** It is the approved clean master
-(`02-music-player-final-clean.mp4`, SHA-256 `25e234d95ce31c03…`), copied byte
-for byte from the previous folder or its archive; `render:carousel` checks the
-hash of the copy and stops if no approved copy is found. The song is added to
-it by hand (see below).
+present-day opening in `out/archive/approved-aabe785/`, the set delivered
+before the dates and the song in `out/archive/delivered-41262e8/` (each with
+its `NOTE.md`), and the final carousel goes to its own folder,
+`out/instagram-carousel-final-v3/` (the earlier ones are left as they were).
 
 How the carousel fits together (the voice-note brief, order, every new word
 on screen, the period design notes): [`docs/carousel.md`](docs/carousel.md).
@@ -60,7 +55,7 @@ npm install
 npm run import:song -- <your file>   # the song, into the gitignored public/music/ (see below)
 npm run dev                  # Remotion Studio: scrub, preview, tweak props
 npm run render:reel          # → out/msn-breakup-reel.mp4               (9:16 master)
-npm run render:carousel      # → out/instagram-carousel-final-v2/ (slides 1 and 3 rendered, slide 2 copied; covers, sheet, manifest)
+npm run render:carousel      # → out/instagram-carousel-final-v3/ (3 videos + slide 2's clean export, covers, sheet, manifest)
 npm run render:carousel:film | :player | :tumblr   # one slide (1, 2, 3)
 npm run render:teaser        # → out/msn-breakup-teaser.mp4
 npm run render:stills        # → out/stills/*.png
@@ -86,10 +81,11 @@ high. Audio is AAC-LC, 48 kHz stereo.
 `npm run import:song -- <file>` copies the audio of the file you supply,
 untouched, into the gitignored `public/music/`. It plays in one place only:
 slide 2, from the frame on which Play turns to Pause (**frame 78 =
-00:00:02.600**). The film has no music. The delivered slide 2 is the clean
-master: the song is added to it by hand, its first note at 0:02.6. Without a
-song file, `npm run qa` skips the song checks; it does not fail them. The cue
-and the rights note are in [`public/music/README.md`](public/music/README.md).
+00:00:02.600**). The film has no music. Slide 2 is rendered with the song
+(`render:carousel` stops if it is not imported); its clean export has no song.
+Without a song file, `npm run qa` skips the song checks; it does not fail
+them. The cue, the clean export and the rights note are in
+[`public/music/README.md`](public/music/README.md).
 
 ## Story
 
@@ -97,7 +93,7 @@ and the rights note are in [`public/music/README.md`](public/music/README.md).
 
 | Time | Beat |
 | --- | --- |
-| 0.0–1.45 | **NOW.** A present-day Windows desktop: a browser open on a new tab, the centred taskbar, the tray clock at 11:47 PM 8/23/2026, the desktop icons. The pointer crosses to the search box (it stalls once on the way) and stops. |
+| 0.0–1.45 | **NOW.** A present-day Windows desktop: a browser open on a new tab, the centred taskbar, the tray clock at 11:47 PM on 8.11.2027, the desktop icons. The pointer crosses to the search box (it stalls once on the way) and stops. |
 | 1.75–2.2 | The first signs: the pointer twitches, bands of the picture slip sideways, the colours fringe. |
 | 2.2–3.1 | **The glitch** (its sound): the picture jumps, freezes for four frames, the colours split, bands tear, blocks break up like a damaged video. Through the cracks the 2007 screen shows, band by band, until it is all that is left. |
 | 3.1–3.75 | **THEN.** The Windows XP desktop takes over: the old monitor degausses (its thunk and hum), the picture wobbles and settles. |
@@ -223,7 +219,9 @@ msn-breakup/
     both lines in the editor, published in one post dated exactly
     `8.11.2007`; the video ends on that post and no end card exists; every
     word of the pages listed; no music;
-  - slide 2 is the approved clean master, copied unchanged (its hash);
+  - the dates: 8.11.2027 on the present-day desktop, 8.11.2007 in the film's
+    status line (the night of her post); the first release keeps 8/23/2007;
+  - slide 2 is never rendered without the song; its clean export comes with it;
   - Play and the song share PLAY_FRAME, and the press comes 3 frames before;
   - every composition is registered at the right size and length;
   - the framing keeps what matters in shot on every frame.
@@ -234,10 +232,10 @@ msn-breakup/
     silence after the last nudge);
   - slide 1's opening under the general-flash limit (WCAG 2.3.1);
   - audio that is present and not clipped, plus its loudness;
-  - slide 2's SHA-256 is the approved clean master's; its pixels show ▶ on
-    frame 77 and ❚❚ on frame 78 (the Play cue);
-  - **sync, only once a song file is imported:** a song-only render's first
-    sample is frame 78's first sample (without one it is skipped, not failed);
+  - **sync:** a song-only render's first sample is frame 78's first sample;
+    the delivered slide 2 has its first note at the Play frame; its pixels
+    show ▶ on frame 77 and ❚❚ on frame 78 (without a song file the two song
+    checks are skipped, not failed);
   - git tracks nothing in `public/music` but its README.
 - `npm run qa:regression` proves that the untouched pieces are untouched.
   The teaser, the first cut and the six stills re-render byte-identical to

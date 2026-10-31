@@ -36,11 +36,11 @@ re-measure its first note and update `SONG_SOURCE` in `src/story/player.ts`.
   sounds 3 ms into frame 78.
 - Full level from that frame. It fades over the last 0.3 s, into the bar line
   at file 15.1 s, after the first sung line. The clip ends at 12.8 s.
-- `npm run qa` checks it. In the delivered (clean) slide 2's pixels, the
-  button is ▶ on frame 77 and ❚❚ on frame 78. Once a song file is imported,
-  it also renders a song-only WAV and checks that the first non-silent sample
-  is the first sample of frame 78; without one, that check is skipped, not
-  failed.
+- `npm run qa` proves it on the rendered files. In a song-only render, the
+  first non-silent sample is the first sample of frame 78. In the delivered
+  slide 2, the first note is at the Play frame. In its pixels, the button is
+  ▶ on frame 77 and ❚❚ on frame 78. Without a song file the two song checks
+  are skipped, not failed.
 
 Render props (`MusicPlayerBreakup`): `song` (false = the clean export),
 `uiSounds` (false = song only, for checks), `cueTone` (a 1 kHz QA blip on
@@ -52,18 +52,17 @@ frame 78), `songVolume` (0 to 1, default 0.8).
 production does not establish public distribution rights. This repository
 makes no claim that the track is licensed, royalty-free or cleared.
 
-- The carousel delivers slide 2 **clean**:
-  `out/instagram-carousel-final-v2/02-music-player-final-clean.mp4`, the
-  approved master copied unchanged (the clicks, **no song**). The song is
-  added by hand: from Instagram's own licensed music, when it is available to
-  your account and region, or in an editor where you hold the rights. Place
-  the song's first note (the first piano chord after the intro swell) at
-  **0:02.6** of this clip, the moment Play turns to Pause. App editors are not
-  frame-accurate. Without the song file the visualisation's bars stay flat
-  (they are driven by the song's own spectrum).
-- With a song file imported here, `node scripts/render.mjs MusicPlayerBreakup
-  <out.mp4>` renders slide 2 with the song on its cue, for review. That is
-  never part of `npm run render:carousel`.
+- `out/instagram-carousel-final-v3/02-music-player-final.mp4` (slide 2)
+  contains about 10 s of the song. It is for review, or for posting where you
+  hold the rights. `npm run render:carousel` stops rather than render slide 2
+  without the song.
+- `out/instagram-carousel-final-v3/02-music-player-final-clean.mp4` is the
+  same video with the clicks but **no song** (the bars still follow it). Use
+  it to add the track from Instagram's own licensed music, when it is
+  available to your account and region. Place the song's first note (the
+  first piano chord after the intro swell) at **0:02.6** of this clip, the
+  moment Play turns to Pause. App editors are not frame-accurate, so the
+  bars may run a few frames off the app's copy of the track.
 
 ## The first cut
 

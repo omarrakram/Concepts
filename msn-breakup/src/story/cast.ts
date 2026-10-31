@@ -25,6 +25,7 @@ export const TIP = 'Click for new Emoticons and Theme Packs from IYS';
 
 /** Clock + date shown on screen (2007: the song came out that summer). */
 export const CLOCK = '11:47 PM';
+/** the first release's date in the status line (the teaser, the first cut, the stills); the film now shows REEL.date, 8.11.2007 */
 export const DATE = '8/23/2007';
 
 /** Her other contacts, for an authentic, slightly chaotic list. */

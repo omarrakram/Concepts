@@ -5,14 +5,14 @@ import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { test } from 'node:test';
 import { FIRST_CUT, root, slides, source, stories } from './load.mjs';
-import { CAROUSEL, OUT_DIR, PLAYER_MASTER } from '../scripts/carousel-list.mjs';
+import { CAROUSEL, OUT_DIR } from '../scripts/carousel-list.mjs';
 
 test('three slides, in the final order: the breakup, the song, her Tumblr post', () => {
   assert.deepEqual(
     CAROUSEL.map((c) => [c.slide, c.file, c.id]),
     [
       [1, '01-msn-breakup-present-to-2007-final.mp4', 'BreakupCarousel'],
-      [2, '02-music-player-final-clean.mp4', 'MusicPlayerBreakup'],
+      [2, '02-music-player-final.mp4', 'MusicPlayerBreakup'],
       [3, '03-tumblr-published-stay-tuned-final.mp4', 'TumblrBreakup'],
     ],
   );
@@ -23,20 +23,24 @@ test('three slides, in the final order: the breakup, the song, her Tumblr post',
   );
   assert.equal(CAROUSEL[2].cover.frame, CAROUSEL[2].frames - 1);
   // a folder of its own: the earlier versions' folders are never overwritten
-  assert.equal(OUT_DIR, 'out/instagram-carousel-final-v2');
+  assert.equal(OUT_DIR, 'out/instagram-carousel-final-v3');
 });
 
-test('slide 2 is the approved clean music-player master, copied unchanged (never re-rendered, no song added)', () => {
+test('slide 2 carries the song (never rendered without it), and a clean export comes with it', () => {
   const player = CAROUSEL.find((c) => c.id === 'MusicPlayerBreakup');
-  assert.equal(player.keep, PLAYER_MASTER);
-  assert.equal(PLAYER_MASTER.sha256, '25e234d95ce31c03baaf1a0f6c128a956244a56ae0934b912b4b511dc17ee768');
+  assert.equal(player.song, true);
+  assert.deepEqual(player.clean, { file: '02-music-player-final-clean.mp4', props: { song: false } });
   assert.equal(player.frames, 384);
+  // render:carousel stops when slide 2 would be rendered without the song
   const render = source('../scripts/render-carousel.mjs');
-  assert.match(render, /if \(c\.keep\) \{[\s\S]*?keep\(`slide \$\{c\.slide\}`, c\.keep\.sha256, c\.keep\.from, `\$\{OUT_DIR\}\/\$\{c\.file\}`\);[\s\S]*?continue;/);
-  // its composition is not touched by this change, and QA checks the copy's hash
-  assert.match(source('../scripts/qa.mjs'), /the approved master, unchanged \(SHA-256\)/);
-  // without a song file the song checks are skipped, never failed
-  assert.match(source('../scripts/qa.mjs'), /if \(!songImported\) skip\(songCheck,/);
+  assert.match(render, /if \(c\.song && !songImported\(\)\) \{[\s\S]*?process\.exit\(1\);/);
+  // QA checks the song lands on the Play frame (a song-only render, and the delivered slide); without a song file
+  // those two checks are skipped, never failed
+  const qa = source('../scripts/qa.mjs');
+  assert.match(qa, /if \(!songImported\) skip\(songCheck,/);
+  assert.match(qa, /if \(!songImported\) skip\(firstNote,/);
+  // the song never enters git
+  assert.match(qa, /git tracks nothing in public\/music but its README/);
 });
 
 test('the order is read from the list everywhere: no script picks a slide by its position', () => {

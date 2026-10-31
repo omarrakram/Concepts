@@ -1,4 +1,5 @@
 import { VH, VW } from '../constants';
+import { DATE } from './cast';
 import type { Beat, CamKey, CursorKey, Story } from './types';
 
 export interface Entry {
@@ -21,6 +22,8 @@ export interface StoryState {
   himTyping: boolean;
   /** Last message from him has arrived (the status line then shows "Last message received…"). */
   received: boolean;
+  /** the date that status line shows: the story's own, else the first release's (cast.DATE) */
+  date: string;
   input: string;
   inputFocused: boolean;
   caretOn: boolean;
@@ -136,6 +139,7 @@ export function stateAt(story: Story, t: number, view?: { w: number; h: number }
     entries,
     himTyping,
     received,
+    date: story.date ?? DATE,
     input,
     inputFocused,
     caretOn,

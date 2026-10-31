@@ -3,7 +3,7 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import ts from 'typescript';
-import { cast, source, state, tumblr } from './load.mjs';
+import { cast, source, state, stories, tumblr } from './load.mjs';
 
 const { STATEMENT, STAY_TUNED, TEASER_POST, TUMBLR, TUMBLR_TEXT, tumblrAt } = tumblr;
 const FPS = 30;
@@ -66,7 +66,9 @@ test('the post is dated exactly 8.11.2007, a Thursday, and no other date is on t
   const blog = source('ui/Tumblr.tsx');
   assert.match(blog, />\{T\.postDate\}<\/div>/);
   assert.doesNotMatch(blog, /dateBlock\[/);
-  // the film's own date (the MSN conversation) is not touched
+  // the film's conversation is dated the same night: its status line reads "… on 8.11.2007."
+  assert.equal(stories.REEL.date, TUMBLR_TEXT.postDate);
+  // the first release keeps its own date
   assert.equal(cast.DATE, '8/23/2007');
 });
 

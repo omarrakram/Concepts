@@ -4,11 +4,10 @@
 //   - every file decodes start to end without an error (no corrupt video or audio)
 //   - no black frames and no frozen stretch outside the designed ones, audio not clipped, not silent
 //   - slide 1's opening stays under the general-flash limit (WCAG 2.3.1): intense, never a strobe
-//   - slide 2 is the approved clean music-player master, byte for byte (SHA-256), and its Play
-//     button turns to Pause on PLAY_FRAME (its pixels)
-//   - only when a song file has been imported (public/music/): the song begins exactly on PLAY_FRAME
-//     in a song-only render as uncompressed WAV (digital zero until the first sample of PLAY_FRAME).
-//     Without one these checks are skipped, not failed: slide 2 is delivered clean, the song is added by hand
+//   - slide 2 (the music player): its Play button turns to Pause on PLAY_FRAME (its pixels), and, with the
+//     song file imported (public/music/), the song begins exactly on PLAY_FRAME: in a song-only render as
+//     uncompressed WAV (digital zero until the first sample of PLAY_FRAME) and in the delivered MP4 (its
+//     first note at the Play frame). Without a song file these two are skipped, not failed
 //   - nothing from public/music is tracked by git
 import { spawnSync } from 'node:child_process';
 import { existsSync, mkdirSync, readdirSync, writeFileSync } from 'node:fs';
@@ -46,7 +45,8 @@ const dbfs = (x) => (x > 0 ? 20 * Math.log10(x / 32768) : -Infinity);
 const PLAYER_SLIDE = CAROUSEL.find((c) => c.id === 'MusicPlayerBreakup');
 const songImported = existsSync(`${root}/public/music`) && readdirSync(`${root}/public/music`).some((f) => /^when-youre-gone\.(mp3|m4a|wav|aac|ogg)$/i.test(f));
 const files = [
-  ...CAROUSEL.map((c) => ({ file: `${OUT_DIR}/${c.file}`, w: 1080, h: 1350, frames: c.frames, holds: c.holds ?? [], dark: c.dark ?? [], opening: c.opening, keep: c.keep })),
+  ...CAROUSEL.map((c) => ({ file: `${OUT_DIR}/${c.file}`, w: 1080, h: 1350, frames: c.frames, holds: c.holds ?? [], dark: c.dark ?? [], opening: c.opening })),
+  ...CAROUSEL.filter((c) => c.clean).map((c) => ({ file: `${OUT_DIR}/${c.clean.file}`, w: 1080, h: 1350, frames: c.frames, holds: [], dark: [] })),
   { file: 'out/msn-breakup-reel.mp4', w: 1080, h: 1920, frames: MASTER_FRAMES, holds: MASTER_HOLDS, dark: [] },
 ];
 /**
@@ -88,7 +88,6 @@ for (const f of files) {
     continue;
   }
   const m = probe(path);
-  if (f.keep) check(`${f.file}: the approved master, unchanged (SHA-256)`, m.sha256 === f.keep.sha256, `${m.sha256} (approved: ${f.keep.sha256})`);
   // every frame of the composition, no more, no less, and a video stream exactly that long
   check(
     `${f.file}: ${m.width}×${m.height} ${m.aspect}, ${m.fps} fps, ${m.frames} frames (composition: ${f.frames}), ${m.video}, ${m.pix_fmt}, ${m.audio} ${m.sample_rate} Hz`,
@@ -138,7 +137,7 @@ const playAt = PLAY_FRAME / FPS;
 const songOnly = `${root}/out/qa/qa-song-only.wav`;
 mkdirSync(`${root}/out/qa`, { recursive: true });
 const songCheck = `song-only WAV: the song from the first sample of frame ${PLAY_FRAME}, digital zero before`;
-if (!songImported) skip(songCheck, 'no song file imported: slide 2 is the clean master, the song is added by hand');
+if (!songImported) skip(songCheck, 'no song file imported (npm run import:song)');
 else {
   console.log('\nrendering the song-only check (MusicPlayerBreakup, clicks off, uncompressed WAV)…');
   const r = spawnSync('node', ['scripts/render.mjs', 'MusicPlayerBreakup', 'out/qa/qa-song-only.wav', '--codec=wav', '--props={"uiSounds":false}', '--log=error'], { cwd: root, stdio: 'inherit' });
@@ -165,8 +164,25 @@ else {
 const deliverable = `${root}/${OUT_DIR}/${PLAYER_SLIDE.file}`;
 const delivered = `delivered slide ${PLAYER_SLIDE.slide} (the music player)`;
 if (existsSync(deliverable)) {
-  // the delivered slide 2 is the clean master (no song), so its first note cannot be checked: the Play cue is checked in its pixels
-  skip(`${delivered}: the song's first note at the Play frame`, 'slide 2 is the clean master (no song): the song is added by hand at 0:02.6, the frame Play turns to Pause');
+  const firstNote = `${delivered}: the song's first note at the Play frame`;
+  if (!songImported) skip(firstNote, 'no song file imported, so the slide was not rendered with the song');
+  else {
+    const a = pcm(deliverable, 48000);
+    const playSample = Math.round(playAt * 48000);
+    // the Play click (2.50–2.59 s) is over; the window just before the Play frame must be quiet.
+    // (AAC smears a sharp onset back into its frame by up to 1024 samples: reported, inaudible)
+    let gap = 0;
+    let preEcho = 0;
+    for (let i = playSample - Math.round(0.006 * 48000); i < playSample - 24; i++) gap = Math.max(gap, Math.abs(a[i]));
+    for (let i = playSample - 24; i < playSample; i++) preEcho = Math.max(preEcho, Math.abs(a[i]));
+    let on = -1;
+    for (let i = playSample - 24; i < playSample + 4800; i++) if (Math.abs(a[i]) >= 32768 * 10 ** (-30 / 20)) { on = i; break; }
+    check(
+      firstNote,
+      dbfs(gap) < -45 && on >= playSample && on <= playSample + 48 * 3,
+      `${dbfs(gap).toFixed(1)} dBFS from 6 ms to 0.5 ms before; AAC pre-echo in the last 0.5 ms ${dbfs(preEcho).toFixed(1)} dBFS; first −30 dBFS sample at Δ ${(((on - playSample) / 48000) * 1000).toFixed(2)} ms`,
+    );
+  }
   // pixels of the button's glyph: the middle is white inside ▶; for ❚❚ the middle is the blue
   // of the (hovered) button showing between two white bars, 4 px either side
   const cam = playerAt(playAt, CAROUSEL_VIEW).camera;

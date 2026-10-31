@@ -1,25 +1,44 @@
 # The Instagram carousel
 
 Three videos, posted together as one carousel. All three are 4:5 (1080 × 1350),
-30 fps, H.264 + AAC. `npm run render:carousel` puts them in
-`out/instagram-carousel-final-v2/`, with a cover per slide, one contact sheet,
-the cue sheet and the ordered manifest (`MANIFEST.md`, `manifest.json`).
-Slides 1 and 3 are rendered; slide 2 is the approved clean master, copied
-byte for byte (its SHA-256 is checked). The earlier folders,
-`out/instagram-carousel/` and `out/instagram-carousel-final/`, are never
+30 fps, H.264 + AAC. `npm run render:carousel` renders them into
+`out/instagram-carousel-final-v3/`, with slide 2's clean export, a cover per
+slide, one contact sheet, the cue sheet and the ordered manifest
+(`MANIFEST.md`, `manifest.json`). Slide 2 carries the song: import it first
+(`npm run import:song`), or the render stops. The earlier folders are never
 written to by this version.
 
 | # | File | Composition | Length | What happens |
 | - | - | - | - | - |
 | 1 | `01-msn-breakup-present-to-2007-final.mp4` | `BreakupCarousel` | 39.8 s | A present-day Windows desktop glitches, and the Windows XP desktop of 2007 takes over (4.8 s). Then the film: he dumps her on MSN, she spirals, three nudges. |
-| 2 | `02-music-player-final-clean.mp4` | `MusicPlayerBreakup` | 12.8 s | She opens Windows Media Player and puts on “When You’re Gone” (clean: the song is added by hand, its first note at 0:02.6). |
+| 2 | `02-music-player-final.mp4` | `MusicPlayerBreakup` | 12.8 s | She opens Windows Media Player and puts on “When You’re Gone”: the song begins on the frame Play turns to Pause (0:02.6). |
 | 3 | `03-tumblr-published-stay-tuned-final.mp4` | `TumblrBreakup` | 15.8 s | On 2007 Tumblr she writes one post, *i guess some people are just passing through.*, a blank line, **STAY TUNED.**, and publishes it, dated 8.11.2007. It ends on the published post. |
 
-Also rendered: the 9:16 master of the film, `out/msn-breakup-reel.mp4`
-(`HeroReel`, 1080 × 1920, without the opening).
+Also rendered: `02-music-player-final-clean.mp4` (slide 2 without the song,
+see [the music README](../public/music/README.md)) and the 9:16 master of the
+film, `out/msn-breakup-reel.mp4` (`HeroReel`, 1080 × 1920, without the
+opening).
 
 All three are 4:5, so the app neither letterboxes nor crops them, and each is
 under Instagram's 60 s limit for a carousel video.
+
+## The dates and the song (31 October 2026)
+
+Two last changes, after the corrections below:
+
+1. **The dates.** The present-day desktop at the start of slide 1 is dated
+   `8.11.2027` (its tray clock: 11:47 PM, 8.11.2027). The 2007 part, the film,
+   is dated `8.11.2007`: Messenger's status line reads “Last message received
+   at 11:47 PM on 8.11.2007.” (the end of slide 1, and the conversation
+   behind slides 2 and 3), the same night as her Tumblr post. Both are
+   written exactly as the collaborator wrote them. The first release (the
+   teaser, the first cut and its stills) keeps its own date, 8/23/2007.
+2. **The song.** Slide 2 now carries “When You’re Gone”, from the file the
+   collaborator supplied (its audio stream copied untouched into the
+   gitignored `public/music/`): it begins on frame 78 (0:02.6), the frame
+   Play turns to Pause, on its first note, and the Now Playing bars move with
+   it. Nothing else in slide 2 changed. The clean export (no song) is
+   rendered alongside it.
 
 ## The final surgical corrections (31 October 2026)
 
@@ -28,10 +47,10 @@ three changes. Nothing else was redesigned.
 
 1. **Slide 1 opens in the present, and a glitch takes it back to 2007.** The
    opening (still 4.8 s, so the film starts on frame 144 as before) is now:
-   - **NOW (0–1.75 s):** a clean Windows desktop of 2026: a browser open on a
+   - **NOW (0–1.75 s):** a clean, current Windows desktop: a browser open on a
      new tab, the centred taskbar (start, search, files, the browser in use,
-     mail), the weather, the tray and the clock at 11:47 PM 8/23/2026 (the
-     minute of her last message, nineteen years later), two desktop icons,
+     mail), the weather, the tray and the clock (now 11:47 PM, 8.11.2027:
+     see above), two desktop icons,
      the mouse pointer. Desktop proportions and furniture: overlapping
      layers, window controls, a taskbar; nothing of a phone. The pointer
      crosses to the search box, stalls once on the way, and stops exactly
@@ -56,13 +75,11 @@ three changes. Nothing else was redesigned.
    Gone from the opening: its previous first screen (her XP desktop, glitching
    on itself), the crash to black, the XP loading bar and the “welcome” screen
    (and, from the first version, the lock screen that read as a phone).
-2. **The music player is not touched.** Slide 2 is the approved clean master
-   (`02-music-player-final-clean.mp4`, SHA-256
+2. **The music player was not touched.** That pass delivered slide 2 as the
+   approved clean master (`02-music-player-final-clean.mp4`, SHA-256
    `25e234d95ce31c03baaf1a0f6c128a956244a56ae0934b912b4b511dc17ee768`), copied
-   byte for byte; its composition was not changed. No song was added: the
-   collaborator adds “When You’re Gone” by hand, its first note on 0:02.6,
-   the frame Play turns to Pause. Without a song file, QA skips the song
-   checks instead of failing them.
+   byte for byte, with no song (the song came after: see above). Without a
+   song file, QA skips the song checks instead of failing them.
 3. **STAY TUNED. is inside her Tumblr post.** She clicks the Post box (where she
    clicked the Title box before; everything up to her first key is as
    approved) and types *i guess some people are just passing through.* with
@@ -96,14 +113,10 @@ statement, dated 8.11.2007 (`THU` in the day block, the date on one line).
 
 ## Points to note
 
-- **Two dates.** The film's conversation is dated 23 August 2007 (its status
-  line reads “Last message received at 11:47 PM on 8/23/2007.”, visible at the
-  end of slide 1, at the start of slide 2 and at the start of slide 3, before
-  the browser opens). Her post is now dated 8.11.2007, eleven weeks later. As
-  asked, only the post's date was changed; the conversation's date and the
-  slides' 11:47–11:48 PM clocks are as they were. If the post should read as
-  the same night, the conversation's date (`DATE` in `src/story/cast.ts`) is
-  the one place to change.
+- **One night.** The film's conversation and her post share the date
+  8.11.2007 (`REEL.date` in `src/story/stories.ts`, `POST_DATE` in
+  `src/story/tumblr.ts`); the slides' clocks run 11:47–11:48 PM. The
+  present-day desktop is dated 8.11.2027 (`INTRO_TEXT.date`).
 
 ## The version of 28 October: the collaborator's two voice notes
 
@@ -134,7 +147,7 @@ window of the screen. It is not a stretch or a blind crop of the 9:16 render.
 The camera opens on her contact list (with the *fluffy pjoys* message), drops
 to his sign-in toast, then holds the whole conversation window. It frames the
 status line lower at the end, so “Last message received at 11:47 PM on
-8/23/2007.” stays in the shorter frame. `tests/framing.test.mjs` checks, on
+8.11.2007.” stays in the shorter frame. `tests/framing.test.mjs` checks, on
 every frame, that what matters is inside the frame.
 
 From the previous versions, still true: his messages are 8 % faster than in the
@@ -155,7 +168,7 @@ The film's script is unchanged. All other words are in code: `INTRO_TEXT`,
 | --- | --- |
 | the present-day desktop | icons `Recycle Bin`, `Documents` |
 | the browser | tab `New tab`, address bar `Search or type a web address`, search box `Search the web`, shortcuts `Mail Maps Music Photos Docs Weather` |
-| the taskbar | weather `64°F` `Clear`, `Search`, clock `11:47 PM` `8/23/2026` |
+| the taskbar | weather `64°F` `Clear`, `Search`, clock `11:47 PM` `8.11.2027` |
 | her XP desktop (the film's first frame) | the film's own words: the Messenger window, her name and personal message, her contacts, the desktop icons |
 
 ### Slide 2: Windows Media Player 11
@@ -229,6 +242,7 @@ item by item, in [`sources.md`](sources.md). In short:
 - Slide 1: the opening's two original sounds (the glitch, 0.9 s, exactly as
   long as the glitch; the old monitor's degauss as XP takes over), then the
   film's own sounds (chimes, keys, clicks, the three nudge buzzes). No song.
-- Slide 2 (unchanged, clean): clicks. The song is added by hand from the Play
-  frame on; see `public/music/README.md` for the cue and the rights note.
+- Slide 2: clicks, then the song from the Play frame on (the clean export: the
+  clicks only). See `public/music/README.md` for the cue, the import and the
+  rights note.
 - Slide 3: clicks, her key clicks and her two Enters. No music.

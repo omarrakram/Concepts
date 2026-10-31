@@ -72,7 +72,8 @@ Not available:
 | What is on screen | Status | Basis |
 | --- | --- | --- |
 | The first screen: a present-day Windows desktop (a browser on a new tab, the centred taskbar with start, search, files, browser and mail, the weather, the tray clock, two desktop icons, the pointer) | Reconstruction, original drawing | today's Windows look, from general knowledge, not traced; no Microsoft logo, wallpaper or icon: the start button's four panes, the globe, the folder, the bin and the wallpaper's bloom are original drawings; Inter stands in for Segoe UI |
-| The clock: `11:47 PM` `8/23/2026` | Brief, fitted | the present day, at the minute of her last message nineteen years later |
+| The clock: `11:47 PM` `8.11.2027` | Brief | the present part's date, as the collaborator wrote it: twenty years to the day after the night of the film and her post; the minute of her last message |
+| The film's status line: “Last message received at 11:47 PM on 8.11.2007.” | Brief | the past part's date, as the collaborator wrote it (the night of her post); the first release keeps 8/23/2007 |
 | The glitch: jumps, a freeze, split colours, torn bands, interference, blocky damaged-video blocks; the 2007 screen through the cracks | Stylised | the approved glitch's vocabulary, carrying one era into the other; kept under the general-flash limit |
 | The XP desktop taking over: the degauss wobble and colour swirl | Stylised | how a CRT monitor looked when it degaussed |
 | Her XP desktop after it (Messenger open, the desktop icons, the pointer) | The film's own | the film's first frame |

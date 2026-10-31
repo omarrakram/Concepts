@@ -42,9 +42,9 @@ test('NOW: unmistakably a present-day desktop computer, not a phone', () => {
   // a desktop: wallpaper, desktop icons, a browser window with its tab, address bar and window controls, the taskbar, the mouse pointer
   for (const part of ['<Wallpaper />', '<Icons />', '<Browser hover={hover} />', '<Taskbar />', '<Pointer size={15} />', '<StartMark />']) assert.ok(now.includes(part), part);
   assert.match(now, /'M1 5h8', 'M1\.5 1\.5h7v7h-7z', 'M1\.5 1\.5l7 7M8\.5 1\.5l-7 7'/, 'minimise, maximise, close');
-  // today's taskbar: the clock and the date, with this year
+  // today's taskbar: the clock and the date of the present part, exactly as the brief writes it
   assert.equal(INTRO_TEXT.time, '11:47 PM');
-  assert.match(INTRO_TEXT.date, /^\d{1,2}\/\d{1,2}\/2026$/);
+  assert.equal(INTRO_TEXT.date, '8.11.2027');
   // nothing of a phone: no lock screen, battery, notch, signal bars, app grid or home screen
   assert.doesNotMatch(code + now, /LockScreen|battery|notch|signal|homeScreen|app ?grid|swipe/i);
 });
@@ -117,7 +117,7 @@ test('slide 1 is the opening, then the film exactly as before (same story, same 
 test('the opening’s words are all in INTRO_TEXT; none is written into the drawing', () => {
   assert.deepEqual(INTRO_TEXT, {
     time: '11:47 PM',
-    date: '8/23/2026',
+    date: '8.11.2027',
     temperature: '64°F',
     weather: 'Clear',
     search: 'Search',
@@ -159,6 +159,19 @@ test('its sounds: the glitch on the glitch, the degauss when XP takes over; no m
   // the glitch sound (0.9 s) lasts exactly as long as the glitch
   assert.equal(+(INTRO.xp - INTRO.glitch).toFixed(3), 0.9);
   assert.doesNotMatch(code, /songFile|music\//);
+});
+
+test('the dates: the present part shows 8.11.2027, the past part (the film) 8.11.2007; the first release keeps its own', () => {
+  assert.equal(INTRO_TEXT.date, '8.11.2027');
+  // the film (9:16 and 4:5) shows 8.11.2007 in Messenger's status line, the night of her Tumblr post
+  assert.equal(stories.REEL.date, '8.11.2007');
+  assert.equal(stories.REEL_CAROUSEL.date, '8.11.2007');
+  assert.equal(state.stateAt(stories.REEL, stories.REEL.duration).date, '8.11.2007');
+  assert.match(source('ui/Conversation.tsx'), /`Last message received at \$\{CLOCK\} on \$\{s\.date\}\.`/);
+  // the first release (the teaser, the first cut and its stills) is not touched
+  assert.equal(state.stateAt(stories.REEL_ORIGINAL, stories.REEL_ORIGINAL.duration).date, '8/23/2007');
+  assert.equal(state.stateAt(stories.TEASER, stories.TEASER.duration).date, '8/23/2007');
+  assert.equal('date' in stories.REEL_ORIGINAL || 'date' in stories.TEASER, false);
 });
 
 test('the present-day face is bundled (Inter, OFL), so no frame renders in a fallback font', () => {

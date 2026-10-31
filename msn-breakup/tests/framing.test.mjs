@@ -16,7 +16,7 @@ const expectInView = (label, camAt, view, rect, from, to) => {
 // conversation window layout (src/ui/Conversation.tsx: CONVO, LEFT, HIST, INPUT): body starts at y 401
 const TYPED = { x: 39, y: 741, w: 272, h: 22 }; // the line she is typing (input box text)
 const NEWEST = { x: 33, y: 655, w: 300, h: 44 }; // the newest message in the history
-const STATUS = { x: 35, y: 847, w: 250, h: 13 }; // "Last message received at 11:47 PM on 8/23/2007."
+const STATUS = { x: 35, y: 847, w: 250, h: 13 }; // "Last message received at 11:47 PM on 8.11.2007."
 const NUDGE_BTN = { x: stories.SPOT.nudge.x - 12, y: stories.SPOT.nudge.y - 10, w: 24, h: 20 };
 
 for (const [id, view] of [['REEL', view916], ['REEL_CAROUSEL', view45]]) {
