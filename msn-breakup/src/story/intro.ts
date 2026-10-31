@@ -1,40 +1,47 @@
 /**
- * The opening of the carousel (the collaborator's brief, voice note B): "start
- * the post as if the computer is turning on normally, ... and then a glitch
- * happens, or it crashes, or whatever, and then it opens onto the old
- * Windows", a little introduction before the post. Her final note: the first
- * screen must be unmistakably a 2007 desktop computer (the first version's
- * present-day lock screen read as a phone).
+ * The opening of the carousel: a journey from NOW to THEN (the collaborator's
+ * brief). It starts on a present-day computer: a clean Windows desktop of
+ * 2026 (a browser open on a new tab, the centred taskbar, the tray clock with
+ * today's year, the mouse pointer). The pointer heads for the search box and
+ * stops; the picture stutters; then a glitch (the picture jumps and freezes,
+ * the colours split, bands tear sideways, blocks break up like a damaged
+ * video) lets the old system show through the cracks, until the Windows XP
+ * desktop of 2007 takes over: the old monitor's degauss, and her desktop
+ * exactly as the film begins (Messenger open, the pointer where the new one
+ * was). Prepended to carousel slide 1.
  *
- * So: her 2007 computer is on (her XP desktop, Messenger open, the film's own
- * first frame), it glitches, collapses like an old monitor switching off, and
- * old Windows starts again: the old monitor comes on (its degauss), the XP
- * loading bar, black, the XP "welcome" screen, then her XP desktop fades in:
- * the film's first frame. Prepended to carousel slide 1. The XP screens leave
- * out Microsoft's logo, wordmark and startup sound.
+ * The opening keeps its length (4.8 s, 144 frames), so the film still starts
+ * on frame 144 of the slide, at the same time as before. Nothing in it is a
+ * phone: no lock screen, no battery, no notch, no app grid. The present-day
+ * screen draws no Microsoft logo or artwork: its icons are original drawings.
  */
 export const INTRO = {
   duration: 4.8,
-  /** the screen is up: her desktop has brightened */
-  on: 0.3,
-  /** the glitch starts, and builds */
-  glitch: 1.45,
-  /** the picture collapses (a monitor switching off) */
-  crash: 2.35,
-  /** nothing */
-  black: 2.7,
-  /** old Windows starts: the old monitor comes on (its degauss) with the loading bar */
-  boot: 2.85,
-  /** the loading bar goes: black again */
-  bootEnd: 3.6,
-  /** the "welcome" screen */
-  welcome: 3.72,
-  /** her XP desktop fades in over it (the film's first frame) */
-  desktop: 4.45,
+  /** the pointer reaches the browser's search box and stops there */
+  hesitate: 1.45,
+  /** the first sign that something is wrong: the pointer twitches, the picture stutters */
+  distort: 1.75,
+  /** the glitch (0.9 s, with its sound) */
+  glitch: 2.2,
+  /** the Windows XP desktop takes over, with the old monitor's degauss */
+  xp: 3.1,
+  /** the old monitor has settled: her XP desktop, still, as the film's first frame */
+  settled: 3.75,
 };
 
-/** The opening's own words (its first screen is the film's first frame, with the film's words). */
+/** Every word on the present-day screen (the 2007 screen that follows is the film's own). */
 export const INTRO_TEXT = {
-  /** the old Windows logon screen */
-  welcome: 'welcome',
+  /** the taskbar's clock: the minute of her last message, nineteen years later */
+  time: '11:47 PM',
+  date: '8/23/2026',
+  /** the taskbar's weather */
+  temperature: '64°F',
+  weather: 'Clear',
+  search: 'Search',
+  icons: ['Recycle Bin', 'Documents'],
+  /** the browser, on a new tab */
+  tab: 'New tab',
+  address: 'Search or type a web address',
+  searchBox: 'Search the web',
+  shortcuts: ['Mail', 'Maps', 'Music', 'Photos', 'Docs', 'Weather'],
 };

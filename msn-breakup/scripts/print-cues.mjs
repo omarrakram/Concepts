@@ -9,7 +9,7 @@ const src = (p) => fileURLToPath(new URL(`../src/${p}`, import.meta.url));
 const { FPS } = await loadTs(src('constants.ts'));
 const { REEL, REEL_CAROUSEL, REEL_ORIGINAL, TEASER } = await loadTs(src('story/stories.ts'));
 const { SONG, HIM, HER } = await loadTs(src('story/cast.ts'));
-const { STAY_TUNED, TUMBLR, TUMBLR_TEXT, TEASER_POST } = await loadTs(src('story/tumblr.ts'));
+const { TUMBLR, TUMBLR_TEXT, TEASER_POST } = await loadTs(src('story/tumblr.ts'));
 const slideOf = (id) => CAROUSEL.find((c) => c.id === id).slide;
 const { INTRO, INTRO_TEXT } = await loadTs(src('story/intro.ts'));
 const { PLAYER, PLAY_FRAME, SONG_SOURCE, TRACK } = await loadTs(src('story/player.ts'));
@@ -72,14 +72,13 @@ console.log(`\nBreakupCarousel (carousel slide ${slideOf('BreakupCarousel')})  $
 console.log(`  the opening (${INTRO.duration} s, frames 0–${frame(INTRO.duration) - 1}), then the same beats as HeroReel, reframed for 4:5, each ${INTRO.duration} s later`);
 table(
   [
-    [0, 'her 2007 XP desktop comes on: Messenger open, the pointer (the film’s first frame; screen-on sound)'],
-    [INTRO.glitch, 'it glitches, more and more (glitch sound)'],
-    [INTRO.crash, 'it crashes: the picture collapses to a line, then a dot (crash sound)'],
-    [INTRO.black, 'black'],
-    [INTRO.boot, 'old Windows starts: the old monitor comes on (degauss), the XP loading bar'],
-    [INTRO.bootEnd, 'black'],
-    [INTRO.welcome, `the XP “${INTRO_TEXT.welcome}” screen`],
-    [INTRO.desktop, 'her XP desktop fades in over it: the film’s first frame'],
+    [0, `NOW: a present-day Windows desktop (a browser on a new tab, the centred taskbar, ${INTRO_TEXT.time} ${INTRO_TEXT.date}); the pointer sets off`],
+    [INTRO.hesitate, 'the pointer stops on the search box (it stalled once on the way)'],
+    [INTRO.distort, 'the first signs: the pointer twitches, bands of the picture slip, the colours fringe'],
+    [INTRO.glitch, 'THE GLITCH (glitch sound): jumps, split colours, torn bands, blocks; the 2007 screen shows through, more and more'],
+    [INTRO.glitch + 19 / FPS, '  a short freeze (4 frames)'],
+    [INTRO.xp, 'THEN: the Windows XP desktop takes over (degauss sound): the picture wobbles, its colours swim'],
+    [INTRO.settled, 'her XP desktop, settled: the film’s first frame, the pointer where the new one stopped'],
     [INTRO.duration, 'the film (HeroReel’s beats, reframed)'],
   ],
   slide1,
@@ -126,12 +125,12 @@ table(
       : []),
     ...(T.bodyClick !== null ? [[T.bodyClick, 'click: Post field']] : []),
     ...T.body.flatMap((b, i) => [
-      [b.from, '  she starts typing'],
-      [b.at, `POST   ${b.text}${i < T.body.length - 1 ? '  (Enter)' : ''}`],
+      ...(b.text ? [[b.from, '  she starts typing'], [b.at, `POST   ${b.text}`]] : []),
+      ...(i < T.enters.length ? [[T.enters[i], b.text ? '  Enter (after a pause)' : '  Enter again: a blank line']] : []),
     ]),
     [T.create, 'click: Create post'],
-    [T.published, `her blog ${TUMBLR_TEXT.blogUrl} with the post on top, dated ${TUMBLR_TEXT.postDate}`],
-    [T.stayTuned, `${STAY_TUNED} (to the end)`],
+    [T.published, `her blog ${TUMBLR_TEXT.blogUrl} with the post on top, dated ${TUMBLR_TEXT.postDate}: her sentence, a blank line, STAY TUNED.`],
+    [T.onPost, 'the camera has moved onto her post; it stays there to the end (the last frame is her published post)'],
   ],
   T.duration,
 );

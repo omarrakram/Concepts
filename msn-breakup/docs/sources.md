@@ -42,8 +42,8 @@ Not available:
 - **The logged-in Tumblr text-post form of 2007** was never archived: the
   Wayback Machine only holds redirects for `tumblr.com/new/text` (a page that
   needed a login). Everything on it below is therefore a reconstruction.
-- **The XP start-up screens** (loading bar, “welcome”) were not looked up in
-  an archive. A web search did not establish the typeface of the “welcome”.
+- **Today's Windows** was not traced from screenshots: the present-day
+  desktop of the opening is drawn from general knowledge of its look.
 
 ## Slide 3: Tumblr, item by item
 
@@ -56,11 +56,11 @@ Not available:
 | Side column: her picture, her name, `Change my photo` | Documented (the pattern) | (7) shows picture, name and “Change my photo”; its “Invite your friends” and Followers boxes are left out |
 | Her dashboard has no posts | Reconstruction | nobody else appears in the carousel, so nobody's posts are shown |
 | The text-post form: `Add a Text Post`, `Title (optional)`, `Post`, `Bold` `Italic` `Link`, `Create post`, `Cancel` | **Reconstruction** | by analogy with the archived “Add a Link” form (heading “Add a Link”, “Name (optional)”, “Create post”, “Cancel”) and the bookmarklet (Bold / Italic / Link buttons, “Create Photo”, “Cancel”), both in (7) |
-| A post with a title and no body | Documented as valid | the API (4) |
+| A post with a body and no title (her sentence, a blank line, STAY TUNED.) | Documented as valid | the API (4): a text post needs “at least one: title, body” |
 | After `Create post`, her blog | Reconstruction | where the 2007 form went after posting is not archived |
 | Her blog: the layout, the title in Arial Black, the rule, the RSS badge's place and size, the day block (the weekday `THU` + the date block), the post title (18 px bold), `Powered by Tumblr` | Documented | the default theme (6): its CSS and markup (`date_brick`, upper-cased) |
 | The date block's contents: `8.11.2007` on one line | Brief | the collaborator's exact date; the theme printed month and day (`AUG` / `23RD`), so the block is a little wider and the weekday a little smaller to keep it in the narrow window |
-| `STAY TUNED.` at the end, on its own | Brief | set in the post title's type and pink on the blog's white, as *stay tuned* (the first version's post) looked on that version's last frame |
+| The post's words, in the post type (18 px bold, her pink), the blank line kept | Fitted | the theme set a post's body in small grey type; her post is set in the type it has had in every version, so both lines read on a phone |
 | Her blog's pink | Documented mechanism | the theme lets the owner choose its Title, Post Title, Date, Date Block and Date Block Text colours (6); the pink is hers, as on her Messenger |
 | The RSS badge | Documented place and size | drawn in code; Tumblr's image is not used |
 | The `Dashboard` control at the blog's top right | Documented control, reconstructed content | (5), (7) show the dark ReBlog / Dashboard control; that its owner sees just `Dashboard` is a reconstruction |
@@ -71,11 +71,12 @@ Not available:
 
 | What is on screen | Status | Basis |
 | --- | --- | --- |
-| The first screen: her XP desktop (Messenger open, the desktop icons, the pointer) | The film's own | the film's first frame; it replaced the first version's present-day lock screen, which read as a phone |
-| The glitch, then the picture collapsing to a line and a dot | Stylised | how a CRT monitor looked when it switched off |
-| Old Windows starting: the loading bar on black (three blue blocks in a rounded track) | Reconstruction from memory | Microsoft's logo and wordmark, which sat above it, are left out |
-| The “welcome” screen: blue field, dark-blue bands with a pale and an orange rule, `welcome` in white italic | Reconstruction from memory | typeface unknown here, so Fira Sans bold italic stands in; no logo, no start-up sound |
-| Sounds (screen on, glitch, crash, degauss) | Original | synthesised in `scripts/make-sfx.mjs` |
+| The first screen: a present-day Windows desktop (a browser on a new tab, the centred taskbar with start, search, files, browser and mail, the weather, the tray clock, two desktop icons, the pointer) | Reconstruction, original drawing | today's Windows look, from general knowledge, not traced; no Microsoft logo, wallpaper or icon: the start button's four panes, the globe, the folder, the bin and the wallpaper's bloom are original drawings; Inter stands in for Segoe UI |
+| The clock: `11:47 PM` `8/23/2026` | Brief, fitted | the present day, at the minute of her last message nineteen years later |
+| The glitch: jumps, a freeze, split colours, torn bands, interference, blocky damaged-video blocks; the 2007 screen through the cracks | Stylised | the approved glitch's vocabulary, carrying one era into the other; kept under the general-flash limit |
+| The XP desktop taking over: the degauss wobble and colour swirl | Stylised | how a CRT monitor looked when it degaussed |
+| Her XP desktop after it (Messenger open, the desktop icons, the pointer) | The film's own | the film's first frame |
+| Sounds (glitch, degauss) | Original | synthesised in `scripts/make-sfx.mjs` |
 
 ## Slide 2: Windows Media Player 11
 

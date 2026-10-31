@@ -1,5 +1,5 @@
 // npm run manifest: the slide order + export metadata (ffprobe) + SHA-256 of every
-// delivered file → out/instagram-carousel/manifest.json and MANIFEST.md
+// delivered file → <OUT_DIR>/manifest.json and MANIFEST.md
 import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { existsSync, readFileSync, statSync, writeFileSync } from 'node:fs';
@@ -39,10 +39,10 @@ export function probe(file) {
 
 if (import.meta.url === `file://${process.argv[1]}`) {
   const entry = (file, extra) => (existsSync(`${root}/${file}`) ? { file, ...extra, ...probe(`${root}/${file}`) } : null);
-  const slides = CAROUSEL.map((c) => entry(`${OUT_DIR}/${c.file}`, { slide: c.slide, composition: c.id, title: c.title, cover: `${OUT_DIR}/covers/${c.cover.file}` }));
-  const player = CAROUSEL.find((c) => c.clean);
+  const slides = CAROUSEL.map((c) =>
+    entry(`${OUT_DIR}/${c.file}`, { slide: c.slide, composition: c.id, title: c.title, cover: `${OUT_DIR}/covers/${c.cover.file}`, ...(c.keep ? { unchanged: `the approved master, copied byte for byte (SHA-256 ${c.keep.sha256})` } : {}) }),
+  );
   const extras = [
-    entry(`${OUT_DIR}/${player.clean.file}`, { composition: player.id, title: `slide ${player.slide} without the song (add the licensed track in the app)`, props: player.clean.props }),
     entry('out/msn-breakup-reel.mp4', { composition: 'HeroReel', title: 'the film, 9:16 master' }),
     entry('out/msn-breakup-teaser.mp4', { composition: 'Teaser', title: 'teaser, 9:16 (unchanged)' }),
   ].filter(Boolean);
@@ -59,7 +59,7 @@ if (import.meta.url === `file://${process.argv[1]}`) {
     '',
     'Post the three videos as one carousel, in this order (all 4:5, 1080 × 1350, 30 fps):',
     '',
-    ...slides.map((s) => `${s.slide}. \`${s.file.split('/').at(-1)}\`: ${s.title}`),
+    ...slides.map((s) => `${s.slide}. \`${s.file.split('/').at(-1)}\`: ${s.title}${s.unchanged ? ` (${s.unchanged.split(' (')[0]})` : ''}`),
     '',
     head,
     ...slides.map(row),

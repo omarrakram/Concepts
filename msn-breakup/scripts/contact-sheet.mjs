@@ -9,11 +9,11 @@ const root = fileURLToPath(new URL('..', import.meta.url));
 const font = `${root}/public/fonts/wine-tahoma.ttf`;
 /** seconds of each video's key moments */
 const MOMENTS = {
-  // the opening (her 2007 desktop, the glitch, the crash, the XP loading bar, "welcome"), then the film (+4.8 s)
-  BreakupCarousel: [0.4, 1.9, 2.5, 3.2, 4.1, 4.8 + 2.0, 4.8 + 14.8, 4.8 + 24.9, 4.8 + 31.45, 4.8 + 34.95],
+  // NOW (the present-day desktop, the pointer on the search box), the stutter, the glitch, THEN (XP takes over), then the film (+4.8 s)
+  BreakupCarousel: [0.4, 1.6, 2.13, 2.4, 2.7, 3.0, 3.3, 4.8 + 2.0, 4.8 + 14.8, 4.8 + 34.95],
   MusicPlayerBreakup: [0.2, 0.8, 1.1, 1.4, 1.7, 2.1, 77 / 30, 78 / 30, 5.0, 12.77],
-  // the dashboard, the form, typing, typed, Create post, her blog (8.11.2007), the move in, the post's last frame, STAY TUNED.
-  TumblrBreakup: [0.2, 1.9, 3.0, 5.3, 7.3, 7.9, 8.6, 10.5, 356 / 30, 401 / 30],
+  // the form, typing, her sentence, the blank line, STAY TUNED., Create post, her blog (8.11.2007), the move in, on the post, the last frame
+  TumblrBreakup: [3.0, 5.3, 7.9, 8.5, 9.8, 10.4, 11.0, 12.5, 14.0, 473 / 30],
 };
 const tmp = `${root}/out/qa/sheet-rows`;
 rmSync(tmp, { recursive: true, force: true });

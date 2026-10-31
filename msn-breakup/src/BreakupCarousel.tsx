@@ -3,12 +3,12 @@ import { Intro, INTRO_FRAMES } from './Intro';
 import { Reel, type ReelProps } from './Reel';
 import { CAROUSEL_VIEW, REEL_CAROUSEL } from './story/stories';
 
-/** Carousel slide 1 (4:5): the opening (her 2007 computer glitches and restarts), then the film, reframed for 4:5. */
+/** Carousel slide 1 (4:5): the opening (a present-day desktop glitches back to her 2007 XP desktop), then the film, reframed for 4:5. */
 export function BreakupCarousel(p: ReelProps) {
   const { fps } = useVideoConfig();
   return (
     <Series>
-      <Series.Sequence durationInFrames={INTRO_FRAMES(fps)} name="Opening: her 2007 computer restarts">
+      <Series.Sequence durationInFrames={INTRO_FRAMES(fps)} name="Opening: from a present-day desktop back to 2007">
         <Intro />
       </Series.Sequence>
       <Series.Sequence durationInFrames={Math.round(REEL_CAROUSEL.duration * fps)} name="The film">

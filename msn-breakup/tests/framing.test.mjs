@@ -35,16 +35,16 @@ for (const [id, view] of [['REEL', view916], ['REEL_CAROUSEL', view45]]) {
   });
 }
 
-test('TumblrBreakup: the Text button, the field while she types, Create post, the post at the end', () => {
+test('TumblrBreakup: the Text button, the Post box while she types, Create post, the whole post to the end', () => {
   const { TUMBLR, PAGE, FORM, pill, tumblrAt } = tumblr;
   const cam = (t) => tumblrAt(t, view45).camera;
   const r = (f) => ({ x: PAGE.x + f.x, y: PAGE.y + f.y, w: f.w, h: f.h });
   expectInView('Add a new... Text', cam, view45, r(pill(0)), TUMBLR.dashboard, TUMBLR.textClick + 0.2);
-  expectInView('title field', cam, view45, r(FORM.title), TUMBLR.title.from, TUMBLR.title.at);
-  if (TUMBLR.body.length) expectInView('post field', cam, view45, r(FORM.body), TUMBLR.body[0].from, TUMBLR.body.at(-1).at);
+  expectInView('post field', cam, view45, r(FORM.body), TUMBLR.body[0].from, TUMBLR.body.at(-1).at);
   expectInView('Create post', cam, view45, r(FORM.create), TUMBLR.create - 0.3, TUMBLR.create + 0.2);
-  // her blog's title, the day block (THU 8.11.2007) and both lines of the post, until STAY TUNED.
-  expectInView('the published post', cam, view45, { x: PAGE.x + 7, y: PAGE.y + 44, w: 370, h: 152 }, TUMBLR.published, TUMBLR.stayTuned);
+  // her blog's title, the day block (THU 8.11.2007) and every line of the post (her sentence on two lines, the blank line,
+  // STAY TUNED.), from the moment it is published to the last frame
+  expectInView('the published post', cam, view45, { x: PAGE.x + 7, y: PAGE.y + 44, w: 370, h: 196 }, TUMBLR.published, TUMBLR.duration);
 });
 
 test('MusicPlayerBreakup: the song row and Play until it plays, then the visualisation and the time', () => {

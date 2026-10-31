@@ -3,12 +3,15 @@
 //   - ffprobe: 1080 × 1350 (4:5) / 1080 × 1920, 30 fps, exactly the composition's frames, H.264 yuv420p, AAC
 //   - every file decodes start to end without an error (no corrupt video or audio)
 //   - no black frames and no frozen stretch outside the designed ones, audio not clipped, not silent
-//   - the music-player slide: the song begins exactly on PLAY_FRAME: in a song-only render as uncompressed WAV
-//     (the exact mix: digital zero until the first sample of PLAY_FRAME), in the delivered MP4
-//     (its first note at the Play frame), and the button turns to Pause on that frame (its pixels)
+//   - slide 1's opening stays under the general-flash limit (WCAG 2.3.1): intense, never a strobe
+//   - slide 2 is the approved clean music-player master, byte for byte (SHA-256), and its Play
+//     button turns to Pause on PLAY_FRAME (its pixels)
+//   - only when a song file has been imported (public/music/): the song begins exactly on PLAY_FRAME
+//     in a song-only render as uncompressed WAV (digital zero until the first sample of PLAY_FRAME).
+//     Without one these checks are skipped, not failed: slide 2 is delivered clean, the song is added by hand
 //   - nothing from public/music is tracked by git
 import { spawnSync } from 'node:child_process';
-import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readdirSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { CAROUSEL, MASTER_FRAMES, MASTER_HOLDS, OUT_DIR } from './carousel-list.mjs';
 import { loadTs } from './load-ts.mjs';
@@ -25,6 +28,11 @@ const check = (name, ok, detail) => {
   results.push({ name, ok, detail });
   console.log(`${ok ? '✓' : '✗'} ${name}${detail ? `  (${detail})` : ''}`);
 };
+/** a check that does not apply to these files: reported, never a failure */
+const skip = (name, why) => {
+  results.push({ name, ok: true, skipped: true, detail: why });
+  console.log(`– ${name}  (skipped: ${why})`);
+};
 const run = (cmd, args, opts = {}) => spawnSync(cmd, args, { encoding: opts.binary ? 'buffer' : 'utf8', maxBuffer: 1 << 30, cwd: root });
 const ffmpegLog = (args) => run('ffmpeg', ['-hide_banner', '-nostats', ...args]).stderr;
 /** mono s16 PCM of a file's audio at `rate` */
@@ -34,13 +42,45 @@ const pcm = (file, rate = 48000) => {
 };
 const dbfs = (x) => (x > 0 ? 20 * Math.log10(x / 32768) : -Infinity);
 
-/** the music-player slide (it carries the song, and the clean export) */
+/** the music-player slide (the approved clean master: the song is added by hand) */
 const PLAYER_SLIDE = CAROUSEL.find((c) => c.id === 'MusicPlayerBreakup');
+const songImported = existsSync(`${root}/public/music`) && readdirSync(`${root}/public/music`).some((f) => /^when-youre-gone\.(mp3|m4a|wav|aac|ogg)$/i.test(f));
 const files = [
-  ...CAROUSEL.map((c) => ({ file: `${OUT_DIR}/${c.file}`, w: 1080, h: 1350, frames: c.frames, holds: c.holds ?? [], dark: c.dark ?? [] })),
-  { file: `${OUT_DIR}/${PLAYER_SLIDE.clean.file}`, w: 1080, h: 1350, frames: PLAYER_SLIDE.frames, holds: [], dark: [] },
+  ...CAROUSEL.map((c) => ({ file: `${OUT_DIR}/${c.file}`, w: 1080, h: 1350, frames: c.frames, holds: c.holds ?? [], dark: c.dark ?? [], opening: c.opening, keep: c.keep })),
   { file: 'out/msn-breakup-reel.mp4', w: 1080, h: 1920, frames: MASTER_FRAMES, holds: MASTER_HOLDS, dark: [] },
 ];
+/**
+ * A WCAG 2.3.1-style general-flash measure of frames [from, to] of a video, at 108 × 135: a flash is
+ * a pair of opposite changes of relative luminance of 0.1 or more (the darker below 0.8). Returns the
+ * largest share of the picture that flashes more than 3 times within any 1 s.
+ */
+function flashShare(file, from, to) {
+  const W = 108;
+  const H = 135;
+  const N = W * H;
+  const raw = run('ffmpeg', ['-v', 'error', '-i', file, '-vf', `select=between(n\\,${from}\\,${to}),scale=${W}:${H}:flags=area`, '-fps_mode', 'passthrough', '-f', 'rawvideo', '-pix_fmt', 'rgb24', '-'], { binary: true }).stdout;
+  const lin = Array.from({ length: 256 }, (_, i) => (i / 255 <= 0.04045 ? i / 255 / 12.92 : Math.pow((i / 255 + 0.055) / 1.055, 2.4)));
+  const count = raw.length / (N * 3);
+  const L = Array.from({ length: count }, (_, f) => Float32Array.from({ length: N }, (_, p) => 0.2126 * lin[raw[(f * N + p) * 3]] + 0.7152 * lin[raw[(f * N + p) * 3 + 1]] + 0.0722 * lin[raw[(f * N + p) * 3 + 2]]));
+  const turns = Array.from({ length: N }, () => []);
+  for (let f = 1; f < count; f++)
+    for (let p = 0; p < N; p++) {
+      const a = L[f - 1][p];
+      const b = L[f][p];
+      if (Math.abs(b - a) >= 0.1 && Math.min(a, b) < 0.8) {
+        const t = turns[p];
+        const dir = Math.sign(b - a);
+        if (!t.length || t.at(-1)[1] !== dir) t.push([f, dir]);
+      }
+    }
+  let worst = 0;
+  for (let s = 0; s + FPS <= Math.max(count, FPS); s++) {
+    let n = 0;
+    for (let p = 0; p < N; p++) if (Math.floor(turns[p].filter(([f]) => f > s && f <= s + FPS).length / 2) > 3) n++;
+    worst = Math.max(worst, n / N);
+  }
+  return worst;
+}
 for (const f of files) {
   const path = `${root}/${f.file}`;
   if (!existsSync(path)) {
@@ -48,6 +88,7 @@ for (const f of files) {
     continue;
   }
   const m = probe(path);
+  if (f.keep) check(`${f.file}: the approved master, unchanged (SHA-256)`, m.sha256 === f.keep.sha256, `${m.sha256} (approved: ${f.keep.sha256})`);
   // every frame of the composition, no more, no less, and a video stream exactly that long
   check(
     `${f.file}: ${m.width}×${m.height} ${m.aspect}, ${m.fps} fps, ${m.frames} frames (composition: ${f.frames}), ${m.video}, ${m.pix_fmt}, ${m.audio} ${m.sample_rate} Hz`,
@@ -82,55 +123,50 @@ for (const f of files) {
   }
   const rms = Math.sqrt(sq / a.length);
   check(`${f.file}: audio sound, not clipped`, a.length > 0 && rms > 0 && full === 0 && peak < 32767, `peak ${dbfs(peak).toFixed(1)} dBFS, RMS ${dbfs(rms).toFixed(1)} dBFS, ${(a.length / 48000).toFixed(3)} s`);
+  if (f.opening) {
+    const share = flashShare(path, Math.round(f.opening[0] * FPS), Math.round(f.opening[1] * FPS) + 5);
+    check(`${f.file}: the opening is under the general-flash limit (WCAG 2.3.1)`, share < 0.25, `at most ${(share * 100).toFixed(1)}% of the picture flashes more than 3 times in a second (limit 25%)`);
+  }
   // ebur128 logs a running value from t = 0; the measurement is the Summary at the end
   const ebu = ffmpegLog(['-i', path, '-vn', '-af', 'ebur128=peak=true', '-f', 'null', '-']);
   const lufs = ebu.slice(ebu.lastIndexOf('Summary:')).match(/I:\s+(-?[\d.]+) LUFS[\s\S]*?LRA:\s+(-?[\d.]+) LU[\s\S]*?Peak:\s+(-?[\d.]+) dBFS/);
   check(`${f.file}: loudness measured (EBU R128)`, Boolean(lufs), lufs ? `integrated ${lufs[1]} LUFS, range ${lufs[2]} LU, true peak ${lufs[3]} dBFS` : 'no summary');
 }
 
-// --- the music-player slide: the song begins on PLAY_FRAME ------------------------------
+// --- the music-player slide: the song begins on PLAY_FRAME (only when a song file is imported) ---
 const playAt = PLAY_FRAME / FPS;
 const songOnly = `${root}/out/qa/qa-song-only.wav`;
 mkdirSync(`${root}/out/qa`, { recursive: true });
-console.log('\nrendering the song-only check (MusicPlayerBreakup, clicks off, uncompressed WAV)…');
-const r = spawnSync('node', ['scripts/render.mjs', 'MusicPlayerBreakup', 'out/qa/qa-song-only.wav', '--codec=wav', '--props={"uiSounds":false}', '--log=error'], { cwd: root, stdio: 'inherit' });
-if (r.status === 0) {
-  const a = pcm(songOnly, 48000);
-  const first = (db, from = 0) => {
-    const th = 32768 * 10 ** (db / 20);
-    for (let i = from; i < a.length; i++) if (Math.abs(a[i]) >= th) return i;
-    return -1;
-  };
-  const playSample = Math.round(playAt * 48000);
-  let before = 0;
-  for (let i = 0; i < playSample; i++) before = Math.max(before, Math.abs(a[i]));
-  const nonZero = first(-90.3); // the first sample that is not digital zero
-  const on = first(-50);
-  check(
-    `song-only WAV: digital zero before sample ${playSample} (${playAt.toFixed(4)} s, the first sample of frame ${PLAY_FRAME}), the song from that sample`,
-    before === 0 && nonZero === playSample && on >= playSample && on <= playSample + 48,
-    `max before: ${before === 0 ? 'exactly 0' : `${dbfs(before).toFixed(1)} dBFS`}; first non-zero sample ${nonZero}; first −50 dBFS sample at Δ ${(((on - playSample) / 48000) * 1000).toFixed(2)} ms; first −20 dBFS at Δ ${(((first(-20) - playSample) / 48000) * 1000).toFixed(1)} ms`,
-  );
-} else check('song-only render', false, 'render failed');
+const songCheck = `song-only WAV: the song from the first sample of frame ${PLAY_FRAME}, digital zero before`;
+if (!songImported) skip(songCheck, 'no song file imported: slide 2 is the clean master, the song is added by hand');
+else {
+  console.log('\nrendering the song-only check (MusicPlayerBreakup, clicks off, uncompressed WAV)…');
+  const r = spawnSync('node', ['scripts/render.mjs', 'MusicPlayerBreakup', 'out/qa/qa-song-only.wav', '--codec=wav', '--props={"uiSounds":false}', '--log=error'], { cwd: root, stdio: 'inherit' });
+  if (r.status === 0) {
+    const a = pcm(songOnly, 48000);
+    const first = (db, from = 0) => {
+      const th = 32768 * 10 ** (db / 20);
+      for (let i = from; i < a.length; i++) if (Math.abs(a[i]) >= th) return i;
+      return -1;
+    };
+    const playSample = Math.round(playAt * 48000);
+    let before = 0;
+    for (let i = 0; i < playSample; i++) before = Math.max(before, Math.abs(a[i]));
+    const nonZero = first(-90.3); // the first sample that is not digital zero
+    const on = first(-50);
+    check(
+      `${songCheck} (sample ${playSample}, ${playAt.toFixed(4)} s)`,
+      before === 0 && nonZero === playSample && on >= playSample && on <= playSample + 48,
+      `max before: ${before === 0 ? 'exactly 0' : `${dbfs(before).toFixed(1)} dBFS`}; first non-zero sample ${nonZero}; first −50 dBFS sample at Δ ${(((on - playSample) / 48000) * 1000).toFixed(2)} ms; first −20 dBFS at Δ ${(((first(-20) - playSample) / 48000) * 1000).toFixed(1)} ms`,
+    );
+  } else check('song-only render', false, 'render failed');
+}
 
 const deliverable = `${root}/${OUT_DIR}/${PLAYER_SLIDE.file}`;
 const delivered = `delivered slide ${PLAYER_SLIDE.slide} (the music player)`;
 if (existsSync(deliverable)) {
-  const a = pcm(deliverable, 48000);
-  const playSample = Math.round(playAt * 48000);
-  // the Play click (2.50–2.59 s) is over; the window just before the Play frame must be quiet.
-  // (AAC smears a sharp onset back into its frame by up to 1024 samples: reported, inaudible)
-  let gap = 0;
-  let preEcho = 0;
-  for (let i = playSample - Math.round(0.006 * 48000); i < playSample - 24; i++) gap = Math.max(gap, Math.abs(a[i]));
-  for (let i = playSample - 24; i < playSample; i++) preEcho = Math.max(preEcho, Math.abs(a[i]));
-  let on = -1;
-  for (let i = playSample - 24; i < playSample + 4800; i++) if (Math.abs(a[i]) >= 32768 * 10 ** (-30 / 20)) { on = i; break; }
-  check(
-    `${delivered}: the song's first note at the Play frame`,
-    dbfs(gap) < -45 && on >= playSample && on <= playSample + 48 * 3,
-    `${dbfs(gap).toFixed(1)} dBFS from 6 ms to 0.5 ms before; AAC pre-echo in the last 0.5 ms ${dbfs(preEcho).toFixed(1)} dBFS; first −30 dBFS sample at Δ ${(((on - playSample) / 48000) * 1000).toFixed(2)} ms`,
-  );
+  // the delivered slide 2 is the clean master (no song), so its first note cannot be checked: the Play cue is checked in its pixels
+  skip(`${delivered}: the song's first note at the Play frame`, 'slide 2 is the clean master (no song): the song is added by hand at 0:02.6, the frame Play turns to Pause');
   // pixels of the button's glyph: the middle is white inside ▶; for ❚❚ the middle is the blue
   // of the (hovered) button showing between two white bars, 4 px either side
   const cam = playerAt(playAt, CAROUSEL_VIEW).camera;
@@ -163,5 +199,6 @@ check('git tracks nothing in public/music but its README', tracked.length === 1 
 
 writeFileSync(`${root}/out/qa/report.json`, JSON.stringify({ when: new Date().toISOString(), results }, null, 2) + '\n');
 const failed = results.filter((x) => !x.ok);
-console.log(`\n${results.length - failed.length}/${results.length} checks passed → out/qa/report.json`);
+const skipped = results.filter((x) => x.skipped);
+console.log(`\n${results.length - failed.length - skipped.length}/${results.length - skipped.length} checks passed, ${skipped.length} skipped (not applicable) → out/qa/report.json`);
 process.exit(failed.length ? 1 : 0);

@@ -5,8 +5,9 @@ import type { Beat, CamKey, CursorKey } from './types';
 
 /**
  * Carousel slide 3, the last: she opens Internet Explorer on her Tumblr
- * dashboard, clicks Text, writes the post and publishes it, then her blog
- * shows it, dated 8.11.2007, and the carousel ends on STAY TUNED. The post
+ * dashboard, clicks Text, writes the post (her sentence, a pause, a blank
+ * line, STAY TUNED.) and publishes it, then her blog shows it, dated
+ * 8.11.2007, and the carousel ends on that published post. The post
  * (TEASER_POST) is the only thing she types. Every other word on screen is
  * browser / Tumblr furniture, all of it in TUMBLR_TEXT (and in docs/carousel.md).
  *
@@ -20,24 +21,23 @@ import type { Beat, CamKey, CursorKey } from './types';
 
 type Line = Extract<Beat, { type: 'her' }>;
 
+/** Her sentence: the collaborator's final wording, exactly as written: lower case, a full stop. */
+export const STATEMENT = 'i guess some people are just passing through.';
+/** The campaign's line, which she writes into the same post after a blank line: capitals, a full stop. */
+export const STAY_TUNED = 'STAY TUNED.';
+
 /**
- * What she posts: the collaborator's final wording, exactly as written: lower
- * case, one sentence, a full stop. It lives here and only here: the timeline,
- * the cues and the camera follow it.
- *
- * A title-only text post, as the first version's was: Tumblr's 2007 API took
- * a text ("regular") post with "at least one: title, body". Body lines, if
- * any, are typed one per line.
+ * What she posts, and the only place it lives: the timeline, the cues and the
+ * camera follow it. One text post, written in its Post box: her sentence, a
+ * blank line, STAY TUNED. No title (Tumblr's 2007 API took a text ("regular")
+ * post with "at least one: title, body"). Body lines are typed one per line.
  */
 export const TEASER_POST: { title: string; body: string[]; final: boolean } = {
-  title: 'i guess some people are just passing through.',
-  body: [],
+  title: '',
+  body: [STATEMENT, '', STAY_TUNED],
   /** the collaborator's final wording */
   final: true,
 };
-
-/** The ending, once her post has registered: the campaign's line, on its own. */
-export const STAY_TUNED = 'STAY TUNED.';
 
 /** The post's date (the collaborator's brief): 8 November 2007, printed exactly as "8.11.2007". */
 const POST_DATE = { day: 8, month: 11, year: 2007 };
@@ -96,6 +96,10 @@ export const BLOG_COLORS = {
 
 /** Her typing here: unhurried (a post, not a reply), ~0.085 s a key. */
 const KEY = 0.085;
+/** After her sentence she stops (the caret blinks) before Enter. */
+const PAUSE = 0.8;
+/** Enter to Enter (the blank line), and the last Enter to the next key. */
+const RETURN = 0.28;
 const typedLine = (text: string, from: number): Line => ({ type: 'her', text, from: +from.toFixed(3), at: +(from + [...text].length * KEY + 0.07).toFixed(3) });
 
 function timeline() {
@@ -108,16 +112,20 @@ function timeline() {
   const title = TEASER_POST.title ? typedLine(TEASER_POST.title, firstClick + 0.2) : null;
   const bodyClick = TEASER_POST.body.length ? +(title ? title.at + 0.45 : firstClick).toFixed(3) : null;
   const body: Line[] = [];
+  const enters: number[] = [];
   let from = (bodyClick ?? 0) + 0.2;
-  for (const text of TEASER_POST.body) {
+  TEASER_POST.body.forEach((text, i) => {
     const line = typedLine(text, from);
     body.push(line);
-    from = line.at + 0.3;
-  }
+    if (i === TEASER_POST.body.length - 1) return;
+    // a written line: a pause, then Enter; an empty line: Enter again (the blank line)
+    const enter = +(text ? line.at + PAUSE : line.from + RETURN).toFixed(3);
+    enters.push(enter);
+    from = TEASER_POST.body[i + 1] ? enter + RETURN : enter;
+  });
   const typed = (body.at(-1) ?? title)!.at;
   const create = +(typed + 0.6).toFixed(3);
   const published = +(create + 0.6).toFixed(3);
-  const stayTuned = Math.round((published + 3.4) * 10) / 10;
   return {
     /** a minute after the last nudge */
     clock: '11:48 PM',
@@ -137,14 +145,16 @@ function timeline() {
     /** click on the Post field (null if the post has no body) */
     bodyClick,
     body,
+    /** the Enter that ends each body line but the last: the next line starts there */
+    enters,
     /** click on "Create post" */
     create,
     /** her blog, with the post on top */
     published,
-    /** the post stays on screen for 3.4 s, the camera moving onto it; then STAY TUNED. */
-    stayTuned,
-    /** STAY TUNED. holds to the end */
-    duration: +(stayTuned + 1.5).toFixed(1),
+    /** the camera has moved onto her post (as before, 3 s after it appears) */
+    onPost: +(published + 3).toFixed(3),
+    /** the video ends on her published post, 4.9 s after it appears (the time the post and the old end card had) */
+    duration: Math.round((published + 4.9) * 10) / 10,
   };
 }
 export const TUMBLR = timeline();
@@ -238,9 +248,9 @@ export const TUMBLR_CAMERA: CamKey[] = [
   // the whole browser again for "Create post" and the page change
   { t: T.create - 0.1, x: 270, y: 586, z: 1 },
   { t: T.published + 0.25, x: 270, y: 586, z: 1 },
-  // then slowly onto her post: her blog's title, the day block and the words (both lines of them)
-  { t: T.stayTuned - 0.4, x: 204, y: 520, z: 1.345 },
-  { t: T.stayTuned, x: 204, y: 520, z: 1.35 },
+  // then slowly onto her post: her blog's title, the day block and all her words, and it stays on them to the end
+  { t: T.onPost, x: 204, y: 520, z: 1.345 },
+  { t: T.duration, x: 204, y: 520, z: 1.36 },
 ];
 
 const typed = (b: Line | null, t: number) => (!b ? '' : t >= b.at ? b.text : t >= b.from ? [...b.text].slice(0, keyTimes(b).filter((k) => k <= t).length).join('') : '');
@@ -281,10 +291,10 @@ export function tumblrAt(t: number, view?: { w: number; h: number }): TumblrStat
   // the address changes when the new page arrives; the status bar names where it is going
   const url = page === 'blog' ? TUMBLR_TEXT.blogUrl : page === 'form' ? TUMBLR_TEXT.formUrl : TUMBLR_TEXT.dashboardUrl;
   const target = toForm ? TUMBLR_TEXT.formUrl : toBlog ? TUMBLR_TEXT.blogUrl : url;
+  // each line after the first starts at the Enter that ends the line before it
   const body: string[] = [];
   T.body.forEach((b, i) => {
-    const prev = T.body[i - 1];
-    if (t >= b.from || (prev && t >= prev.at)) body.push(typed(b, t));
+    if (i === 0 ? t >= b.from : t >= T.enters[i - 1]!) body.push(typed(b, t));
   });
   const typing = [T.title, ...T.body].some((b) => b && t >= b.from && t < b.at);
   const focus = page !== 'form' || t >= T.create ? null : T.bodyClick !== null && t >= T.bodyClick ? 'body' : T.titleClick !== null && t >= T.titleClick ? 'title' : null;

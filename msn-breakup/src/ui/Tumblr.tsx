@@ -151,18 +151,12 @@ export function TumblrPostForm({ title, body, focus, caretOn, createPressed }: {
 
 /** Her posts' titles: the theme's bold face, in her pink. */
 const postTitle: CSSProperties = { fontFamily: SANS, fontWeight: 700, fontSize: 18, letterSpacing: -1, color: BLOG_COLORS.postTitle };
-
 /**
- * The ending, once her post has registered: the line on its own, in her post
- * title's type and pink on her blog's white, centred on (x, y) of the screen.
+ * Her post's words (a post without a title): set in that same post type, as her
+ * post has always looked here, not in the theme's 12 px grey body type, so every
+ * line reads on a phone. An empty line keeps its height (the blank line).
  */
-export function TumblrStayTuned({ text, x, y }: { text: string; x: number; y: number }) {
-  return (
-    <div style={{ position: 'absolute', inset: 0, background: BLOG_COLORS.background }}>
-      <div style={{ ...postTitle, position: 'absolute', left: x - 200, width: 400, top: y - 11, lineHeight: '22px', textAlign: 'center', whiteSpace: 'nowrap' }}>{text}</div>
-    </div>
-  );
-}
+const postWords: CSSProperties = { ...postTitle, lineHeight: '21px' };
 
 /** Her blog: the default theme of 2007 (title, rule, RSS, the day block, the post), in her colours. */
 export function TumblrBlog({ title, body }: { title: string; body: string[] }) {
@@ -188,9 +182,9 @@ export function TumblrBlog({ title, body }: { title: string; body: string[] }) {
         </div>
         {title && <div style={{ ...postTitle, margin: '0 0 5px' }}>{title}</div>}
         {body.length > 0 && (
-          <div style={{ fontFamily: SANS, fontSize: 12, lineHeight: '17px', color: C.text }}>
+          <div style={title ? { fontFamily: SANS, fontSize: 12, lineHeight: '17px', color: C.text } : postWords}>
             {body.map((line, i) => (
-              <div key={i}>{line}</div>
+              <div key={i}>{line || '\u00a0'}</div>
             ))}
           </div>
         )}

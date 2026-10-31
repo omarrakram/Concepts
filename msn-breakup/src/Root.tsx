@@ -24,7 +24,7 @@ export function Root() {
         height={1920}
         defaultProps={{} satisfies ReelProps}
       />
-      {/* carousel slide 1: the opening (her 2007 computer glitches and restarts), then the film recomposed for 4:5 */}
+      {/* carousel slide 1: the opening (a present-day desktop glitches back to 2007), then the film recomposed for 4:5 */}
       <Composition
         id="BreakupCarousel"
         component={BreakupCarousel}

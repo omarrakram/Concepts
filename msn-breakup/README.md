@@ -1,11 +1,13 @@
 # MSN breakup: a 2007 nostalgia reel and Instagram carousel
 
-Her 2007 Windows XP PC is on. It glitches, crashes and starts up again. It's
-11:47 PM on 23 August 2007, with MSN Messenger 7.5 open. karim dumps
-~\*nOuR\*~ in five lines, then goes quiet. She spirals, nudges him, says “no
-actually”, and nudges him twice more. Nothing. She opens Windows Media Player
-and plays “When You’re Gone” by Avril Lavigne. Then, on Tumblr, she posts *i
-guess some people are just passing through.*, dated 8.11.2007. **STAY TUNED.**
+A present-day Windows desktop, 11:47 PM. The pointer stops; the picture
+glitches; through the cracks the old system shows, and the Windows XP desktop
+of 2007 takes over. It's 11:47 PM on 23 August 2007, with MSN Messenger 7.5
+open. karim dumps ~\*nOuR\*~ in five lines, then goes quiet. She spirals,
+nudges him, says “no actually”, and nudges him twice more. Nothing. She opens
+Windows Media Player and plays “When You’re Gone” by Avril Lavigne. Then, on
+Tumblr, she writes and publishes one post, dated 8.11.2007: *i guess some
+people are just passing through.*, a blank line, **STAY TUNED.**
 
 This is a standalone Remotion project. Every pixel is code: the Luna window
 chrome, the Messenger windows, Internet Explorer, the Tumblr pages, the Start
@@ -17,11 +19,10 @@ sounds. Each frame is a pure function of time, so renders are deterministic.
 
 | Output | Size | Length | Command |
 | --- | --- | --- | --- |
-| `out/instagram-carousel-final/01-msn-breakup-final.mp4` (slide 1: the opening, then the film, 4:5) | 1080 × 1350, 30 fps, H.264 + AAC | 39.8 s | `npm run render:carousel:film` |
-| `out/instagram-carousel-final/02-music-player-final.mp4` (slide 2: the song) | 1080 × 1350, 30 fps | 12.8 s | `npm run render:carousel:player` |
-| `out/instagram-carousel-final/02-music-player-final-clean.mp4` (slide 2 without the song) | 1080 × 1350, 30 fps | 12.8 s | (same) |
-| `out/instagram-carousel-final/03-tumblr-statement-final.mp4` (slide 3: her Tumblr post, then STAY TUNED.) | 1080 × 1350, 30 fps | 13.4 s | `npm run render:carousel:tumblr` |
-| `out/instagram-carousel-final/covers/`, `contact-sheet.png`, `MANIFEST.md`, `manifest.json` | | | `npm run render:carousel` (all of the above) |
+| `out/instagram-carousel-final-v2/01-msn-breakup-present-to-2007-final.mp4` (slide 1: the present-day opening, then the film, 4:5) | 1080 × 1350, 30 fps, H.264 + AAC | 39.8 s | `npm run render:carousel:film` |
+| `out/instagram-carousel-final-v2/02-music-player-final-clean.mp4` (slide 2: the music player, clean; the song is added by hand) | 1080 × 1350, 30 fps | 12.8 s | `npm run render:carousel:player` (copies the approved master, unchanged) |
+| `out/instagram-carousel-final-v2/03-tumblr-published-stay-tuned-final.mp4` (slide 3: her Tumblr post, STAY TUNED. in it) | 1080 × 1350, 30 fps | 15.8 s | `npm run render:carousel:tumblr` |
+| `out/instagram-carousel-final-v2/covers/`, `contact-sheet.png`, `MANIFEST.md`, `manifest.json`, `CUES.txt` | | | `npm run render:carousel` (all of the above) |
 | `out/msn-breakup-reel.mp4` (the film, 9:16 master) | 1080 × 1920, 30 fps | 35.0 s | `npm run render:reel` |
 | `out/msn-breakup-teaser.mp4` (teaser, unchanged) | 1080 × 1920, 30 fps | 7.0 s | `npm run render:teaser` |
 | `out/stills/01…05-*.png`, `06-bonus-sign-in.png` (stills, unchanged) | 1080 × 1350 | 6 stills | `npm run render:stills` |
@@ -32,8 +33,17 @@ an earlier file: if the output exists and no copy is archived yet,
 `scripts/render.mjs` first copies it to `out/archive/previous/`. The first
 release's renders and their SHA-256 sums are kept in
 `out/archive/original-38f0d3a/`, the approved carousel before the final
-corrections in `out/archive/approved-ad78f3f/` (see its `NOTE.md`), and the
-final carousel goes to its own folder, `out/instagram-carousel-final/`.
+corrections in `out/archive/approved-ad78f3f/`, the approved set before the
+present-day opening in `out/archive/approved-aabe785/` (each with its
+`NOTE.md`), and the final carousel goes to its own folder,
+`out/instagram-carousel-final-v2/` (the previous one,
+`out/instagram-carousel-final/`, is left as it was).
+
+**Slide 2 is never re-rendered.** It is the approved clean master
+(`02-music-player-final-clean.mp4`, SHA-256 `25e234d95ce31c03…`), copied byte
+for byte from the previous folder or its archive; `render:carousel` checks the
+hash of the copy and stops if no approved copy is found. The song is added to
+it by hand (see below).
 
 How the carousel fits together (the voice-note brief, order, every new word
 on screen, the period design notes): [`docs/carousel.md`](docs/carousel.md).
@@ -50,7 +60,7 @@ npm install
 npm run import:song -- <your file>   # the song, into the gitignored public/music/ (see below)
 npm run dev                  # Remotion Studio: scrub, preview, tweak props
 npm run render:reel          # → out/msn-breakup-reel.mp4               (9:16 master)
-npm run render:carousel      # → out/instagram-carousel-final/ (3 videos + clean export, covers, sheet, manifest)
+npm run render:carousel      # → out/instagram-carousel-final-v2/ (slides 1 and 3 rendered, slide 2 copied; covers, sheet, manifest)
 npm run render:carousel:film | :player | :tumblr   # one slide (1, 2, 3)
 npm run render:teaser        # → out/msn-breakup-teaser.mp4
 npm run render:stills        # → out/stills/*.png
@@ -76,9 +86,10 @@ high. Audio is AAC-LC, 48 kHz stereo.
 `npm run import:song -- <file>` copies the audio of the file you supply,
 untouched, into the gitignored `public/music/`. It plays in one place only:
 slide 2, from the frame on which Play turns to Pause (**frame 78 =
-00:00:02.600**). The film has no music. The cue, the clean export for adding
-the track from Instagram's licensed library, and the rights note are in
-[`public/music/README.md`](public/music/README.md).
+00:00:02.600**). The film has no music. The delivered slide 2 is the clean
+master: the song is added to it by hand, its first note at 0:02.6. Without a
+song file, `npm run qa` skips the song checks; it does not fail them. The cue
+and the rights note are in [`public/music/README.md`](public/music/README.md).
 
 ## Story
 
@@ -86,11 +97,11 @@ the track from Instagram's licensed library, and the rights note are in
 
 | Time | Beat |
 | --- | --- |
-| 0.0–1.45 | Her 2007 computer is on: her XP desktop comes up (Messenger open, the desktop icons, the pointer; the film's first frame). |
-| 1.45–2.35 | It glitches: the colours pull apart, bands tear sideways, blocks of noise. It gets worse. |
-| 2.35–2.85 | It crashes: the picture squeezes to a line, then a dot, then black. |
-| 2.85–3.6 | Old Windows starts: the old monitor comes on (a degauss thunk) and the XP loading bar runs. |
-| 3.72–4.8 | The “welcome” screen, then her XP desktop fades in. The film begins. |
+| 0.0–1.45 | **NOW.** A present-day Windows desktop: a browser open on a new tab, the centred taskbar, the tray clock at 11:47 PM 8/23/2026, the desktop icons. The pointer crosses to the search box (it stalls once on the way) and stops. |
+| 1.75–2.2 | The first signs: the pointer twitches, bands of the picture slip sideways, the colours fringe. |
+| 2.2–3.1 | **The glitch** (its sound): the picture jumps, freezes for four frames, the colours split, bands tear, blocks break up like a damaged video. Through the cracks the 2007 screen shows, band by band, until it is all that is left. |
+| 3.1–3.75 | **THEN.** The Windows XP desktop takes over: the old monitor degausses (its thunk and hum), the picture wobbles and settles. |
+| 3.75–4.8 | Her XP desktop, still: the film's first frame, the old pointer where the new one stopped. The film begins on frame 144, as before. |
 
 ### The film (HeroReel 9:16 · BreakupCarousel 4:5, 35 s; in slide 1 it starts at 4.8 s)
 
@@ -114,13 +125,16 @@ presses Play. On that frame the button turns to Pause, the time reads 00:00
 and the song begins on its first note. She switches to Now Playing. The bars
 move with the music, through the first sung line.
 
-### Slide 3: her Tumblr post (TumblrBreakup, 13.4 s)
+### Slide 3: her Tumblr post (TumblrBreakup, 15.8 s)
 
 She clicks the Quick Launch “Internet” icon. Internet Explorer opens on her
-Tumblr dashboard. She clicks **Text**, types *i guess some people are just
-passing through.* (the collaborator's final words, `TEASER_POST` in
-`src/story/tumblr.ts`) and clicks **Create post**. Her blog shows it, dated
-`THU` `8.11.2007`, and the camera moves in on it. Then **STAY TUNED.**
+Tumblr dashboard. She clicks **Text**, clicks the Post box and types *i guess
+some people are just passing through.*, stops for a moment, presses Enter
+twice and types **STAY TUNED.** (the post, `TEASER_POST` in
+`src/story/tumblr.ts`). Both lines sit in the editor; she clicks **Create
+post**. Her blog shows the one post, dated `THU` `8.11.2007`: her sentence, a
+blank line, STAY TUNED., in her pink. The camera moves in on it and the video
+ends on that post. There is no separate end card.
 
 The teaser (7 s, unchanged) is the hook: the sign-in, “hey… sry but i think
 we shud break up :(”, “bye x”, “did u seriously just dump me on msn??”,
@@ -138,9 +152,9 @@ msn-breakup/
 │  │                           Teaser, HeroReelOriginal, Carousel (stills), SignIn
 │  ├─ Reel.tsx                 the film: picture + every sound event (+ the first cut's song slot)
 │  ├─ BreakupCarousel.tsx      slide 1: the opening, then the film (4:5)
-│  ├─ Intro.tsx                slide 1's opening: her XP desktop, glitch, crash, XP starting
+│  ├─ Intro.tsx                slide 1's opening: the present-day desktop, the glitch, XP taking over
 │  ├─ MusicPlayerBreakup.tsx   slide 2: the song from PLAY_FRAME, the spectrum bars
-│  ├─ TumblrBreakup.tsx        slide 3: her post, then STAY TUNED.
+│  ├─ TumblrBreakup.tsx        slide 3: she writes and publishes her post (STAY TUNED. in it)
 │  ├─ Scene.tsx                the film's frame; Screen: the 540×960 virtual XP screen, camera, grain, vignette
 │  ├─ Stills.tsx               carousel stills + bonus sign-in still
 │  ├─ sound.tsx, music.ts      sound cues; where the imported song lives
@@ -150,12 +164,13 @@ msn-breakup/
 │  │  ├─ stories.ts            the script + beat timings + camera + pointer (REEL, REEL_CAROUSEL, REEL_ORIGINAL, TEASER)
 │  │  ├─ intro.ts              slide 1's opening: its timings and its words (INTRO, INTRO_TEXT)
 │  │  ├─ player.ts             slide 2: PLAY_FRAME, the song's in-point, metadata, geometry, playerAt(t)
-│  │  ├─ tumblr.ts             slide 3: the post (TEASER_POST), its date, STAY_TUNED, timeline, every new word (TUMBLR_TEXT), geometry, tumblrAt(t)
+│  │  ├─ tumblr.ts             slide 3: the post (TEASER_POST: STATEMENT, STAY_TUNED), its date, timeline, every new word (TUMBLR_TEXT), geometry, tumblrAt(t)
 │  │  ├─ slides.ts             which moments become carousel stills
 │  │  ├─ state.ts              stateAt(story, t): typing, scroll, toasts, nudge shake…
 │  │  └─ types.ts
 │  └─ ui/                      XP Luna chrome, MSN contact list + conversation, toast, sign-in, desktop,
-│                              Internet Explorer 6, Tumblr, Start menu, Windows Media Player 11, original SVG icons
+│                              Internet Explorer 6, Tumblr, Start menu, Windows Media Player 11, original SVG icons,
+│                              present.tsx: the present-day desktop of the opening
 ├─ public/
 │  ├─ fonts/                   redistributable fonts + licences (see its README)
 │  ├─ sfx/                     original synthesized sounds (scripts/make-sfx.mjs)
@@ -177,9 +192,11 @@ msn-breakup/
   virtual screen at the centre and the zoom. The camera eases between keys and
   never leaves the screen. Slide 1 has its own keys (`REEL_CAROUSEL`) for the
   4:5 frame.
-- **Slide 1's opening:** its timings and words are in `src/story/intro.ts`.
-- **The Tumblr post:** `TEASER_POST` in `src/story/tumblr.ts` (its date and
-  STAY TUNED. are there too). The typing, cues and camera follow it.
+- **Slide 1's opening:** its timings and words are in `src/story/intro.ts`;
+  the present-day desktop is drawn in `src/ui/present.tsx`.
+- **The Tumblr post:** `TEASER_POST` in `src/story/tumblr.ts` (built from
+  `STATEMENT` and `STAY_TUNED`; its date is there too). The typing, the pause,
+  the Enters, the cues and the camera follow it.
 - **The carousel's order, files and covers:** `scripts/carousel-list.mjs`.
 - **Slides 2 and 3:** their timelines, words and layout are in
   `src/story/player.ts` and `src/story/tumblr.ts`.
@@ -195,25 +212,32 @@ msn-breakup/
   - the film has no popup, ♫ status or song;
   - the carousel is in the final order (the breakup, the song, Tumblr), with
     its file names, and no script picks a slide by its position;
-  - slide 1's opening runs in order with its approved timings, starts on her
-    XP desktop (no phone lock screen left), keeps the approved glitch and
-    crash, uses only its listed words, and is followed by the unchanged film;
-  - the Tumblr post is exactly the final statement, from one constant, typed
-    key by key, dated exactly `8.11.2007`, then STAY TUNED. on its own; every
-    word of the pages listed; no music; the old post and date are gone;
+  - slide 1's opening runs NOW → glitch → THEN in the same 4.8 s (the film
+    still starts on frame 144); its first screen is a present-day desktop
+    computer (taskbar, window chrome, pointer, this year's date; nothing of a
+    phone); the glitch has its jumps, freeze, split, tears, interference and
+    blocks, each part turning old once; XP takes over and settles on the
+    film's first frame; only its listed words; no vendor names or pictures;
+  - the Tumblr post is exactly her sentence, a blank line and STAY TUNED.,
+    from one constant, typed key by key with the pause and the two Enters,
+    both lines in the editor, published in one post dated exactly
+    `8.11.2007`; the video ends on that post and no end card exists; every
+    word of the pages listed; no music;
+  - slide 2 is the approved clean master, copied unchanged (its hash);
   - Play and the song share PLAY_FRAME, and the press comes 3 frames before;
   - every composition is registered at the right size and length;
   - the framing keeps what matters in shot on every frame.
 - `npm run qa` checks the rendered MP4s:
   - format: size, rate, frame count, codecs;
   - a full decode with no error;
-  - no black frames and no frozen stretches outside the designed ones
-    (slide 1's crash and start-up, the silence after the last nudge, STAY
-    TUNED. at the end of slide 3);
+  - no black frames and no frozen stretches outside the designed ones (the
+    silence after the last nudge);
+  - slide 1's opening under the general-flash limit (WCAG 2.3.1);
   - audio that is present and not clipped, plus its loudness;
-  - **sync:** a song-only render's first sample is frame 78's first sample;
-    the delivered slide 2 has its first note at the Play frame; its pixels
-    show ▶ on frame 77 and ❚❚ on frame 78;
+  - slide 2's SHA-256 is the approved clean master's; its pixels show ▶ on
+    frame 77 and ❚❚ on frame 78 (the Play cue);
+  - **sync, only once a song file is imported:** a song-only render's first
+    sample is frame 78's first sample (without one it is skipped, not failed);
   - git tracks nothing in `public/music` but its README.
 - `npm run qa:regression` proves that the untouched pieces are untouched.
   The teaser, the first cut and the six stills re-render byte-identical to
@@ -267,8 +291,8 @@ What it models:
 
 ## Notes and licences
 
-- **Fonts:** Wine Tahoma (LGPL-2.1+), Comic Neue, Arimo, Fira Sans, Gelasio
-  and Archivo Black (SIL OFL). Details are in [`public/fonts/README.md`](public/fonts/README.md).
+- **Fonts:** Wine Tahoma (LGPL-2.1+), Comic Neue, Arimo, Fira Sans, Gelasio,
+  Archivo Black and Inter (SIL OFL). Details are in [`public/fonts/README.md`](public/fonts/README.md).
 - **Remotion** is source-available. It is free for individuals and companies
   with up to 3 employees. Bigger companies need a company licence (see
   remotion.dev/license).
