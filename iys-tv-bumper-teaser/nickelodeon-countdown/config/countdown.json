@@ -1,0 +1,8 @@
+{
+  "_": "The one source of the countdown. Nothing here is ever shown on screen: only the four two-digit groups (days:hours:minutes:seconds) and their colons. The film is a prerecorded, deterministic animation, not a live clock: its first countdown frame (clockOriginFrame in config/timeline.json) stands for the moment `start`, whatever moment it is watched.",
+  "timezone": "Africa/Cairo",
+  "start": "2026-11-08T00:00:00",
+  "target": "2026-11-11T00:00:00",
+  "fps": 30,
+  "display": "ceil: a value is on screen for the whole second that ends at it, so the start shows 03:00:00:00 and one second later 02:23:59:59"
+}

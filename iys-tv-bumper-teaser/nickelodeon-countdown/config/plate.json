@@ -1,0 +1,157 @@
+{
+  "_": "The supplied photograph of the TV and the room (kept exactly as it is: the clips are only added inside the screen glass), and how the compositor uses it. Coordinates are the photo's own pixels.",
+  "file": "plate/tv-room-vertical.webp",
+  "sha256": "8bf1ef7d77abcdb74764553790330aa1c1e0ed0a5ef429aef8923def35810970",
+  "size": [
+    941,
+    1672
+  ],
+  "glass": {
+    "_": "the edge where the glass meets the black lip of the bezel, measured along each side (threshold crossings, outliers rejected) and fitted with quadratics: top/bottom give y from x, left/right give x from y. Fit residuals: 0.24, 0.19, 0.65, 0.16 px.",
+    "top": [
+      0.000203,
+      -0.201427,
+      621.330491
+    ],
+    "bottom": [
+      -0.00012,
+      0.114929,
+      939.208949
+    ],
+    "left": [
+      0.000354,
+      -0.562372,
+      403.744788
+    ],
+    "right": [
+      -0.000227,
+      0.363663,
+      616.648663
+    ],
+    "cornerRadius": 11.0,
+    "edgeSoftness": 1.1
+  },
+  "picture": {
+    "_": "the 4:3 signal fills the glass's width (overscanX of it hides past each side edge, as on a real set); the glass is wider than 4:3 (about 1.47:1), so the top and bottom of the picture run behind the bezel instead. Nothing is stretched.",
+    "overscanX": 0.015
+  },
+  "light": {
+    "_": "the picture's light, in the photo's linear light: emission is the brightness of a full-white picture on the glass; reflection is how much of the glass's own reflection of the room (in the photo) stays on top of the lit picture",
+    "emission": 0.82,
+    "reflection": 0.5,
+    "lip": 0.55,
+    "spill": 0.55,
+    "bloom": 0.05
+  },
+  "spill": {
+    "_": "where the screen's light falls in the room (soft ellipses: cx, cy, rx, ry, weight): the chest's top and front in front of the set, the things beside it, the plant, the armchair in the foreground. The wall behind the set and the set's own case get none.",
+    "regions": [
+      [
+        470,
+        1103,
+        470,
+        26,
+        1.0
+      ],
+      [
+        470,
+        1140,
+        470,
+        30,
+        0.35
+      ],
+      [
+        900,
+        1000,
+        75,
+        130,
+        0.65
+      ],
+      [
+        60,
+        840,
+        95,
+        260,
+        0.45
+      ],
+      [
+        190,
+        1560,
+        300,
+        150,
+        0.35
+      ],
+      [
+        700,
+        1610,
+        300,
+        70,
+        0.18
+      ]
+    ],
+    "falloff": 520
+  },
+  "camera": {
+    "_": "One continuous push-in, like a dolly: how fast it moves is set by `speed` (relative, seconds -> speed; smooth and never backwards), and where it goes by each format's `start` and `end` window on the photo (centre x, centre y, height, in photo pixels). The window never leaves the photo. The move: a slow creep while the cartoon plays, a push that builds through the ident and carries through the glitch, then easing into a slow creep on the countdown (still moving at the cut).",
+    "speed": [
+      [
+        0.0,
+        0.05
+      ],
+      [
+        7.533,
+        0.1
+      ],
+      [
+        9.0,
+        0.75
+      ],
+      [
+        10.733,
+        1.0
+      ],
+      [
+        11.333,
+        1.0
+      ],
+      [
+        12.3,
+        0.32
+      ],
+      [
+        13.5,
+        0.12
+      ],
+      [
+        16.833,
+        0.06
+      ]
+    ],
+    "9x16": {
+      "aspect": 0.5625,
+      "start": [
+        470.5,
+        836.0,
+        1672.0
+      ],
+      "end": [
+        473.0,
+        771.0,
+        958.0
+      ]
+    },
+    "4x5": {
+      "aspect": 0.8,
+      "start": [
+        470.5,
+        800.0,
+        1176.0
+      ],
+      "end": [
+        473.0,
+        771.0,
+        680.0
+      ]
+    }
+  }
+}

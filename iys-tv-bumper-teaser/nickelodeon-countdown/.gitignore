@@ -1,0 +1,17 @@
+# The two supplied third-party clips (Fairly OddParents, the Nickelodeon ident) never enter git:
+# put them in sources/ yourself (see sources/README.md)
+sources/*
+!sources/README.md
+# the supplied TV photo (licence unknown) stays out of git too (see plate/README.md)
+plate/*
+!plate/README.md
+# plates, passes, frame caches, renders, deliverables (the films contain the third-party footage)
+build/
+out/
+*.exr
+*.npy
+*.wav
+*.mp4
+*.blend
+*.blend1
+__pycache__/

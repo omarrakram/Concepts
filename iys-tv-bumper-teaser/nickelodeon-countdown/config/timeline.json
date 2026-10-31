@@ -1,0 +1,50 @@
+{
+  "_": "The edit, in frames of the 30 fps film. Every cut point was read off the supplied files themselves (docs/source-cuts.md).",
+  "fps": 30,
+  "cartoon": {
+    "source": "sources/Fairly Odd Parents.mp4",
+    "sha256": "b00fa989cbf38c90f1b3964267904d28881059038dbfa3959d7c758ad22178c9",
+    "first": 0,
+    "frames": 226,
+    "sourceIn": 0,
+    "_crop": "the 4:3 picture inside the file's blurred pillarbox, x 280-1640 (inside the black edge lines at 273-275 and 1644-1646), y 30-1050: exactly 4:3, square pixels, no stretch",
+    "crop": [
+      280,
+      30,
+      1360,
+      1020
+    ],
+    "matrix": "bt709",
+    "audioIn": 0.0,
+    "audioOut": 7.533333
+  },
+  "ident": {
+    "source": "sources/WhatsApp Video 2026-10-31 at 4.22.32 PM.mp4",
+    "sha256": "ad3ebf8f4eb555207025adcf3957252eecbda51ebe036b88fe66f7b2851002b9",
+    "first": 226,
+    "_frames": "source frames 0-95, one film frame each (the stream's nominal rate says 29.97 fps, but its 164 frames span 5.467 s: 30 fps); frame 95 is the last new picture: the wordmark reads 'nickelode' and the next letter is still in pieces",
+    "frames": 96,
+    "sourceIn": 0,
+    "interruptFrame": 95,
+    "_crop": "464x352 -> 464x348 (2 px off top and bottom): 4:3, square pixels",
+    "crop": [
+      0,
+      2,
+      464,
+      348
+    ],
+    "matrix": "bt709",
+    "audioIn": 0.0,
+    "audioOut": 3.2
+  },
+  "glitch": {
+    "first": 322,
+    "frames": 18
+  },
+  "countdown": {
+    "_": "the countdown's signal breaks through during the glitch's last frames (showing its starting value); its clock starts when the signal locks, at clockOriginFrame, and it runs to the film's last frame",
+    "visibleFrom": 329,
+    "clockOriginFrame": 340
+  },
+  "frames": 505
+}
