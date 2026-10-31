@@ -1,9 +1,10 @@
 // Slide 3, the last: her Tumblr post, dated 8.11.2007: her sentence, a blank line, STAY TUNED., written and published
-// by her, and the video ends on that post (no separate end card); every other word listed, no music.
+// by her, and the video ends on that post (no separate end card); it picks up where slide 2 ends, the song carrying on;
+// every other word listed.
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import ts from 'typescript';
-import { cast, source, state, stories, tumblr } from './load.mjs';
+import { cast, player, source, state, stories, tumblr } from './load.mjs';
 
 const { STATEMENT, STAY_TUNED, TEASER_POST, TUMBLR, TUMBLR_TEXT, tumblrAt } = tumblr;
 const FPS = 30;
@@ -180,8 +181,29 @@ test('every word on the Tumblr pages comes from TUMBLR_TEXT or TEASER_POST (no s
   assert.deepEqual(literals.filter((s) => /[\p{L}\p{N}]/u.test(s)), []);
 });
 
-test('no music in the Tumblr video, and nothing is posted anywhere (it is all drawn)', () => {
+test('slide 3 picks up where slide 2 ends: the player open on Now Playing, the song carrying on', () => {
+  const { PLAYER, PLAYER_CAMERA, PLAYER_CURSOR, PLAY_FRAME, SONG_SOURCE } = player;
+  const { TUMBLR_CAMERA, TUMBLR_CURSOR, TUMBLR_SONG } = tumblr;
+  // the pointer and the camera start exactly where slide 2 leaves them
+  assert.deepEqual({ x: TUMBLR_CURSOR[0].x, y: TUMBLR_CURSOR[0].y }, { x: PLAYER_CURSOR.at(-1).x, y: PLAYER_CURSOR.at(-1).y });
+  assert.deepEqual({ x: TUMBLR_CAMERA[0].x, y: TUMBLR_CAMERA[0].y, z: TUMBLR_CAMERA[0].z }, { x: PLAYER_CAMERA.at(-1).x, y: PLAYER_CAMERA.at(-1).y, z: PLAYER_CAMERA.at(-1).z });
+  // the song: slide 3's first frame plays the file frame slide 2 would play next (file 15.1 s)
+  assert.equal(TUMBLR_SONG.from, SONG_SOURCE.inFrames + Math.round(PLAYER.duration * 30) - PLAY_FRAME);
+  assert.equal(TUMBLR_SONG.from, 453);
+  assert.equal(+(TUMBLR_SONG.from / 30).toFixed(3), 15.1);
+  const comp = source('TumblrBreakup.tsx');
+  assert.match(comp, /trimBefore=\{TUMBLR_SONG\.from\}/);
+  // the player, still playing: its clock and its bars run on from slide 2's
+  assert.match(comp, /const wmp = playerAt\(PLAYER\.duration \+ t, view\);/);
+  assert.match(comp, /songMeter\(audioData, fps, TUMBLR_SONG\.from \+ frame\)/);
+  assert.match(comp, /<MediaPlayer view=\{wmp\.view\}[^>]*playing=\{wmp\.playing\} elapsed=\{wmp\.elapsed\}/);
+  assert.equal(player.playerAt(PLAYER.duration).view, 'nowPlaying');
+  assert.equal(player.playerAt(PLAYER.duration).playing, true);
+  // the timing of the Tumblr part is unchanged: Quick Launch at 1.0 s, the browser up at 1.2 s
+  assert.deepEqual([TUMBLR.launch, TUMBLR.shown], [1.0, 1.2]);
+});
+
+test('nothing is posted anywhere: the Tumblr pages are drawn', () => {
   const comp = source('TumblrBreakup.tsx') + source('ui/Tumblr.tsx') + source('ui/Browser.tsx') + source('story/tumblr.ts');
-  assert.doesNotMatch(comp, /songFile|music\/|<Audio/);
   assert.doesNotMatch(comp, /fetch\(|XMLHttpRequest|https?:\/\/(?!www\.tumblr\.com\/(?:new\/text|dashboard)\b|nour-xoxo-89\.tumblr\.com\/)/);
 });

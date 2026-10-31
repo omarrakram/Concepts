@@ -57,8 +57,9 @@ test('the composition starts the song with a Sequence on PLAY_FRAME, trimmed to 
   const comp = source('MusicPlayerBreakup.tsx');
   assert.match(comp, /<Sequence from=\{PLAY_FRAME\} layout="none" name="SONG \(supplied file\)">/);
   assert.match(comp, /trimBefore=\{SONG_SOURCE\.inFrames\}/);
-  // the visualisation never reads audio from before the playback point
-  assert.match(comp, /f >= PLAY_FRAME \? spectrumBars\(audioData, fps, f - PLAY_FRAME \+ SONG_SOURCE\.inFrames\)/);
+  // the visualisation never reads audio from before the playback point (src/meter.ts, shared with slide 3)
+  assert.match(comp, /songMeter\(audioData, fps, frame - PLAY_FRAME \+ SONG_SOURCE\.inFrames\)/);
+  assert.match(source('meter.ts'), /const start = SONG_SOURCE\.inFrames;\s*const barsAt = \(f: number\) => \(audioData && f >= start \? spectrumBars\(audioData, fps, f\)/);
 });
 
 test('opens the player, selects the song, presses Play, in that order, within ~7–13 s', () => {

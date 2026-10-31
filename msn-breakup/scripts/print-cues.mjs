@@ -9,7 +9,7 @@ const src = (p) => fileURLToPath(new URL(`../src/${p}`, import.meta.url));
 const { FPS } = await loadTs(src('constants.ts'));
 const { REEL, REEL_CAROUSEL, REEL_ORIGINAL, TEASER } = await loadTs(src('story/stories.ts'));
 const { SONG, HIM, HER } = await loadTs(src('story/cast.ts'));
-const { TUMBLR, TUMBLR_TEXT, TEASER_POST } = await loadTs(src('story/tumblr.ts'));
+const { TUMBLR, TUMBLR_SONG, TUMBLR_TEXT, TEASER_POST } = await loadTs(src('story/tumblr.ts'));
 const slideOf = (id) => CAROUSEL.find((c) => c.id === id).slide;
 const { INTRO, INTRO_TEXT } = await loadTs(src('story/intro.ts'));
 const { PLAYER, PLAY_FRAME, SONG_SOURCE, TRACK } = await loadTs(src('story/player.ts'));
@@ -93,6 +93,7 @@ console.log(`    plays the file from ${inAt.toFixed(3)} s (its first note, ${SON
 console.log(`    fades over the last ${P.fadeOut} s and ends at ${clock(P.duration)} = file ${(inAt + P.duration - P.play).toFixed(3)} s`);
 console.log(`    the player shows 00:00 on frame ${PLAY_FRAME} and a length of ${TRACK.length}`);
 console.log(`    clean export (no song): add the licensed track so its first note lands at ${clock(P.play)} into the clip.`);
+console.log(`    slide 3 carries the song on from file ${(TUMBLR_SONG.from / FPS).toFixed(3)} s, where this clip stops.`);
 table(
   [
     [P.start, 'click: Start (the Start menu opens)'],
@@ -107,10 +108,13 @@ table(
 );
 
 const T = TUMBLR;
-console.log(`\nTumblrBreakup (carousel slide ${slideOf('TumblrBreakup')}, the last)  ${T.duration.toFixed(3)} s · ${frame(T.duration)} frames @ ${FPS} fps · 1080×1350  (no music)`);
+console.log(`\nTumblrBreakup (carousel slide ${slideOf('TumblrBreakup')}, the last)  ${T.duration.toFixed(3)} s · ${frame(T.duration)} frames @ ${FPS} fps · 1080×1350`);
+console.log(`\n  ♫ THE SONG CARRIES ON from slide 2: frame 0 plays the file from ${(TUMBLR_SONG.from / FPS).toFixed(3)} s (file frame ${TUMBLR_SONG.from}), where slide 2 stops`);
+console.log(`    in over ${TUMBLR_SONG.fadeIn} s; out over the last ${TUMBLR_SONG.fadeOut} s; ends at file ${(TUMBLR_SONG.from / FPS + T.duration).toFixed(3)} s`);
 console.log(`  the post: TEASER_POST in src/story/tumblr.ts (${TEASER_POST.final ? 'final wording' : 'PENDING the collaborator’s final wording'})`);
 table(
   [
+    [0, 'slide 2 carries on: Windows Media Player on Now Playing, the song still playing, the camera and pointer where slide 2 left them'],
     [T.launch, 'click: Quick Launch → Internet'],
     [T.shown, `Internet Explorer opens: “Opening page ${TUMBLR_TEXT.dashboardUrl}…”`],
     [T.dashboard, `her Tumblr dashboard: “${TUMBLR_TEXT.addNew}” ${TUMBLR_TEXT.postTypes.join(' ')}`],
@@ -131,6 +135,7 @@ table(
     [T.create, 'click: Create post'],
     [T.published, `her blog ${TUMBLR_TEXT.blogUrl} with the post on top, dated ${TUMBLR_TEXT.postDate}: her sentence, a blank line, STAY TUNED.`],
     [T.onPost, 'the camera has moved onto her post; it stays there to the end (the last frame is her published post)'],
+    [T.duration - TUMBLR_SONG.fadeOut, '  the song fades out over the last second'],
   ],
   T.duration,
 );

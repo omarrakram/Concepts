@@ -22,7 +22,8 @@ sounds. Each frame is a pure function of time, so renders are deterministic.
 | `out/instagram-carousel-final-v3/01-msn-breakup-present-to-2007-final.mp4` (slide 1: the present-day opening, then the film, 4:5) | 1080 × 1350, 30 fps, H.264 + AAC | 39.8 s | `npm run render:carousel:film` |
 | `out/instagram-carousel-final-v3/02-music-player-final.mp4` (slide 2: the music player, with the song) | 1080 × 1350, 30 fps | 12.8 s | `npm run render:carousel:player` (needs the song imported) |
 | `out/instagram-carousel-final-v3/02-music-player-final-clean.mp4` (slide 2 without the song) | 1080 × 1350, 30 fps | 12.8 s | (same) |
-| `out/instagram-carousel-final-v3/03-tumblr-published-stay-tuned-final.mp4` (slide 3: her Tumblr post, STAY TUNED. in it) | 1080 × 1350, 30 fps | 15.8 s | `npm run render:carousel:tumblr` |
+| `out/instagram-carousel-final-v3/03-tumblr-published-stay-tuned-final.mp4` (slide 3: slide 2 carries on, the song still playing; her Tumblr post, STAY TUNED. in it) | 1080 × 1350, 30 fps | 15.8 s | `npm run render:carousel:tumblr` (needs the song imported) |
+| `out/instagram-carousel-final-v3/03-tumblr-published-stay-tuned-final-clean.mp4` (slide 3 without the song) | 1080 × 1350, 30 fps | 15.8 s | (same) |
 | `out/instagram-carousel-final-v3/covers/`, `contact-sheet.png`, `MANIFEST.md`, `manifest.json`, `CUES.txt` | | | `npm run render:carousel` (all of the above) |
 | `out/msn-breakup-reel.mp4` (the film, 9:16 master) | 1080 × 1920, 30 fps | 35.0 s | `npm run render:reel` |
 | `out/msn-breakup-teaser.mp4` (teaser, unchanged) | 1080 × 1920, 30 fps | 7.0 s | `npm run render:teaser` |
@@ -79,10 +80,11 @@ high. Audio is AAC-LC, 48 kHz stereo.
 
 “When You’re Gone” is **not** in this repo, and no file pretends to be it.
 `npm run import:song -- <file>` copies the audio of the file you supply,
-untouched, into the gitignored `public/music/`. It plays in one place only:
-slide 2, from the frame on which Play turns to Pause (**frame 78 =
-00:00:02.600**). The film has no music. Slide 2 is rendered with the song
-(`render:carousel` stops if it is not imported); its clean export has no song.
+untouched, into the gitignored `public/music/`. It starts in slide 2, on the
+frame on which Play turns to Pause (**frame 78 = 00:00:02.600**), and carries
+on in slide 3 from the point slide 2 stops (file 15.1 s). The film has no
+music. Slides 2 and 3 are rendered with the song (`render:carousel` stops if
+it is not imported); their clean exports have no song.
 Without a song file, `npm run qa` skips the song checks; it does not fail
 them. The cue, the clean export and the rights note are in
 [`public/music/README.md`](public/music/README.md).
@@ -123,14 +125,18 @@ move with the music, through the first sung line.
 
 ### Slide 3: her Tumblr post (TumblrBreakup, 15.8 s)
 
-She clicks the Quick Launch “Internet” icon. Internet Explorer opens on her
-Tumblr dashboard. She clicks **Text**, clicks the Post box and types *i guess
+It picks up where slide 2 ends: Windows Media Player open on Now Playing, the
+song still playing (from the point of the file where slide 2 stops), its bars
+and clock running on, the pointer and the camera where slide 2 left them. She
+clicks the Quick Launch “Internet” icon. Internet Explorer opens over the
+player, on her Tumblr dashboard. She clicks **Text**, clicks the Post box and types *i guess
 some people are just passing through.*, stops for a moment, presses Enter
 twice and types **STAY TUNED.** (the post, `TEASER_POST` in
 `src/story/tumblr.ts`). Both lines sit in the editor; she clicks **Create
 post**. Her blog shows the one post, dated `THU` `8.11.2007`: her sentence, a
 blank line, STAY TUNED., in her pink. The camera moves in on it and the video
-ends on that post. There is no separate end card.
+ends on that post. There is no separate end card. The song plays all the way
+through and fades over the last second.
 
 The teaser (7 s, unchanged) is the hook: the sign-in, “hey… sry but i think
 we shud break up :(”, “bye x”, “did u seriously just dump me on msn??”,
@@ -218,7 +224,9 @@ msn-breakup/
     from one constant, typed key by key with the pause and the two Enters,
     both lines in the editor, published in one post dated exactly
     `8.11.2007`; the video ends on that post and no end card exists; every
-    word of the pages listed; no music;
+    word of the pages listed;
+  - slide 3 starts where slide 2 ends (the player, its pointer and camera)
+    and the song carries on from the file frame slide 2 stops on;
   - the dates: 8.11.2027 on the present-day desktop, 8.11.2007 in the film's
     status line (the night of her post); the first release keeps 8/23/2007;
   - slide 2 is never rendered without the song; its clean export comes with it;
@@ -234,8 +242,9 @@ msn-breakup/
   - audio that is present and not clipped, plus its loudness;
   - **sync:** a song-only render's first sample is frame 78's first sample;
     the delivered slide 2 has its first note at the Play frame; its pixels
-    show ▶ on frame 77 and ❚❚ on frame 78 (without a song file the two song
-    checks are skipped, not failed);
+    show ▶ on frame 77 and ❚❚ on frame 78; slide 2's song ends and slide 3's
+    begins on the same point of the file, each within 1 ms (without a song
+    file the song checks are skipped, not failed);
   - git tracks nothing in `public/music` but its README.
 - `npm run qa:regression` proves that the untouched pieces are untouched.
   The teaser, the first cut and the six stills re-render byte-identical to

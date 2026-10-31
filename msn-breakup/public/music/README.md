@@ -5,9 +5,13 @@ folder except this README is gitignored, and `npm run qa` fails if git tracks
 anything else here. The track is copyrighted. It is not downloaded, bundled,
 replaced by a sound-alike or faked.
 
-The song plays in exactly one place: **carousel slide 2, `MusicPlayerBreakup`**
-(she opens Windows Media Player, selects the song and presses Play). The film
-itself (`HeroReel`, `BreakupCarousel`) has no music at all.
+The song starts in **carousel slide 2, `MusicPlayerBreakup`** (she opens
+Windows Media Player, selects the song and presses Play) and **carries on in
+slide 3, `TumblrBreakup`**, which picks up where slide 2 ends: its first frame
+plays the point of the file slide 2 stops on (file 15.1 s, `TUMBLR_SONG` in
+`src/story/tumblr.ts`), in over 0.1 s, and the song fades over slide 3's last
+second (file 30.9 s). The film itself (`HeroReel`, `BreakupCarousel`) has no
+music at all.
 
 ## Import the file you were given
 
@@ -39,8 +43,10 @@ re-measure its first note and update `SONG_SOURCE` in `src/story/player.ts`.
 - `npm run qa` proves it on the rendered files. In a song-only render, the
   first non-silent sample is the first sample of frame 78. In the delivered
   slide 2, the first note is at the Play frame. In its pixels, the button is
-  ▶ on frame 77 and ❚❚ on frame 78. Without a song file the two song checks
-  are skipped, not failed.
+  ▶ on frame 77 and ❚❚ on frame 78. In song-only renders of slides 2 and 3,
+  slide 2's song ends and slide 3's begins on the same point of the file,
+  each within 1 ms. Without a song file the song checks are skipped, not
+  failed.
 
 Render props (`MusicPlayerBreakup`): `song` (false = the clean export),
 `uiSounds` (false = song only, for checks), `cueTone` (a 1 kHz QA blip on
@@ -56,6 +62,9 @@ makes no claim that the track is licensed, royalty-free or cleared.
   contains about 10 s of the song. It is for review, or for posting where you
   hold the rights. `npm run render:carousel` stops rather than render slide 2
   without the song.
+- `out/instagram-carousel-final-v3/03-tumblr-published-stay-tuned-final.mp4`
+  (slide 3) carries the song on for about 16 s more; its clean export is
+  `03-tumblr-published-stay-tuned-final-clean.mp4`.
 - `out/instagram-carousel-final-v3/02-music-player-final-clean.mp4` is the
   same video with the clicks but **no song** (the bars still follow it). Use
   it to add the track from Instagram's own licensed music, when it is

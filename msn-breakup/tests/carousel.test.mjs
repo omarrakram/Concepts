@@ -26,7 +26,10 @@ test('three slides, in the final order: the breakup, the song, her Tumblr post',
   assert.equal(OUT_DIR, 'out/instagram-carousel-final-v3');
 });
 
-test('slide 2 carries the song (never rendered without it), and a clean export comes with it', () => {
+test('slides 2 and 3 carry the song (never rendered without it), each with a clean export', () => {
+  const tumblr = CAROUSEL.find((c) => c.id === 'TumblrBreakup');
+  assert.equal(tumblr.song, true);
+  assert.deepEqual(tumblr.clean, { file: '03-tumblr-published-stay-tuned-final-clean.mp4', props: { song: false } });
   const player = CAROUSEL.find((c) => c.id === 'MusicPlayerBreakup');
   assert.equal(player.song, true);
   assert.deepEqual(player.clean, { file: '02-music-player-final-clean.mp4', props: { song: false } });

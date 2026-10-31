@@ -1,11 +1,15 @@
 import { ieLayout } from '../ui/ie-geometry';
 import { HER } from './cast';
+import { FPS } from '../constants';
+import { PLAY_FRAME, PLAYER, PLAYER_CAMERA, PLAYER_CURSOR, SONG_SOURCE } from './player';
 import { cameraAt, cursorAt, keyTimes } from './state';
 import type { Beat, CamKey, CursorKey } from './types';
 
 /**
- * Carousel slide 3, the last: she opens Internet Explorer on her Tumblr
- * dashboard, clicks Text, writes the post (her sentence, a pause, a blank
+ * Carousel slide 3, the last, picks up where slide 2 ends: Windows Media
+ * Player open on Now Playing, the song still playing (it carries on from the
+ * point slide 2 stops), her pointer and the camera where slide 2 left them.
+ * She opens Internet Explorer over the player, on her Tumblr dashboard, clicks Text, writes the post (her sentence, a pause, a blank
  * line, STAY TUNED.) and publishes it, then her blog shows it, dated
  * 8.11.2007, and the carousel ends on that published post. The post
  * (TEASER_POST) is the only thing she types. Every other word on screen is
@@ -82,6 +86,18 @@ export const TUMBLR_TEXT = {
   done: 'Done',
   zone: 'Internet',
 } as const;
+
+/**
+ * The song carries on from slide 2: slide 3's first frame plays the file frame slide 2 would play
+ * next (slide 2 plays it from SONG_SOURCE.inFrames, on PLAY_FRAME, to its end: file 15.1 s). A
+ * 0.1 s fade in (slide 2 fades out over its last 0.3 s), and out over slide 3's last second.
+ */
+export const TUMBLR_SONG = {
+  /** the file frame (at the video's rate) slide 3 starts on */
+  from: SONG_SOURCE.inFrames + Math.round(PLAYER.duration * FPS) - PLAY_FRAME,
+  fadeIn: 0.1,
+  fadeOut: 1.0,
+};
 
 /** Her blog's colours: the theme's defaults, with her pink where the theme let her choose. */
 export const BLOG_COLORS = {
@@ -206,10 +222,12 @@ export const TSPOT = {
 const T = TUMBLR;
 const field = T.title ? TSPOT.title : TSPOT.body;
 const fieldClick = (T.titleClick ?? T.bodyClick)!;
+/** Where slide 2 leaves her pointer, and its camera. */
+const FROM_PLAYER = { cursor: PLAYER_CURSOR.at(-1)!, camera: PLAYER_CAMERA.at(-1)! };
 export const TUMBLR_CURSOR: CursorKey[] = [
-  // where the film left it: on the nudge button
-  { t: 0, x: 306, y: 720 },
-  { t: 0.3, x: 306, y: 720 },
+  // where slide 2 left it: resting on the player's list pane
+  { t: 0, x: FROM_PLAYER.cursor.x, y: FROM_PLAYER.cursor.y },
+  { t: 0.3, x: FROM_PLAYER.cursor.x, y: FROM_PLAYER.cursor.y },
   { t: T.launch - 0.05, ...TSPOT.quickLaunch },
   { t: T.launch, ...TSPOT.quickLaunch, click: true },
   { t: T.dashboard + 0.1, x: 150, y: 640 },
@@ -237,7 +255,10 @@ export const TUMBLR_CURSOR: CursorKey[] = [
 
 /** The 4:5 camera (540 × 675 of the screen at z 1). */
 export const TUMBLR_CAMERA: CamKey[] = [
-  { t: 0, x: 270, y: 622, z: 1 },
+  // as slide 2 ends (leaning in on the player), then back out to the whole screen, the taskbar in shot, for Quick Launch
+  { t: 0, x: FROM_PLAYER.camera.x, y: FROM_PLAYER.camera.y, z: FROM_PLAYER.camera.z },
+  { t: 0.3, x: FROM_PLAYER.camera.x, y: FROM_PLAYER.camera.y, z: FROM_PLAYER.camera.z },
+  { t: T.launch - 0.1, x: 270, y: 622, z: 1 },
   { t: T.launch + 0.05, x: 270, y: 622, z: 1 },
   // the browser is up: its title bar to its status bar
   { t: T.dashboard - 0.05, x: 270, y: 586, z: 1 },

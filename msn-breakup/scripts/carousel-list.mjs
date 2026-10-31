@@ -55,8 +55,12 @@ export const CAROUSEL = [
     slide: 3,
     id: 'TumblrBreakup',
     file: '03-tumblr-published-stay-tuned-final.mp4',
-    title: 'Her Tumblr post, 8.11.2007: her sentence and STAY TUNED., published',
+    title: 'Slide 2 carries on: the song still playing, she opens Tumblr and publishes her post, 8.11.2007: her sentence and STAY TUNED.',
     frames: frames(TUMBLR.duration),
+    // the song carries on from where slide 2 stops (file 15.1 s): render:carousel stops if it is not imported
+    song: true,
+    // also: the same video without the song (the bars still follow it)
+    clean: { file: '03-tumblr-published-stay-tuned-final-clean.mp4', props: { song: false } },
     // the last frame: her published post
     cover: { file: 'cover-03-tumblr-published.png', frame: frames(TUMBLR.duration) - 1 },
     // designed still moment (QA allows a frozen picture only here): the end of her sentence, her pause, the two Enters

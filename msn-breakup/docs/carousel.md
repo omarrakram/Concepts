@@ -12,15 +12,35 @@ written to by this version.
 | - | - | - | - | - |
 | 1 | `01-msn-breakup-present-to-2007-final.mp4` | `BreakupCarousel` | 39.8 s | A present-day Windows desktop glitches, and the Windows XP desktop of 2007 takes over (4.8 s). Then the film: he dumps her on MSN, she spirals, three nudges. |
 | 2 | `02-music-player-final.mp4` | `MusicPlayerBreakup` | 12.8 s | She opens Windows Media Player and puts on “When You’re Gone”: the song begins on the frame Play turns to Pause (0:02.6). |
-| 3 | `03-tumblr-published-stay-tuned-final.mp4` | `TumblrBreakup` | 15.8 s | On 2007 Tumblr she writes one post, *i guess some people are just passing through.*, a blank line, **STAY TUNED.**, and publishes it, dated 8.11.2007. It ends on the published post. |
+| 3 | `03-tumblr-published-stay-tuned-final.mp4` | `TumblrBreakup` | 15.8 s | Slide 2 carries on: the player open, the song still playing. On 2007 Tumblr she writes one post, *i guess some people are just passing through.*, a blank line, **STAY TUNED.**, and publishes it, dated 8.11.2007. It ends on the published post. |
 
-Also rendered: `02-music-player-final-clean.mp4` (slide 2 without the song,
-see [the music README](../public/music/README.md)) and the 9:16 master of the
+Also rendered: `02-music-player-final-clean.mp4` and
+`03-tumblr-published-stay-tuned-final-clean.mp4` (slides 2 and 3 without the
+song, see [the music README](../public/music/README.md)) and the 9:16 master of the
 film, `out/msn-breakup-reel.mp4` (`HeroReel`, 1080 × 1920, without the
 opening).
 
 All three are 4:5, so the app neither letterboxes nor crops them, and each is
 under Instagram's 60 s limit for a carousel video.
+
+## Slide 3 carries on from slide 2 (31 October 2026)
+
+She started the song in slide 2, so it keeps playing in slide 3, and slide 3
+begins where slide 2 ends, as one continuous evening:
+
+- **The picture:** slide 3's first frame is the moment after slide 2's last.
+  Windows Media Player is open on Now Playing, playing, its clock and bars
+  running on (`playerAt(PLAYER.duration + t)`; the bars from the song's own
+  spectrum, `src/meter.ts`, shared with slide 2). Her pointer and the camera
+  start where slide 2 leaves them, the camera then eases back to the whole
+  screen (the taskbar in shot) as she heads for Quick Launch, and Internet
+  Explorer opens over the player, which stays open behind it. From there the
+  Tumblr part is as before, to the second.
+- **The song:** slide 3's first frame plays the file frame slide 2 would play
+  next (file 15.1 s; slide 2 stops there, fading over its last 0.3 s). It
+  comes in over 0.1 s, plays under the whole Tumblr part (her clicks and keys
+  over it) and fades over the last second. QA checks both ends against the
+  file. Slide 3's clean export has no song.
 
 ## The dates and the song (31 October 2026)
 
@@ -199,7 +219,7 @@ What she types, in the Post box (the post has no title):
 | her blog | control `Dashboard`, title `~*nOuR*~`, badge `RSS`, day block `THU` `8.11.2007` (8 November 2007, a Thursday), footer `Powered by Tumblr` |
 | taskbar | clock `11:48 PM` |
 
-There are no other people, posts, notes, reblogs, likes or tags, and no music.
+There are no other people, posts, notes, reblogs, likes or tags. The song from slide 2 plays on.
 
 ## Period design
 
@@ -245,4 +265,5 @@ item by item, in [`sources.md`](sources.md). In short:
 - Slide 2: clicks, then the song from the Play frame on (the clean export: the
   clicks only). See `public/music/README.md` for the cue, the import and the
   rights note.
-- Slide 3: clicks, her key clicks and her two Enters. No music.
+- Slide 3: the song carries on from slide 2 (file 15.1 s, faded out over the
+  last second), under the clicks, her key clicks and her two Enters.

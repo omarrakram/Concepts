@@ -8,6 +8,8 @@
 //     song file imported (public/music/), the song begins exactly on PLAY_FRAME: in a song-only render as
 //     uncompressed WAV (digital zero until the first sample of PLAY_FRAME) and in the delivered MP4 (its
 //     first note at the Play frame). Without a song file these two are skipped, not failed
+//   - slide 3 carries the song on: in song-only renders, slide 2's song ends and slide 3's begins on the
+//     same point of the file (TUMBLR_SONG.from), each aligned with the file to within 1 ms
 //   - nothing from public/music is tracked by git
 import { spawnSync } from 'node:child_process';
 import { existsSync, mkdirSync, readdirSync, writeFileSync } from 'node:fs';
@@ -19,7 +21,8 @@ import { probe } from './manifest.mjs';
 const root = fileURLToPath(new URL('..', import.meta.url));
 const src = (p) => fileURLToPath(new URL(`../src/${p}`, import.meta.url));
 const { FPS } = await loadTs(src('constants.ts'));
-const { PLAY_FRAME, playerAt, WMP, WMP_WIN } = await loadTs(src('story/player.ts'));
+const { PLAY_FRAME, playerAt, SONG_SOURCE, WMP, WMP_WIN } = await loadTs(src('story/player.ts'));
+const { TUMBLR_SONG } = await loadTs(src('story/tumblr.ts'));
 const { CAROUSEL_VIEW } = await loadTs(src('story/stories.ts'));
 
 const results = [];
@@ -46,7 +49,8 @@ const PLAYER_SLIDE = CAROUSEL.find((c) => c.id === 'MusicPlayerBreakup');
 const songImported = existsSync(`${root}/public/music`) && readdirSync(`${root}/public/music`).some((f) => /^when-youre-gone\.(mp3|m4a|wav|aac|ogg)$/i.test(f));
 const files = [
   ...CAROUSEL.map((c) => ({ file: `${OUT_DIR}/${c.file}`, w: 1080, h: 1350, frames: c.frames, holds: c.holds ?? [], dark: c.dark ?? [], opening: c.opening })),
-  ...CAROUSEL.filter((c) => c.clean).map((c) => ({ file: `${OUT_DIR}/${c.clean.file}`, w: 1080, h: 1350, frames: c.frames, holds: [], dark: [] })),
+  // a clean export is the same picture as its slide: the same designed holds
+  ...CAROUSEL.filter((c) => c.clean).map((c) => ({ file: `${OUT_DIR}/${c.clean.file}`, w: 1080, h: 1350, frames: c.frames, holds: c.holds ?? [], dark: c.dark ?? [] })),
   { file: 'out/msn-breakup-reel.mp4', w: 1080, h: 1920, frames: MASTER_FRAMES, holds: MASTER_HOLDS, dark: [] },
 ];
 /**
@@ -159,6 +163,53 @@ else {
       `max before: ${before === 0 ? 'exactly 0' : `${dbfs(before).toFixed(1)} dBFS`}; first non-zero sample ${nonZero}; first −50 dBFS sample at Δ ${(((on - playSample) / 48000) * 1000).toFixed(2)} ms; first −20 dBFS at Δ ${(((first(-20) - playSample) / 48000) * 1000).toFixed(1)} ms`,
     );
   } else check('song-only render', false, 'render failed');
+}
+
+// --- the song carries on from slide 2 into slide 3 ----------------------------------------
+/** where a render's audio sits in the song file: the lag (ms) at which render[t] best matches file[fileAt0 + t] over [from, to) s */
+function alignment(render, file, fileAt0, from, to) {
+  const R = 48000;
+  const a0 = Math.round(from * R);
+  const a1 = Math.round(to * R);
+  const off = Math.round(fileAt0 * R);
+  const maxLag = Math.round(0.01 * R);
+  let best = { lag: 0, r: -1 };
+  for (let lag = -maxLag; lag <= maxLag; lag++) {
+    let sab = 0;
+    let saa = 0;
+    let sbb = 0;
+    for (let i = a0; i < a1; i += 2) {
+      const x = render[i];
+      const y = file[off + i + lag] ?? 0;
+      sab += x * y;
+      saa += x * x;
+      sbb += y * y;
+    }
+    const r = sab / Math.sqrt(saa * sbb + 1e-9);
+    if (r > best.r) best = { lag, r };
+  }
+  return { lagMs: (best.lag / R) * 1000, r: best.r };
+}
+const TUMBLR_SLIDE = CAROUSEL.find((c) => c.id === 'TumblrBreakup');
+const carryOn = `slide ${TUMBLR_SLIDE.slide} carries the song on from file ${(TUMBLR_SONG.from / FPS).toFixed(3)} s, the point where slide ${PLAYER_SLIDE.slide} stops`;
+if (!songImported) skip(carryOn, 'no song file imported (npm run import:song)');
+else {
+  const slide3Only = `${root}/out/qa/qa-slide3-song-only.wav`;
+  console.log('\nrendering the song-only check of slide 3 (TumblrBreakup, clicks and keys off, uncompressed WAV)…');
+  const r3 = spawnSync('node', ['scripts/render.mjs', 'TumblrBreakup', 'out/qa/qa-slide3-song-only.wav', '--codec=wav', '--props={"uiSounds":false}', '--log=error'], { cwd: root, stdio: 'inherit' });
+  const songName = readdirSync(`${root}/public/music`).find((f) => /^when-youre-gone\.(mp3|m4a|wav|aac|ogg)$/i.test(f));
+  if (r3.status === 0 && existsSync(songOnly)) {
+    const file = pcm(`${root}/public/music/${songName}`, 48000);
+    // slide 2 plays the file from SONG_SOURCE.inFrames on PLAY_FRAME: render t ↔ file t + (inFrames − PLAY_FRAME) / FPS
+    const ends = alignment(pcm(songOnly, 48000), file, (SONG_SOURCE.inFrames - PLAY_FRAME) / FPS, PLAYER_SLIDE.frames / FPS - 3.4, PLAYER_SLIDE.frames / FPS - 0.4);
+    const starts = alignment(pcm(slide3Only, 48000), file, TUMBLR_SONG.from / FPS, 0.3, 3.3);
+    const endAt = (SONG_SOURCE.inFrames - PLAY_FRAME + PLAYER_SLIDE.frames) / FPS;
+    check(
+      carryOn,
+      endAt === TUMBLR_SONG.from / FPS && Math.abs(ends.lagMs) <= 1 && Math.abs(starts.lagMs) <= 1 && ends.r > 0.95 && starts.r > 0.95,
+      `slide ${PLAYER_SLIDE.slide} ends on file ${endAt.toFixed(3)} s (its last 3 s match the file at lag ${ends.lagMs.toFixed(2)} ms, correlation ${ends.r.toFixed(4)}); slide ${TUMBLR_SLIDE.slide} starts on file ${(TUMBLR_SONG.from / FPS).toFixed(3)} s (its first 3 s match at lag ${starts.lagMs.toFixed(2)} ms, correlation ${starts.r.toFixed(4)})`,
+    );
+  } else check(carryOn, false, 'song-only render failed');
 }
 
 const deliverable = `${root}/${OUT_DIR}/${PLAYER_SLIDE.file}`;
