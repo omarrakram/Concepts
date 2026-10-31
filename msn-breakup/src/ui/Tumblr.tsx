@@ -149,6 +149,21 @@ export function TumblrPostForm({ title, body, focus, caretOn, createPressed }: {
   );
 }
 
+/** Her posts' titles: the theme's bold face, in her pink. */
+const postTitle: CSSProperties = { fontFamily: SANS, fontWeight: 700, fontSize: 18, letterSpacing: -1, color: BLOG_COLORS.postTitle };
+
+/**
+ * The ending, once her post has registered: the line on its own, in her post
+ * title's type and pink on her blog's white, centred on (x, y) of the screen.
+ */
+export function TumblrStayTuned({ text, x, y }: { text: string; x: number; y: number }) {
+  return (
+    <div style={{ position: 'absolute', inset: 0, background: BLOG_COLORS.background }}>
+      <div style={{ ...postTitle, position: 'absolute', left: x - 200, width: 400, top: y - 11, lineHeight: '22px', textAlign: 'center', whiteSpace: 'nowrap' }}>{text}</div>
+    </div>
+  );
+}
+
 /** Her blog: the default theme of 2007 (title, rule, RSS, the day block, the post), in her colours. */
 export function TumblrBlog({ title, body }: { title: string; body: string[] }) {
   const C = BLOG_COLORS;
@@ -165,16 +180,13 @@ export function TumblrBlog({ title, body }: { title: string; body: string[] }) {
         <Rss />
       </div>
       <div style={{ position: 'absolute', left: B.post.x, top: B.post.y, width: B.post.w }}>
-        {/* the day block, to the left of the post */}
-        <div style={{ position: 'absolute', right: B.post.w + 30, top: 0, display: 'flex', alignItems: 'flex-start', gap: 10, whiteSpace: 'nowrap' }}>
-          <div style={{ fontFamily: SANS, fontSize: 34, letterSpacing: -2, lineHeight: '35px', color: C.date, textTransform: 'uppercase' }}>{T.day}</div>
-          <div style={{ width: 45, height: 30, paddingTop: 5, background: C.dateBlock, color: C.dateBlockText, fontFamily: UI, fontWeight: 700, fontSize: 12, lineHeight: '12px', textAlign: 'center', textTransform: 'uppercase' }}>
-            {T.dateBlock[0]}
-            <br />
-            {T.dateBlock[1]}
-          </div>
+        {/* the day block, to the left of the post: the weekday, and the date on one line in the block
+            (a little tighter than the theme's month-and-day block, so it keeps its place in the narrow window) */}
+        <div style={{ position: 'absolute', right: B.post.w + 18, top: 0, display: 'flex', alignItems: 'flex-start', gap: 7, whiteSpace: 'nowrap' }}>
+          <div style={{ fontFamily: SANS, fontSize: 30, letterSpacing: -2, lineHeight: '31px', color: C.date, textTransform: 'uppercase' }}>{T.day}</div>
+          <div style={{ height: 30, padding: '0 3px', display: 'flex', alignItems: 'center', background: C.dateBlock, color: C.dateBlockText, fontFamily: UI, fontWeight: 700, fontSize: 12, lineHeight: '12px' }}>{T.postDate}</div>
         </div>
-        {title && <div style={{ fontFamily: SANS, fontWeight: 700, fontSize: 18, letterSpacing: -1, color: C.postTitle, margin: '0 0 5px' }}>{title}</div>}
+        {title && <div style={{ ...postTitle, margin: '0 0 5px' }}>{title}</div>}
         {body.length > 0 && (
           <div style={{ fontFamily: SANS, fontSize: 12, lineHeight: '17px', color: C.text }}>
             {body.map((line, i) => (

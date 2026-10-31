@@ -1,14 +1,14 @@
 import { ieLayout } from '../ui/ie-geometry';
-import { DATE, HER } from './cast';
+import { HER } from './cast';
 import { cameraAt, cursorAt, keyTimes } from './state';
 import type { Beat, CamKey, CursorKey } from './types';
 
 /**
- * Carousel slide 2: a minute after the film she opens Internet Explorer on
- * her Tumblr dashboard, clicks Text, writes the post and publishes it, then
- * her blog shows it. The post is the carousel's teaser (TEASER_POST): the only
- * words she types. Every other word on screen is browser / Tumblr furniture,
- * all of it in TUMBLR_TEXT (and in docs/carousel.md).
+ * Carousel slide 3, the last: she opens Internet Explorer on her Tumblr
+ * dashboard, clicks Text, writes the post and publishes it, then her blog
+ * shows it, dated 8.11.2007, and the carousel ends on STAY TUNED. The post
+ * (TEASER_POST) is the only thing she types. Every other word on screen is
+ * browser / Tumblr furniture, all of it in TUMBLR_TEXT (and in docs/carousel.md).
  *
  * The pages follow archived 2007 Tumblr where it was archived (see
  * docs/sources.md): the dashboard frame and "Add a new..." buttons of April
@@ -21,25 +21,27 @@ import type { Beat, CamKey, CursorKey } from './types';
 type Line = Extract<Beat, { type: 'her' }>;
 
 /**
- * The teaser she posts (the collaborator's voice note A: what she writes
- * should say "stay tuned", so the post works as a teaser). The words are the
- * collaborator's own; she will send the final wording, so it lives here and
- * only here: the timeline, the cues and the camera follow it.
+ * What she posts: the collaborator's final wording, exactly as written: lower
+ * case, one sentence, a full stop. It lives here and only here: the timeline,
+ * the cues and the camera follow it.
  *
- * A title-only text post: Tumblr's 2007 API took a text ("regular") post with
- * "at least one: title, body". Body lines, if any, are typed one per line.
+ * A title-only text post, as the first version's was: Tumblr's 2007 API took
+ * a text ("regular") post with "at least one: title, body". Body lines, if
+ * any, are typed one per line.
  */
 export const TEASER_POST: { title: string; body: string[]; final: boolean } = {
-  title: 'stay tuned',
+  title: 'i guess some people are just passing through.',
   body: [],
-  /** false until the collaborator's final wording is in */
-  final: false,
+  /** the collaborator's final wording */
+  final: true,
 };
 
-const [MONTH, DAY, YEAR] = DATE.split('/').map(Number) as [number, number, number];
-const SHORT_MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+/** The ending, once her post has registered: the campaign's line, on its own. */
+export const STAY_TUNED = 'STAY TUNED.';
+
+/** The post's date (the collaborator's brief): 8 November 2007, printed exactly as "8.11.2007". */
+const POST_DATE = { day: 8, month: 11, year: 2007 };
 const SHORT_DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-const ordinal = (n: number) => `${n}${n % 10 === 1 && n % 100 !== 11 ? 'st' : n % 10 === 2 && n % 100 !== 12 ? 'nd' : n % 10 === 3 && n % 100 !== 13 ? 'rd' : 'th'}`;
 
 /** Every new word in this video that she does not type. */
 export const TUMBLR_TEXT = {
@@ -69,9 +71,9 @@ export const TUMBLR_TEXT = {
   /** her blog: her MSN name and address, as a Tumblr blog (underscores are not allowed in a host name) */
   blogTitle: HER.name,
   blogUrl: 'http://nour-xoxo-89.tumblr.com/',
-  /** the theme prints the day of a post in a block, upper-cased: "THU", "AUG" / "23RD" (the film's date) */
-  day: SHORT_DAYS[new Date(Date.UTC(YEAR, MONTH - 1, DAY)).getUTCDay()]!,
-  dateBlock: [SHORT_MONTHS[MONTH - 1]!, ordinal(DAY)] as [string, string],
+  /** the theme prints the day of a post next to it: the weekday, upper-cased ("THU"), and the date in its block */
+  day: SHORT_DAYS[new Date(Date.UTC(POST_DATE.year, POST_DATE.month - 1, POST_DATE.day)).getUTCDay()]!,
+  postDate: `${POST_DATE.day}.${POST_DATE.month}.${POST_DATE.year}`,
   rss: 'RSS',
   /** the Tumblr control at the top right of a blog, for its signed-in owner */
   control: 'Dashboard',
@@ -115,6 +117,7 @@ function timeline() {
   const typed = (body.at(-1) ?? title)!.at;
   const create = +(typed + 0.6).toFixed(3);
   const published = +(create + 0.6).toFixed(3);
+  const stayTuned = Math.round((published + 3.4) * 10) / 10;
   return {
     /** a minute after the last nudge */
     clock: '11:48 PM',
@@ -138,8 +141,10 @@ function timeline() {
     create,
     /** her blog, with the post on top */
     published,
-    /** the post stays on screen, the camera moving onto it */
-    duration: Math.round((published + 3.4) * 10) / 10,
+    /** the post stays on screen for 3.4 s, the camera moving onto it; then STAY TUNED. */
+    stayTuned,
+    /** STAY TUNED. holds to the end */
+    duration: +(stayTuned + 1.5).toFixed(1),
   };
 }
 export const TUMBLR = timeline();
@@ -233,9 +238,9 @@ export const TUMBLR_CAMERA: CamKey[] = [
   // the whole browser again for "Create post" and the page change
   { t: T.create - 0.1, x: 270, y: 586, z: 1 },
   { t: T.published + 0.25, x: 270, y: 586, z: 1 },
-  // then slowly onto her post: her blog's title, the day block and the words
-  { t: T.duration - 0.4, x: 176, y: 520, z: 1.54 },
-  { t: T.duration, x: 176, y: 520, z: 1.545 },
+  // then slowly onto her post: her blog's title, the day block and the words (both lines of them)
+  { t: T.stayTuned - 0.4, x: 204, y: 520, z: 1.345 },
+  { t: T.stayTuned, x: 204, y: 520, z: 1.35 },
 ];
 
 const typed = (b: Line | null, t: number) => (!b ? '' : t >= b.at ? b.text : t >= b.from ? [...b.text].slice(0, keyTimes(b).filter((k) => k <= t).length).join('') : '');

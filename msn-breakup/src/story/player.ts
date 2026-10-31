@@ -4,8 +4,9 @@ import { cameraAt, cursorAt } from './state';
 import type { CamKey, CursorKey } from './types';
 
 /**
- * Carousel slide 3: she opens Windows Media Player 11 from the Start menu,
- * selects "When You’re Gone" by Avril Lavigne and presses Play. The song
+ * Carousel slide 2, right after the film: she opens Windows Media Player 11
+ * from the Start menu, selects "When You’re Gone" by Avril Lavigne and
+ * presses Play (her Tumblr post comes after, in slide 3). The song
  * starts on PLAY_FRAME, the first frame on which the button shows Pause:
  * the mouse goes down 3 frames earlier (the click) and the Play action
  * takes effect on release, as in Windows. Nothing plays before that.
@@ -28,8 +29,8 @@ const PLAY = PLAY_FRAME / FPS;
 export const PLAYER = {
   /** ends on the bar line after the first sung line (file 15.1 s) */
   duration: 12.8,
-  /** a minute after the Tumblr post */
-  clock: '11:49 PM',
+  /** a minute after the film (11:47 PM), as the Tumblr video that now follows it */
+  clock: '11:48 PM',
   /** click on Start; the menu opens */
   start: 0.72,
   menuShown: 0.76,
@@ -125,7 +126,7 @@ const SONG_ROW = { ...at(WMP.nav, WMP.row), w: WMP_WIN.w - WMP.nav, h: WMP.rowH 
 const NOW_TAB = { ...at(WMP.tab[0], WMP.title), w: WMP.tab[1] - WMP.tab[0], h: WMP.tabs };
 
 export const PLAYER_CURSOR: CursorKey[] = [
-  // where the Tumblr video left it
+  // resting over the conversation, as in the first version
   { t: 0, x: 336, y: 792 },
   { t: 0.3, x: 336, y: 792 },
   { t: 0.68, ...PSPOT.start },

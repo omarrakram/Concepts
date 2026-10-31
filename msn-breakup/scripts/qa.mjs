@@ -3,7 +3,7 @@
 //   - ffprobe: 1080 × 1350 (4:5) / 1080 × 1920, 30 fps, exactly the composition's frames, H.264 yuv420p, AAC
 //   - every file decodes start to end without an error (no corrupt video or audio)
 //   - no black frames and no frozen stretch outside the designed ones, audio not clipped, not silent
-//   - slide 3: the song begins exactly on PLAY_FRAME: in a song-only render as uncompressed WAV
+//   - the music-player slide: the song begins exactly on PLAY_FRAME: in a song-only render as uncompressed WAV
 //     (the exact mix: digital zero until the first sample of PLAY_FRAME), in the delivered MP4
 //     (its first note at the Play frame), and the button turns to Pause on that frame (its pixels)
 //   - nothing from public/music is tracked by git
@@ -34,9 +34,11 @@ const pcm = (file, rate = 48000) => {
 };
 const dbfs = (x) => (x > 0 ? 20 * Math.log10(x / 32768) : -Infinity);
 
+/** the music-player slide (it carries the song, and the clean export) */
+const PLAYER_SLIDE = CAROUSEL.find((c) => c.id === 'MusicPlayerBreakup');
 const files = [
   ...CAROUSEL.map((c) => ({ file: `${OUT_DIR}/${c.file}`, w: 1080, h: 1350, frames: c.frames, holds: c.holds ?? [], dark: c.dark ?? [] })),
-  { file: `${OUT_DIR}/${CAROUSEL[2].clean.file}`, w: 1080, h: 1350, frames: CAROUSEL[2].frames, holds: [], dark: [] },
+  { file: `${OUT_DIR}/${PLAYER_SLIDE.clean.file}`, w: 1080, h: 1350, frames: PLAYER_SLIDE.frames, holds: [], dark: [] },
   { file: 'out/msn-breakup-reel.mp4', w: 1080, h: 1920, frames: MASTER_FRAMES, holds: MASTER_HOLDS, dark: [] },
 ];
 for (const f of files) {
@@ -86,7 +88,7 @@ for (const f of files) {
   check(`${f.file}: loudness measured (EBU R128)`, Boolean(lufs), lufs ? `integrated ${lufs[1]} LUFS, range ${lufs[2]} LU, true peak ${lufs[3]} dBFS` : 'no summary');
 }
 
-// --- slide 3: the song begins on PLAY_FRAME -------------------------------------------
+// --- the music-player slide: the song begins on PLAY_FRAME ------------------------------
 const playAt = PLAY_FRAME / FPS;
 const songOnly = `${root}/out/qa/qa-song-only.wav`;
 mkdirSync(`${root}/out/qa`, { recursive: true });
@@ -111,7 +113,8 @@ if (r.status === 0) {
   );
 } else check('song-only render', false, 'render failed');
 
-const deliverable = `${root}/${OUT_DIR}/${CAROUSEL[2].file}`;
+const deliverable = `${root}/${OUT_DIR}/${PLAYER_SLIDE.file}`;
+const delivered = `delivered slide ${PLAYER_SLIDE.slide} (the music player)`;
 if (existsSync(deliverable)) {
   const a = pcm(deliverable, 48000);
   const playSample = Math.round(playAt * 48000);
@@ -124,7 +127,7 @@ if (existsSync(deliverable)) {
   let on = -1;
   for (let i = playSample - 24; i < playSample + 4800; i++) if (Math.abs(a[i]) >= 32768 * 10 ** (-30 / 20)) { on = i; break; }
   check(
-    `delivered slide 3: the song's first note at the Play frame`,
+    `${delivered}: the song's first note at the Play frame`,
     dbfs(gap) < -45 && on >= playSample && on <= playSample + 48 * 3,
     `${dbfs(gap).toFixed(1)} dBFS from 6 ms to 0.5 ms before; AAC pre-echo in the last 0.5 ms ${dbfs(preEcho).toFixed(1)} dBFS; first −30 dBFS sample at Δ ${(((on - playSample) / 48000) * 1000).toFixed(2)} ms`,
   );
@@ -148,7 +151,7 @@ if (existsSync(deliverable)) {
   };
   const seq = [PLAY_FRAME - 2, PLAY_FRAME - 1, PLAY_FRAME, PLAY_FRAME + 1].map((n) => [n, shows(n)]);
   check(
-    `delivered slide 3: ▶ until frame ${PLAY_FRAME - 1}, ❚❚ from frame ${PLAY_FRAME} (pixels around ${px},${py})`,
+    `${delivered}: ▶ until frame ${PLAY_FRAME - 1}, ❚❚ from frame ${PLAY_FRAME} (pixels around ${px},${py})`,
     seq[0][1].glyph === '▶' && seq[1][1].glyph === '▶' && seq[2][1].glyph === '❚❚' && seq[3][1].glyph === '❚❚',
     seq.map(([n, x]) => `${n}: ${x.glyph} (${x.detail})`).join('; '),
   );

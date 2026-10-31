@@ -24,7 +24,7 @@ export function Root() {
         height={1920}
         defaultProps={{} satisfies ReelProps}
       />
-      {/* carousel slide 1: the opening (today's computer breaking into 2007), then the film recomposed for 4:5 */}
+      {/* carousel slide 1: the opening (her 2007 computer glitches and restarts), then the film recomposed for 4:5 */}
       <Composition
         id="BreakupCarousel"
         component={BreakupCarousel}
@@ -34,9 +34,9 @@ export function Root() {
         height={1350}
         defaultProps={{} satisfies ReelProps}
       />
-      {/* carousel slide 2: her Tumblr post, the teaser */}
+      {/* carousel slide 3, the last: her Tumblr post, then STAY TUNED. */}
       <Composition id="TumblrBreakup" component={TumblrBreakup} durationInFrames={Math.round(TUMBLR.duration * FPS)} fps={FPS} width={1080} height={1350} />
-      {/* carousel slide 3: she plays the song (it starts on the Play frame) */}
+      {/* carousel slide 2: she plays the song (it starts on the Play frame) */}
       <Composition
         id="MusicPlayerBreakup"
         component={MusicPlayerBreakup}

@@ -45,7 +45,7 @@ Not available:
 - **The XP start-up screens** (loading bar, “welcome”) were not looked up in
   an archive. A web search did not establish the typeface of the “welcome”.
 
-## Slide 2: Tumblr, item by item
+## Slide 3: Tumblr, item by item
 
 | What is on screen | Status | Basis |
 | --- | --- | --- |
@@ -58,7 +58,9 @@ Not available:
 | The text-post form: `Add a Text Post`, `Title (optional)`, `Post`, `Bold` `Italic` `Link`, `Create post`, `Cancel` | **Reconstruction** | by analogy with the archived “Add a Link” form (heading “Add a Link”, “Name (optional)”, “Create post”, “Cancel”) and the bookmarklet (Bold / Italic / Link buttons, “Create Photo”, “Cancel”), both in (7) |
 | A post with a title and no body | Documented as valid | the API (4) |
 | After `Create post`, her blog | Reconstruction | where the 2007 form went after posting is not archived |
-| Her blog: the layout, the title in Arial Black, the rule, the RSS badge's place and size, the day block `THU` + `AUG` / `23RD`, the post title (18 px bold), `Powered by Tumblr` | Documented | the default theme (6): its CSS and markup (`date_brick`, upper-cased) |
+| Her blog: the layout, the title in Arial Black, the rule, the RSS badge's place and size, the day block (the weekday `THU` + the date block), the post title (18 px bold), `Powered by Tumblr` | Documented | the default theme (6): its CSS and markup (`date_brick`, upper-cased) |
+| The date block's contents: `8.11.2007` on one line | Brief | the collaborator's exact date; the theme printed month and day (`AUG` / `23RD`), so the block is a little wider and the weekday a little smaller to keep it in the narrow window |
+| `STAY TUNED.` at the end, on its own | Brief | set in the post title's type and pink on the blog's white, as *stay tuned* (the first version's post) looked on that version's last frame |
 | Her blog's pink | Documented mechanism | the theme lets the owner choose its Title, Post Title, Date, Date Block and Date Block Text colours (6); the pink is hers, as on her Messenger |
 | The RSS badge | Documented place and size | drawn in code; Tumblr's image is not used |
 | The `Dashboard` control at the blog's top right | Documented control, reconstructed content | (5), (7) show the dark ReBlog / Dashboard control; that its owner sees just `Dashboard` is a reconstruction |
@@ -69,13 +71,13 @@ Not available:
 
 | What is on screen | Status | Basis |
 | --- | --- | --- |
-| Today's lock screen: the clock `11:47`, `Wednesday, October 28`, wi-fi and battery | Reconstruction, generic | no product, logo or wallpaper of any vendor: an abstract gradient |
+| The first screen: her XP desktop (Messenger open, the desktop icons, the pointer) | The film's own | the film's first frame; it replaced the first version's present-day lock screen, which read as a phone |
 | The glitch, then the picture collapsing to a line and a dot | Stylised | how a CRT monitor looked when it switched off |
 | Old Windows starting: the loading bar on black (three blue blocks in a rounded track) | Reconstruction from memory | Microsoft's logo and wordmark, which sat above it, are left out |
 | The “welcome” screen: blue field, dark-blue bands with a pale and an orange rule, `welcome` in white italic | Reconstruction from memory | typeface unknown here, so Fira Sans bold italic stands in; no logo, no start-up sound |
 | Sounds (screen on, glitch, crash, degauss) | Original | synthesised in `scripts/make-sfx.mjs` |
 
-## Slide 3: Windows Media Player 11
+## Slide 2: Windows Media Player 11
 
 | What is on screen | Status | Basis |
 | --- | --- | --- |

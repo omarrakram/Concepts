@@ -43,8 +43,8 @@ test('TumblrBreakup: the Text button, the field while she types, Create post, th
   expectInView('title field', cam, view45, r(FORM.title), TUMBLR.title.from, TUMBLR.title.at);
   if (TUMBLR.body.length) expectInView('post field', cam, view45, r(FORM.body), TUMBLR.body[0].from, TUMBLR.body.at(-1).at);
   expectInView('Create post', cam, view45, r(FORM.create), TUMBLR.create - 0.3, TUMBLR.create + 0.2);
-  // her blog's title, the day block (THU AUG 23RD) and the post title, to the last frame
-  expectInView('the published post', cam, view45, { x: PAGE.x + 10, y: PAGE.y + 44, w: 312, h: 128 }, TUMBLR.published, TUMBLR.duration);
+  // her blog's title, the day block (THU 8.11.2007) and both lines of the post, until STAY TUNED.
+  expectInView('the published post', cam, view45, { x: PAGE.x + 7, y: PAGE.y + 44, w: 370, h: 152 }, TUMBLR.published, TUMBLR.stayTuned);
 });
 
 test('MusicPlayerBreakup: the song row and Play until it plays, then the visualisation and the time', () => {

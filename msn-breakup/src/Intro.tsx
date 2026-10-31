@@ -7,9 +7,9 @@ import { INTRO, INTRO_TEXT } from './story/intro';
 import { CAROUSEL_VIEW, REEL_CAROUSEL } from './story/stories';
 
 /**
- * The carousel's opening, before the film (see story/intro.ts): today's
- * computer, crisp and clean, glitches and dies; old Windows starts on the
- * film's old monitor (its grain and vignette), and her XP desktop arrives.
+ * The carousel's opening, before the film (see story/intro.ts): her 2007
+ * computer, on her XP desktop, glitches and dies; old Windows starts again on
+ * the film's old monitor (its grain and vignette), and her XP desktop arrives.
  */
 const hash = (n: number) => {
   const x = Math.sin(n * 127.1 + 311.7) * 43758.5453;
@@ -32,9 +32,9 @@ export function Intro() {
     <>
       <AbsoluteFill style={{ background: '#000', overflow: 'hidden' }}>
         <ChannelFilters />
-        {t < INTRO.glitch && <LockScreen t={t} />}
+        {t < INTRO.glitch && <DesktopScreen t={t} frame={frame} />}
         {t >= INTRO.glitch && t < INTRO.crash && <Glitch t={t} frame={frame} />}
-        {t >= INTRO.crash && t < INTRO.black && <Collapse t={t} />}
+        {t >= INTRO.crash && t < INTRO.black && <Collapse t={t} frame={frame} />}
         {t >= INTRO.boot && <OldWindowsStarting t={t} frame={frame} />}
       </AbsoluteFill>
       <Cues cues={CUES} />
@@ -42,30 +42,17 @@ export function Intro() {
   );
 }
 
-/** A present-day lock screen: an abstract wallpaper, the big clock and the date, wi-fi and battery. */
-function LockScreen({ t }: { t: number }) {
+/**
+ * The first screen: her 2007 computer, on. Her XP desktop exactly as the film
+ * begins (Messenger open, the desktop icons, the pointer), on the film's old
+ * monitor: unmistakably a desktop PC of the time, not a phone.
+ */
+function DesktopScreen({ t, frame }: { t: number; frame: number }) {
   // starts half-lit, not black: the first frame is also the carousel's first picture
   const lit = interpolate(t, [0, INTRO.on], [0.62, 1], { extrapolateRight: 'clamp', easing: Easing.out(Easing.quad) });
-  const drift = t * 26; // a slow, living wallpaper
   return (
-    <AbsoluteFill style={{ background: 'linear-gradient(165deg, #0b1636 0%, #1d2d74 36%, #6343ad 67%, #e7866b 100%)', overflow: 'hidden', filter: `brightness(${lit})` }}>
-      <div style={{ position: 'absolute', left: -260 + drift, top: 760, width: 1000, height: 1000, borderRadius: '50%', background: 'radial-gradient(circle, rgba(255,128,186,.55), rgba(255,128,186,0) 68%)' }} />
-      <div style={{ position: 'absolute', right: -300 - drift, top: -160, width: 1100, height: 1100, borderRadius: '50%', background: 'radial-gradient(circle, rgba(86,166,255,.5), rgba(86,166,255,0) 68%)' }} />
-      <div style={{ position: 'absolute', left: 0, right: 0, top: 232, textAlign: 'center', fontFamily: TITLE, fontWeight: 600, fontSize: 250, letterSpacing: -6, color: '#fff', textShadow: '0 6px 40px rgba(0,0,0,.22)' }}>{INTRO_TEXT.time}</div>
-      <div style={{ position: 'absolute', left: 0, right: 0, top: 548, textAlign: 'center', fontFamily: TITLE, fontWeight: 600, fontSize: 50, color: 'rgba(255,255,255,.92)' }}>{INTRO_TEXT.date}</div>
-      <div style={{ position: 'absolute', right: 74, bottom: 66, display: 'flex', alignItems: 'center', gap: 28 }}>
-        <svg width="46" height="36" viewBox="0 0 46 36">
-          {[34, 24, 14].map((r, i) => (
-            <path key={r} d={`M${23 - r / 1.4} ${32 - r / 1.4 + 2}a${r} ${r} 0 0 1 ${(2 * r) / 1.4} 0`} fill="none" stroke="#fff" strokeWidth="4.5" strokeLinecap="round" opacity={0.95 - i * 0.05} />
-          ))}
-          <circle cx="23" cy="31" r="3.6" fill="#fff" />
-        </svg>
-        <svg width="64" height="32" viewBox="0 0 64 32">
-          <rect x="2" y="4" width="54" height="24" rx="6" fill="none" stroke="#fff" strokeWidth="3.5" />
-          <rect x="8" y="10" width="38" height="12" rx="2.5" fill="#fff" />
-          <rect x="58" y="11" width="4" height="10" rx="1.5" fill="#fff" />
-        </svg>
-      </div>
+    <AbsoluteFill style={{ filter: `brightness(${lit})` }}>
+      <Scene story={REEL_CAROUSEL} t={0} view={CAROUSEL_VIEW} frameSeed={frame} />
     </AbsoluteFill>
   );
 }
@@ -110,7 +97,7 @@ function Glitch({ t, frame }: { t: number; frame: number }) {
         <AbsoluteFill key={i} style={{ clipPath: `inset(${s.top}% 0 ${s.bottom}% 0)`, transform: `translateX(${s.dx}px)`, background: '#000', isolation: 'isolate' }}>
           {(['r', 'g', 'b'] as const).map((c, ci) => (
             <AbsoluteFill key={c} style={{ filter: `url(#intro-${c})`, mixBlendMode: 'screen', transform: `translate(${[split, 0, -split][ci]}px, ${[0, (spike ? 1 : 0) * 6, 0][ci]}px)` }}>
-              <LockScreen t={t} />
+              <DesktopScreen t={t} frame={frame} />
             </AbsoluteFill>
           ))}
         </AbsoluteFill>
@@ -124,7 +111,7 @@ function Glitch({ t, frame }: { t: number; frame: number }) {
 }
 
 /** The crash: the picture squeezes to a bright line, the line to a dot, the dot fades: an old monitor going off. */
-function Collapse({ t }: { t: number }) {
+function Collapse({ t, frame }: { t: number; frame: number }) {
   const u = clamp01((t - INTRO.crash) / (INTRO.black - INTRO.crash));
   const sy = interpolate(u, [0, 0.45], [1, 0.004], { extrapolateRight: 'clamp', easing: Easing.in(Easing.cubic) });
   const sx = interpolate(u, [0.45, 0.8], [1, 0.01], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.in(Easing.quad) });
@@ -133,7 +120,7 @@ function Collapse({ t }: { t: number }) {
     <AbsoluteFill style={{ background: '#000', alignItems: 'center', justifyContent: 'center' }}>
       {u < 0.8 ? (
         <AbsoluteFill style={{ transform: `scale(${sx}, ${sy})`, filter: `brightness(${1 + 5 * u})` }}>
-          <LockScreen t={t} />
+          <DesktopScreen t={t} frame={frame} />
         </AbsoluteFill>
       ) : (
         <div style={{ width: 14, height: 14, borderRadius: 7, background: '#fff', opacity: dot, boxShadow: '0 0 24px 8px rgba(200,220,255,.8)' }} />

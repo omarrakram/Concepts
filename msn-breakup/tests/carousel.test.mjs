@@ -1,19 +1,41 @@
-// The three carousel videos: 4:5, 30 fps, under Instagram's 60 s, in order; the original stills untouched.
+// The three carousel videos: 4:5, 30 fps, under Instagram's 60 s, in the final order; the original stills untouched.
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 import { test } from 'node:test';
 import { FIRST_CUT, root, slides, source, stories } from './load.mjs';
-import { CAROUSEL } from '../scripts/carousel-list.mjs';
+import { CAROUSEL, OUT_DIR } from '../scripts/carousel-list.mjs';
 
-test('three slides, in order, with the agreed file names', () => {
+test('three slides, in the final order: the breakup, the song, her Tumblr post', () => {
   assert.deepEqual(
-    CAROUSEL.map((c) => [c.file, c.id]),
+    CAROUSEL.map((c) => [c.slide, c.file, c.id]),
     [
-      ['01-msn-breakup-carousel.mp4', 'BreakupCarousel'],
-      ['02-tumblr-breakup-post.mp4', 'TumblrBreakup'],
-      ['03-when-youre-gone-music-player.mp4', 'MusicPlayerBreakup'],
+      [1, '01-msn-breakup-final.mp4', 'BreakupCarousel'],
+      [2, '02-music-player-final.mp4', 'MusicPlayerBreakup'],
+      [3, '03-tumblr-statement-final.mp4', 'TumblrBreakup'],
     ],
   );
+  // the covers and the clean export carry the numbers of the final order
+  assert.deepEqual(
+    CAROUSEL.map((c) => c.cover.file),
+    ['cover-01-msn-breakup.png', 'cover-02-music-player.png', 'cover-03-tumblr-statement.png'],
+  );
+  assert.deepEqual(
+    CAROUSEL.filter((c) => c.clean).map((c) => [c.id, c.clean.file]),
+    [['MusicPlayerBreakup', '02-music-player-final-clean.mp4']],
+  );
+  // a folder of its own: the first version's out/instagram-carousel/ is never overwritten
+  assert.equal(OUT_DIR, 'out/instagram-carousel-final');
+});
+
+test('the order is read from the list everywhere: no script picks a slide by its position', () => {
+  for (const f of ['qa.mjs', 'manifest.mjs', 'contact-sheet.mjs', 'render-carousel.mjs', 'print-cues.mjs']) {
+    assert.doesNotMatch(source(`../scripts/${f}`), /CAROUSEL\[\d\]|MOMENTS\[c\.slide\]/, f);
+  }
+  const pkg = JSON.parse(readFileSync(resolve(root, 'package.json'), 'utf8'));
+  assert.equal(pkg.scripts['render:carousel:player'], 'node scripts/render-carousel.mjs --only=2');
+  assert.equal(pkg.scripts['render:carousel:tumblr'], 'node scripts/render-carousel.mjs --only=3');
 });
 
 test('every composition is registered at the right size, rate and length', () => {
@@ -26,7 +48,8 @@ test('every composition is registered at the right size, rate and length', () =>
   assert.deepEqual(row('HeroReel'), { fps: 30, w: 1080, h: 1920, frames: 1050 });
   // slide 1: the opening (4.8 s) and then the film (35 s)
   assert.deepEqual(row('BreakupCarousel'), { fps: 30, w: 1080, h: 1350, frames: 144 + 1050 });
-  assert.deepEqual(row('TumblrBreakup'), { fps: 30, w: 1080, h: 1350, frames: 267 });
+  // the post is longer to type (46 keys, not 10) and STAY TUNED. follows it: 8.9 s → 13.4 s
+  assert.deepEqual(row('TumblrBreakup'), { fps: 30, w: 1080, h: 1350, frames: 402 });
   assert.deepEqual(row('MusicPlayerBreakup'), { fps: 30, w: 1080, h: 1350, frames: 384 });
   assert.deepEqual(row('HeroReelOriginal'), { fps: 30, w: 1080, h: 1920, frames: 990 });
   assert.deepEqual(row('Teaser'), { fps: 30, w: 1080, h: 1920, frames: 210 });

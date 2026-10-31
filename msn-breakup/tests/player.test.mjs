@@ -1,10 +1,26 @@
-// Change 2 (its own video): Play takes effect on PLAY_FRAME and the song begins on that frame.
+// The music-player video (carousel slide 2): Play takes effect on PLAY_FRAME and the song begins on that frame.
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { cast, FPS, player, source } from './load.mjs';
 
 const { PLAY_FRAME, PLAYER, playerAt, SONG_SOURCE, TRACK, PLAYER_CURSOR, PSPOT } = player;
 const at = (f) => playerAt(f / FPS);
+
+test('the song cue is the approved one: the same file, in-point, Play frame, length and fade', () => {
+  assert.equal(PLAY_FRAME, 78);
+  assert.deepEqual(SONG_SOURCE, { duration: 239.258, firstNote: 4.903, inFrames: 147 });
+  assert.equal(PLAYER.duration, 12.8);
+  assert.equal(PLAYER.fadeOut, 0.3);
+  assert.deepEqual([TRACK.title, TRACK.artist], ['When You’re Gone', 'Avril Lavigne']);
+});
+
+test('slide 2 comes straight after the film: her conversation behind the player, no Tumblr window, 11:48 PM', () => {
+  const comp = source('MusicPlayerBreakup.tsx');
+  assert.match(comp, /<Conversation s=\{\{ \.\.\.FILM_END, caretOn: msnActive && /);
+  // her Tumblr post comes after this video now, so it is not on screen here
+  assert.doesNotMatch(comp, /IEWindow|TumblrBlog|TEASER_POST|TUMBLR_TEXT/);
+  assert.equal(PLAYER.clock, '11:48 PM');
+});
 
 test('it is the right song: “When You’re Gone” by Avril Lavigne (not Adam Levine), the supplied file', () => {
   assert.equal(TRACK.title, cast.SONG.title);

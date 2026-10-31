@@ -5,7 +5,7 @@ folder except this README is gitignored, and `npm run qa` fails if git tracks
 anything else here. The track is copyrighted. It is not downloaded, bundled,
 replaced by a sound-alike or faked.
 
-The song plays in exactly one place: **carousel slide 3, `MusicPlayerBreakup`**
+The song plays in exactly one place: **carousel slide 2, `MusicPlayerBreakup`**
 (she opens Windows Media Player, selects the song and presses Play). The film
 itself (`HeroReel`, `BreakupCarousel`) has no music at all.
 
@@ -51,10 +51,10 @@ frame 78), `songVolume` (0 to 1, default 0.8).
 production does not establish public distribution rights. This repository
 makes no claim that the track is licensed, royalty-free or cleared.
 
-- `out/instagram-carousel/03-when-youre-gone-music-player.mp4` contains about
+- `out/instagram-carousel-final/02-music-player-final.mp4` contains about
   10 s of the song. It is for review, or for posting where you hold the
   rights.
-- `out/instagram-carousel/03-when-youre-gone-music-player-clean.mp4` is the
+- `out/instagram-carousel-final/02-music-player-final-clean.mp4` is the
   same video with the clicks but **no song**. Use it to add the track from
   Instagram's own licensed music, when it is available to your account and
   region. Place the song's first note (the first piano chord after the

@@ -40,8 +40,9 @@ export function probe(file) {
 if (import.meta.url === `file://${process.argv[1]}`) {
   const entry = (file, extra) => (existsSync(`${root}/${file}`) ? { file, ...extra, ...probe(`${root}/${file}`) } : null);
   const slides = CAROUSEL.map((c) => entry(`${OUT_DIR}/${c.file}`, { slide: c.slide, composition: c.id, title: c.title, cover: `${OUT_DIR}/covers/${c.cover.file}` }));
+  const player = CAROUSEL.find((c) => c.clean);
   const extras = [
-    entry(`${OUT_DIR}/${CAROUSEL[2].clean.file}`, { composition: 'MusicPlayerBreakup', title: 'slide 3 without the song (add the licensed track in the app)', props: CAROUSEL[2].clean.props }),
+    entry(`${OUT_DIR}/${player.clean.file}`, { composition: player.id, title: `slide ${player.slide} without the song (add the licensed track in the app)`, props: player.clean.props }),
     entry('out/msn-breakup-reel.mp4', { composition: 'HeroReel', title: 'the film, 9:16 master' }),
     entry('out/msn-breakup-teaser.mp4', { composition: 'Teaser', title: 'teaser, 9:16 (unchanged)' }),
   ].filter(Boolean);

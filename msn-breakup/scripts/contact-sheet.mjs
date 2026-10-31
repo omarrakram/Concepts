@@ -1,5 +1,5 @@
-// One contact sheet of all three carousel videos (key moments, timecoded), made from the
-// rendered MP4s themselves: out/instagram-carousel/contact-sheet.png
+// One contact sheet of all three carousel videos, in carousel order (key moments, timecoded),
+// made from the rendered MP4s themselves: <OUT_DIR>/contact-sheet.png
 import { spawnSync } from 'node:child_process';
 import { existsSync, mkdirSync, rmSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
@@ -7,12 +7,13 @@ import { CAROUSEL, OUT_DIR } from './carousel-list.mjs';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
 const font = `${root}/public/fonts/wine-tahoma.ttf`;
-/** seconds of each slide's key moments */
+/** seconds of each video's key moments */
 const MOMENTS = {
-  // the opening (today's screen, the glitch, the crash, the XP loading bar, "welcome"), then the film (+4.8 s)
-  1: [0.4, 1.9, 2.5, 3.2, 4.1, 4.8 + 2.0, 4.8 + 14.8, 4.8 + 24.9, 4.8 + 31.45, 4.8 + 34.95],
-  2: [0.2, 1.3, 1.9, 2.3, 3.0, 3.8, 4.4, 4.93, 5.7, 8.87],
-  3: [0.2, 0.8, 1.1, 1.4, 1.7, 2.1, 77 / 30, 78 / 30, 5.0, 12.77],
+  // the opening (her 2007 desktop, the glitch, the crash, the XP loading bar, "welcome"), then the film (+4.8 s)
+  BreakupCarousel: [0.4, 1.9, 2.5, 3.2, 4.1, 4.8 + 2.0, 4.8 + 14.8, 4.8 + 24.9, 4.8 + 31.45, 4.8 + 34.95],
+  MusicPlayerBreakup: [0.2, 0.8, 1.1, 1.4, 1.7, 2.1, 77 / 30, 78 / 30, 5.0, 12.77],
+  // the dashboard, the form, typing, typed, Create post, her blog (8.11.2007), the move in, the post's last frame, STAY TUNED.
+  TumblrBreakup: [0.2, 1.9, 3.0, 5.3, 7.3, 7.9, 8.6, 10.5, 356 / 30, 401 / 30],
 };
 const tmp = `${root}/out/qa/sheet-rows`;
 rmSync(tmp, { recursive: true, force: true });
@@ -31,7 +32,7 @@ for (const c of CAROUSEL) {
     console.error(`missing ${OUT_DIR}/${c.file}: run npm run render:carousel first`);
     process.exit(1);
   }
-  const frames = MOMENTS[c.slide].map((s) => Math.round(s * 30));
+  const frames = MOMENTS[c.id].map((s) => Math.round(s * 30));
   const select = frames.map((f) => `eq(n\\,${f})`).join('+');
   const label = `${c.slide}. ${c.file}`.replaceAll(':', '\\:');
   const row = `${tmp}/row-${c.slide}.png`;

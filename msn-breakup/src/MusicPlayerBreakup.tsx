@@ -7,16 +7,13 @@ import { clickCues, Cues } from './sound';
 import { HER, HIM } from './story/cast';
 import { PLAY_FRAME, PLAYER, PLAYER_CURSOR, playerAt, SONG_SOURCE } from './story/player';
 import { CAROUSEL_VIEW } from './story/stories';
-import { IE_WIN, TEASER_POST, TUMBLR_TEXT } from './story/tumblr';
 import { FILM_END } from './TumblrBreakup';
-import { IEWindow } from './ui/Browser';
 import { ContactList } from './ui/ContactList';
 import { Conversation } from './ui/Conversation';
 import { DesktopIcons, Taskbar, Wallpaper } from './ui/desktop';
 import { Hourglass, Pointer } from './ui/icons';
 import { MediaPlayer } from './ui/MediaPlayer';
 import { StartMenu } from './ui/StartMenu';
-import { TumblrBlog } from './ui/Tumblr';
 
 export interface MusicPlayerProps {
   /** the song (from public/music); false = the clean export for adding the licensed track in an app */
@@ -68,9 +65,9 @@ function spectrumBars(audioData: MediaUtilsAudioData, fps: number, songFrame: nu
 }
 
 /**
- * Carousel slide 3 (4:5): Start → Windows Media Player → "When You’re Gone"
- * → Play. The song is a <Sequence> that starts on PLAY_FRAME, trimmed to
- * the first note; nothing of it plays before.
+ * Carousel slide 2 (4:5), right after the film: Start → Windows Media Player
+ * → "When You’re Gone" → Play. The song is a <Sequence> that starts on
+ * PLAY_FRAME, trimmed to the first note; nothing of it plays before.
  */
 export function MusicPlayerBreakup(props: MusicPlayerProps) {
   const analysis = songAnalysisFile();
@@ -100,10 +97,11 @@ function Player({ song = true, uiSounds = true, cueTone = false, songVolume = 0.
   const file = songFile();
   const songFrames = durationInFrames - PLAY_FRAME;
   const fade = Math.round(PLAYER.fadeOut * fps);
+  // the conversation, as the film leaves it, is her window until she clicks Start (her Tumblr post comes later, in slide 3)
+  const msnActive = !s.wmpShown && !s.menuOpen;
   const tasks = [
     { label: `${HER.name} - MSN Messenger` },
-    { label: `${HIM.name} - Conversation` },
-    { label: `${TUMBLR_TEXT.blogTitle}${TUMBLR_TEXT.windowSuffix}`, active: !s.wmpShown, icon: 'internet' as const },
+    { label: `${HIM.name} - Conversation`, active: !s.wmpShown },
     ...(s.wmpShown ? [{ label: 'Windows Media Player', active: true, icon: 'player' as const }] : []),
   ];
   return (
@@ -112,11 +110,7 @@ function Player({ song = true, uiSounds = true, cueTone = false, songVolume = 0.
         <Wallpaper />
         <DesktopIcons />
         <ContactList inactive />
-        <Conversation s={{ ...FILM_END, caretOn: false }} inactive />
-        {/* her blog, as the Tumblr video left it */}
-        <IEWindow win={IE_WIN} title={TUMBLR_TEXT.blogTitle} url={TUMBLR_TEXT.blogUrl} loading={false} progress={0} status={TUMBLR_TEXT.done} canGoBack frame={frame} inactive={s.wmpShown || s.menuOpen}>
-          <TumblrBlog title={TEASER_POST.title} body={TEASER_POST.body} />
-        </IEWindow>
+        <Conversation s={{ ...FILM_END, caretOn: msnActive && Math.floor(t / 0.53) % 2 === 0 }} inactive={!msnActive} />
         {s.wmpShown && (
           <div style={{ opacity: Math.min(1, s.wmpAge / 0.08) }}>
             <MediaPlayer view={s.view} selected={s.selected} rowHover={s.rowHover} playing={s.playing} elapsed={s.elapsed} playHover={s.playHover} playPressed={s.playPressed} tabHover={s.tabHover} bars={bars} peaks={peaks} />

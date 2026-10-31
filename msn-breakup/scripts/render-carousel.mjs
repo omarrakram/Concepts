@@ -1,6 +1,6 @@
-// npm run render:carousel [-- --only=1,3]: the three 4:5 carousel videos (and the clean
-// music-player export) into out/instagram-carousel/, then a cover PNG per slide, one
-// contact sheet of all three, the ordered manifest (npm run manifest) and the cue sheet.
+// npm run render:carousel [-- --only=1,3]: the three 4:5 carousel videos, in carousel order (and
+// the clean music-player export) into OUT_DIR (out/instagram-carousel-final/), then a cover PNG
+// per slide, one contact sheet of all three, the ordered manifest (npm run manifest) and the cue sheet.
 import { spawnSync } from 'node:child_process';
 import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';

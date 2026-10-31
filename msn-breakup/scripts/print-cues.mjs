@@ -2,13 +2,15 @@
 // from the story data (src/story/*.ts), so it is always what renders. Includes the
 // song's placement cue for the music-player video (and its clean export).
 import { fileURLToPath } from 'node:url';
+import { CAROUSEL } from './carousel-list.mjs';
 import { loadTs } from './load-ts.mjs';
 
 const src = (p) => fileURLToPath(new URL(`../src/${p}`, import.meta.url));
 const { FPS } = await loadTs(src('constants.ts'));
 const { REEL, REEL_CAROUSEL, REEL_ORIGINAL, TEASER } = await loadTs(src('story/stories.ts'));
 const { SONG, HIM, HER } = await loadTs(src('story/cast.ts'));
-const { TUMBLR, TUMBLR_TEXT, TEASER_POST } = await loadTs(src('story/tumblr.ts'));
+const { STAY_TUNED, TUMBLR, TUMBLR_TEXT, TEASER_POST } = await loadTs(src('story/tumblr.ts'));
+const slideOf = (id) => CAROUSEL.find((c) => c.id === id).slide;
 const { INTRO, INTRO_TEXT } = await loadTs(src('story/intro.ts'));
 const { PLAYER, PLAY_FRAME, SONG_SOURCE, TRACK } = await loadTs(src('story/player.ts'));
 
@@ -66,11 +68,11 @@ function film(id, story, size) {
 console.log('MSN breakup: cue sheet');
 film('HeroReel (the film, 9:16 master)', REEL, '1080×1920');
 const slide1 = INTRO.duration + REEL_CAROUSEL.duration;
-console.log(`\nBreakupCarousel (carousel slide 1)  ${slide1.toFixed(3)} s · ${frame(INTRO.duration) + frame(REEL_CAROUSEL.duration)} frames @ ${FPS} fps · 1080×1350`);
+console.log(`\nBreakupCarousel (carousel slide ${slideOf('BreakupCarousel')})  ${slide1.toFixed(3)} s · ${frame(INTRO.duration) + frame(REEL_CAROUSEL.duration)} frames @ ${FPS} fps · 1080×1350`);
 console.log(`  the opening (${INTRO.duration} s, frames 0–${frame(INTRO.duration) - 1}), then the same beats as HeroReel, reframed for 4:5, each ${INTRO.duration} s later`);
 table(
   [
-    [0, `today's lock screen lights up: “${INTRO_TEXT.time}”, “${INTRO_TEXT.date}” (screen-on sound)`],
+    [0, 'her 2007 XP desktop comes on: Messenger open, the pointer (the film’s first frame; screen-on sound)'],
     [INTRO.glitch, 'it glitches, more and more (glitch sound)'],
     [INTRO.crash, 'it crashes: the picture collapses to a line, then a dot (crash sound)'],
     [INTRO.black, 'black'],
@@ -83,8 +85,30 @@ table(
   slide1,
 );
 
+const P = PLAYER;
+const inAt = SONG_SOURCE.inFrames / FPS;
+console.log(`\nMusicPlayerBreakup (carousel slide ${slideOf('MusicPlayerBreakup')})  ${P.duration.toFixed(3)} s · ${frame(P.duration)} frames @ ${FPS} fps · 1080×1350`);
+console.log(`\n  ♫ SONG CUE  “${SONG.title}” by ${SONG.artist} (the supplied file, public/music/)`);
+console.log(`    starts at ${clock(P.play)}  ·  frame ${PLAY_FRAME}  ·  SMPTE ${smpte(P.play)}  = the frame Play turns to Pause`);
+console.log(`    plays the file from ${inAt.toFixed(3)} s (its first note, ${SONG_SOURCE.firstNote} s, sounds ${((SONG_SOURCE.firstNote - inAt) * 1000).toFixed(0)} ms into frame ${PLAY_FRAME})`);
+console.log(`    fades over the last ${P.fadeOut} s and ends at ${clock(P.duration)} = file ${(inAt + P.duration - P.play).toFixed(3)} s`);
+console.log(`    the player shows 00:00 on frame ${PLAY_FRAME} and a length of ${TRACK.length}`);
+console.log(`    clean export (no song): add the licensed track so its first note lands at ${clock(P.play)} into the clip.`);
+table(
+  [
+    [P.start, 'click: Start (the Start menu opens)'],
+    [P.launch, 'click: Windows Media Player (hourglass while it starts)'],
+    [P.shown, 'Windows Media Player 11 opens: Library ▸ Songs'],
+    [P.select, `click: “${TRACK.title}”, ${TRACK.artist} (selected)`],
+    [P.press, 'mouse down on Play (click)'],
+    [P.play, `PLAY takes effect: Pause, “Playing”, 00:00  ♫ the song begins`],
+    [P.nowPlaying, 'click: Now Playing (the visualisation)'],
+  ],
+  P.duration,
+);
+
 const T = TUMBLR;
-console.log(`\nTumblrBreakup (carousel slide 2)  ${T.duration.toFixed(3)} s · ${frame(T.duration)} frames @ ${FPS} fps · 1080×1350  (no music)`);
+console.log(`\nTumblrBreakup (carousel slide ${slideOf('TumblrBreakup')}, the last)  ${T.duration.toFixed(3)} s · ${frame(T.duration)} frames @ ${FPS} fps · 1080×1350  (no music)`);
 console.log(`  the post: TEASER_POST in src/story/tumblr.ts (${TEASER_POST.final ? 'final wording' : 'PENDING the collaborator’s final wording'})`);
 table(
   [
@@ -106,31 +130,10 @@ table(
       [b.at, `POST   ${b.text}${i < T.body.length - 1 ? '  (Enter)' : ''}`],
     ]),
     [T.create, 'click: Create post'],
-    [T.published, `her blog ${TUMBLR_TEXT.blogUrl} with the post on top`],
+    [T.published, `her blog ${TUMBLR_TEXT.blogUrl} with the post on top, dated ${TUMBLR_TEXT.postDate}`],
+    [T.stayTuned, `${STAY_TUNED} (to the end)`],
   ],
   T.duration,
-);
-
-const P = PLAYER;
-const inAt = SONG_SOURCE.inFrames / FPS;
-console.log(`\nMusicPlayerBreakup (carousel slide 3)  ${P.duration.toFixed(3)} s · ${frame(P.duration)} frames @ ${FPS} fps · 1080×1350`);
-console.log(`\n  ♫ SONG CUE  “${SONG.title}” by ${SONG.artist} (the supplied file, public/music/)`);
-console.log(`    starts at ${clock(P.play)}  ·  frame ${PLAY_FRAME}  ·  SMPTE ${smpte(P.play)}  = the frame Play turns to Pause`);
-console.log(`    plays the file from ${inAt.toFixed(3)} s (its first note, ${SONG_SOURCE.firstNote} s, sounds ${((SONG_SOURCE.firstNote - inAt) * 1000).toFixed(0)} ms into frame ${PLAY_FRAME})`);
-console.log(`    fades over the last ${P.fadeOut} s and ends at ${clock(P.duration)} = file ${(inAt + P.duration - P.play).toFixed(3)} s`);
-console.log(`    the player shows 00:00 on frame ${PLAY_FRAME} and a length of ${TRACK.length}`);
-console.log(`    clean export (no song): add the licensed track so its first note lands at ${clock(P.play)} into the clip.`);
-table(
-  [
-    [P.start, 'click: Start (the Start menu opens)'],
-    [P.launch, 'click: Windows Media Player (hourglass while it starts)'],
-    [P.shown, 'Windows Media Player 11 opens: Library ▸ Songs'],
-    [P.select, `click: “${TRACK.title}”, ${TRACK.artist} (selected)`],
-    [P.press, 'mouse down on Play (click)'],
-    [P.play, `PLAY takes effect: Pause, “Playing”, 00:00  ♫ the song begins`],
-    [P.nowPlaying, 'click: Now Playing (the visualisation)'],
-  ],
-  P.duration,
 );
 
 film('Teaser (unchanged)', TEASER, '1080×1920');
