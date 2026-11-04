@@ -23,7 +23,7 @@ test('three slides, in the final order: the breakup, the song, her Tumblr post',
   );
   assert.equal(CAROUSEL[2].cover.frame, CAROUSEL[2].frames - 1);
   // a folder of its own: the earlier versions' folders are never overwritten
-  assert.equal(OUT_DIR, 'out/instagram-carousel-final-v3');
+  assert.equal(OUT_DIR, 'out/instagram-carousel-final-v4');
 });
 
 test('slides 2 and 3 carry the song (never rendered without it), each with a clean export', () => {
@@ -65,8 +65,8 @@ test('every composition is registered at the right size, rate and length', () =>
   assert.deepEqual(row('HeroReel'), { fps: 30, w: 1080, h: 1920, frames: 1050 });
   // slide 1: the opening (4.8 s) and then the film (35 s)
   assert.deepEqual(row('BreakupCarousel'), { fps: 30, w: 1080, h: 1350, frames: 144 + 1050 });
-  // she now writes STAY TUNED. into the post (a pause, a blank line, 11 keys) and it ends on the post: 13.4 s → 15.8 s
-  assert.deepEqual(row('TumblrBreakup'), { fps: 30, w: 1080, h: 1350, frames: 474 });
+  // her post as before (to 15.8 s), then she types www.inyourshoe.com in the Address bar: 15.8 s → 20.2 s
+  assert.deepEqual(row('TumblrBreakup'), { fps: 30, w: 1080, h: 1350, frames: 606 });
   assert.deepEqual(row('MusicPlayerBreakup'), { fps: 30, w: 1080, h: 1350, frames: 384 });
   assert.deepEqual(row('HeroReelOriginal'), { fps: 30, w: 1080, h: 1920, frames: 990 });
   assert.deepEqual(row('Teaser'), { fps: 30, w: 1080, h: 1920, frames: 210 });

@@ -35,7 +35,7 @@ for (const [id, view] of [['REEL', view916], ['REEL_CAROUSEL', view45]]) {
   });
 }
 
-test('TumblrBreakup: the Text button, the Post box while she types, Create post, the whole post to the end', () => {
+test('TumblrBreakup: the Text button, the Post box while she types, Create post, the whole post to the end, the Address bar as she types in it', () => {
   const { TUMBLR, PAGE, FORM, pill, tumblrAt } = tumblr;
   const cam = (t) => tumblrAt(t, view45).camera;
   const r = (f) => ({ x: PAGE.x + f.x, y: PAGE.y + f.y, w: f.w, h: f.h });
@@ -45,6 +45,9 @@ test('TumblrBreakup: the Text button, the Post box while she types, Create post,
   // her blog's title, the day block (THU 8.11.2007) and every line of the post (her sentence on two lines, the blank line,
   // STAY TUNED.), from the moment it is published to the last frame
   expectInView('the published post', cam, view45, { x: PAGE.x + 7, y: PAGE.y + 44, w: 370, h: 196 }, TUMBLR.published, TUMBLR.duration);
+  // the Address bar ("Address" and its field, where she types www.inyourshoe.com), from her click to the last frame
+  // (the bar's "Address" label starts 9 px inside the window: its 3 px frame and the bar's 6 px padding)
+  expectInView('the Address bar', cam, view45, { x: tumblr.IE_WIN.x + 9, y: tumblr.TSPOT.address.y - 12, w: 337, h: 24 }, TUMBLR.addressClick - 0.2, TUMBLR.duration);
 });
 
 test('MusicPlayerBreakup: the song row and Play until it plays, then the visualisation and the time', () => {

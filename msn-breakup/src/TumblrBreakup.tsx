@@ -27,6 +27,8 @@ const CUES = [
   ...TUMBLR.body.flatMap((b, i) => typingCues(b, `body${i}`, false)),
   // the Enters between her lines (the second one makes the blank line), as loud as an Enter in the film
   ...TUMBLR.enters.map((at, i) => ({ at: at - 0.03, src: sfx('key1'), volume: 0.42, key: `body${i}-enter` })),
+  // then the address, in the Address bar (no Enter)
+  ...typingCues(TUMBLR.address, 'address', false),
 ];
 
 export interface TumblrProps {
@@ -41,7 +43,8 @@ export interface TumblrProps {
 /**
  * Carousel slide 3 (4:5), the last, picking up where slide 2 ends: Windows Media Player open on
  * Now Playing, the song still playing. She opens Internet Explorer over it, writes and publishes
- * her Tumblr post, and it ends on that post, the song still going.
+ * her Tumblr post; then she clicks the Address bar and types www.inyourshoe.com, and it ends on
+ * that, typed, above her post, the song still going.
  */
 export function TumblrBreakup(props: TumblrProps) {
   const analysis = songAnalysisFile();
@@ -81,7 +84,7 @@ function Tumblr({ view = CAROUSEL_VIEW, song = true, uiSounds = true, songVolume
         <MediaPlayer view={wmp.view} selected={wmp.selected} rowHover={wmp.rowHover} playing={wmp.playing} elapsed={wmp.elapsed} playHover={wmp.playHover} playPressed={wmp.playPressed} tabHover={wmp.tabHover} bars={meter.bars} peaks={meter.peaks} />
         {s.ieShown && (
           <div style={{ opacity: Math.min(1, s.ieAge / 0.08) }}>
-            <IEWindow win={IE_WIN} title={s.pageTitle} url={s.url} loading={s.loading} progress={s.progress} status={s.status} canGoBack={s.page === 'blog'} frame={frame}>
+            <IEWindow win={IE_WIN} title={s.pageTitle} url={s.url} loading={s.loading} progress={s.progress} status={s.status} canGoBack={s.page === 'blog'} frame={frame} address={s.address}>
               {s.page === 'dashboard' && <TumblrDashboard textPressed={s.textPressed} />}
               {s.page === 'form' && <TumblrPostForm title={s.title} body={s.body} focus={s.focus} caretOn={s.caretOn} createPressed={s.createPressed} />}
               {s.page === 'blog' && <TumblrBlog title={TEASER_POST.title} body={TEASER_POST.body} />}

@@ -25,6 +25,7 @@ export function IEWindow({
   canGoBack,
   frame,
   inactive,
+  address,
   children,
 }: {
   win: { x: number; y: number; w: number; h: number };
@@ -39,6 +40,8 @@ export function IEWindow({
   frame: number;
   /** another window has the focus */
   inactive?: boolean;
+  /** she is in the Address bar: the address selected (her click), or what she has typed and the caret */
+  address?: AddressEdit | null;
   children: ReactNode;
 }) {
   const page = ieLayout(win);
@@ -55,7 +58,7 @@ export function IEWindow({
         <Throbber spinning={loading} frame={frame} />
       </div>
       <Toolbar canGoBack={canGoBack} />
-      <AddressBar url={url} />
+      <AddressBar url={url} edit={address ?? null} />
       <div style={{ height: page.h, display: 'flex', background: '#fff' }}>
         <div style={{ width: page.w, height: page.h, position: 'relative', overflow: 'hidden' }}>{children}</div>
         {/* IE 6 always drew the vertical scrollbar, even when the page fitted */}
@@ -143,7 +146,13 @@ function ToolButton({ children }: { children: ReactNode }) {
   return <div style={{ height: 30, display: 'flex', alignItems: 'center', padding: '0 3px' }}>{children}</div>;
 }
 
-function AddressBar({ url }: { url: string }) {
+export interface AddressEdit {
+  text: string;
+  selected: boolean;
+  caretOn: boolean;
+}
+
+function AddressBar({ url, edit }: { url: string; edit: AddressEdit | null }) {
   return (
     <div style={{ height: IE_BARS.address, boxSizing: 'border-box', display: 'flex', alignItems: 'center', gap: 4, padding: '0 3px 0 6px', borderBottom: '1px solid #919b9c', fontFamily: UI, fontSize: 11, color: '#000' }}>
       <span style={{ color: '#5c5c5c' }}>
@@ -151,7 +160,19 @@ function AddressBar({ url }: { url: string }) {
       </span>
       <div style={{ flex: 1, minWidth: 0, height: 19, boxSizing: 'border-box', border: '1px solid #7f9db9', background: '#fff', display: 'flex', alignItems: 'center', gap: 3, paddingLeft: 2 }}>
         <PageGlyph size={14} />
-        <span style={{ flex: 1, minWidth: 0, whiteSpace: 'nowrap', overflow: 'hidden' }}>{url}</span>
+        <span style={{ flex: 1, minWidth: 0, whiteSpace: 'nowrap', overflow: 'hidden' }}>
+          {!edit ? (
+            url
+          ) : edit.selected ? (
+            // a click in IE 6's Address bar selects the whole address (XP's highlight)
+            <span style={{ background: '#316ac5', color: '#fff' }}>{edit.text}</span>
+          ) : (
+            <>
+              {edit.text}
+              {edit.caretOn && <span style={{ display: 'inline-block', width: 1, height: 13, background: '#000', verticalAlign: '-2px', marginLeft: 1 }} />}
+            </>
+          )}
+        </span>
         <div style={{ width: 15, height: 17, boxSizing: 'border-box', border: '1px solid #b5c7f0', borderRadius: 2, background: 'linear-gradient(90deg,#c6d6fc,#b1c8fb 50%,#a7bdf7)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <svg width="7" height="4" viewBox="0 0 7 4">
             <path d="M0 0h7L3.5 4z" fill="#4d6185" />

@@ -10,7 +10,7 @@ Windows Media Player, selects the song and presses Play) and **carries on in
 slide 3, `TumblrBreakup`**, which picks up where slide 2 ends: its first frame
 plays the point of the file slide 2 stops on (file 15.1 s, `TUMBLR_SONG` in
 `src/story/tumblr.ts`), in over 0.1 s, and the song fades over slide 3's last
-second (file 30.9 s). The film itself (`HeroReel`, `BreakupCarousel`) has no
+second (file 35.3 s). The film itself (`HeroReel`, `BreakupCarousel`) has no
 music at all.
 
 ## Import the file you were given
@@ -58,14 +58,14 @@ frame 78), `songVolume` (0 to 1, default 0.8).
 production does not establish public distribution rights. This repository
 makes no claim that the track is licensed, royalty-free or cleared.
 
-- `out/instagram-carousel-final-v3/02-music-player-final.mp4` (slide 2)
+- `out/instagram-carousel-final-v4/02-music-player-final.mp4` (slide 2)
   contains about 10 s of the song. It is for review, or for posting where you
   hold the rights. `npm run render:carousel` stops rather than render slide 2
   without the song.
-- `out/instagram-carousel-final-v3/03-tumblr-published-stay-tuned-final.mp4`
-  (slide 3) carries the song on for about 16 s more; its clean export is
+- `out/instagram-carousel-final-v4/03-tumblr-published-stay-tuned-final.mp4`
+  (slide 3) carries the song on for about 20 s more; its clean export is
   `03-tumblr-published-stay-tuned-final-clean.mp4`.
-- `out/instagram-carousel-final-v3/02-music-player-final-clean.mp4` is the
+- `out/instagram-carousel-final-v4/02-music-player-final-clean.mp4` is the
   same video with the clicks but **no song** (the bars still follow it). Use
   it to add the track from Instagram's own licensed music, when it is
   available to your account and region. Place the song's first note (the

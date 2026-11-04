@@ -2,7 +2,7 @@
 
 Three videos, posted together as one carousel. All three are 4:5 (1080 × 1350),
 30 fps, H.264 + AAC. `npm run render:carousel` renders them into
-`out/instagram-carousel-final-v3/`, with slide 2's clean export, a cover per
+`out/instagram-carousel-final-v4/`, with slide 2's clean export, a cover per
 slide, one contact sheet, the cue sheet and the ordered manifest
 (`MANIFEST.md`, `manifest.json`). Slide 2 carries the song: import it first
 (`npm run import:song`), or the render stops. The earlier folders are never
@@ -12,7 +12,7 @@ written to by this version.
 | - | - | - | - | - |
 | 1 | `01-msn-breakup-present-to-2007-final.mp4` | `BreakupCarousel` | 39.8 s | A present-day Windows desktop glitches, and the Windows XP desktop of 2007 takes over (4.8 s). Then the film: he dumps her on MSN, she spirals, three nudges. |
 | 2 | `02-music-player-final.mp4` | `MusicPlayerBreakup` | 12.8 s | She opens Windows Media Player and puts on “When You’re Gone”: the song begins on the frame Play turns to Pause (0:02.6). |
-| 3 | `03-tumblr-published-stay-tuned-final.mp4` | `TumblrBreakup` | 15.8 s | Slide 2 carries on: the player open, the song still playing. On 2007 Tumblr she writes one post, *i guess some people are just passing through.*, a blank line, **STAY TUNED.**, and publishes it, dated 8.11.2007. It ends on the published post. |
+| 3 | `03-tumblr-published-stay-tuned-final.mp4` | `TumblrBreakup` | 20.2 s | Slide 2 carries on: the player open, the song still playing. On 2007 Tumblr she writes one post, *i guess some people are just passing through.*, a blank line, **STAY TUNED.**, and publishes it, dated 8.11.2007. Then she clicks the address bar and types **www.inyourshoe.com**; it ends on the typed address, above her post. |
 
 Also rendered: `02-music-player-final-clean.mp4` and
 `03-tumblr-published-stay-tuned-final-clean.mp4` (slides 2 and 3 without the
@@ -22,6 +22,33 @@ opening).
 
 All three are 4:5, so the app neither letterboxes nor crops them, and each is
 under Instagram's 60 s limit for a carousel video.
+
+## The address (4 November 2026)
+
+One change, to slide 3 only: after she posts, she types the brand's address
+into Internet Explorer's Address bar.
+
+- **Everything up to her post is as it was.** The slide used to end at 15.8 s,
+  on her published post, the camera settled on it. Every frame up to that
+  point is unchanged: the camera and pointer keys up to it are the same, and
+  QA compares the new render with the delivered one frame by frame. Slides 1
+  and 2 are not re-rendered: their files are copied from the delivered set.
+- **Then the address** (15.8 → 20.2 s): she takes the pointer up to the
+  Address bar and clicks the address, `http://nour-xoxo-89.tumblr.com/` (IE 6
+  selects all of it, in XP's highlight). She types `www.inyourshoe.com` over
+  it, 18 keys at the pace of her post (0.085 s a key), each with its key
+  sound. The camera lifts a little towards the bar as she goes to it, her
+  post still in shot.
+- **No Enter.** She does not press it, so nothing loads: her blog stays on
+  screen, the status bar reads Done. The video ends 1.7 s after her last key,
+  on the typed address with its caret lit, her post below it.
+- **The song** plays on under it and fades over the new last second (it now
+  ends at file 35.3 s). The clean export has the same picture, without the
+  song.
+
+The earlier deliveries are kept in `out/archive/` (the set delivered before
+this change: `delivered-8cee92f/`), and this version goes to its own folder,
+`out/instagram-carousel-final-v4/`.
 
 ## Slide 3 carries on from slide 2 (31 October 2026)
 
@@ -208,6 +235,7 @@ is used.
 
 What she types, in the Post box (the post has no title):
 `i guess some people are just passing through.`, Enter, Enter, `STAY TUNED.`
+Then, in the Address bar: `www.inyourshoe.com` (no Enter).
 
 | Where | Text |
 | --- | --- |
@@ -266,4 +294,5 @@ item by item, in [`sources.md`](sources.md). In short:
   clicks only). See `public/music/README.md` for the cue, the import and the
   rights note.
 - Slide 3: the song carries on from slide 2 (file 15.1 s, faded out over the
-  last second), under the clicks, her key clicks and her two Enters.
+  last second), under the clicks, her key clicks and her two Enters, then her
+  click in the Address bar and the 18 keys of the address.

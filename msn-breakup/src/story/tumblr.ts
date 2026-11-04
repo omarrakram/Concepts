@@ -1,4 +1,4 @@
-import { ieLayout } from '../ui/ie-geometry';
+import { IE_BARS, ieLayout } from '../ui/ie-geometry';
 import { HER } from './cast';
 import { FPS } from '../constants';
 import { PLAY_FRAME, PLAYER, PLAYER_CAMERA, PLAYER_CURSOR, SONG_SOURCE } from './player';
@@ -11,9 +11,12 @@ import type { Beat, CamKey, CursorKey } from './types';
  * point slide 2 stops), her pointer and the camera where slide 2 left them.
  * She opens Internet Explorer over the player, on her Tumblr dashboard, clicks Text, writes the post (her sentence, a pause, a blank
  * line, STAY TUNED.) and publishes it, then her blog shows it, dated
- * 8.11.2007, and the carousel ends on that published post. The post
- * (TEASER_POST) is the only thing she types. Every other word on screen is
- * browser / Tumblr furniture, all of it in TUMBLR_TEXT (and in docs/carousel.md).
+ * 8.11.2007. The camera settles on that published post, as before; then she
+ * clicks Internet Explorer's address bar and types www.inyourshoe.com, and the
+ * carousel ends on it, typed (she does not press Enter), above her post. The
+ * post (TEASER_POST) and the address (ADDRESS) are the only things she types.
+ * Every other word on screen is browser / Tumblr furniture, all of it in
+ * TUMBLR_TEXT (and in docs/carousel.md).
  *
  * The pages follow archived 2007 Tumblr where it was archived (see
  * docs/sources.md): the dashboard frame and "Add a new..." buttons of April
@@ -42,6 +45,12 @@ export const TEASER_POST: { title: string; body: string[]; final: boolean } = {
   /** the collaborator's final wording */
   final: true,
 };
+
+/**
+ * After her post is up, she clicks the address bar and types this, exactly as the collaborator wrote it. She does
+ * not press Enter: the video ends on it, typed.
+ */
+export const ADDRESS = 'www.inyourshoe.com';
 
 /** The post's date (the collaborator's brief): 8 November 2007, printed exactly as "8.11.2007". */
 const POST_DATE = { day: 8, month: 11, year: 2007 };
@@ -142,6 +151,10 @@ function timeline() {
   const typed = (body.at(-1) ?? title)!.at;
   const create = +(typed + 0.6).toFixed(3);
   const published = +(create + 0.6).toFixed(3);
+  // everything up to postEnd is the slide as it was (it ended there, on her post)
+  const postEnd = Math.round((published + 4.9) * 10) / 10;
+  const addressClick = +(postEnd + 0.75).toFixed(3);
+  const address = typedLine(ADDRESS, +(addressClick + 0.35).toFixed(3));
   return {
     /** a minute after the last nudge */
     clock: '11:48 PM',
@@ -169,8 +182,14 @@ function timeline() {
     published,
     /** the camera has moved onto her post (as before, 3 s after it appears) */
     onPost: +(published + 3).toFixed(3),
-    /** the video ends on her published post, 4.9 s after it appears (the time the post and the old end card had) */
-    duration: Math.round((published + 4.9) * 10) / 10,
+    /** where the slide used to end, on her published post, 4.9 s after it appears: every frame up to here is as it was */
+    postEnd,
+    /** then she clicks the address bar: IE 6 selects the whole address */
+    addressClick,
+    /** and types www.inyourshoe.com over it, at her pace (no Enter) */
+    address,
+    /** the video ends on the typed address, her post below it: 1.7 s after the last key, so the caret is lit on the last frame */
+    duration: Math.round((address.at + 1.7) * 10) / 10,
   };
 }
 export const TUMBLR = timeline();
@@ -217,6 +236,8 @@ export const TSPOT = {
   title: abs(FORM.title, 70, 14),
   body: abs(FORM.body, 73, 25),
   create: abs(FORM.create, 47, 12),
+  /** on the address in IE's Address bar */
+  address: { x: 150, y: IE_WIN.y + IE_BARS.title + IE_BARS.menu + IE_BARS.tools + IE_BARS.address / 2 },
 };
 
 const T = TUMBLR;
@@ -250,7 +271,12 @@ export const TUMBLR_CURSOR: CursorKey[] = [
   { t: T.create - 0.05, ...TSPOT.create },
   { t: T.create, ...TSPOT.create, click: true },
   { t: T.published + 0.4, x: 428, y: 828 },
-  { t: T.duration, x: 428, y: 828 },
+  { t: T.postEnd, x: 428, y: 828 },
+  // up to the address bar, a click (the address is selected), then out of the way of what she types
+  { t: T.addressClick - 0.05, ...TSPOT.address },
+  { t: T.addressClick, ...TSPOT.address, click: true },
+  { t: T.addressClick + 0.4, x: 318, y: 388 },
+  { t: T.duration, x: 318, y: 388 },
 ];
 
 /** The 4:5 camera (540 × 675 of the screen at z 1). */
@@ -271,7 +297,10 @@ export const TUMBLR_CAMERA: CamKey[] = [
   { t: T.published + 0.25, x: 270, y: 586, z: 1 },
   // then slowly onto her post: her blog's title, the day block and all her words, and it stays on them to the end
   { t: T.onPost, x: 204, y: 520, z: 1.345 },
-  { t: T.duration, x: 204, y: 520, z: 1.36 },
+  { t: T.postEnd, x: 204, y: 520, z: 1.36 },
+  // a gentle lift towards the address bar as she goes to it (her post stays in shot), then a last slow creep
+  { t: T.addressClick + 0.3, x: 204, y: 498, z: 1.4 },
+  { t: T.duration, x: 204, y: 496, z: 1.41 },
 ];
 
 const typed = (b: Line | null, t: number) => (!b ? '' : t >= b.at ? b.text : t >= b.from ? [...b.text].slice(0, keyTimes(b).filter((k) => k <= t).length).join('') : '');
@@ -297,6 +326,8 @@ export interface TumblrState {
   caretOn: boolean;
   textPressed: boolean;
   createPressed: boolean;
+  /** the Address bar while she is in it (null before): the address selected by her click, then what she has typed */
+  address: { text: string; selected: boolean; caretOn: boolean } | null;
   camera: { x: number; y: number; z: number };
   cursor: { x: number; y: number; pressed: boolean };
 }
@@ -320,6 +351,10 @@ export function tumblrAt(t: number, view?: { w: number; h: number }): TumblrStat
   const typing = [T.title, ...T.body].some((b) => b && t >= b.from && t < b.at);
   const focus = page !== 'form' || t >= T.create ? null : T.bodyClick !== null && t >= T.bodyClick ? 'body' : T.titleClick !== null && t >= T.titleClick ? 'title' : null;
   const cursor = cursorAt(TUMBLR_CURSOR, t);
+  // in the address bar: her click selects the whole address; her first key replaces it
+  const typedAddress = typed(T.address, t);
+  const addressTyping = t >= T.address.from && t < T.address.at;
+  const address = t < T.addressClick ? null : typedAddress === '' ? { text: url, selected: true, caretOn: false } : { text: typedAddress, selected: false, caretOn: addressTyping || Math.floor(t / 0.53) % 2 === 0 };
   return {
     t,
     ieShown: t >= T.shown,
@@ -337,6 +372,7 @@ export function tumblrAt(t: number, view?: { w: number; h: number }): TumblrStat
     caretOn: focus !== null && (typing || Math.floor(t / 0.53) % 2 === 0),
     textPressed: page === 'dashboard' && cursor.pressed && within(cursor, pill(0)),
     createPressed: page === 'form' && cursor.pressed && within(cursor, FORM.create),
+    address,
     camera: cameraAt(TUMBLR_CAMERA, t, view),
     cursor,
   };

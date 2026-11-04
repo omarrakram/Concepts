@@ -1,12 +1,12 @@
 // Slide 3, the last: her Tumblr post, dated 8.11.2007: her sentence, a blank line, STAY TUNED., written and published
-// by her, and the video ends on that post (no separate end card); it picks up where slide 2 ends, the song carrying on;
-// every other word listed.
+// by her (no separate end card); then she types www.inyourshoe.com in the Address bar and the video ends on it, above
+// her post; it picks up where slide 2 ends, the song carrying on; every other word listed.
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import ts from 'typescript';
 import { cast, player, source, state, stories, tumblr } from './load.mjs';
 
-const { STATEMENT, STAY_TUNED, TEASER_POST, TUMBLR, TUMBLR_TEXT, tumblrAt } = tumblr;
+const { ADDRESS, STATEMENT, STAY_TUNED, TEASER_POST, TUMBLR, TUMBLR_TEXT, tumblrAt } = tumblr;
 const FPS = 30;
 
 /** every string literal and JSX text in a source file (TypeScript's own parser) */
@@ -36,7 +36,7 @@ test('the post is exactly her sentence, a blank line and STAY TUNED., character 
   assert.ok(STATEMENT.startsWith('i guess ') && STATEMENT === STATEMENT.toLowerCase());
   assert.equal(STAY_TUNED, STAY_TUNED.toUpperCase());
   assert.equal(TEASER_POST.body.filter(Boolean).length, 2);
-  // what she types is exactly the post, nothing else
+  // what she types in the post is exactly the post, nothing else (the address goes in the Address bar)
   assert.equal(TUMBLR.title, null);
   assert.deepEqual(
     TUMBLR.body.map((b) => b.text),
@@ -73,7 +73,7 @@ test('the post is dated exactly 8.11.2007, a Thursday, and no other date is on t
   assert.equal(cast.DATE, '8/23/2007');
 });
 
-test('STAY TUNED. is inside her published post: no end card, no overlay; the video ends on the post', () => {
+test('STAY TUNED. is inside her published post: no end card, no overlay; her blog stays up to the last frame', () => {
   const T = TUMBLR;
   // from the moment it is published to the last frame, the picture is her blog with the post on it
   for (let t = T.published; t < T.duration; t += 1 / FPS) assert.equal(tumblrAt(t).page, 'blog', t.toFixed(3));
@@ -122,9 +122,9 @@ test('she types key by key, steadily, as before (her sentence keeps its exact rh
   assert.deepEqual([TUMBLR.body[0].from, TUMBLR.body[0].at], [3.4, 7.295]);
 });
 
-test('timeline: launch → dashboard → Text → form → her post → Create post → her blog → on the post to the end', () => {
+test('timeline: launch → dashboard → Text → form → her post → Create post → her blog → on the post → the address → the end', () => {
   const T = TUMBLR;
-  const seq = [T.launch, T.shown, T.dashboard, T.textClick, T.loaded, T.bodyClick, T.body[0].from, T.body[0].at, T.enters[0], T.enters[1], T.body[2].from, T.body[2].at, T.create, T.published, T.onPost, T.duration];
+  const seq = [T.launch, T.shown, T.dashboard, T.textClick, T.loaded, T.bodyClick, T.body[0].from, T.body[0].at, T.enters[0], T.enters[1], T.body[2].from, T.body[2].at, T.create, T.published, T.onPost, T.postEnd, T.addressClick, T.address.from, T.address.at, T.duration];
   seq.forEach((v, i) => i && assert.ok(v > seq[i - 1], `step ${i}`));
   assert.equal(T.titleClick, null);
   // everything up to her first key is timed as in the approved version (she clicks the Post box where she clicked the Title)
@@ -132,11 +132,55 @@ test('timeline: launch → dashboard → Text → form → her post → Create p
   // the publishing beat as before: 0.6 s to Create post, 0.6 s to her blog
   assert.equal(+(T.create - T.body[2].at).toFixed(3), 0.6);
   assert.equal(+(T.published - T.create).toFixed(3), 0.6);
-  // the published post stays on screen 4.9 s, as long as the post and the old end card did together; the camera is on it after 3 s
-  assert.ok(Math.abs(T.duration - T.published - 4.9) < 0.06);
+  // the published post has its 4.9 s on screen, as long as the post and the old end card did together, before she goes
+  // to the Address bar; the camera is on it after 3 s
+  assert.ok(Math.abs(T.postEnd - T.published - 4.9) < 0.06);
   assert.equal(+(T.onPost - T.published).toFixed(3), 3);
-  // longer than before only by what she now types (the pause, the blank line, STAY TUNED.)
-  assert.equal(T.duration, 15.8);
+  // the slide used to end at 15.8 s; the address adds 4.4 s: to the bar, the click, 18 keys, and the typed address held
+  assert.equal(T.postEnd, 15.8);
+  assert.deepEqual([T.addressClick, T.address.from, T.address.at, T.duration], [16.55, 16.9, 18.5, 20.2]);
+});
+
+test('after her post, she clicks the Address bar and types www.inyourshoe.com; everything before is as it was', () => {
+  const T = TUMBLR;
+  const { TUMBLR_CAMERA, TUMBLR_CURSOR, TSPOT } = tumblr;
+  // exactly the collaborator's address, typed key by key at her pace, and nothing else; no Enter
+  assert.equal(ADDRESS, 'www.inyourshoe.com');
+  assert.equal(T.address.text, ADDRESS);
+  const keys = state.keyTimes(T.address);
+  assert.equal(keys.length, [...ADDRESS].length);
+  const perKey = (T.address.at - T.address.from) / keys.length;
+  assert.ok(perKey > 0.06 && perKey < 0.12, `${perKey.toFixed(3)} s a key`);
+  // nothing in the Address bar changes before her click; then the whole address is selected; her first key replaces it
+  for (let t = 0; t < T.addressClick; t += 1 / FPS) assert.equal(tumblrAt(t).address, null, t.toFixed(3));
+  assert.deepEqual(tumblrAt(T.addressClick).address, { text: TUMBLR_TEXT.blogUrl, selected: true, caretOn: false });
+  assert.equal(tumblrAt(keys[0] - 0.001).address.selected, true);
+  assert.deepEqual(tumblrAt(keys[0]).address, { text: 'w', selected: false, caretOn: true });
+  assert.equal(tumblrAt(T.address.at).address.text, ADDRESS);
+  // the last frame: the typed address, its caret lit, above her post; nothing loads (she has not pressed Enter)
+  const last = tumblrAt((Math.round(T.duration * FPS) - 1) / FPS);
+  assert.deepEqual(last.address, { text: ADDRESS, selected: false, caretOn: true });
+  assert.equal(last.page, 'blog');
+  assert.equal(last.url, TUMBLR_TEXT.blogUrl);
+  assert.equal(last.loading, false);
+  assert.equal(last.status, TUMBLR_TEXT.done);
+  // her click is on the address; the click sound comes from the pointer path, the keys from the address's typing cues
+  const click = TUMBLR_CURSOR.find((k) => k.click && k.t === T.addressClick);
+  assert.deepEqual({ x: click.x, y: click.y }, TSPOT.address);
+  assert.match(source('TumblrBreakup.tsx'), /\.\.\.typingCues\(TUMBLR\.address, 'address', false\)/);
+  assert.match(source('TumblrBreakup.tsx'), /address=\{s\.address\}/);
+  // the camera and the pointer up to the old end are exactly as they were: their keys then were these two, and the
+  // address beat only adds keys after it
+  const camBefore = TUMBLR_CAMERA.filter((k) => k.t <= T.postEnd);
+  assert.deepEqual(camBefore.slice(-2), [
+    { t: T.onPost, x: 204, y: 520, z: 1.345 },
+    { t: 15.8, x: 204, y: 520, z: 1.36 },
+  ]);
+  assert.deepEqual(TUMBLR_CURSOR.filter((k) => k.t <= T.postEnd).slice(-2), [
+    { t: +(T.published + 0.4).toFixed(3), x: 428, y: 828 },
+    { t: 15.8, x: 428, y: 828 },
+  ]);
+  assert.equal(TUMBLR_CAMERA.at(-1).t, T.duration);
 });
 
 test('what is on screen follows the timeline', () => {
