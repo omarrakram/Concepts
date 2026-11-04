@@ -11,9 +11,10 @@ import type { Beat, CamKey, CursorKey } from './types';
  * point slide 2 stops), her pointer and the camera where slide 2 left them.
  * She opens Internet Explorer over the player, on her Tumblr dashboard, clicks Text, writes the post (her sentence, a pause, a blank
  * line, STAY TUNED.) and publishes it, then her blog shows it, dated
- * 8.11.2007. The camera settles on that published post, as before; then she
- * clicks Internet Explorer's address bar and types www.inyourshoe.com, and the
- * carousel ends on it, typed (she does not press Enter), above her post. The
+ * 8.11.2007. Two seconds later she heads for Internet Explorer's address bar,
+ * the camera moving in on her post and the bar, clicks it and types
+ * www.inyourshoe.com, and the carousel ends on it, typed (she does not press
+ * Enter), above her post. The
  * post (TEASER_POST) and the address (ADDRESS) are the only things she types.
  * Every other word on screen is browser / Tumblr furniture, all of it in
  * TUMBLR_TEXT (and in docs/carousel.md).
@@ -151,9 +152,9 @@ function timeline() {
   const typed = (body.at(-1) ?? title)!.at;
   const create = +(typed + 0.6).toFixed(3);
   const published = +(create + 0.6).toFixed(3);
-  // everything up to postEnd is the slide as it was (it ended there, on her post)
-  const postEnd = Math.round((published + 4.9) * 10) / 10;
-  const addressClick = +(postEnd + 0.75).toFixed(3);
+  // her post up, she heads for the Address bar 2 s later (everything until her blog appears is as it was)
+  const toAddress = +(published + 2).toFixed(3);
+  const addressClick = +(toAddress + 0.75).toFixed(3);
   const address = typedLine(ADDRESS, +(addressClick + 0.35).toFixed(3));
   return {
     /** a minute after the last nudge */
@@ -180,11 +181,9 @@ function timeline() {
     create,
     /** her blog, with the post on top */
     published,
-    /** the camera has moved onto her post (as before, 3 s after it appears) */
-    onPost: +(published + 3).toFixed(3),
-    /** where the slide used to end, on her published post, 4.9 s after it appears: every frame up to here is as it was */
-    postEnd,
-    /** then she clicks the address bar: IE 6 selects the whole address */
+    /** her post has been up 2 s: she heads for the Address bar (the camera is moving in on her post and the bar) */
+    toAddress,
+    /** she clicks the address bar: IE 6 selects the whole address */
     addressClick,
     /** and types www.inyourshoe.com over it, at her pace (no Enter) */
     address,
@@ -271,7 +270,7 @@ export const TUMBLR_CURSOR: CursorKey[] = [
   { t: T.create - 0.05, ...TSPOT.create },
   { t: T.create, ...TSPOT.create, click: true },
   { t: T.published + 0.4, x: 428, y: 828 },
-  { t: T.postEnd, x: 428, y: 828 },
+  { t: T.toAddress, x: 428, y: 828 },
   // up to the address bar, a click (the address is selected), then out of the way of what she types
   { t: T.addressClick - 0.05, ...TSPOT.address },
   { t: T.addressClick, ...TSPOT.address, click: true },
@@ -295,10 +294,8 @@ export const TUMBLR_CAMERA: CamKey[] = [
   // the whole browser again for "Create post" and the page change
   { t: T.create - 0.1, x: 270, y: 586, z: 1 },
   { t: T.published + 0.25, x: 270, y: 586, z: 1 },
-  // then slowly onto her post: her blog's title, the day block and all her words, and it stays on them to the end
-  { t: T.onPost, x: 204, y: 520, z: 1.345 },
-  { t: T.postEnd, x: 204, y: 520, z: 1.36 },
-  // a gentle lift towards the address bar as she goes to it (her post stays in shot), then a last slow creep
+  // then in, in one move, on her post (her blog's title, the day block and all her words) and the address bar above it,
+  // settling as she clicks into the bar; then a last slow creep
   { t: T.addressClick + 0.3, x: 204, y: 498, z: 1.4 },
   { t: T.duration, x: 204, y: 496, z: 1.41 },
 ];

@@ -65,8 +65,8 @@ test('every composition is registered at the right size, rate and length', () =>
   assert.deepEqual(row('HeroReel'), { fps: 30, w: 1080, h: 1920, frames: 1050 });
   // slide 1: the opening (4.8 s) and then the film (35 s)
   assert.deepEqual(row('BreakupCarousel'), { fps: 30, w: 1080, h: 1350, frames: 144 + 1050 });
-  // her post as before (to 15.8 s), then she types www.inyourshoe.com in the Address bar: 15.8 s → 20.2 s
-  assert.deepEqual(row('TumblrBreakup'), { fps: 30, w: 1080, h: 1350, frames: 606 });
+  // her post, then (2 s after it appears) she types www.inyourshoe.com in the Address bar: 15.8 s → 17.3 s
+  assert.deepEqual(row('TumblrBreakup'), { fps: 30, w: 1080, h: 1350, frames: 519 });
   assert.deepEqual(row('MusicPlayerBreakup'), { fps: 30, w: 1080, h: 1350, frames: 384 });
   assert.deepEqual(row('HeroReelOriginal'), { fps: 30, w: 1080, h: 1920, frames: 990 });
   assert.deepEqual(row('Teaser'), { fps: 30, w: 1080, h: 1920, frames: 210 });

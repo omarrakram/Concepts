@@ -10,7 +10,7 @@ Windows Media Player, selects the song and presses Play) and **carries on in
 slide 3, `TumblrBreakup`**, which picks up where slide 2 ends: its first frame
 plays the point of the file slide 2 stops on (file 15.1 s, `TUMBLR_SONG` in
 `src/story/tumblr.ts`), in over 0.1 s, and the song fades over slide 3's last
-second (file 35.3 s). The film itself (`HeroReel`, `BreakupCarousel`) has no
+second (file 32.4 s). The film itself (`HeroReel`, `BreakupCarousel`) has no
 music at all.
 
 ## Import the file you were given
@@ -63,7 +63,7 @@ makes no claim that the track is licensed, royalty-free or cleared.
   hold the rights. `npm run render:carousel` stops rather than render slide 2
   without the song.
 - `out/instagram-carousel-final-v4/03-tumblr-published-stay-tuned-final.mp4`
-  (slide 3) carries the song on for about 20 s more; its clean export is
+  (slide 3) carries the song on for about 17 s more; its clean export is
   `03-tumblr-published-stay-tuned-final-clean.mp4`.
 - `out/instagram-carousel-final-v4/02-music-player-final-clean.mp4` is the
   same video with the clicks but **no song** (the bars still follow it). Use

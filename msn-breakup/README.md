@@ -22,8 +22,8 @@ sounds. Each frame is a pure function of time, so renders are deterministic.
 | `out/instagram-carousel-final-v4/01-msn-breakup-present-to-2007-final.mp4` (slide 1: the present-day opening, then the film, 4:5) | 1080 × 1350, 30 fps, H.264 + AAC | 39.8 s | `npm run render:carousel:film` |
 | `out/instagram-carousel-final-v4/02-music-player-final.mp4` (slide 2: the music player, with the song) | 1080 × 1350, 30 fps | 12.8 s | `npm run render:carousel:player` (needs the song imported) |
 | `out/instagram-carousel-final-v4/02-music-player-final-clean.mp4` (slide 2 without the song) | 1080 × 1350, 30 fps | 12.8 s | (same) |
-| `out/instagram-carousel-final-v4/03-tumblr-published-stay-tuned-final.mp4` (slide 3: slide 2 carries on, the song still playing; her Tumblr post, STAY TUNED. in it; then www.inyourshoe.com typed in the address bar) | 1080 × 1350, 30 fps | 20.2 s | `npm run render:carousel:tumblr` (needs the song imported) |
-| `out/instagram-carousel-final-v4/03-tumblr-published-stay-tuned-final-clean.mp4` (slide 3 without the song) | 1080 × 1350, 30 fps | 20.2 s | (same) |
+| `out/instagram-carousel-final-v4/03-tumblr-published-stay-tuned-final.mp4` (slide 3: slide 2 carries on, the song still playing; her Tumblr post, STAY TUNED. in it; then www.inyourshoe.com typed in the address bar) | 1080 × 1350, 30 fps | 17.3 s | `npm run render:carousel:tumblr` (needs the song imported) |
+| `out/instagram-carousel-final-v4/03-tumblr-published-stay-tuned-final-clean.mp4` (slide 3 without the song) | 1080 × 1350, 30 fps | 17.3 s | (same) |
 | `out/instagram-carousel-final-v4/covers/`, `contact-sheet.png`, `MANIFEST.md`, `manifest.json`, `CUES.txt` | | | `npm run render:carousel` (all of the above) |
 | `out/msn-breakup-reel.mp4` (the film, 9:16 master) | 1080 × 1920, 30 fps | 35.0 s | `npm run render:reel` |
 | `out/msn-breakup-teaser.mp4` (teaser, unchanged) | 1080 × 1920, 30 fps | 7.0 s | `npm run render:teaser` |
@@ -39,7 +39,8 @@ corrections in `out/archive/approved-ad78f3f/`, the approved set before the
 present-day opening in `out/archive/approved-aabe785/`, the set delivered
 before the dates and the song in `out/archive/delivered-41262e8/` (each with
 its `NOTE.md`), the set delivered before the address in
-`out/archive/delivered-8cee92f/`, and the final carousel goes to its own folder,
+`out/archive/delivered-8cee92f/` (and with the address's first timing in
+`out/archive/delivered-d9f3516/`), and the final carousel goes to its own folder,
 `out/instagram-carousel-final-v4/` (the earlier ones are left as they were).
 
 How the carousel fits together (the voice-note brief, order, every new word
@@ -124,7 +125,7 @@ presses Play. On that frame the button turns to Pause, the time reads 00:00
 and the song begins on its first note. She switches to Now Playing. The bars
 move with the music, through the first sung line.
 
-### Slide 3: her Tumblr post, then the address (TumblrBreakup, 20.2 s)
+### Slide 3: her Tumblr post, then the address (TumblrBreakup, 17.3 s)
 
 It picks up where slide 2 ends: Windows Media Player open on Now Playing, the
 song still playing (from the point of the file where slide 2 stops), its bars
@@ -135,10 +136,9 @@ some people are just passing through.*, stops for a moment, presses Enter
 twice and types **STAY TUNED.** (the post, `TEASER_POST` in
 `src/story/tumblr.ts`). Both lines sit in the editor; she clicks **Create
 post**. Her blog shows the one post, dated `THU` `8.11.2007`: her sentence, a
-blank line, STAY TUNED., in her pink. The camera moves in on it and holds,
-as before (the slide used to end there, at 15.8 s: everything up to that frame
-is unchanged). Then she takes the pointer up to Internet Explorer's Address
-bar and clicks it (IE selects the whole address), and types
+blank line, STAY TUNED., in her pink. Two seconds later she takes the
+pointer up to Internet Explorer's Address bar while the camera moves in on her
+post and the bar, clicks it (IE selects the whole address), and types
 **www.inyourshoe.com** over it (`ADDRESS` in `src/story/tumblr.ts`), key by
 key at her pace. She does not press Enter: the video ends on the typed
 address, the caret lit, her post below it. There is no separate end card. The

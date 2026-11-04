@@ -12,9 +12,9 @@ const MOMENTS = {
   // NOW (the present-day desktop, the pointer on the search box), the stutter, the glitch, THEN (XP takes over), then the film (+4.8 s)
   BreakupCarousel: [0.4, 1.6, 2.13, 2.4, 2.7, 3.0, 3.3, 4.8 + 2.0, 4.8 + 14.8, 4.8 + 34.95],
   MusicPlayerBreakup: [0.2, 0.8, 1.1, 1.4, 1.7, 2.1, 77 / 30, 78 / 30, 5.0, 12.77],
-  // the player still playing (slide 2 carries on), Quick Launch, the form, her sentence, STAY TUNED., her blog (8.11.2007), on the post,
+  // the player still playing (slide 2 carries on), Quick Launch, the form, her sentence, STAY TUNED., her blog (8.11.2007), moving in,
   // her click in the Address bar (the address selected), typing www.inyourshoe.com, the last frame (the typed address above her post)
-  TumblrBreakup: [0.2, 1.0, 3.0, 7.9, 9.8, 11.0, 14.0, 16.6, 17.6, 605 / 30],
+  TumblrBreakup: [0.2, 1.0, 3.0, 7.9, 9.8, 11.0, 12.6, 13.7, 14.6, 518 / 30],
 };
 const tmp = `${root}/out/qa/sheet-rows`;
 rmSync(tmp, { recursive: true, force: true });

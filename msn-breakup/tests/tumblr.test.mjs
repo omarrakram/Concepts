@@ -122,9 +122,9 @@ test('she types key by key, steadily, as before (her sentence keeps its exact rh
   assert.deepEqual([TUMBLR.body[0].from, TUMBLR.body[0].at], [3.4, 7.295]);
 });
 
-test('timeline: launch → dashboard → Text → form → her post → Create post → her blog → on the post → the address → the end', () => {
+test('timeline: launch → dashboard → Text → form → her post → Create post → her blog → the address → the end', () => {
   const T = TUMBLR;
-  const seq = [T.launch, T.shown, T.dashboard, T.textClick, T.loaded, T.bodyClick, T.body[0].from, T.body[0].at, T.enters[0], T.enters[1], T.body[2].from, T.body[2].at, T.create, T.published, T.onPost, T.postEnd, T.addressClick, T.address.from, T.address.at, T.duration];
+  const seq = [T.launch, T.shown, T.dashboard, T.textClick, T.loaded, T.bodyClick, T.body[0].from, T.body[0].at, T.enters[0], T.enters[1], T.body[2].from, T.body[2].at, T.create, T.published, T.toAddress, T.addressClick, T.address.from, T.address.at, T.duration];
   seq.forEach((v, i) => i && assert.ok(v > seq[i - 1], `step ${i}`));
   assert.equal(T.titleClick, null);
   // everything up to her first key is timed as in the approved version (she clicks the Post box where she clicked the Title)
@@ -132,16 +132,13 @@ test('timeline: launch → dashboard → Text → form → her post → Create p
   // the publishing beat as before: 0.6 s to Create post, 0.6 s to her blog
   assert.equal(+(T.create - T.body[2].at).toFixed(3), 0.6);
   assert.equal(+(T.published - T.create).toFixed(3), 0.6);
-  // the published post has its 4.9 s on screen, as long as the post and the old end card did together, before she goes
-  // to the Address bar; the camera is on it after 3 s
-  assert.ok(Math.abs(T.postEnd - T.published - 4.9) < 0.06);
-  assert.equal(+(T.onPost - T.published).toFixed(3), 3);
-  // the slide used to end at 15.8 s; the address adds 4.4 s: to the bar, the click, 18 keys, and the typed address held
-  assert.equal(T.postEnd, 15.8);
-  assert.deepEqual([T.addressClick, T.address.from, T.address.at, T.duration], [16.55, 16.9, 18.5, 20.2]);
+  // her post is up 2 s before she heads for the Address bar: from Create post to her first key there, 3.7 s
+  assert.equal(+(T.toAddress - T.published).toFixed(3), 2);
+  assert.equal(+(T.address.from - T.create).toFixed(3), 3.7);
+  assert.deepEqual([T.toAddress, T.addressClick, T.address.from, T.address.at, T.duration], [12.86, 13.61, 13.96, 15.56, 17.3]);
 });
 
-test('after her post, she clicks the Address bar and types www.inyourshoe.com; everything before is as it was', () => {
+test('after her post, she clicks the Address bar and types www.inyourshoe.com; everything until her blog appears is as it was', () => {
   const T = TUMBLR;
   const { TUMBLR_CAMERA, TUMBLR_CURSOR, TSPOT } = tumblr;
   // exactly the collaborator's address, typed key by key at her pace, and nothing else; no Enter
@@ -169,18 +166,17 @@ test('after her post, she clicks the Address bar and types www.inyourshoe.com; e
   assert.deepEqual({ x: click.x, y: click.y }, TSPOT.address);
   assert.match(source('TumblrBreakup.tsx'), /\.\.\.typingCues\(TUMBLR\.address, 'address', false\)/);
   assert.match(source('TumblrBreakup.tsx'), /address=\{s\.address\}/);
-  // the camera and the pointer up to the old end are exactly as they were: their keys then were these two, and the
-  // address beat only adds keys after it
-  const camBefore = TUMBLR_CAMERA.filter((k) => k.t <= T.postEnd);
-  assert.deepEqual(camBefore.slice(-2), [
-    { t: T.onPost, x: 204, y: 520, z: 1.345 },
-    { t: 15.8, x: 204, y: 520, z: 1.36 },
+  // the camera and the pointer until her blog is up are exactly as they were (the whole browser for the page change,
+  // the pointer off to the side); after that, one move in on her post and the bar, and the pointer to the bar
+  assert.deepEqual(TUMBLR_CAMERA.filter((k) => k.t <= T.published + 0.25).at(-1), { t: T.published + 0.25, x: 270, y: 586, z: 1 });
+  assert.deepEqual(TUMBLR_CAMERA.filter((k) => k.t > T.published + 0.25), [
+    { t: T.addressClick + 0.3, x: 204, y: 498, z: 1.4 },
+    { t: T.duration, x: 204, y: 496, z: 1.41 },
   ]);
-  assert.deepEqual(TUMBLR_CURSOR.filter((k) => k.t <= T.postEnd).slice(-2), [
-    { t: +(T.published + 0.4).toFixed(3), x: 428, y: 828 },
-    { t: 15.8, x: 428, y: 828 },
+  assert.deepEqual(TUMBLR_CURSOR.filter((k) => k.t <= T.toAddress).slice(-2), [
+    { t: T.published + 0.4, x: 428, y: 828 },
+    { t: T.toAddress, x: 428, y: 828 },
   ]);
-  assert.equal(TUMBLR_CAMERA.at(-1).t, T.duration);
 });
 
 test('what is on screen follows the timeline', () => {
