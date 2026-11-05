@@ -62,27 +62,31 @@ def main():
     tl = load_json('config', 'timeline.json')
     fps, n = tl['fps'], tl['frames']
     cd = Countdown()
+    cfg = load_json('config', 'countdown.json')
     report = {'films': {}, 'countdown': {}, 'audio': {}}
 
     # --- D. the countdown, every frame -------------------------------------------------------------------------
     origin = tl['countdown']['clockOriginFrame']
     vals = [(f, cd.text(f)) for f in range(tl['countdown']['visibleFrom'], n)]
-    pat = re.compile(r'^\d\d:\d\d:\d\d:\d\d$')
-    check('countdown: four two-digit groups separated by colons, nothing else, on every frame',
+    pat = re.compile(r'^\d\d:\d\d:\d\d$')
+    check('countdown: three two-digit groups (hours:minutes:seconds) separated by colons, nothing else, on every frame',
           all(pat.match(t) for _, t in vals), f'{len(vals)} frames')
     secs = [cd.seconds(f) for f, _ in vals]
     check('countdown: never increases, never negative', all(b <= a_ for a_, b in zip(secs, secs[1:])) and min(secs) >= 0)
-    ok = all(0 <= int(t[3:5]) < 24 and 0 <= int(t[6:8]) < 60 and 0 <= int(t[9:11]) < 60 for _, t in vals)
-    check('countdown: valid hours (<24), minutes (<60), seconds (<60)', ok)
+    ok = all(int(t[3:5]) < 60 and int(t[6:8]) < 60 for _, t in vals)
+    check('countdown: valid minutes (<60) and seconds (<60)', ok)
     changes = [(f, cd.text(f - 1), cd.text(f)) for f in range(origin, n) if cd.text(f) != cd.text(f - 1)]
-    check('countdown: starts at 03:00:00:00 when its clock starts', cd.text(origin) == '03:00:00:00', f'frame {origin}')
-    check('countdown: first tick rolls over to 02:23:59:59, one second later',
-          changes and changes[0] == (origin + fps, '03:00:00:00', '02:23:59:59'), str(changes[:1]))
+    start = cfg['start']
+    after = '%02d:%02d:%02d' % Countdown.groups(cd.total - 1)
+    check(f'countdown: shows {start} from its first frame on screen until its first tick',
+          all(cd.text(f) == start for f in range(tl['countdown']['visibleFrom'], origin + fps)),
+          f"frames {tl['countdown']['visibleFrom']}-{origin + fps - 1}")
+    check(f'countdown: first tick goes to {after}, one second after its clock starts',
+          changes and changes[0] == (origin + fps, start, after), str(changes[:1]))
     check('countdown: ticks exactly once a second, one second at a time',
           all(f2 - f1 == fps for (f1, _, _), (f2, _, _) in zip(changes, changes[1:])) and
           all(cd.seconds(f - 1) - cd.seconds(f) == 1 for f, _, _ in changes), ', '.join(f'{f}:{b}' for f, _, b in changes))
-    report['countdown'] = {'start': load_json('config', 'countdown.json')['start'], 'target': load_json('config', 'countdown.json')['target'],
-                           'timezone': 'Africa/Cairo', 'utc': cd.utc, 'totalSeconds': cd.total, 'clockOriginFrame': origin,
+    report['countdown'] = {'format': cfg['format'], 'start': cfg['start'], 'totalSeconds': cd.total, 'clockOriginFrame': origin,
                            'ticks': [{'frame': f, 'from': a_, 'to': b} for f, a_, b in changes], 'finalValue': cd.text(n - 1)}
 
     for fmt, (name, W, H) in FILMS.items():

@@ -1,5 +1,5 @@
 """The film, frame by frame: the photo (exactly as supplied), the camera's push-in, and inside the screen glass the
-television's signal: the cartoon, the ident, the glitch, the countdown. In linear light; written to ffmpeg.
+television's signal: the cartoon, the card, the glitch, the countdown. In linear light; written to ffmpeg.
 
   python comp/film.py --format 9x16                       -> build/film-9x16.mp4 (picture only, H.264 CRF 17), build/film-9x16.json
   python comp/film.py --format 4x5
@@ -20,6 +20,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import crt  # noqa: E402
 import glitch  # noqa: E402
 import sources  # noqa: E402
+from card import Card  # noqa: E402
 from common import BUILD, RASTER_H, RASTER_W, decode8, encode8, load_json, rng  # noqa: E402
 from countdown import Countdown, CountdownPicture  # noqa: E402
 from screen import Camera, Plate  # noqa: E402
@@ -49,9 +50,8 @@ class Film:
         self.cd = Countdown()
         self.cdpic = CountdownPicture(countdown=self.cd)
         self.cartoon = sources.load('cartoon')
-        self.ident = sources.load('ident')
+        self.card = Card(self.tl)
         self.light = self.plate.cfg['light']
-        self._ident_lin = {}
         g = rng('grain-bank', self.W, self.H)
         self.grain = [cv2.GaussianBlur(g.standard_normal((self.H, self.W)).astype(np.float32), (0, 0), 0.6) * 1.9
                       for _ in range(GRAIN_BANK)]
@@ -63,28 +63,25 @@ class Film:
     # --- what the set is showing ----------------------------------------------------------------------------
     def segment(self, f):
         tl = self.tl
-        if f < tl['ident']['first']:
+        if f < tl['card']['first']:
             return 'cartoon'
         if f < tl['glitch']['first']:
-            return 'ident'
+            return 'card'
         if f < tl['glitch']['first'] + tl['glitch']['frames']:
             return 'glitch'
         return 'countdown'
-
-    def ident_lin(self, i):
-        if i not in self._ident_lin:
-            self._ident_lin[i] = decode8(np.asarray(self.ident[i]))
-        return self._ident_lin[i]
 
     def signal(self, f):
         tl, seg = self.tl, self.segment(f)
         if seg == 'cartoon':
             raw = decode8(np.asarray(self.cartoon[f - tl['cartoon']['first'] + tl['cartoon']['sourceIn']]))
-        elif seg == 'ident':
-            raw = self.ident_lin(f - tl['ident']['first'])
+        elif seg == 'card':
+            raw = self.card.render(f - tl['card']['first'])
         elif seg == 'glitch':
             gi = f - tl['glitch']['first']
-            raw = glitch.frame(gi, f, {94: self.ident_lin(94), 95: self.ident_lin(95)}, self.cdpic.render(f))
+            last = tl['card']['interruptFrame']
+            held = {last - 1: self.card.held(last - 1), last: self.card.held(last)}
+            raw = glitch.frame(gi, f, held, self.cdpic.render(f))
         else:
             # the hijacking signal: the countdown, and the faint snow of a weak broadcast in its black
             raw = self.cdpic.render(f) + glitch.static(f, COUNTDOWN_SNOW)

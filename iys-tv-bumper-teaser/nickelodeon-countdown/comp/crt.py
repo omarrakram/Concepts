@@ -1,4 +1,4 @@
-"""The television's own look, applied to every picture it shows (cartoon, ident, glitch, countdown alike):
+"""The television's own look, applied to every picture it shows (cartoon, card, glitch, countdown alike):
 
   signal()      on the 4:3 signal: an analog picture's limited sharpness (softer across than down), colour that
                 bleeds a little sideways (composite video), a faint shimmer of analog noise

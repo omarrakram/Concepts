@@ -1,9 +1,10 @@
-"""The broadcast glitch: 18 frames (0.6 s) between the ident's 'nickelode...' frame and the countdown's locked signal.
-Every frame is a fixed recipe (KEYS) with seeded noise, so it renders identically every time. No new imagery: only
-the ident's own last frames, static, and the countdown's signal breaking through. No white flash: the static's
-average brightness is held well below the ident's white backdrop, and brightness swings stay under three a second.
+"""The broadcast glitch: 18 frames (0.6 s) between the card's last frame (SINGLE’S DAY / OFFER ENDS IN) and the
+countdown's locked signal. Every frame is a fixed recipe (KEYS) with seeded noise, so it renders identically every
+time. No new imagery: only the card's own last frames, static, and the countdown's signal breaking through. No white
+flash: the static's average brightness is held well below the card's white, and brightness swings stay under three
+a second. (The recipe is the one first made for the Nickelodeon ident in this slot, unchanged.)
 
-  A  (before)   the ident in motion, up to its frame 95
+  A  (before)   the card, up to its frame 95
   B  g0-g1      the picture freezes on frame 95 and stutters back to 94, a band tears sideways
   C  g2-g5      strong but controlled interference: tearing, scanline displacement, RGB split, static rising
   D  g6-g10     brief signal loss (dark, one bright sync line), then a new signal rolls in: horizontal distortion,
@@ -19,16 +20,17 @@ import numpy as np
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from common import RASTER_H, RASTER_W, rng  # noqa: E402
 
-# per glitch frame: source ('i95', 'i94', 'cd' or None), its opacity, vertical roll (fraction of the height),
-# tears [(y0, y1, dx)] in fractions, wave amplitude (px), RGB split (px), static amount, random-walk jitter (px),
-# extra: 'sync' = a bright horizontal sync line, 'loss' = the dark no-signal frame
+# per glitch frame: source ('c95', 'c94': the card's frames 95 and 94; 'cd': the countdown; or None), its opacity,
+# vertical roll (fraction of the height), tears [(y0, y1, dx)] in fractions, wave amplitude (px), RGB split (px),
+# static amount, random-walk jitter (px), extra: 'sync' = a bright horizontal sync line, 'loss' = the dark no-signal
+# frame
 KEYS = [
-    dict(src='i95', a=1.0, roll=0.00, tears=[(0.55, 0.68, 0.045)], wave=0, rgb=3, static=0.00, jitter=0),
-    dict(src='i94', a=1.0, roll=-0.012, tears=[(0.30, 0.38, -0.06), (0.71, 0.74, 0.03)], wave=0, rgb=5, static=0.06, jitter=2),
-    dict(src='i95', a=1.0, roll=0.00, tears=[(0.12, 0.20, 0.05), (0.47, 0.60, -0.08), (0.80, 0.86, 0.11)], wave=14, rgb=7, static=0.22, jitter=6),
-    dict(src='i95', a=0.92, roll=0.05, tears=[(0.05, 0.22, -0.13), (0.40, 0.44, 0.20), (0.62, 0.77, 0.07)], wave=34, rgb=11, static=0.42, jitter=26, extra='sync'),
-    dict(src='i95', a=0.45, roll=0.21, tears=[(0.30, 0.52, 0.16)], wave=48, rgb=14, static=0.70, jitter=40),
-    dict(src='i95', a=0.15, roll=0.43, tears=[], wave=60, rgb=16, static=0.88, jitter=55),
+    dict(src='c95', a=1.0, roll=0.00, tears=[(0.55, 0.68, 0.045)], wave=0, rgb=3, static=0.00, jitter=0),
+    dict(src='c94', a=1.0, roll=-0.012, tears=[(0.30, 0.38, -0.06), (0.71, 0.74, 0.03)], wave=0, rgb=5, static=0.06, jitter=2),
+    dict(src='c95', a=1.0, roll=0.00, tears=[(0.12, 0.20, 0.05), (0.47, 0.60, -0.08), (0.80, 0.86, 0.11)], wave=14, rgb=7, static=0.22, jitter=6),
+    dict(src='c95', a=0.92, roll=0.05, tears=[(0.05, 0.22, -0.13), (0.40, 0.44, 0.20), (0.62, 0.77, 0.07)], wave=34, rgb=11, static=0.42, jitter=26, extra='sync'),
+    dict(src='c95', a=0.45, roll=0.21, tears=[(0.30, 0.52, 0.16)], wave=48, rgb=14, static=0.70, jitter=40),
+    dict(src='c95', a=0.15, roll=0.43, tears=[], wave=60, rgb=16, static=0.88, jitter=55),
     dict(src=None, a=0.0, roll=0.0, tears=[], wave=0, rgb=0, static=0.14, jitter=0, extra='loss'),
     dict(src='cd', a=0.35, roll=-0.38, tears=[(0.10, 0.30, 0.18), (0.55, 0.70, -0.12)], wave=40, rgb=16, static=0.62, jitter=45),
     dict(src='cd', a=0.60, roll=-0.24, tears=[(0.35, 0.47, -0.15), (0.70, 0.76, 0.09)], wave=28, rgb=12, static=0.44, jitter=28),
@@ -42,7 +44,7 @@ KEYS = [
     dict(src='cd', a=1.0, roll=0.0, tears=[], wave=0.5, rgb=0.6, static=0.02, jitter=0.5),
     dict(src='cd', a=1.0, roll=0.0, tears=[], wave=0, rgb=0.3, static=0.015, jitter=0),
 ]
-STATIC_MEAN = 0.26      # linear: the static's average brightness (the ident's backdrop is about 0.85)
+STATIC_MEAN = 0.26      # linear: the static's average brightness (the card's white is about 0.86)
 
 
 def static(frame, amount):
@@ -93,17 +95,16 @@ def _roll(img, frac):
     return out
 
 
-def frame(gi, film_frame, ident, countdown_lin):
-    """The signal at glitch frame gi (0-17): linear float32 HxWx3. ident: the prepared ident frames (sRGB uint8,
-    as from comp/sources.py, already decoded to linear by the caller: a dict {94: lin, 95: lin});
-    countdown_lin: the countdown's picture for this frame."""
+def frame(gi, film_frame, held, countdown_lin):
+    """The signal at glitch frame gi (0-17): linear float32 HxWx3. held: the card's last two frames, linear
+    ({94: lin, 95: lin}); countdown_lin: the countdown's picture for this frame."""
     k = KEYS[gi]
     g = rng('glitch', gi)
     h, w = RASTER_H, RASTER_W
-    if k['src'] == 'i95':
-        pic = ident[95].copy()
-    elif k['src'] == 'i94':
-        pic = ident[94].copy()
+    if k['src'] == 'c95':
+        pic = held[95].copy()
+    elif k['src'] == 'c94':
+        pic = held[94].copy()
     elif k['src'] == 'cd':
         pic = countdown_lin.copy()
     else:

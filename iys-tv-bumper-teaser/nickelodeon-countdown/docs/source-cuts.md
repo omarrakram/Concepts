@@ -24,48 +24,13 @@ The dialogue, with its measured word times:
 
 After the wish, 6.4–7.5 s: Cosmo and Wanda raise their wands, and the wands' sparkle sounds at 7.05–7.5 s.
 
-**Cut:** the film uses **the whole clip, film frames 0–225 (0.000–7.533 s)**, picture and sound. The wish is complete at 6.38 s. The wands rising after it is the scene's own ending, and the ident follows on the next frame, as a channel would cut to its bumper. The delivered film's own sound is checked by speech recognition for the full sentence (`out/validation-report.md`).
+**Cut:** the film uses **the whole clip, film frames 0–225 (0.000–7.533 s)**, picture and sound. The wish is complete at 6.38 s. The wands rising after it is the scene's own ending, and the card follows on the next frame, as a channel would cut to a promo. The delivered film's own sound is checked by speech recognition for the full sentence (`out/validation-report.md`).
 
-## Video B: the Nickelodeon ident
+## Video B: the Nickelodeon ident (no longer used)
 
-| | |
-|---|---|
-| File | `WhatsApp Video 2026-10-31 at 4.22.32 PM.mp4` (the supplied attachment, unchanged) |
-| SHA-256 | `ad3ebf8f4eb555207025adcf3957252eecbda51ebe036b88fe66f7b2851002b9` |
-| Picture | 464×352 H.264 Baseline, tagged BT.709 limited range; 164 frames in 5.467 s (average 30 fps; the stream's nominal rate says 29.97) |
-| Sound | AAC-LC 44.1 kHz stereo, 5.450 s (music and impacts, no speech) |
-| Crop used | 2 px off the top and bottom → 464×348, exactly 4:3, square pixels |
+The first delivery (commit 809ece1) played the supplied ident, `WhatsApp Video 2026-10-31 at 4.22.32 PM.mp4` (SHA-256 `ad3ebf8f4eb555207025adcf3957252eecbda51ebe036b88fe66f7b2851002b9`), in film frames 226–321. That was its source frames 0–95, up to "nickelode…", with its own sound.
 
-**What the file actually shows** (frame by frame; it differs from the brief's description):
-- a white/light-grey studio backdrop, not a blue/purple background;
-- orange, dimensional, lowercase letters that drop and assemble one by one into the word "nickelodeon";
-- no white lettering.
-
-It is the supplied file (name, length, size and frame rate all match the brief), so it is used exactly as supplied. Nothing was recoloured or substituted.
-
-How the wordmark forms:
-
-| Source frame | Time | On screen |
-|---|---|---|
-| 4 | 0.133 s | the first letter falls in |
-| 40 | 1.333 s | "nick" |
-| 60 | 2.000 s | "nicke." |
-| 93 | 3.100 s | "nickeloo" (the "d" still a bowl without its stem), pieces arriving |
-| 94 | 3.133 s | "nickeloo" with an "e" forming |
-| **95** | **3.167 s** | **"nickelode", with the next letters still in pieces: the interruption frame** |
-| 96 | 3.200 s | "nickelode" plus a half-formed "o" |
-| 103 | 3.433 s | "nickelodeon" complete (never reached in the film) |
-
-**Cut:** source frames **0–95**, one film frame each (film frames 226–321, 7.533–10.733 s). Frame 95 is the last new picture: the glitch begins by freezing on it and stuttering back to 94 (film frames 322–323). The ident never reaches its complete wordmark.
-
-The ident's sound runs from its start to the interruption, 0.000–3.200 s. During the glitch's freeze and stutter, its own last two frames of sound repeat in step with the picture.
-
-### Cleanup applied to the ident (and only this)
-
-- **TikTok watermark removed.** The recording carries a TikTok logo and an uploader's username over the plain backdrop, at bottom left (x 2–72, y 209–251). Around frame 148 they move to the bottom right. The watermark is not part of the ident, and on a 2000s broadcast it would be an anachronism.
-  - That region, and only that region, is replaced with the same backdrop taken from the clip's own frames 150–163, where the watermark has moved away. Each frame's backdrop brightness is matched, with a 4 px feathered edge.
-  - The letters, their shadows and the animation are untouched. See `build/content/check-sources.png`.
-- **Mild compression cleanup.** Light non-local-means denoising (strength 2.5), then a Lanczos upscale to the 1440×1080 signal. No AI upscaling, no invented frames, no change to the lettering.
+This version plays the SINGLE’S DAY / OFFER ENDS IN card in the same slot instead (`comp/card.py`, `config/timeline.json` → `card`). It has the same 96 frames, and the glitch interrupts it on its frame 95, as it did the ident. The ident file is no longer read and is not needed to render. Its cut points and its watermark cleanup are in this file's history (commit 809ece1).
 
 ## The TV photo
 
@@ -73,7 +38,7 @@ The ident's sound runs from its start to the interruption, 0.000–3.200 s. Duri
 |---|---|
 | File | `plate/tv-room-vertical.webp`: the vertical photo supplied in the conversation (941×1672, about 9:16) |
 | SHA-256 | `8bf1ef7d77abcdb74764553790330aa1c1e0ed0a5ef429aef8923def35810970` |
-| Use | kept exactly as supplied. The clips are only added inside the screen glass, and the camera's push-in only enlarges the photo. |
+| Use | kept exactly as supplied. The picture (the cartoon, the card, the glitch, the countdown) is only added inside the screen glass, and the camera's push-in only enlarges the photo. |
 
 The glass edge was measured along each side, at threshold crossings with outliers rejected, and fitted with quadratics:
 
@@ -86,4 +51,4 @@ The glass edge was measured along each side, at threshold crossings with outlier
 
 The fitted corners are TL (195.1, 589.8), TR (751.6, 584.9), BR (756.5, 957.5) and BL (189.5, 956.7). The glass bows outward like a real tube: by about 18 px at the top, 9 px at the bottom and 8 px at each side.
 
-The glass is about **1.47:1**, wider than the clips' 4:3. To keep the clips unstretched, the picture fills the glass's width with 1.5 % overscan at each side. The top and bottom of the picture (about 7 % each) run behind the bezel, as an overscanned CRT does.
+The glass is about **1.47:1**, wider than the signal's 4:3. To keep the picture unstretched, the picture fills the glass's width with 1.5 % overscan at each side. The top and bottom of the picture (about 7 % each) run behind the bezel, as an overscanned CRT does.

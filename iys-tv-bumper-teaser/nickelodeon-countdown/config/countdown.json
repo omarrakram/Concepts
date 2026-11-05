@@ -1,8 +1,7 @@
 {
-  "_": "The one source of the countdown. Nothing here is ever shown on screen: only the four two-digit groups (days:hours:minutes:seconds) and their colons. The film is a prerecorded, deterministic animation, not a live clock: its first countdown frame (clockOriginFrame in config/timeline.json) stands for the moment `start`, whatever moment it is watched.",
-  "timezone": "Africa/Cairo",
-  "start": "2026-11-08T00:00:00",
-  "target": "2026-11-11T00:00:00",
+  "_": "The one source of the countdown. Only its digits and colons are ever on screen. It shows `start` (hours:minutes:seconds) from the moment its signal locks (clockOriginFrame in config/timeline.json) and counts down one second a second. The film is a prerecorded, deterministic animation, not a live clock.",
+  "format": "HH:MM:SS",
+  "start": "22:22:22",
   "fps": 30,
-  "display": "ceil: a value is on screen for the whole second that ends at it, so the start shows 03:00:00:00 and one second later 02:23:59:59"
+  "display": "ceil: a value is on screen for the whole second that ends at it, so the start shows 22:22:22 and one second later 22:22:21"
 }

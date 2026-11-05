@@ -18,23 +18,17 @@
     "audioIn": 0.0,
     "audioOut": 7.533333
   },
-  "ident": {
-    "source": "sources/WhatsApp Video 2026-10-31 at 4.22.32 PM.mp4",
-    "sha256": "ad3ebf8f4eb555207025adcf3957252eecbda51ebe036b88fe66f7b2851002b9",
+  "card": {
+    "_": "the card the set plays where the Nickelodeon ident used to be (comp/card.py), in the ident's slot: film frames 226-321, the same 96 frames; its frame 95 is where the glitch interrupts it (the glitch freezes on 95 and stutters back to 94, as it did on the ident)",
     "first": 226,
-    "_frames": "source frames 0-95, one film frame each (the stream's nominal rate says 29.97 fps, but its 164 frames span 5.467 s: 30 fps); frame 95 is the last new picture: the wordmark reads 'nickelode' and the next letter is still in pieces",
     "frames": 96,
-    "sourceIn": 0,
     "interruptFrame": 95,
-    "_crop": "464x352 -> 464x348 (2 px off top and bottom): 4:3, square pixels",
-    "crop": [
-      0,
-      2,
-      464,
-      348
+    "lines": [
+      "SINGLE’S DAY",
+      "OFFER ENDS IN"
     ],
-    "matrix": "bt709",
-    "audioIn": 0.0,
+    "_secondLineAt": "card frame the second line lands on (0.6 s in, film frame 244); the first line lands on the card's first frame",
+    "secondLineAt": 18,
     "audioOut": 3.2
   },
   "glitch": {

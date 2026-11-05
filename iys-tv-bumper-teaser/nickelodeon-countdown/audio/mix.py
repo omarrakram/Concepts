@@ -1,13 +1,14 @@
 """The film's sound, 48 kHz stereo, sample-accurate to the 30 fps picture (config/timeline.json).
 
   cartoon    the supplied clip's own audio (dialogue, the full wish), through a small TV speaker into the room
-  ident      the supplied ident's own audio, from its start to the interruption frame, the same way
-  glitch     the picture's stutter, heard: the ident's own last two frames of sound, repeated as the picture repeats
+  card       the SINGLE’S DAY card's sting (synthesized): a bright chord as it cuts in, a lighter chime as its second
+             line lands, a warm chord held under it; the same speaker and room, cut at the interruption frame
+  glitch     the picture's stutter, heard: the card's own last two frames of sound, repeated as the picture repeats
              them; then static whose loudness follows the static on screen frame by frame; a pop at the signal loss
   countdown  a low lock-in thump as the signal locks; a tick exactly on each frame a digit changes (tick, tock);
              a low, restrained drone under it, still sounding when the film cuts
 
-  python audio/mix.py        -> build/audio/mix.wav (before loudness normalisation), build/audio/cues.json
+  python audio/mix.py        -> build/audio/mix.wav (before the encode's limiter), build/audio/cues.json
 All synthesis is seeded; the supplied audio is used as is (filtered, never replaced).
 """
 import json
@@ -115,10 +116,14 @@ def to_lufs(x, target):
     return x * 10 ** (g / 20), g
 
 
-# the balance (before the whole film is normalised to -14 LUFS): the dialogue on top, the glitch a step under it,
+# the balance: the dialogue on top, the card a step under it (the level the ident had), the glitch under that,
 # the countdown's ticks and drone quieter still, the drone well under the ticks
-LEVELS = {'cartoon': -16.0, 'ident': -17.0, 'glitch': -19.0, 'countdown': -19.0, 'drone': -26.0}
+LEVELS = {'cartoon': -16.0, 'card': -17.0, 'glitch': -19.0, 'countdown': -19.0, 'drone': -26.0}
 MASTER = -14.0     # the whole film, integrated (the true peak is then held under -1 dBTP by a limiter at the encode)
+# The master gain is the delivered film's (809ece1, when the ident played in the card's slot: its mix measured
+# -17.267 LUFS and was raised 3.267 dB to -14). It is kept fixed so the cartoon's sound stays sample for sample what
+# was delivered; the card sits at the ident's level, so the film still measures about -14 LUFS (checked below).
+MASTER_GAIN_DB = 3.2670574378720794
 
 
 def fade(x, a, b):
@@ -171,6 +176,51 @@ def thump(n_sec=0.7, f0=58):
     return np.stack([s, s], axis=1)
 
 
+def card_sound(n_sec, second_at, seed='card'):
+    """The card's sound, as a channel's promo card would have it (synthesized, seeded): a bright bell chord over a
+    soft low hit and a breath of sparkle as the card cuts in, a lighter two-note chime when its second line lands
+    (second_at, seconds), and a warm chord held under the card, still sounding when the glitch cuts it."""
+    g = rng(seed)
+    n = int(n_sec * SR)
+    t = np.arange(n) / SR
+    x = np.zeros((n, 2))
+
+    def bell(f0, t0, amp, decay, pan):
+        tt = t - t0
+        on = tt >= 0
+        u = tt[on]
+        v = (np.sin(2 * np.pi * f0 * u) + 0.32 * np.sin(2 * np.pi * f0 * 2.0 * u) * np.exp(-u / (decay * 0.45))
+             + 0.16 * np.sin(2 * np.pi * f0 * 3.01 * u) * np.exp(-u / (decay * 0.25)))
+        v *= np.exp(-u / decay) * (1 - np.exp(-u / 0.0015)) * amp
+        x[on, 0] += v * (1 - pan)
+        x[on, 1] += v * (1 + pan)
+
+    # the sting: A major, high, over the held chord's root
+    for f0, amp, pan in ((440.0, 0.30, 0.0), (880.0, 0.42, -0.15), (1108.73, 0.34, 0.15), (1318.51, 0.30, -0.05)):
+        bell(f0, 0.0, amp, 0.85, pan)
+    # the low hit: a short pitch drop, a little saturated so the small speaker still carries it
+    pitch = 95 * (1 + 0.8 * np.exp(-t / 0.025))
+    hit = np.tanh(2.2 * np.sin(2 * np.pi * np.cumsum(pitch) / SR)) * np.exp(-t / 0.16) * (1 - np.exp(-t / 0.002))
+    x += 0.55 * hit[:, None]
+    # sparkle: a short bright breath of noise
+    sp = spectral(g.standard_normal((n, 2)), chain(hp(5000, 2), lp(12000, 1))) * np.exp(-t / 0.09)[:, None]
+    x += 0.10 * sp / (np.abs(sp).max() + 1e-12)
+    # the second line: a lighter chime
+    for f0, amp, pan in ((1318.51, 0.26, 0.1), (1760.0, 0.20, -0.1)):
+        bell(f0, second_at, amp, 0.5, pan)
+    # the held chord: soft, a little detuned, swelling gently under the card
+    pad = np.zeros(n)
+    for f0, amp in ((220.0, 1.0), (329.63, 0.8), (440.0, 0.7), (554.37, 0.55)):
+        for det in (-0.0017, 0.0017):
+            ph = g.random() * 2 * np.pi
+            for k in range(1, 9):
+                pad += amp / k ** 1.6 * np.sin(2 * np.pi * f0 * (1 + det) * k * t + ph * k)
+    pad *= (1 - np.exp(-t / 0.08)) * (0.85 + 0.15 * np.clip(t / 3.0, 0, 1))
+    x += 0.045 * np.stack([pad, pad], axis=1)
+    pk = np.abs(x).max()
+    return np.tanh(1.6 * x / pk) / np.tanh(1.6) * pk     # rounded peaks: the sting is full, never a spike
+
+
 def drone(n, seed='drone'):
     """Low and restrained: two low partials beating slowly, a breath of filtered air, a faint high shimmer that
     grows a little; no melody, no horror stings."""
@@ -205,26 +255,29 @@ def main():
     place(bus, fade(a, 48, 96), at(c['first'], fps))
     cues.append({'t': c['first'] / fps, 'cue': 'cartoon audio (supplied clip, 0.000-%.3f s)' % (len(a) / SR)})
 
-    # --- the ident: its own audio, up to the interruption -------------------------------------------------
-    i = tl['ident']
-    src = verify_source(i)
-    b = decode(src, i['audioIn'], i['audioOut'] - i['audioIn'])
-    b, gb = to_lufs(room(tv_speaker(b)), LEVELS['ident'])
-    place(bus, fade(b, 64, 48), at(i['first'], fps))
-    cues.append({'t': i['first'] / fps, 'cue': 'ident audio (supplied clip, %.3f-%.3f s), cut at the interruption' % (i['audioIn'], i['audioOut'])})
+    # --- the card: its sting and held chord, up to the interruption ------------------------------------------
+    cc = tl['card']
+    second = cc['secondLineAt'] / fps
+    raw_card = room(tv_speaker(card_sound(cc['audioOut'] + 0.1, second)))   # a frame or two past the cut, for the stutter
+    b, gb = to_lufs(raw_card[:int(round(cc['audioOut'] * SR))], LEVELS['card'])
+    place(bus, fade(b, 64, 48), at(cc['first'], fps))
+    cues.append({'t': cc['first'] / fps, 'cue': 'card: the sting (bell chord, low hit) as SINGLE\u2019S DAY cuts in; a warm chord held under the card'})
+    cues.append({'t': (cc['first'] + cc['secondLineAt']) / fps, 'cue': 'card: a lighter chime as OFFER ENDS IN lands'})
+    cues.append({'t': (cc['first'] + cc['frames']) / fps, 'cue': 'card: its sound cut at the interruption (0.000-%.3f s)' % cc['audioOut']})
 
     # --- the glitch ---------------------------------------------------------------------------------------------
     gfirst, gn = tl['glitch']['first'], tl['glitch']['frames']
     per = SR // fps
     # the stutter: the picture holds frame 95, jumps back to 94, holds 95 again -> so does the sound
-    raw_ident = room(tv_speaker(decode(src, 0, 3.3))) * 10 ** (gb / 20)   # the same level as the ident
+    raw_card = raw_card * 10 ** (gb / 20)            # the same level as the card
 
     def grain(src_frame):
         s0 = src_frame * per
-        return fade(raw_ident[s0:s0 + per].copy(), 24, 24)
-    for gi, sf, lvl in ((0, 95, 0.9), (1, 94, 0.8), (2, 95, 0.55), (3, 95, 0.3)):
+        return fade(raw_card[s0:s0 + per].copy(), 24, 24)
+    last = cc['interruptFrame']
+    for gi, sf, lvl in ((0, last, 0.9), (1, last - 1, 0.8), (2, last, 0.55), (3, last, 0.3)):
         place(bus, grain(sf) * lvl, at(gfirst + gi, fps))
-    cues.append({'t': gfirst / fps, 'cue': 'glitch: the ident\'s last two frames of sound repeat with the frozen/stuttering picture'})
+    cues.append({'t': gfirst / fps, 'cue': 'glitch: the card\'s last two frames of sound repeat with the frozen/stuttering picture'})
     # static: its level follows the picture's static amount frame by frame (smoothed over 4 ms)
     n = gn * per + per
     env = np.zeros(n)
@@ -258,7 +311,7 @@ def main():
     origin = tl['countdown']['clockOriginFrame']
     cbus = np.zeros((total - at(origin, fps), 2))
     place(cbus, thump(0.8, 52) * 0.5, 0)
-    cues.append({'t': origin / fps, 'cue': 'countdown: the signal locks (low thump); its clock starts (03:00:00:00)'})
+    cues.append({'t': origin / fps, 'cue': 'countdown: the signal locks (low thump); its clock starts (%s)' % cd['start']})
     dn = total - at(origin, fps)
     d, gd = to_lufs(drone(dn), LEVELS['drone'])
     d[:int(0.45 * SR)] *= np.linspace(0, 1, int(0.45 * SR))[:, None] ** 2
@@ -271,7 +324,7 @@ def main():
     # the ticks and the thump are levelled together; the drone sits under them at its own level
     cbus, gc = to_lufs(cbus, LEVELS['countdown'])
     place(bus, cbus + d, at(origin, fps))
-    levels = {'cartoon': round(loudness(a), 1), 'ident': round(loudness(b), 1), 'glitch': round(loudness(gbus), 1),
+    levels = {'cartoon': round(loudness(a), 1), 'card': round(loudness(b), 1), 'glitch': round(loudness(gbus), 1),
               'countdown (ticks, thump)': round(loudness(cbus), 1), 'drone': round(loudness(d), 1)}
     print('levels (LUFS)', levels)
     # the last 8 ms only: the film cuts while everything is still sounding, without a click
@@ -279,7 +332,11 @@ def main():
     bus[-k:] *= np.linspace(1, 0, k)[:, None]
 
     whole = loudness(bus)
-    bus *= 10 ** ((MASTER - whole) / 20)
+    bus *= 10 ** (MASTER_GAIN_DB / 20)
+    film = loudness(bus)
+    print('mix %.2f LUFS + %.3f dB (the delivered master gain) -> %.2f LUFS' % (whole, MASTER_GAIN_DB, film))
+    if abs(film - MASTER) > 0.5:
+        raise SystemExit('the film is %.2f LUFS, more than 0.5 LU off %.1f: the balance has changed' % (film, MASTER))
     peak = float(np.abs(bus).max())
     # 32-bit float WAV: nothing is clipped here; the encode's limiter catches the few peaks over -1 dBTP
     raw = bus.astype('<f4').tobytes()
@@ -290,7 +347,7 @@ def main():
     levels['film (before the limiter)'] = round(loudness(bus), 1)
     with open(os.path.join(OUT, 'cues.json'), 'w') as f:
         json.dump({'sampleRate': SR, 'fps': fps, 'samples': total, 'cues': cues, 'levelsLUFS': levels,
-                   'countdown': {'start': cd['start'], 'target': cd['target'], 'timezone': cd['timezone']}}, f, indent=1)
+                   'masterGainDB': MASTER_GAIN_DB, 'countdown': {'format': cd['format'], 'start': cd['start']}}, f, indent=1)
     print('mix', total, 'samples', total / SR, 's; peak', round(20 * np.log10(peak), 2), 'dBFS')
 
 

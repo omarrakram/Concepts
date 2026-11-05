@@ -1,11 +1,9 @@
 """The countdown: what it shows on every frame (exact integer arithmetic from config/countdown.json), and the picture
-of it as the hijacked signal: four two-digit groups and three colons, softly luminous on black. No labels, no
-dates, no words: only digits and colons are ever drawn."""
+of it as the new signal: three two-digit groups (hours:minutes:seconds) and two colons, softly luminous on black.
+No labels and no words: only digits and colons are ever drawn."""
 import json
 import math
 import os
-from datetime import datetime, timezone
-from zoneinfo import ZoneInfo
 
 import cv2
 import numpy as np
@@ -24,21 +22,19 @@ def load_config():
 
 
 class Countdown:
-    """Frame -> the value on screen. The film's frame clockOriginFrame stands for the instant `start`; the value is
-    the time left until `target`, rounded up to the second (ceil)."""
+    """Frame -> the value on screen. The film's frame clockOriginFrame shows `start`; from there the value is the time
+    left, one second less every second, rounded up to the second (ceil)."""
 
     def __init__(self, cfg=None, tl=None):
         if cfg is None:
             cfg, tl = load_config()
-        tz = ZoneInfo(cfg['timezone'])
-        start = datetime.fromisoformat(cfg['start']).replace(tzinfo=tz).astimezone(timezone.utc)
-        target = datetime.fromisoformat(cfg['target']).replace(tzinfo=tz).astimezone(timezone.utc)
-        total = (target - start).total_seconds()
-        assert total > 0 and total == int(total), 'start and target must be whole seconds apart'
-        self.total = int(total)               # 259200 for 8 Nov 00:00 -> 11 Nov 00:00 (Cairo, no DST change)
+        assert cfg['format'] == 'HH:MM:SS'
+        h, m, s = (int(v) for v in cfg['start'].split(':'))
+        assert 0 <= m < 60 and 0 <= s < 60 and 0 <= h < 100
+        self.total = h * 3600 + m * 60 + s     # 80542 for 22:22:22
+        self.start = cfg['start']
         self.fps = int(cfg['fps'])
         self.origin = int(tl['countdown']['clockOriginFrame'])
-        self.utc = (start.isoformat(), target.isoformat())
 
     def seconds(self, frame):
         """Whole seconds on screen at this frame: ceil(total - elapsed), never below 0, never above total."""
@@ -48,14 +44,13 @@ class Countdown:
 
     @staticmethod
     def groups(seconds):
-        d, r = divmod(seconds, 86400)
-        h, r = divmod(r, 3600)
+        h, r = divmod(seconds, 3600)
         m, s = divmod(r, 60)
-        assert d <= 99
-        return d, h, m, s
+        assert h <= 99
+        return h, m, s
 
     def text(self, frame):
-        return '%02d:%02d:%02d:%02d' % self.groups(self.seconds(frame))
+        return '%02d:%02d:%02d' % self.groups(self.seconds(frame))
 
     def last_tick(self, frame):
         """(frame the current value appeared on, the value before it) for the tick animation; None before the
@@ -81,11 +76,13 @@ class CountdownPicture:
     def __init__(self, width=1440, height=1080, text_width=0.80, countdown=None):
         self.w, self.h = width, height
         self.cd = countdown or Countdown()
-        # size the type so the eleven characters span text_width of the raster (title-safe)
+        # size the type so the line (its digits and colons) spans text_width of the raster (title-safe)
         probe = ImageFont.truetype(FONT, 200)
         adv_d, adv_c = probe.getlength('0'), probe.getlength(':')
         self.track = 0.04                                   # extra space after each character, in em
-        em_units = 8 * adv_d / 200 + 3 * adv_c / 200 + 10 * self.track
+        sample = self.cd.text(self.cd.origin)
+        nd, nc = sum(ch.isdigit() for ch in sample), sample.count(':')
+        em_units = nd * adv_d / 200 + nc * adv_c / 200 + (len(sample) - 1) * self.track
         self.size = int(round(text_width * width / em_units))
         self.font = ImageFont.truetype(FONT, self.size)
         self.adv_d = self.font.getlength('0')
@@ -172,6 +169,6 @@ class CountdownPicture:
 
 if __name__ == '__main__':
     cd = Countdown()
-    print('total seconds', cd.total, 'UTC', cd.utc, 'origin frame', cd.origin)
+    print('total seconds', cd.total, 'start', cd.start, 'origin frame', cd.origin)
     for f in (cd.origin - 1, cd.origin, cd.origin + 29, cd.origin + 30, cd.origin + 59, cd.origin + 60, 504):
         print(f, cd.text(f), cd.last_tick(f))

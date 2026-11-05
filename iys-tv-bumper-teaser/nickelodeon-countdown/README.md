@@ -2,9 +2,9 @@
 
 An **internal creative concept / pitch** for IN YOUR SHOE (IYS).
 
-An old CRT television in a 2000s living room is playing The Fairly OddParents. Timmy wishes he had clothes like the popular kids. The channel cuts to its Nickelodeon ident, and just as the wordmark reaches "nickelode…" the broadcast is hijacked. The picture tears and rolls into static, and a mysterious countdown locks in: four groups of two digits, ticking. The film ends on the ticking countdown: no logo, no words, no explanation.
+An old CRT television in a 2000s living room is playing The Fairly OddParents. Timmy wishes he had clothes like the popular kids. The channel cuts to a card: **SINGLE’S DAY**, then **OFFER ENDS IN**. The broadcast is hijacked: the picture tears and rolls into static, and a countdown locks in at `22:22:22` and ticks down. The film ends on the ticking countdown: no logo, no explanation.
 
-> **Rights.** The cartoon and the ident are recognisable third-party material (Nickelodeon), used here only as internal concept references in the working environment. Nothing here is cleared for publication, implies any broadcaster's involvement or support, or grants any usage right. A public campaign would need licences for both clips, or replacements, settled separately. The supplied clips, the supplied TV photo and every rendered film stay out of git (`.gitignore`).
+> **Rights.** The cartoon is recognisable third-party material (Nickelodeon), used here only as an internal concept reference in the working environment. Nothing here is cleared for publication, implies any broadcaster's involvement or support, or grants any usage right. A public campaign would need a licence for the clip, or a replacement, settled separately. The supplied clip, the supplied TV photo and every rendered film stay out of git (`.gitignore`).
 
 This folder is self-contained, beside the earlier TV-bumper teaser in `iys-tv-bumper-teaser/`, which it does not touch.
 
@@ -13,9 +13,9 @@ This folder is self-contained, beside the earlier TV-bumper teaser in `iys-tv-bu
 | Film frames | Time | |
 |---|---|---|
 | 0–225 | 0.000–7.533 s | **The cartoon**: the whole supplied clip, its own dialogue. The wish runs 3.90–6.38 s; the wands rise after it. The camera watches the set, creeping in a little. |
-| 226–321 | 7.533–10.733 s | **The ident**: the supplied ident from its first frame to its frame 95, "nickelode…". The camera moves in. |
+| 226–321 | 7.533–10.733 s | **The card**, in the slot the Nickelodeon ident used to play in: SINGLE’S DAY lands with a sting on the cut, OFFER ENDS IN 0.6 s later (frame 244) with a chime. Both hold, pushing in slowly, until the glitch interrupts. The camera moves in. |
 | 322–339 | 10.733–11.333 s | **The glitch**, 0.6 s: freeze, stutter, tearing, static, signal loss, the new signal rolling in. The screen now dominates the frame. ([keyframes](docs/glitch-keyframes.md)) |
-| 340–504 | 11.333–16.833 s | **The countdown**: `03:00:00:00` locks, then ticks `02:23:59:59`, `…58`, `…57`, `…56`, `…55`. The numbers fill the frame's width and the bezel slides out of shot. The film cuts half a second after the last tick, the countdown still running. ([logic](docs/countdown.md)) |
+| 340–504 | 11.333–16.833 s | **The countdown** (hours:minutes:seconds): `22:22:22` locks, then ticks `22:22:21`, `…20`, `…19`, `…18`, `…17`. The numbers fill the frame's width and the bezel slides out of shot. The film cuts half a second after the last tick, the countdown still running. ([logic](docs/countdown.md)) |
 
 ## How it is made
 
@@ -37,7 +37,11 @@ They are the supplied vertical photo (`plate/`), **kept exactly as supplied**.
 
 All in linear light (`comp/`).
 
-- **The clips** (`comp/sources.py`): the cartoon is cut out of its pillarbox. The ident gets its TikTok watermark replaced by its own backdrop, plus a mild compression cleanup.
+- **The cartoon** (`comp/sources.py`): cut out of its pillarbox.
+- **The card** (`comp/card.py`): drawn natively at the signal's size, its words from `config/timeline.json` → `card.lines`.
+  - Liberation Sans Bold, the countdown's typeface, near-black on white. The white is the ident's own backdrop level (sRGB 239), so the set lights the room as it did.
+  - SINGLE’S DAY spans the same width as the countdown that follows. OFFER ENDS IN sits under it, smaller and letter-spaced.
+  - Each line lands in five frames, settling from slightly larger. Both then push in slowly (3.5 % over the card).
 - **The CRT** (`comp/crt.py`):
   - analog softness, softer across than down;
   - composite colour bleed;
@@ -50,20 +54,21 @@ All in linear light (`comp/`).
 ### The sound
 
 `audio/mix.py`, 48 kHz:
-- **Cartoon and ident:** the supplied audio through a small TV speaker into the room. The wish stays clear and is never covered.
+- **Cartoon:** the supplied audio through a small TV speaker into the room. The wish stays clear and is never covered.
+- **Card:** a synthesized sting through the same speaker and room: a bright bell chord over a soft low hit as SINGLE’S DAY lands, a lighter chime for OFFER ENDS IN, a warm chord held under the card until the glitch cuts it.
 - **Glitch:**
-  - the ident's own last frames of sound stutter with the picture;
+  - the card's own last frames of sound stutter with the picture;
   - static follows the static on screen frame by frame;
   - a sync buzz and a pop at the signal loss.
 - **Countdown:**
   - a low lock-in thump;
   - a tick on each frame the digits change;
   - a restrained low drone, still sounding at the cut.
-- **Master:** −14 LUFS, true peak under −1 dBTP. Cues: [docs/audio-cues.md](docs/audio-cues.md).
+- **Master:** about −14 LUFS, true peak under −1 dBTP. The master gain is the previous delivery's, fixed, so the cartoon's sound is sample for sample what was delivered. Cues: [docs/audio-cues.md](docs/audio-cues.md).
 
 ## Render
 
-1. Put the clips in `sources/` and the photo in `plate/`: see their READMEs. The hashes are checked, and nothing is ever substituted.
+1. Put the cartoon clip in `sources/` and the photo in `plate/`: see their READMEs. The hashes are checked, and nothing is ever substituted.
 2. Set up the environment and run the pipeline:
 
 ```
@@ -80,12 +85,16 @@ Outputs, in `out/` (not in git):
 |---|---|
 | `IYS-NICKELODEON-COUNTDOWN-TEASER-1080x1920.mp4` | the film, 9:16 |
 | `IYS-NICKELODEON-COUNTDOWN-TEASER-1080x1350.mp4` | its 4:5 version, composed for the feed (its own framing and push-in, not a squeezed 9:16) |
-| `stills/<format>/` | first frame, cover, the wish, the interruption frame, the final countdown frame, the glitch keyframes |
+| `stills/<format>/` | first frame, cover, the wish, the card, the interruption frame, the final countdown frame, the glitch keyframes |
 | `contact-sheet-<format>.png` | a frame every half second |
 | `validation-report.md`, `validation.json` | the QA of the delivered files |
 | `frame-log-<format>.json` | every frame's segment, countdown value and camera window |
 
 ## Notes
 
-- **The supplied ident differs from the brief's description.** It shows orange 3D letters assembling "nickelodeon" on a white/light-grey backdrop, not a blue/purple background with white lettering. It is the supplied file, so it is used as is. See [docs/source-cuts.md](docs/source-cuts.md).
+- **This version replaces the Nickelodeon ident with the card**, as requested. The first delivery (commit 809ece1) played the supplied ident in this slot, frames 0–95, "nickelode…". Its countdown counted down from `03:00:00:00` (days:hours:minutes:seconds). Everything else is unchanged, and checked frame by frame in [docs/changes-since-809ece1.md](docs/changes-since-809ece1.md):
+  - the photo, the camera and the cartoon;
+  - the CRT and the glitch recipe;
+  - the countdown's look and its ticks.
+- **The card's copy is spelt as requested: "SINGLE’S DAY".** The 11.11 shopping day is more often written "Singles' Day" or "Singles Day". The words are one line in `config/timeline.json`.
 - **The supplied photo shows text the brief keeps off screen.** The TV's bezel reads "IYS", and VHS spines in the cabinet include "Toy Story 2". Both are part of the photo, which was to be kept verbatim, so neither was altered.

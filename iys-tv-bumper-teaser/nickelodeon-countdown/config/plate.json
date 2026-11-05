@@ -92,7 +92,7 @@
     "falloff": 520
   },
   "camera": {
-    "_": "One continuous push-in, like a dolly: how fast it moves is set by `speed` (relative, seconds -> speed; smooth and never backwards), and where it goes by each format's `start` and `end` window on the photo (centre x, centre y, height, in photo pixels). The window never leaves the photo. The move: a slow creep while the cartoon plays, a push that builds through the ident and carries through the glitch, then easing into a slow creep on the countdown (still moving at the cut).",
+    "_": "One continuous push-in, like a dolly: how fast it moves is set by `speed` (relative, seconds -> speed; smooth and never backwards), and where it goes by each format's `start` and `end` window on the photo (centre x, centre y, height, in photo pixels). The window never leaves the photo. The move: a slow creep while the cartoon plays, a push that builds through the card and carries through the glitch, then easing into a slow creep on the countdown (still moving at the cut).",
     "speed": [
       [
         0.0,
