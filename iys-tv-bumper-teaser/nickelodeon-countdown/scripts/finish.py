@@ -1,6 +1,7 @@
 """Finish one format: picture + sound -> the delivered MP4, and its stills and contact sheet.
 
-  python scripts/finish.py 9x16      -> out/IYS-NICKELODEON-COUNTDOWN-TEASER-1080x1920.mp4, out/stills/..., out/...
+  python scripts/finish.py 9x16      -> out/IYS-NICKELODEON-COUNTDOWN-TEASER-1080x1920.mp4 (and its -compact copy),
+                                        out/stills/..., out/...
   python scripts/finish.py 4x5       -> out/IYS-NICKELODEON-COUNTDOWN-TEASER-1080x1350.mp4, ...
 """
 import json
@@ -37,6 +38,21 @@ def main(fmt):
          '-c:a', 'aac', '-b:a', '256k', '-ar', '48000', '-ac', '2', '-movflags', '+faststart',
          '-metadata', 'title=IYS Nickelodeon countdown teaser (internal concept)',
          '-metadata', 'comment=Internal creative concept using third-party footage; not cleared for publication.', mp4])
+    # a compact copy for downloading and sharing (about 14 MB instead of 45-60 MB): the same film re-encoded in two
+    # passes at about 6.3 Mb/s, still High@4.1; its sound is the film's own AAC stream, copied unchanged
+    compact = os.path.join(out, f'{name}-compact.mp4')
+    plog = os.path.join(ROOT, 'build', f'compact-{fmt}')
+    venc = ['-c:v', 'libx264', '-preset', 'slow', '-tune', 'film', '-profile:v', 'high', '-level:v', '4.1', '-refs', '4',
+            '-b:v', '6300k', '-maxrate', '10M', '-bufsize', '12M', '-pix_fmt', 'yuv420p', '-colorspace', 'bt709',
+            '-color_primaries', 'bt709', '-color_trc', 'bt709', '-color_range', 'tv', '-passlogfile', plog]
+    run(['ffmpeg', '-v', 'error', '-y', '-i', mp4, '-an'] + venc + ['-pass', '1', '-f', 'mp4', os.devnull])
+    run(['ffmpeg', '-v', 'error', '-y', '-i', mp4, '-map', '0:v:0', '-map', '0:a:0'] + venc +
+        ['-pass', '2', '-c:a', 'copy', '-movflags', '+faststart',
+         '-metadata', 'title=IYS Nickelodeon countdown teaser (internal concept)',
+         '-metadata', 'comment=Internal creative concept using third-party footage; not cleared for publication.', compact])
+    for f in os.listdir(os.path.join(ROOT, 'build')):
+        if f.startswith(f'compact-{fmt}'):
+            os.remove(os.path.join(ROOT, 'build', f))
     # stills, taken from the encoded film itself
     sdir = os.path.join(out, 'stills', fmt)
     os.makedirs(sdir, exist_ok=True)

@@ -189,6 +189,23 @@ def main():
         info['audio']['tickOnsetOffsets_s'] = offs
         check(f'{fmt}: each tick sounds on the frame its digits change (within 10 ms)', all(abs(o) <= 0.010 for o in offs), str(offs))
 
+        # the compact copy, for downloading and sharing: small, the same profile, the same frames, the very same sound
+        cf = os.path.join(ROOT, 'out', name.replace('.mp4', '-compact.mp4'))
+        if check(f'{fmt}: compact copy exists', os.path.exists(cf), os.path.basename(cf)):
+            cv = next(s for s in probe(cf)['streams'] if s['codec_type'] == 'video')
+            size = os.path.getsize(cf)
+            psnr = subprocess.run(['ffmpeg', '-v', 'info', '-i', f, '-i', cf, '-lavfi', '[1:v][0:v]psnr', '-f', 'null', '-'],
+                                  capture_output=True, text=True).stderr
+            avg = float(re.search(r'PSNR .*? average:([\d.]+)', psnr).group(1))
+            same_sound = np.array_equal(audio(f), audio(cf))
+            info['compact'] = {'file': os.path.basename(cf), 'bytes': size, 'level': cv.get('level'),
+                               'frames': int(cv['nb_read_frames']), 'psnrAverage': avg, 'soundIdentical': bool(same_sound),
+                               'sha256': hashlib.sha256(open(cf, 'rb').read()).hexdigest()}
+            check(f'{fmt}: compact copy: under 15 MB, H.264 High@4.1, every frame, close to the film, the same sound',
+                  size < 15e6 and cv.get('profile') == 'High' and int(cv.get('level', 99)) <= 41 and int(cv['nb_read_frames']) == n
+                  and avg >= 38 and same_sound,
+                  f"{size / 1e6:.1f} MB, High@{cv.get('level', 0) / 10:.1f}, {cv['nb_read_frames']} frames, PSNR {avg:.1f} dB against the film, sound {'identical' if same_sound else 'DIFFERENT'}")
+
         # A. the full wish is in the delivered sound (speech recognition on the film's own audio)
         if a.asr_python and fmt == '9x16':
             wav = os.path.join(ROOT, 'build', 'qa-cartoon-16k.wav')
@@ -223,6 +240,9 @@ def main():
         lines.append(f"- **{i['file']}**: {i['width']}x{i['height']}, {i['frames']} frames at {i['fps']}, {i['video_duration']:.3f} s, "
                      f"{i['codec']} {i['profile']} {i['pix_fmt']}, AAC {i['audio']['channels']} ch {i['audio']['sample_rate']} Hz, "
                      f"{i['bytes']:,} bytes, sha256 `{i['sha256']}`")
+        if 'compact' in i:
+            c = i['compact']
+            lines.append(f"- **{c['file']}**: the compact copy, {c['bytes']:,} bytes, sha256 `{c['sha256']}`")
     with open(os.path.join(ROOT, 'out', 'validation-report.md'), 'w') as fh:
         fh.write('\n'.join(lines) + '\n')
     print('ALL PASSED' if report['passed'] else 'SOME CHECKS FAILED')

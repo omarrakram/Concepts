@@ -5,7 +5,22 @@ Each delivery changed only what was asked. Everything else was checked against t
 - the decoded films by `scripts/compare_delivery.py`;
 - the sound sample by sample, in the mix before the encode.
 
-## adb67a0 → this version: the encode only
+## aa11fe1 → this version: a compact copy for downloading
+
+The problem: the films (60 and 45 MB) would not download on a laptop. Large files sent from a cloud session do not always transfer to another device.
+
+The fix: `scripts/finish.py` also writes a compact copy of each film, about 14 MB. QA checks each copy:
+- under 15 MB;
+- H.264 High@4.1;
+- every frame;
+- within 38 dB PSNR of the full film (it measures 42 dB);
+- the very same sound.
+
+The video is re-encoded in two passes at about 6.3 Mb/s. The sound is the film's own AAC stream, copied unchanged.
+
+The full films are untouched: re-running the finish step writes them byte-identical to aa11fe1's delivery.
+
+## adb67a0 → aa11fe1: the encode only
 
 The problem: the downloaded film was reported as "unsupported".
 

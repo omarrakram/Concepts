@@ -86,6 +86,7 @@ Outputs, in `out/` (not in git):
 |---|---|
 | `IYS-NICKELODEON-COUNTDOWN-TEASER-1080x1920.mp4` | the film, 9:16 |
 | `IYS-NICKELODEON-COUNTDOWN-TEASER-1080x1350.mp4` | its 4:5 version, composed for the feed (its own framing and push-in, not a squeezed 9:16) |
+| `…-compact.mp4` | a compact copy of each, about 14 MB instead of 45–60 MB, for downloading and sharing. The same frames, re-encoded in two passes at about 6.3 Mb/s (42 dB PSNR against the full film), with the very same sound. |
 | `stills/<format>/` | first frame, cover, the wish, the cartoon's last frame, the logo, the interruption frame, the final countdown frame, the glitch keyframes |
 | `contact-sheet-<format>.png` | a frame every half second |
 | `validation-report.md`, `validation.json` | the QA of the delivered files |
