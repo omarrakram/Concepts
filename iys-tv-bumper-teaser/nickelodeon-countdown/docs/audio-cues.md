@@ -4,12 +4,12 @@ The sound is 48 kHz stereo and sample-accurate to the picture: 1,600 samples per
 
 | Time | Film frame | Cue |
 |---|---|---|
-| 0.000 s | 0 | **Cartoon:** the supplied clip's own sound, 0.000–7.515 s (the file's full audio). "Move it." / "You could say please." / "Fine, please move it." / **"I wish I had clothes like the popular kids."** (3.90–6.38 s), then the wands' sparkle (7.05–7.5 s). No music or effect sits under the wish. |
-| 7.533 s | 226 | **Card:** the sting as SINGLE’S DAY lands: a bright bell chord over a soft low hit, with a breath of sparkle. A warm chord then holds under the card. |
-| 8.133 s | 244 | a lighter two-note chime as OFFER ENDS IN lands |
-| 10.733 s | 322 | the card's sound is cut at the interruption (it ran 0.000–3.200 s). Glitch, freeze: the card's frame-95 sound (33 ms) repeats |
-| 10.767 s | 323 | Glitch, stutter: the frame-94 sound, as the picture jumps back to it |
-| 10.800 s | 324 | the frame-95 sound again, fading under static that rises with the static on screen, frame by frame |
+| 0.000 s | 0 | **Cartoon:** the supplied clip's own sound, 0.000–7.433 s, cut at the end of its last frame of the wands waving. "Move it." / "You could say please." / "Fine, please move it." / **"I wish I had clothes like the popular kids."** (3.90–6.38 s), then the wands' click and sparkle (from 7.05 s). No music or effect sits under the wish. |
+| 7.433 s | 223 | **Logo:** the sting as the IN YOUR SHOE logo lands: a bright bell chord over a soft low hit, with a breath of sparkle. A warm chord then holds under the logo. |
+| 8.033 s | 241 | a lighter two-note chime |
+| 10.733 s | 322 | the logo's sound is cut at the interruption (it ran 0.000–3.300 s). Glitch, freeze: the sound of the logo's last frame (33 ms) repeats |
+| 10.767 s | 323 | Glitch, stutter: the sound of the frame before, as the picture jumps back to it |
+| 10.800 s | 324 | the last frame's sound again, fading under static that rises with the static on screen, frame by frame |
 | 10.833 s | 325 | a 50 Hz sync buzz, with the bright sync bar on screen |
 | 10.933 s | 328 | a low pop: the signal-loss frame |
 | 11.033 s | 331 | a sync buzz again, as the new signal rolls in |
@@ -23,14 +23,14 @@ The sound is 48 kHz stereo and sample-accurate to the picture: 1,600 samples per
 
 ## The chain
 
-**Cartoon and card: a small TV speaker in a room.**
+**Cartoon and logo sting: a small TV speaker in a room.**
 - High-pass at 150 Hz, low-pass at 8 kHz, a little presence at 2.6 kHz, near-mono.
 - A short room reverb: early reflections, RT60 about 0.4 s, 10 % wet.
 
-**Card sting** (synthesized, seeded: no music from anywhere).
+**Logo sting** (synthesized, seeded: no music from anywhere).
 - On the cut: bells on A4, A5, C♯6 and E6 (A major), decaying over about 0.85 s. Under them, a soft low hit (a 95 Hz pitch drop, saturated a little so the small speaker still carries it) and a 90 ms breath of 5–12 kHz noise.
-- At 0.6 s, as OFFER ENDS IN lands: a lighter chime on E6 and A6.
-- Under the card: a warm chord, A3–E4–A4–C♯5, soft, slightly detuned, swelling gently. It is still sounding at the interruption, so the glitch's stutter repeats it.
+- At 0.6 s: a lighter chime on E6 and A6.
+- Under the logo: a warm chord, A3–E4–A4–C♯5, soft, slightly detuned, swelling gently. It is still sounding at the interruption, so the glitch's stutter repeats it.
 - A gentle soft saturation rounds its peaks: the sting is full, never a spike, and needs no limiting.
 - It is in A, the key of the countdown's drone.
 
@@ -54,11 +54,11 @@ Integrated loudness, ITU-R BS.1770, set per element before mastering:
 | Element | Level |
 |---|---|
 | Cartoon | −16 LUFS |
-| Card | −17 LUFS (the level the ident had) |
+| Logo sting | −17 LUFS (the level the ident had) |
 | Glitch | −19.5 LUFS |
 | Countdown ticks and thump | −19 LUFS |
 | Drone | −26 LUFS |
 
 The whole film is mastered to about **−14 LUFS**. A limiter holds the true peak under **−1 dBTP**, and AAC-LC 256 kb/s carries it. QA measures the delivered files and checks every tick's onset against its frame.
 
-The master gain is the first delivery's, **+3.267 dB**, kept fixed (`MASTER_GAIN_DB` in `audio/mix.py`). So the cartoon's sound, 0–7.533 s, is sample for sample what was delivered, and so is the countdown's from 11.333 s on. The card sits at the ident's level, so the film's loudness barely moves: the mix is −13.9 LUFS before the encode's limiter. The measured figures for the delivered files are in `out/validation-report.md`.
+The master gain is the first delivery's, **+3.267 dB**, kept fixed (`MASTER_GAIN_DB` in `audio/mix.py`). So the cartoon's sound, up to its new cut at 7.433 s, is sample for sample what was delivered, and so is the countdown's from 11.333 s on. The logo's sting sits at the ident's level, so the film's loudness barely moves: the mix is −13.9 LUFS before the encode's limiter. The measured figures for the delivered files are in `out/validation-report.md`.

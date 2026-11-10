@@ -2,7 +2,7 @@
 
 An **internal creative concept / pitch** for IN YOUR SHOE (IYS).
 
-An old CRT television in a 2000s living room is playing The Fairly OddParents. Timmy wishes he had clothes like the popular kids. The channel cuts to a card: **SINGLE’S DAY**, then **OFFER ENDS IN**. The broadcast is hijacked: the picture tears and rolls into static, and a countdown locks in at `22:22:22` and ticks down. The film ends on the ticking countdown: no logo, no explanation.
+An old CRT television in a 2000s living room is playing The Fairly OddParents. Timmy wishes he had clothes like the popular kids. Right after the fairies wave their wands, the channel cuts to the **IN YOUR SHOE** logo on black. The broadcast is hijacked: the picture tears and rolls into static, and a countdown locks in at `22:22:22` and ticks down. The film ends on the ticking countdown: no logo, no explanation.
 
 > **Rights.** The cartoon is recognisable third-party material (Nickelodeon), used here only as an internal concept reference in the working environment. Nothing here is cleared for publication, implies any broadcaster's involvement or support, or grants any usage right. A public campaign would need a licence for the clip, or a replacement, settled separately. The supplied clip, the supplied TV photo and every rendered film stay out of git (`.gitignore`).
 
@@ -12,8 +12,8 @@ This folder is self-contained, beside the earlier TV-bumper teaser in `iys-tv-bu
 
 | Film frames | Time | |
 |---|---|---|
-| 0–225 | 0.000–7.533 s | **The cartoon**: the whole supplied clip, its own dialogue. The wish runs 3.90–6.38 s; the wands rise after it. The camera watches the set, creeping in a little. |
-| 226–321 | 7.533–10.733 s | **The card**, in the slot the Nickelodeon ident used to play in: SINGLE’S DAY lands with a sting on the cut, OFFER ENDS IN 0.6 s later (frame 244) with a chime. Both hold, pushing in slowly, until the glitch interrupts. The camera moves in. |
+| 0–222 | 0.000–7.433 s | **The cartoon**: the supplied clip up to its last frame of Cosmo and Wanda waving their wands, with its own dialogue. The wish runs 3.90–6.38 s; the wands rise after it. The clip's last three frames, a cut to the next shot, are left out. The camera watches the set, creeping in a little. |
+| 223–321 | 7.433–10.733 s | **The logo**, in the slot the Nickelodeon ident used to play in: the IN YOUR SHOE wordmark, white on black, lands with a sting on the cut. It holds, pushing in slowly, until the glitch interrupts. The camera moves in. |
 | 322–339 | 10.733–11.333 s | **The glitch**, 0.6 s: freeze, stutter, tearing, static, signal loss, the new signal rolling in. The screen now dominates the frame. ([keyframes](docs/glitch-keyframes.md)) |
 | 340–504 | 11.333–16.833 s | **The countdown** (hours:minutes:seconds): `22:22:22` locks, then ticks `22:22:21`, `…20`, `…19`, `…18`, `…17`. The numbers fill the frame's width and the bezel slides out of shot. The film cuts half a second after the last tick, the countdown still running. ([logic](docs/countdown.md)) |
 
@@ -38,10 +38,9 @@ They are the supplied vertical photo (`plate/`), **kept exactly as supplied**.
 All in linear light (`comp/`).
 
 - **The cartoon** (`comp/sources.py`): cut out of its pillarbox.
-- **The card** (`comp/card.py`): drawn natively at the signal's size, its words from `config/timeline.json` → `card.lines`.
-  - Liberation Sans Bold, the countdown's typeface, near-black on white. The white is the ident's own backdrop level (sRGB 239), so the set lights the room as it did.
-  - SINGLE’S DAY spans the same width as the countdown that follows. OFFER ENDS IN sits under it, smaller and letter-spaced.
-  - Each line lands in five frames, settling from slightly larger. Both then push in slowly (3.5 % over the card).
+- **The logo** (`comp/card.py`): the supplied IN YOUR SHOE logo (`brand/`), white on black. It is drawn at the signal's size from the file's own alpha, never redrawn or retyped.
+  - It is centred and spans the same width as the countdown that follows.
+  - It lands in five frames, settling from slightly larger, then pushes in slowly (3.5 % over the card).
 - **The CRT** (`comp/crt.py`):
   - analog softness, softer across than down;
   - composite colour bleed;
@@ -55,7 +54,7 @@ All in linear light (`comp/`).
 
 `audio/mix.py`, 48 kHz:
 - **Cartoon:** the supplied audio through a small TV speaker into the room. The wish stays clear and is never covered.
-- **Card:** a synthesized sting through the same speaker and room: a bright bell chord over a soft low hit as SINGLE’S DAY lands, a lighter chime for OFFER ENDS IN, a warm chord held under the card until the glitch cuts it.
+- **Logo:** a synthesized sting through the same speaker and room: a bright bell chord over a soft low hit as the logo lands, a lighter chime 0.6 s later, a warm chord held under it until the glitch cuts it.
 - **Glitch:**
   - the card's own last frames of sound stutter with the picture;
   - static follows the static on screen frame by frame;
@@ -85,16 +84,18 @@ Outputs, in `out/` (not in git):
 |---|---|
 | `IYS-NICKELODEON-COUNTDOWN-TEASER-1080x1920.mp4` | the film, 9:16 |
 | `IYS-NICKELODEON-COUNTDOWN-TEASER-1080x1350.mp4` | its 4:5 version, composed for the feed (its own framing and push-in, not a squeezed 9:16) |
-| `stills/<format>/` | first frame, cover, the wish, the card, the interruption frame, the final countdown frame, the glitch keyframes |
+| `stills/<format>/` | first frame, cover, the wish, the cartoon's last frame, the logo, the interruption frame, the final countdown frame, the glitch keyframes |
 | `contact-sheet-<format>.png` | a frame every half second |
 | `validation-report.md`, `validation.json` | the QA of the delivered files |
 | `frame-log-<format>.json` | every frame's segment, countdown value and camera window |
 
 ## Notes
 
-- **This version replaces the Nickelodeon ident with the card**, as requested. The first delivery (commit 809ece1) played the supplied ident in this slot, frames 0–95, "nickelode…". Its countdown counted down from `03:00:00:00` (days:hours:minutes:seconds). Everything else is unchanged, and checked frame by frame in [docs/changes-since-809ece1.md](docs/changes-since-809ece1.md):
-  - the photo, the camera and the cartoon;
-  - the CRT and the glitch recipe;
-  - the countdown's look and its ticks.
-- **The card's copy is spelt as requested: "SINGLE’S DAY".** The 11.11 shopping day is more often written "Singles' Day" or "Singles Day". The words are one line in `config/timeline.json`.
+- **Changes since the first delivery (commit 809ece1), each as requested:**
+  - the Nickelodeon ident's slot shows the IN YOUR SHOE logo on black. The first delivery played the supplied ident there; 8092818 showed a SINGLE’S DAY / OFFER ENDS IN card;
+  - the countdown counts down from `22:22:22` (hours:minutes:seconds), not `03:00:00:00` (days:hours:minutes:seconds);
+  - the cartoon ends on its last frame of the wands waving, without the file's last three frames.
+
+  Everything else is unchanged, and checked frame by frame and sample by sample in [docs/changes.md](docs/changes.md): the photo, the camera, the cartoon's kept frames and sound, the CRT, the glitch recipe, and the countdown's look and ticks.
+- **The logo is the file supplied in the conversation on 10 November 2026** (`brand/in-your-shoe-logo.png`, its hash checked). It is the same wordmark as the official white file in `../assets/brand/`.
 - **The supplied photo shows text the brief keeps off screen.** The TV's bezel reads "IYS", and VHS spines in the cabinet include "Toy Story 2". Both are part of the photo, which was to be kept verbatim, so neither was altered.

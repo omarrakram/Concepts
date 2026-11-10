@@ -3,7 +3,7 @@
 ## What the viewer sees
 
 Three two-digit groups and two colons, hours:minutes:seconds, starting at `22:22:22`, and nothing else:
-- no labels on the countdown itself (no HOURS/MINUTES/SECONDS, no H/M/S). The card before it says what it counts down to: SINGLE’S DAY, OFFER ENDS IN;
+- no labels on the countdown itself (no HOURS/MINUTES/SECONDS, no H/M/S). The IN YOUR SHOE logo comes just before it;
 - no dates, no branding, no URL.
 
 The renderer only ever draws the characters `0123456789:`. QA checks every frame's value against `^\d\d:\d\d:\d\d$`.

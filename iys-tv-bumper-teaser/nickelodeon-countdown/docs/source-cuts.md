@@ -22,15 +22,19 @@ The dialogue, with its measured word times:
 | "Fine, please move it." | 2.34 s | 3.90 s |
 | **"I wish I had clothes like the popular kids."** | **3.90 s** ("I") | **6.38 s** ("kids") |
 
-After the wish, 6.4–7.5 s: Cosmo and Wanda raise their wands, and the wands' sparkle sounds at 7.05–7.5 s.
+After the wish, 6.4–7.4 s: Cosmo and Wanda raise their wands, and the wands' sparkle sounds from 7.05 s with a sharp click. The close-up of them waving runs from frame 208 to frame 222. The file's last three frames, 223–225 (7.433–7.533 s), cut to the next shot: a wide shot of Timmy standing with them.
 
-**Cut:** the film uses **the whole clip, film frames 0–225 (0.000–7.533 s)**, picture and sound. The wish is complete at 6.38 s. The wands rising after it is the scene's own ending, and the card follows on the next frame, as a channel would cut to a promo. The delivered film's own sound is checked by speech recognition for the full sentence (`out/validation-report.md`).
+**Cut:** the film uses **film frames 0–222 (0.000–7.433 s)**, picture and sound: the clip up to its last frame of the wands waving. The wish is complete at 6.38 s. The three frames of the next shot are left out, and the logo follows on the next frame, as a channel would cut to a promo.
+
+The sound is cut at the end of frame 222 (7.433 s). The clip's whole sound is first put through the TV speaker and the room and levelled as one piece, as in the earlier deliveries, and only then cut, with the same 2 ms fade. So every sample the film keeps is the one delivered before.
+
+The first two deliveries used the whole clip, frames 0–225, ending on those three frames of the wide shot. The delivered film's own sound is checked by speech recognition for the full sentence (`out/validation-report.md`).
 
 ## Video B: the Nickelodeon ident (no longer used)
 
 The first delivery (commit 809ece1) played the supplied ident, `WhatsApp Video 2026-10-31 at 4.22.32 PM.mp4` (SHA-256 `ad3ebf8f4eb555207025adcf3957252eecbda51ebe036b88fe66f7b2851002b9`), in film frames 226–321. That was its source frames 0–95, up to "nickelode…", with its own sound.
 
-This version plays the SINGLE’S DAY / OFFER ENDS IN card in the same slot instead (`comp/card.py`, `config/timeline.json` → `card`). It has the same 96 frames, and the glitch interrupts it on its frame 95, as it did the ident. The ident file is no longer read and is not needed to render. Its cut points and its watermark cleanup are in this file's history (commit 809ece1).
+This version plays the IN YOUR SHOE logo on black in that slot instead (`comp/card.py`, `config/timeline.json` → `card`). The slot is film frames 223–321, as the cartoon now ends three frames earlier, and the glitch interrupts the logo on its last frame, as it did the ident. Commit 8092818 had a SINGLE’S DAY / OFFER ENDS IN card there. The ident file is no longer read and is not needed to render. Its cut points and its watermark cleanup are in this file's history (commit 809ece1).
 
 ## The TV photo
 

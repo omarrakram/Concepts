@@ -1,6 +1,8 @@
 """The supplied clip, prepared as the TV signal (4:3, 1440x1080, sRGB 8-bit), frame for frame:
 
-  cartoon  the Fairly OddParents scene, all 226 frames: the 4:3 picture cut out of the file's pillarbox (no stretch)
+  cartoon  the Fairly OddParents scene, frames 0-222: up to its last frame of Cosmo and Wanda waving their wands (the
+           file's last three frames are the next shot and are left out); the 4:3 picture cut out of the file's
+           pillarbox (no stretch)
 
 The Nickelodeon ident that followed it is no longer used: the card (comp/card.py) plays in its slot.
 
@@ -56,7 +58,7 @@ if __name__ == '__main__':
     tl = load_json('config', 'timeline.json')
     car = cartoon(tl)
     print('cartoon', car.shape, save('cartoon', car))
-    # a check image: the cartoon's wish and its last frame
-    sheet = np.concatenate([car[150], car[225]], axis=1)
+    # a check image: the cartoon's wish and its last kept frame (the wands waving)
+    sheet = np.concatenate([car[150], car[-1]], axis=1)
     cv2.imwrite(os.path.join(CONTENT, 'check-sources.png'), cv2.cvtColor(cv2.resize(sheet, None, fx=0.5, fy=0.5,
                 interpolation=cv2.INTER_AREA), cv2.COLOR_RGB2BGR))

@@ -80,7 +80,7 @@ class Film:
         elif seg == 'glitch':
             gi = f - tl['glitch']['first']
             last = tl['card']['interruptFrame']
-            held = {last - 1: self.card.held(last - 1), last: self.card.held(last)}
+            held = {'prev': self.card.held(last - 1), 'last': self.card.held(last)}
             raw = glitch.frame(gi, f, held, self.cdpic.render(f))
         else:
             # the hijacking signal: the countdown, and the faint snow of a weak broadcast in its black

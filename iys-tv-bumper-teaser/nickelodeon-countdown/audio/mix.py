@@ -1,8 +1,9 @@
 """The film's sound, 48 kHz stereo, sample-accurate to the 30 fps picture (config/timeline.json).
 
-  cartoon    the supplied clip's own audio (dialogue, the full wish), through a small TV speaker into the room
-  card       the SINGLE’S DAY card's sting (synthesized): a bright chord as it cuts in, a lighter chime as its second
-             line lands, a warm chord held under it; the same speaker and room, cut at the interruption frame
+  cartoon    the supplied clip's own audio (dialogue, the full wish), through a small TV speaker into the room, cut
+             at the end of its last frame of the wands waving
+  card       the IN YOUR SHOE logo card's sting (synthesized): a bright chord as it cuts in, a lighter chime 0.6 s
+             later, a warm chord held under it; the same speaker and room, cut at the interruption frame
   glitch     the picture's stutter, heard: the card's own last two frames of sound, repeated as the picture repeats
              them; then static whose loudness follows the static on screen frame by frame; a pop at the signal loss
   countdown  a low lock-in thump as the signal locks; a tick exactly on each frame a digit changes (tick, tock);
@@ -176,10 +177,10 @@ def thump(n_sec=0.7, f0=58):
     return np.stack([s, s], axis=1)
 
 
-def card_sound(n_sec, second_at, seed='card'):
+def card_sound(n_sec, chime_at, seed='card'):
     """The card's sound, as a channel's promo card would have it (synthesized, seeded): a bright bell chord over a
-    soft low hit and a breath of sparkle as the card cuts in, a lighter two-note chime when its second line lands
-    (second_at, seconds), and a warm chord held under the card, still sounding when the glitch cuts it."""
+    soft low hit and a breath of sparkle as the card cuts in, a lighter two-note chime a moment later (chime_at,
+    seconds), and a warm chord held under the card, still sounding when the glitch cuts it."""
     g = rng(seed)
     n = int(n_sec * SR)
     t = np.arange(n) / SR
@@ -205,9 +206,9 @@ def card_sound(n_sec, second_at, seed='card'):
     # sparkle: a short bright breath of noise
     sp = spectral(g.standard_normal((n, 2)), chain(hp(5000, 2), lp(12000, 1))) * np.exp(-t / 0.09)[:, None]
     x += 0.10 * sp / (np.abs(sp).max() + 1e-12)
-    # the second line: a lighter chime
+    # a moment later: a lighter chime
     for f0, amp, pan in ((1318.51, 0.26, 0.1), (1760.0, 0.20, -0.1)):
-        bell(f0, second_at, amp, 0.5, pan)
+        bell(f0, chime_at, amp, 0.5, pan)
     # the held chord: soft, a little detuned, swelling gently under the card
     pad = np.zeros(n)
     for f0, amp in ((220.0, 1.0), (329.63, 0.8), (440.0, 0.7), (554.37, 0.55)):
@@ -247,28 +248,32 @@ def main():
     cues = []
     os.makedirs(OUT, exist_ok=True)
 
-    # --- the cartoon: its own audio, the whole scene ------------------------------------------------------
+    # --- the cartoon: its own audio, up to the end of its last frame of the wands waving -------------------------
     c = tl['cartoon']
     src = verify_source(c)
-    a = decode(src, c['audioIn'], c['audioOut'] - c['audioIn'])
+    # the clip's whole sound is filtered and levelled as one piece, exactly as in the earlier deliveries, and only
+    # then cut at audioOut: every sample it keeps is the one delivered before
+    a = decode(src, c['audioIn'], c['audioWhole'] - c['audioIn'])
     a, ga = to_lufs(room(tv_speaker(a)), LEVELS['cartoon'])
+    a = a[:int(round((c['audioOut'] - c['audioIn']) * SR))]
     place(bus, fade(a, 48, 96), at(c['first'], fps))
-    cues.append({'t': c['first'] / fps, 'cue': 'cartoon audio (supplied clip, 0.000-%.3f s)' % (len(a) / SR)})
+    cues.append({'t': c['first'] / fps, 'cue': 'cartoon audio (supplied clip, 0.000-%.3f s: cut at the end of its last frame of the wands waving)' % (len(a) / SR)})
 
     # --- the card: its sting and held chord, up to the interruption ------------------------------------------
     cc = tl['card']
-    second = cc['secondLineAt'] / fps
-    raw_card = room(tv_speaker(card_sound(cc['audioOut'] + 0.1, second)))   # a frame or two past the cut, for the stutter
+    chime = cc['chimeAt'] / fps
+    raw_card = room(tv_speaker(card_sound(cc['audioOut'] + 0.1, chime)))   # a frame or two past the cut, for the stutter
     b, gb = to_lufs(raw_card[:int(round(cc['audioOut'] * SR))], LEVELS['card'])
     place(bus, fade(b, 64, 48), at(cc['first'], fps))
-    cues.append({'t': cc['first'] / fps, 'cue': 'card: the sting (bell chord, low hit) as SINGLE\u2019S DAY cuts in; a warm chord held under the card'})
-    cues.append({'t': (cc['first'] + cc['secondLineAt']) / fps, 'cue': 'card: a lighter chime as OFFER ENDS IN lands'})
+    cues.append({'t': cc['first'] / fps, 'cue': 'card: the sting (bell chord, low hit) as the IN YOUR SHOE logo cuts in; a warm chord held under the card'})
+    cues.append({'t': (cc['first'] + cc['chimeAt']) / fps, 'cue': 'card: the sting\'s lighter chime'})
     cues.append({'t': (cc['first'] + cc['frames']) / fps, 'cue': 'card: its sound cut at the interruption (0.000-%.3f s)' % cc['audioOut']})
 
     # --- the glitch ---------------------------------------------------------------------------------------------
     gfirst, gn = tl['glitch']['first'], tl['glitch']['frames']
     per = SR // fps
-    # the stutter: the picture holds frame 95, jumps back to 94, holds 95 again -> so does the sound
+    # the stutter: the picture holds the card's last frame, jumps back to the one before, holds the last again -> so
+    # does the sound
     raw_card = raw_card * 10 ** (gb / 20)            # the same level as the card
 
     def grain(src_frame):

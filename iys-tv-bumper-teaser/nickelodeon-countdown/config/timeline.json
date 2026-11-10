@@ -5,7 +5,8 @@
     "source": "sources/Fairly Odd Parents.mp4",
     "sha256": "b00fa989cbf38c90f1b3964267904d28881059038dbfa3959d7c758ad22178c9",
     "first": 0,
-    "frames": 226,
+    "_frames": "source frames 0-222: the scene up to its last frame of Cosmo and Wanda waving their wands (222). The file's last three frames, 223-225, are the next shot (a wide shot of Timmy with them) and are left out.",
+    "frames": 223,
     "sourceIn": 0,
     "_crop": "the 4:3 picture inside the file's blurred pillarbox, x 280-1640 (inside the black edge lines at 273-275 and 1644-1646), y 30-1050: exactly 4:3, square pixels, no stretch",
     "crop": [
@@ -16,20 +17,25 @@
     ],
     "matrix": "bt709",
     "audioIn": 0.0,
-    "audioOut": 7.533333
+    "_audioWhole": "the clip's whole sound (0 to 7.533333 s) goes through the TV speaker and the room and is levelled as one piece, exactly as in the earlier deliveries; only then is it cut at audioOut, the end of frame 222, so every sample it keeps is unchanged",
+    "audioWhole": 7.533333,
+    "audioOut": 7.433333
   },
   "card": {
-    "_": "the card the set plays where the Nickelodeon ident used to be (comp/card.py), in the ident's slot: film frames 226-321, the same 96 frames; its frame 95 is where the glitch interrupts it (the glitch freezes on 95 and stutters back to 94, as it did on the ident)",
-    "first": 226,
-    "frames": 96,
-    "interruptFrame": 95,
-    "lines": [
-      "SINGLE’S DAY",
-      "OFFER ENDS IN"
-    ],
-    "_secondLineAt": "card frame the second line lands on (0.6 s in, film frame 244); the first line lands on the card's first frame",
-    "secondLineAt": 18,
-    "audioOut": 3.2
+    "_": "the card the set plays where the Nickelodeon ident used to be (comp/card.py): the IN YOUR SHOE logo, white on black, from the cut after the cartoon's last wand frame to the glitch, film frames 223-321; its last frame (98) is where the glitch interrupts it: the glitch freezes on it and stutters back to the frame before, as it did on the ident",
+    "first": 223,
+    "frames": 99,
+    "interruptFrame": 98,
+    "logo": {
+      "_": "the logo supplied in the conversation on 10 November 2026: the white IN YOUR SHOE wordmark on a transparent ground (brand/README.md)",
+      "file": "brand/in-your-shoe-logo.png",
+      "sha256": "b615a3919e22ce3b5fd5a344e382fc2f691fc8a58794c3d0eda9606e1e712da7",
+      "_width": "the wordmark spans this fraction of the signal's width: the same width as the countdown that follows",
+      "width": 0.8
+    },
+    "_chimeAt": "card frame of the sting's second, lighter chime (0.6 s in)",
+    "chimeAt": 18,
+    "audioOut": 3.3
   },
   "glitch": {
     "first": 322,

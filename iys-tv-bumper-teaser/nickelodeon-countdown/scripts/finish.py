@@ -15,7 +15,7 @@ from common import load_json  # noqa: E402
 
 NAMES = {'9x16': 'IYS-NICKELODEON-COUNTDOWN-TEASER-1080x1920', '4x5': 'IYS-NICKELODEON-COUNTDOWN-TEASER-1080x1350'}
 # the frames kept as stills (film frames): the cover is the set already hijacked, the room still around it
-STILLS = {'first-frame': 0, 'cover': 345, 'wish': 150, 'card': 260, 'card-interruption': 321}
+STILLS = {'first-frame': 0, 'cover': 345, 'wish': 150, 'last-cartoon-frame': 222, 'card': 260, 'card-interruption': 321}
 
 
 def run(cmd):

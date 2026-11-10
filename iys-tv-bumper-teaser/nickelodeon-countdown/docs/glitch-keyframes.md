@@ -4,14 +4,14 @@ The recipe for every frame is in `comp/glitch.py`, in the `KEYS` table. It is se
 
 It uses no new imagery: only the card's own last frames, TV static, and the countdown's signal breaking through. The images are the delivered film's own frames: `out/stills/<format>/glitch-keyframes.png` shows frames 321 to 340.
 
-The recipe is unchanged from the first delivery, where it interrupted the Nickelodeon ident in the same slot. It now freezes and tears the SINGLE’S DAY / OFFER ENDS IN card instead.
+The recipe is unchanged from the first delivery, where it interrupted the Nickelodeon ident in the same slot. It now freezes and tears the IN YOUR SHOE logo on black instead. On black, the torn bands that fall below the logo are black on black, so the freeze reads as a still logo with a slight colour split until the static rises.
 
 | Brief | Film frame | Glitch frame | On the screen | Sound |
 |---|---|---|---|---|
-| A: the card | 226–321 | | SINGLE’S DAY, then OFFER ENDS IN (from 244), holding to the card's frame 95 | the card's sting, chime and held chord |
-| B: freeze / tear | 322 | g0 | frozen on the card's frame 95; one band tears sideways (+4.5 %); 3 px RGB split | frame 95's sound again |
-| | 323 | g1 | stutters back to the card's frame 94; two tears; the picture slips 1 % | frame 94's sound |
-| C: strong but controlled interference | 324 | g2 | frame 95; three tears, scanline displacement wave, 7 px RGB split, static 22 % | frame 95's sound, static rising |
+| A: the logo | 223–321 | | the IN YOUR SHOE logo on black, holding to its last frame (card frame 98) | the sting, chime and held chord |
+| B: freeze / tear | 322 | g0 | frozen on the logo's last frame; one band tears sideways (+4.5 %); 3 px RGB split | the last frame's sound again |
+| | 323 | g1 | stutters back to the frame before; two tears; the picture slips 1 % | that frame's sound |
+| C: strong but controlled interference | 324 | g2 | the last frame again; three tears, scanline displacement wave, 7 px RGB split, static 22 % | the last frame's sound, static rising |
 | | 325 | g3 | tears up to 20 % of the width, a bright sync bar, 11 px RGB split, static 42 % | static, sync buzz |
 | | 326–327 | g4–g5 | the picture loses vertical hold (rolls 21 %, then 43 %, with the dark blanking bar) and dissolves into static (70 %, 88 %) | static peak |
 | (brief signal loss) | 328 | g6 | no signal: near-black, faint snow, one thin bright sync line | a low pop |
@@ -21,6 +21,6 @@ The recipe is unchanged from the first delivery, where it interrupted the Nickel
 
 ## No white flash, no flash hazard
 
-- The static averages a linear brightness of 0.26, against about 0.86 for the card's white (the ident's backdrop level), so the glitch only ever darkens from the card.
+- The static averages a linear brightness of 0.26, far below full white (about 0.86). From the black logo it lifts the screen to a grey snow, then dies away to the countdown's black.
 - The brightest single element is a thin sync line.
 - QA counts the flashes in the delivered films, as opposing swings of 10 % or more in relative luminance, over the whole frame and its middle. It requires no more than three in any second (WCAG 2.3.1).
