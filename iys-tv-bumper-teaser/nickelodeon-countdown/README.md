@@ -78,6 +78,8 @@ PY=.venv/bin/python scripts/render.sh            # ~25 min on 4 CPU cores
 
 Every step is deterministic: fixed seeds, frame-accurate timing, no network access during the render.
 
+Both films are H.264 High profile at level 4.1 (at most 4 reference frames, bitrate peaks held to 40 Mb/s) with AAC-LC sound. That is what phones, their galleries and the social apps all accept. QA checks it on every delivery.
+
 Outputs, in `out/` (not in git):
 
 | | |

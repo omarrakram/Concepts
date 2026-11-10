@@ -5,13 +5,26 @@ Each delivery changed only what was asked. Everything else was checked against t
 - the decoded films by `scripts/compare_delivery.py`;
 - the sound sample by sample, in the mix before the encode.
 
-## 8092818 → this version
+## adb67a0 → this version: the encode only
+
+The problem: the downloaded film was reported as "unsupported".
+
+The cause: the 9:16 film was H.264 High at **level 5.0**, at about 28 Mb/s.
+- At 1080×1920, the encoder's 5 reference frames (preset slow) need level 5.0, and nothing capped the bitrate. The grain and the static are costly, so the peaks ran high.
+- Many phones, galleries and apps accept H.264 only up to level 4.1 or 4.2 for 1080p, so they refuse it. Apple, for example, documents its iPhones' H.264 support as "High Profile level 4.2".
+- The 4:5 film said level 4.0, but its bitrate ran over that level's limit.
+
+The fix, in `comp/film.py`: High profile at level 4.1, at most 4 reference frames, the bitrate's peaks held to 40 Mb/s (a 50 Mb buffer). QA now checks this on every delivery.
+
+Nothing else changed. The renderer was given the same frames and the same sound as in adb67a0; only their compression differs.
+
+## 8092818 → adb67a0
 
 The request: end the cartoon on its frame of the wands waving, without the extra frame after it; replace the SINGLE’S DAY card with the attached IN YOUR SHOE logo on a black screen; keep everything else verbatim.
 
 ### Changed
 
-| Film frames | Time | Before (8092818) | Now |
+| Film frames | Time | Before (8092818) | adb67a0 |
 |---|---|---|---|
 | 223–225 | 7.433–7.533 s | the cartoon's last three frames: the next shot, a wide shot of Timmy with the fairies | the logo (the cartoon now ends on frame 222, its last frame of the wands waving) |
 | 226–321 | 7.533–10.733 s | the card: SINGLE’S DAY, then OFFER ENDS IN, black on white | the IN YOUR SHOE logo (`brand/in-your-shoe-logo.png`, as supplied), white on black. It lands and pushes in exactly as the card's first line did. |

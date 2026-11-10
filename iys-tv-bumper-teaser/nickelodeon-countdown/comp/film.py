@@ -1,7 +1,7 @@
 """The film, frame by frame: the photo (exactly as supplied), the camera's push-in, and inside the screen glass the
 television's signal: the cartoon, the card, the glitch, the countdown. In linear light; written to ffmpeg.
 
-  python comp/film.py --format 9x16                       -> build/film-9x16.mp4 (picture only, H.264 CRF 17), build/film-9x16.json
+  python comp/film.py --format 9x16                       -> build/film-9x16.mp4 (picture only, H.264), build/film-9x16.json
   python comp/film.py --format 4x5
   python comp/film.py --format 9x16 --stills 0,150,321,330,504 --no-video   -> build/stills-9x16/*.png
 """
@@ -184,6 +184,10 @@ def main():
                '-r', str(film.fps), '-i', '-',
                '-vf', 'scale=out_color_matrix=bt709:out_range=tv:flags=accurate_rnd+full_chroma_int,setsar=1',
                '-c:v', 'libx264', '-preset', 'slow', '-crf', '17', '-tune', 'film', '-pix_fmt', 'yuv420p',
+               # what phones, their galleries and the social apps all accept: High profile at level 4.1, so at most
+               # 4 reference frames, and the bitrate's peaks (the grain and the static are costly) held to 40 Mb/s.
+               # Without these the 9:16 film came out at level 5.0, which many players refuse as unsupported.
+               '-profile:v', 'high', '-level:v', '4.1', '-refs', '4', '-maxrate', '40M', '-bufsize', '50M',
                '-colorspace', 'bt709', '-color_primaries', 'bt709', '-color_trc', 'bt709', '-color_range', 'tv',
                '-movflags', '+faststart', video]
         proc = subprocess.Popen(cmd, stdin=subprocess.PIPE)

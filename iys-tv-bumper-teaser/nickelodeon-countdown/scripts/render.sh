@@ -10,7 +10,7 @@ PY=${PY:-.venv/bin/python}
 $PY comp/sources.py                       # the cartoon as the TV signal (4:3, 1440x1080)
 $PY audio/mix.py                          # the sound, 48 kHz, -14 LUFS
 for fmt in 9x16 4x5; do
-  $PY comp/film.py --format "$fmt"        # the picture (H.264, CRF 17)
+  $PY comp/film.py --format "$fmt"        # the picture (H.264 High@4.1, CRF 17, peaks held to 40 Mb/s)
   $PY scripts/finish.py "$fmt"            # + sound -> out/*.mp4, stills, contact sheet
 done
 $PY scripts/qa.py ${ASR_PY:+--asr-python "$ASR_PY"}

@@ -109,6 +109,16 @@ def main():
               f"{v['width']}x{v['height']} SAR {v.get('sample_aspect_ratio')} DAR {v.get('display_aspect_ratio')}")
         check(f'{fmt}: H.264, yuv420p, 30 fps', v['codec_name'] == 'h264' and v['pix_fmt'] == 'yuv420p' and v['r_frame_rate'] == '30/1',
               f"{v['codec_name']} {v.get('profile')} {v['pix_fmt']} {v['r_frame_rate']}")
+        # playable everywhere: High profile at level 4.1 or lower, at most 4 reference frames, the bitrate's peaks capped
+        # (a level 5.0 stream is refused as 'unsupported' by many phones, galleries and apps)
+        head = open(f, 'rb').read(1 << 22)
+        x264 = re.search(rb'x264 - core .*?options: ([^\x00]*)', head, re.S)
+        opts = dict(kv.split('=', 1) for kv in x264.group(1).decode('latin-1').split() if '=' in kv) if x264 else {}
+        info['h264'] = {'level': v.get('level'), 'refs': opts.get('ref'), 'vbvMaxrate': opts.get('vbv_maxrate'), 'vbvBufsize': opts.get('vbv_bufsize')}
+        check(f'{fmt}: plays on phones and in galleries: H.264 High at level 4.1 or lower, at most 4 reference frames, peaks capped',
+              v.get('profile') == 'High' and 0 < int(v.get('level', 99)) <= 41 and int(opts.get('ref', 99)) <= 4
+              and 0 < int(opts.get('vbv_maxrate', 0)) <= 62500,
+              f"High@{v.get('level', 0) / 10:.1f}, {opts.get('ref')} reference frames, peaks held to {int(opts.get('vbv_maxrate', 0)) / 1000:g} Mb/s")
         check(f'{fmt}: {n} frames, {n / fps:.3f} s', int(v['nb_read_frames']) == n and abs(float(v['duration']) - n / fps) < 0.002,
               f"{v['nb_read_frames']} frames, video {float(v['duration']):.3f} s, file {dur:.3f} s")
         check(f'{fmt}: AAC stereo 48 kHz, as long as the picture', au['codec_name'] == 'aac' and au['channels'] == 2 and
